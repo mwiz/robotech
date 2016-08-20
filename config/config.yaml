@@ -1,0 +1,324 @@
+#config_version=4
+
+hardware:
+  platform: fast
+  driverboards: fast
+
+fast:
+  ports: /dev/ttyUSB1, /dev/ttyUSB2
+  config_number_format: int
+
+config:
+- leds.yaml
+- shots.yaml
+
+window:
+  width: 1280
+  height: 800
+  title: Robotech
+  resizable: false
+  fullscreen: auto
+  borderless: false
+  exit_on_escape: true
+
+kivy_config:
+  graphics:
+        fbo: force_hardware
+
+
+switches:
+  s_start:
+    number: 2
+    tags: start
+  s_drain_kicker:
+    number: 9
+    tags: start
+  s_trough1:
+    number: 12
+  s_trough2:
+    number: 11
+  s_trough3:
+    number: 10
+  s_right_flipper:
+    number: 0
+    tags: right_flipper
+  s_left_flipper:
+    number: 1
+    tags: left_flipper
+  s_plunger_lane:
+    number: 13
+  s_tilt:
+    number: 3
+  s_right_inlane_c:
+    number: 14
+    tags: playfield_active
+  s_right_outlane_h:
+    number: 15
+    tags: playfield_active
+  s_kickback_t:
+    number: 16
+    tags: kickback, playfield_active
+  s_left_slingshot:
+    number: 17
+    tags: playfield_active
+  s_left_inlane_e:
+    number: 18
+    tags: playfield_active
+  s_left_lock_rollover:
+    number: 19
+    tags: playfield_active
+  s_left_lock_kickout:
+    number: 20
+    tags: 
+  s_right_drop_target:
+    number: 21
+    tags: playfield_active
+  s_middle_drop_target:
+    number: 22
+    tags: playfield_active
+  s_left_drop_target:
+    number: 23
+    tags: playfield_active
+  s_bottom_l_pop_bumper:
+    number: 24
+    tags: playfield_active
+  s_top_l_pop_bumper:
+    number: 25
+    tags: playfield_active
+  s_bottom_r_pop_bumper:
+    number: 26
+    tags: playfield_active
+  s_top_r_pop_bumper:
+    number: 27
+    tags: playfield_active
+  s_spinner:
+    number: 28
+    tags: playfield_active
+  s_top_lock_kickout:
+    number: 29
+    tags:
+  s_right_lock_kickout:
+    number: 30
+    tags:
+  s_right_slingshot:
+    number: 31
+    tags: playfield_active
+
+flippers:
+  lower_left:
+    main_coil: c_flipper_left_main
+    activation_switch: s_left_flipper
+    label: Left Main Flipper
+  lower_right:
+    main_coil: c_flipper_right_main
+    activation_switch: s_right_flipper
+    label: Right Main Flipper
+
+coils:
+  c_flipper_left_main:
+    number: 6
+    pulse_ms: 14
+    hold_power: 1
+  c_flipper_right_main:
+    number: 4
+    pulse_ms: 14
+    hold_power: 1
+  c_trough_eject:
+    number: 5
+    pulse_ms: 70
+  c_drain_kicker:
+    number: 7
+    pulse_ms: 20
+  c_kickback:
+    number: 8
+    pulse_ms: 20
+  c_left_slingshot:
+    number: 9
+    pulse_ms: 10
+  c_left_lock_kickout:
+    number: 10
+    pulse_ms: 20
+  c_right_slingshot:
+    number: 11
+    pulse_ms: 10
+  c_middle_drop_target:
+    number: 12
+    pulse_ms: 20
+  c_left_drop_target:
+    number: 13
+    pulse_ms: 20
+  c_right_drop_target:
+    number: 14
+    pulse_ms: 20
+  c_right_lock_kickout:
+    number: 15
+    pulse_ms: 20
+  c_bottom_l_pop_bumper:
+    number: 16
+    pulse_ms: 30
+  c_top_l_pop_bumper:
+    number: 17
+    pulse_ms: 30
+  c_bottom_r_pop_bumper:
+    number: 18
+    pulse_ms: 30
+  c_top_r_pop_bumper:
+    number: 19
+    pulse_ms: 30
+  c_top_lock_kickout:
+    number: 20
+    pulse_ms: 20
+  c_top_gate:
+    number: 21
+    pulse_ms: 20
+
+ball_devices:
+  bd_trough:
+    ball_switches: s_trough1, s_trough2, s_trough3
+    entrance_count_delay: 300ms
+    eject_coil: c_trough_eject
+    tags: trough, home, drain
+    debug: yes
+    eject_targets: bd_plunger
+  bd_plunger:
+    ball_switches: s_plunger_lane
+    #entrance_count_delay: 300ms
+    eject_timeouts: 3s
+    tags: ball_add_live
+    mechanical_eject: true
+  drain:
+    ball_switches: s_drain_kicker
+    eject_coil: c_drain_kicker
+    entrance_count_delay: 100ms
+    confirm_eject_type: target
+    eject_targets: bd_trough
+    tags: drain
+  bd_left_lock:
+    label: left lock
+    ball_switches: s_left_lock_kickout
+    eject_coil: c_left_lock_kickout
+    exit_count_delay: 250ms
+    tags: left_lock
+    eject_timeouts: 500ms
+  bd_right_lock:
+    label: right lock
+    ball_switches: s_right_lock_kickout
+    eject_coil: c_right_lock_kickout
+    exit_count_delay: 250ms
+    tags: right_lock
+    eject_timeouts: 500ms
+  bd_top_lock:
+    label: top lock
+    ball_switches: s_top_lock_kickout
+    eject_coil: c_top_lock_kickout
+    exit_count_delay: 250ms
+    tags: top_lock
+    eject_timeouts: 500ms
+
+game:
+  balls_per_game: 3
+  max_players: 1
+
+modes:
+- attract
+- base
+#- ball_save
+- kickback
+
+widget_styles:
+  default:
+    font_name: Quadrit
+    font_size: 10
+    adjust_top: 2
+    adjust_bottom: 3
+  space title huge:
+    font_name: DEADJIM
+    font_size: 29
+    antialias: true
+    adjust_top: 3
+    adjust_bottom: 3
+  space title:
+    font_name: DEADJIM
+    font_size: 21
+    antialias: true
+    adjust_top: 2
+    adjust_bottom: 3
+  medium:
+    font_name: pixelmix
+    font_size: 8
+    adjust_top: 1
+    adjust_bottom: 1
+  small:
+    font_name: smallest_pixel-7
+    font_size: 9
+    adjust_top: 2
+    adjust_bottom: 3
+  tall title:
+    font_name: big_noodle_titling
+    font_size: 20
+
+autofire_coils:
+  left_slingshot:
+    coil: c_left_slingshot
+    switch: s_left_slingshot
+  right_slingshot:
+    coil: c_right_slingshot
+    switch: s_right_slingshot
+  bottom_l_pop_bumper:
+    coil: c_bottom_l_pop_bumper
+    switch: s_bottom_l_pop_bumper
+  bottom_r_pop_bumper:
+    coil: c_bottom_r_pop_bumper
+    switch: s_bottom_r_pop_bumper
+  top_l_pop_bumper:
+    coil: c_top_l_pop_bumper
+    switch: s_top_l_pop_bumper
+  top_r_pop_bumper:
+    coil: c_top_r_pop_bumper
+    switch: s_top_r_pop_bumper
+  kickback:
+    coil: c_kickback
+    switch: s_kickback_t
+    enable_events: mode_kickback_started
+    disable_events: mode_kickback_stopped
+
+drop_targets:
+   left_drop:
+     debug: True
+     switch: s_left_drop_target
+     reset_coil: c_left_drop_target
+   middle_drop:
+     debug: True
+     switch: s_middle_drop_target
+     reset_coil: c_middle_drop_target
+   right_drop:
+     debug: True
+     switch: s_right_drop_target
+     reset_coil: c_right_drop_target
+
+drop_target_banks:
+  bank:
+    debug: True
+    drop_targets: left_drop, middle_drop, right_drop
+    reset_events:
+        drop_target_bank_bank_down: 1s
+
+ball_saves:
+  default:
+    active_time: 5s
+    hurry_up_time: 2s
+    grace_period: 3s
+    enable_events: mode_base_started
+    timer_start_events: balldevice_bd_plunger_ball_eject_success
+    auto_launch: no
+    balls_to_save: 1
+    debug: yes
+
+
+show_player:
+  ball_save_default_enabled:
+    ball_save_flash:
+      loops: -1
+  ball_save_default_disabled:
+    ball_save_flash:
+      action: stop  

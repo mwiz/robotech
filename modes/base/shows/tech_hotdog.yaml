@@ -1,0 +1,36 @@
+#show_version=4
+
+- time: 0
+  leds: 
+    tech_hotdog: off
+- time: +100ms
+  leds:
+    tech_hotdog: blue
+- time: +100ms
+  leds:
+    tech_hotdog: off
+- time: +100ms
+  leds:
+    tech_hotdog: blue
+- time: +100ms
+  leds:
+    tech_hotdog: off
+- time: +100ms
+  leds:
+    tech_hotdog: blue
+- time: +100ms
+  leds:
+    tech_hotdog: off
+- time: +100ms
+  leds:
+    tech_hotdog: blue
+- time: +100ms
+  leds:
+    tech_hotdog: off
+- time: +100ms
+  leds:
+    tech_hotdog: blue
+- duration: -1
+  leds:
+    tech_hotdog: blue
+  

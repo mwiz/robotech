@@ -1,0 +1,15 @@
+#config_version=4
+
+show_player:
+  mode_attract_started:
+    #cycle_all_lights:
+     # loops: -1
+      #speed: 1
+    all_blink:
+      loops: -1
+      speed: 1
+  mode_attract_stopping:
+    #cycle_all_lights:
+    #  action: stop
+    all_blink:
+      action: stop

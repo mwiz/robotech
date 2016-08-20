@@ -1,0 +1,60 @@
+'3': 185
+events:
+  ball_search_begin_phase1: 0
+  game_ended: 234
+  game_started: 435
+h3: 261
+player:
+  score:
+    average: 0.0
+    top:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    total: 234
+shots:
+  left_inlane_e: 285
+  left_outlane_t: 235
+  right_inlane_c: 372
+  right_outlane_h: 193
+switches:
+  s_bottom_l_pop_bumper: 2201
+  s_bottom_r_pop_bumper: 2516
+  s_drain: 0
+  s_drain_kicker: 1341
+  s_kickback_t: 559
+  s_left_drop_target: 813
+  s_left_flipper: 11577
+  s_left_inlane_e: 534
+  s_left_lock_kickout: 281
+  s_left_lock_rollover: 0
+  s_left_sling: 15
+  s_left_slingshot: 2175
+  s_middle_drop_target: 915
+  s_plunger_lane: 2373
+  s_right_drop_target: 640
+  s_right_flipper: 10658
+  s_right_inlane_c: 621
+  s_right_kickout: 25
+  s_right_lock_kickout: 171
+  s_right_outlane_h: 342
+  s_right_sling: 24
+  s_right_slingshot: 2156
+  s_spinner: 2630
+  s_spinnter: 2295
+  s_start: 51
+  s_tilt: 27
+  s_top_kickout: 88
+  s_top_l_pop_bumper: 3691
+  s_top_lock_kickout: 193
+  s_top_r_pop_bumper: 3882
+  s_trough1: 3100
+  s_trough2: 1528
+  s_trough3: 1581

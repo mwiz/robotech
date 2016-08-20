@@ -1,0 +1,32 @@
+# show_version=4
+
+#- time: 0
+- duration: 1
+  leds:
+    playfield: Deep Sky Blue-f200ms
+
+#- time: '+1'
+- duration: 1
+  leds:
+    playfield: 000000-f200ms
+
+#- time: '+1'
+- duration: 1
+  leds:
+    playfield: Green-f200ms
+
+#- time: '+1'
+- duration: 1
+  leds:
+    playfield: 000000-f200ms
+
+#- time: '+1'
+- duration: 1
+  leds:
+    playfield: Gold-f200ms
+
+#- time: '+1'
+- duration: 1
+  leds:
+    playfield: 000000-f200ms
+

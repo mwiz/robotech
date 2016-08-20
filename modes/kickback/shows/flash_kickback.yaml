@@ -1,0 +1,9 @@
+# show_version=4
+
+- time: 0
+  leds:
+    l_kickback: Red
+- time: +100ms
+  leds:
+    l_kickback: 000000
+- time: +100ms

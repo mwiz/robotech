@@ -1,0 +1,31 @@
+#config_version=4
+
+
+mode:
+    #start_events: game_started
+    #start_events: mode_base_starting
+    start_events: ball_starting
+    stop_events: timer_kickback_grace_period_complete
+    priority: 200
+
+timers:
+    kickback_grace_period:
+        start_value: 5
+        direction: down
+        debug: Yes
+        control_events:
+          - event: sw_kickback
+            action: start
+   
+show_player:
+    mode_kickback_started:
+      light_kickback:
+        repeat: no
+    mode_kickback_stopped:
+      flash_kickback:
+        action: stop
+    sw_kickback:
+      light_kickback:
+        action: stop
+      flash_kickback:
+        loops: -1  

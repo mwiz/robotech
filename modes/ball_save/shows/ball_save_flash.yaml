@@ -1,0 +1,9 @@
+# show_version=4
+
+- time: 0
+  leds:
+    l_shoot_again: 0000ff
+- time: +500ms
+  leds:
+    l_shoot_again: 000000
+- time: +500ms

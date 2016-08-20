@@ -1,0 +1,63 @@
+#config_version=4
+
+shots:
+#  r_lane:
+#    switch: s_r
+#    show_tokens:
+#      light: l_r_light
+#  o_lane:
+#    switch:
+#    show_tokens:
+#      light: l_o_light
+   left_outlane_t:
+     switch: s_kickback_t 
+     show_tokens:
+       led: l_left_outlane_t
+   left_inlane_e:
+     switch: s_left_inlane_e
+     show_tokens:
+       led: l_left_inlane_e
+   right_inlane_c:
+     switch: s_right_inlane_c
+     show_tokens:
+       led: l_right_inlane_c
+   right_outlane_h:
+     switch: s_right_outlane_h
+     #profile: quick_flash
+     show_tokens:
+       led: l_right_outlane_h
+
+#shot_groups:
+#  tech_lanes:
+#    shots:
+#      - left_outlane_t
+#      - left_inlane_e
+#      - right_inlane_c
+#      - right_outlane_h
+
+shot_profiles:
+  quick_flash:
+    states:
+    - name: unlit
+      show: off
+    - name: hit
+      show: quick_flash
+
+#shows:
+#    quick_flash:
+#        - time: 0
+#          leds:
+#            (led): 
+#              color: white
+#        - time: +100ms
+#          leds:
+#             (led): 
+#               color: black
+#        - time: +100ms   
+
+shows:
+  quick_flash:
+    - leds:
+        (leds): white
+    - leds:
+        (leds): off
