@@ -1,4 +1,5 @@
 #config_version=4
+# Robotech Pinball Machine
 
 hardware:
   platform: fast
@@ -11,6 +12,7 @@ fast:
 config:
 - leds.yaml
 - shots.yaml
+- lightscripts.yaml
 
 window:
   width: 1280
@@ -23,7 +25,7 @@ window:
 
 kivy_config:
   graphics:
-        fbo: force_hardware
+        fbo: force-hardware
 
 
 switches:
@@ -218,12 +220,7 @@ ball_devices:
 game:
   balls_per_game: 3
   max_players: 1
-
-modes:
-- attract
-- base
-#- ball_save
-- kickback
+  min_balls: 1
 
 widget_styles:
   default:

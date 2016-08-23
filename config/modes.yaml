@@ -1,0 +1,8 @@
+# config_version=4
+
+
+modes:
+- attract
+- base
+#- ball_save
+- kickback
