@@ -9,13 +9,13 @@ shot_groups:
     rotate_left_events: sw_left_flipper
     rotate_right_events: sw_right_flipper
     reset_events:
-       tech_lanes_default_lit_complete: 
+       tech_lanes_default_lit_complete: 1s 
 
 show_player:
    tech_lanes_default_lit_complete:
       tech_lanes_complete:
         loops: 3
-#        #priority: 1
+        priority: 1
       tech_hotdog:
 #        #priority: 2   
         loops: 0

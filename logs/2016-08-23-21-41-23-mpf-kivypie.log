@@ -1,0 +1,81 @@
+2016-08-23 21:41:23,135 : INFO : Machine : Mission Pinball Framework Core Engine v0.30.26
+2016-08-23 21:41:23,137 : DEBUG : Machine : Command line arguments: {'loglevel': 10, 'force_platform': None, 'mpfconfigfile': '/usr/local/lib/python3.4/dist-packages/mpf/mpfconfig.yaml', 'logfile': 'logs/2016-08-23-21-41-23-mpf-kivypie.log', 'consoleloglevel': 20, 'configfile': ['config'], 'bcp': False, 'pause': False, 'no_load_cache': False, 'create_config_cache': True}
+2016-08-23 21:41:23,137 : DEBUG : Machine : MPF path: /usr/local/lib/python3.4/dist-packages/mpf
+2016-08-23 21:41:23,138 : INFO : Machine : Machine path: /home/sysop/robotech
+2016-08-23 21:41:23,139 : DEBUG : Machine : Command line arguments: {'loglevel': 10, 'force_platform': None, 'mpfconfigfile': '/usr/local/lib/python3.4/dist-packages/mpf/mpfconfig.yaml', 'logfile': 'logs/2016-08-23-21-41-23-mpf-kivypie.log', 'consoleloglevel': 20, 'configfile': ['config'], 'bcp': False, 'pause': False, 'no_load_cache': False, 'create_config_cache': True}
+2016-08-23 21:41:23,139 : DEBUG : Machine : Python version: 3.4.2
+2016-08-23 21:41:23,140 : DEBUG : Machine : Platform: linux
+2016-08-23 21:41:23,140 : DEBUG : Machine : Python executable location: /usr/bin/python3
+2016-08-23 21:41:23,140 : DEBUG : Machine : 32-bit Python? True
+2016-08-23 21:41:23,141 : DEBUG : Machine : Machine path: /home/sysop/robotech
+2016-08-23 21:41:24,977 : INFO : Machine : Loading config from original files
+2016-08-23 21:41:24,979 : DEBUG : YAML File Interface : Loading file: /usr/local/lib/python3.4/dist-packages/mpf/mpfconfig.yaml
+2016-08-23 21:41:25,380 : INFO : Machine : Machine config file #1: /home/sysop/robotech/config/config
+2016-08-23 21:41:25,383 : DEBUG : YAML File Interface : Loading file: /home/sysop/robotech/config/config.yaml
+2016-08-23 21:41:25,818 : DEBUG : YAML File Interface : Loading file: /home/sysop/robotech/config/leds.yaml
+2016-08-23 21:41:26,177 : DEBUG : YAML File Interface : Loading file: /home/sysop/robotech/config/shots.yaml
+2016-08-23 21:41:26,237 : DEBUG : YAML File Interface : Loading file: /home/sysop/robotech/config/lightscripts.yaml
+2016-08-23 21:41:26,243 : DEBUG : YAML File Interface : YAML error found in file /home/sysop/robotech/config/lightscripts.yaml. Line 7, Position 14
+2016-08-23 21:41:26,244 : ERROR : root : YAML error found in file /home/sysop/robotech/config/lightscripts.yaml. Line 7, Position 14
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/mpf/file_interfaces/yaml_interface.py", line 304, in load
+    config = YamlInterface.process(f, round_trip)
+  File "/usr/local/lib/python3.4/dist-packages/mpf/file_interfaces/yaml_interface.py", line 334, in process
+    return Util.keys_to_lower(yaml.load(data_string, Loader=MpfLoader))
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/main.py", line 75, in load
+    return loader.get_single_data()
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/constructor.py", line 57, in get_single_data
+    node = self.get_single_node()
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 46, in get_single_node
+    document = self.compose_document()
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 66, in compose_document
+    node = self.compose_node(None, None)
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 97, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 156, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 97, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 156, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 95, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 126, in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 97, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/composer.py", line 149, in compose_mapping_node
+    while not self.check_event(MappingEndEvent):
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/parser_.py", line 118, in check_event
+    self.current_event = self.state()
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/parser_.py", line 490, in parse_block_mapping_key
+    if self.check_token(KeyToken):
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/scanner.py", line 130, in check_token
+    self.fetch_more_tokens()
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/scanner.py", line 237, in fetch_more_tokens
+    return self.fetch_value()
+  File "/usr/local/lib/python3.4/dist-packages/ruamel/yaml/scanner.py", line 596, in fetch_value
+    self.get_mark())
+ruamel.yaml.scanner.ScannerError: mapping values are not allowed here
+  in "/home/sysop/robotech/config/lightscripts.yaml", line 7, column 14
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/mpf/commands/game.py", line 130, in __init__
+    MachineController(mpf_path, machine_path, vars(args)).run()
+  File "/usr/local/lib/python3.4/dist-packages/mpf/core/machine.py", line 100, in __init__
+    self._load_config()
+  File "/usr/local/lib/python3.4/dist-packages/mpf/core/machine.py", line 286, in _load_config
+    self._load_config_from_files()
+  File "/usr/local/lib/python3.4/dist-packages/mpf/core/machine.py", line 305, in _load_config_from_files
+    config_type='machine'))
+  File "/usr/local/lib/python3.4/dist-packages/mpf/core/config_processor.py", line 82, in load_config_file
+    full_file, config_type))
+  File "/usr/local/lib/python3.4/dist-packages/mpf/core/config_processor.py", line 57, in load_config_file
+    config = FileManager.load(filename, verify_version, halt_on_error)
+  File "/usr/local/lib/python3.4/dist-packages/mpf/core/file_manager.py", line 155, in load
+    round_trip)
+  File "/usr/local/lib/python3.4/dist-packages/mpf/file_interfaces/yaml_interface.py", line 313, in load
+    "Position {}".format(filename, mark.line + 1, mark.column + 1))
+ValueError: YAML error found in file /home/sysop/robotech/config/lightscripts.yaml. Line 7, Position 14

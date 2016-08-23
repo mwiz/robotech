@@ -1,22 +1,23 @@
 # config_version=4
 
-
 shows:
 
-quick_flash:
+  quick_flash:
   - time: 0
     leds:
       (leds): white
-  - time: '+100'
+  - time: +75ms
     leds:
       (leds): '000000'
-  - time: '+100'
+  - time: +75ms
     leds:
       (leds): white
-  - time: '+100'
+  - time: +75ms
     leds:
       (leds): '000000'
-  - time: '+100'
+  - time: +75ms
     leds:
       (leds): white
-  - time: '+100'
+  - duration: -1
+    leds:
+      (leds): white

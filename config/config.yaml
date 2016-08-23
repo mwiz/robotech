@@ -220,6 +220,9 @@ ball_devices:
 game:
   balls_per_game: 3
   max_players: 1
+
+machine:
+  balls_installed: 3
   min_balls: 1
 
 widget_styles:
