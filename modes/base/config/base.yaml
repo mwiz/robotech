@@ -1,7 +1,7 @@
 # config_version=4
 
 mode:
-  start_events: game_starting
+  start_events: ball_starting
   priority: 100
 
 shot_groups:
@@ -9,13 +9,13 @@ shot_groups:
     rotate_left_events: sw_left_flipper
     rotate_right_events: sw_right_flipper
     reset_events:
-       tech_lanes_default_lit_complete: 1s 
+      tech_lanes_default_lit_complete: 10ms  
 
 show_player:
    tech_lanes_default_lit_complete:
       tech_lanes_complete:
         loops: 3
-        priority: 1
+#        #priority: 1
       tech_hotdog:
 #        #priority: 2   
         loops: 0

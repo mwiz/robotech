@@ -7,10 +7,10 @@ mode:
 ball_saves:
   default:
     active_time: 5s
-    #hurry_up_time: 2s
+    hurry_up_time: 2s
     grace_period: 3s
-    #enable_events: mode_base_started
-    enable_events: mode_ball_save_started
+    enable_events: mode_base_started
+    #enable_events: mode_ball_save_started
     timer_start_events: balldevice_bd_plunger_ball_eject_success
     auto_launch: no
     balls_to_save: 1
@@ -19,8 +19,8 @@ ball_saves:
 show_player:
   ball_save_default_enabled:
     ball_save_flash:
-      repeat: yes
-      tocks_per_sec: 8
+      speed: 4
+      loops: -1
   ball_save_default_disabled:
     ball_save_flash:
       action: stop

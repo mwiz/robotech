@@ -15,26 +15,27 @@ shots:
        leds: l_left_outlane_t
    left_inlane_e:
      switch: s_left_inlane_e
+     #profile: quick_flash
      show_tokens:
        leds: l_left_inlane_e
    right_inlane_c:
      switch: s_right_inlane_c
-     profile: quick_flash
+     #profile: quick_flash
      show_tokens:
        leds: l_right_inlane_c
    right_outlane_h:
      switch: s_right_outlane_h
-     profile: quick_flash
+     #profile: quick_flash
      show_tokens:
        leds: l_right_outlane_h
 
 shot_groups:
   tech_lanes:
     shots:
-      - left_outlane_t
-      - left_inlane_e
-      - right_inlane_c
-      - right_outlane_h
+    - left_outlane_t
+    - left_inlane_e
+    - right_inlane_c
+    - right_outlane_h
 
 shot_profiles:
   quick_flash:
