@@ -2,7 +2,7 @@
 
 - time: 0
   leds:
-    l_shoot_again: 0000ff
+    l_shoot_again: white
 - time: +500ms
   leds:
     l_shoot_again: 000000

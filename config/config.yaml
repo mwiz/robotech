@@ -18,6 +18,7 @@ modes:
 - base
 - kickback
 - attract
+- ball_save
 
 window:
   width: 1280
@@ -308,21 +309,22 @@ drop_target_banks:
     reset_events:
         drop_target_bank_bank_down: 1s
 
-ball_saves:
-  default:
-    active_time: 5s
-    hurry_up_time: 2s
-    grace_period: 3s
-    enable_events: mode_base_started
-    timer_start_events: balldevice_bd_plunger_ball_eject_success
-    auto_launch: false
-    balls_to_save: 1
-    debug: true
-
-show_player:
-  ball_save_default_enabled:
-   ball_save_flash:
-    loops: -1
-  ball_save_default_disabled:
-    ball_save_flash:
-      action: stop  
+#ball_saves:
+#  default:
+#    active_time: 5s
+#    hurry_up_time: 2s
+#    grace_period: 3s
+#    enable_events: mode_base_started
+#    timer_start_events: #       
+#    balldevice_bd_plunger_ball_eject_success
+#    auto_launch: false
+#    balls_to_save: 1
+#    debug: true
+#
+#show_player:
+#  ball_save_default_enabled:
+#   ball_save_flash:
+#    loops: -1
+#  ball_save_default_disabled:
+#    ball_save_flash:
+#      action: stop  
