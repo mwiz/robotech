@@ -1,8 +1,8 @@
 '3': 185
 events:
   ball_search_begin_phase1: 0
-  game_ended: 243
-  game_started: 464
+  game_ended: 269
+  game_started: 496
 h3: 261
 player:
   score:
@@ -18,43 +18,63 @@ player:
     - 0
     - 0
     - 0
-    total: 243
+    total: 269
 shots:
-  left_inlane_e: 349
-  left_outlane_t: 267
-  right_inlane_c: 439
-  right_outlane_h: 237
+  left_inlane_e: 398
+  left_outlane_t: 326
+  right_inlane_c: 498
+  right_outlane_h: 264
 switches:
-  s_bottom_l_pop_bumper: 2288
-  s_bottom_r_pop_bumper: 2621
+  s_b_top_lane: 37
+  s_bottom_l_pop_bumper: 2527
+  s_bottom_r_pop_bumper: 2906
+  s_d_target: 44
   s_drain: 0
-  s_drain_kicker: 1402
-  s_kickback_t: 591
-  s_left_drop_target: 849
-  s_left_flipper: 12173
-  s_left_inlane_e: 598
-  s_left_lock_kickout: 293
+  s_drain_kicker: 1517
+  s_f_target: 47
+  s_kickback_t: 650
+  s_left_bottom_rubber: 48
+  s_left_drop_target: 929
+  s_left_flipper: 13438
+  s_left_inlane_e: 647
+  s_left_lock_kickout: 335
   s_left_lock_rollover: 0
+  s_left_middle_rubber: 76
+  s_left_rollover: 0
   s_left_sling: 15
-  s_left_slingshot: 2262
-  s_middle_drop_target: 948
-  s_plunger_lane: 2488
-  s_right_drop_target: 671
-  s_right_flipper: 11276
-  s_right_inlane_c: 688
+  s_left_slingshot: 2473
+  s_left_target: 70
+  s_left_top_rubber: 17
+  s_lower_right_rubber: 19
+  s_middle_drop_target: 1075
+  s_middle_right_rubber: 19
+  s_middle_target: 53
+  s_o1_top_lane: 43
+  s_o2_top_lane: 61
+  s_plunger_lane: 2685
+  s_r_top_lane: 22
+  s_right_drop_target: 754
+  s_right_flipper: 12322
+  s_right_inlane_c: 747
   s_right_kickout: 25
-  s_right_lock_kickout: 188
-  s_right_outlane_h: 386
+  s_right_lock_kickout: 240
+  s_right_outlane_h: 413
+  s_right_rollover: 0
   s_right_sling: 24
-  s_right_slingshot: 2248
-  s_spinner: 2972
+  s_right_slingshot: 2497
+  s_right_target: 53
+  s_right_top1_rubber: 22
+  s_right_top2_rubber: 28
+  s_s_target: 43
+  s_spinner: 3663
   s_spinnter: 2295
   s_start: 51
-  s_tilt: 27
+  s_tilt: 32
   s_top_kickout: 88
-  s_top_l_pop_bumper: 3829
-  s_top_lock_kickout: 210
-  s_top_r_pop_bumper: 4033
-  s_trough1: 3206
-  s_trough2: 1594
-  s_trough3: 1626
+  s_top_l_pop_bumper: 4255
+  s_top_lock_kickout: 238
+  s_top_r_pop_bumper: 4423
+  s_top_target: 0
+  s_trough1: 3450
+  s_trough2: 2009
+  s_trough3: 1742

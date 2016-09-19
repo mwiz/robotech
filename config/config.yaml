@@ -35,81 +35,141 @@ kivy_config:
 
 
 switches:
-  s_start:
-    number: 2
-    tags: start
-  s_drain_kicker:
-    number: 9
-    tags: start
-  s_trough1:
-    number: 12
-  s_trough2:
-    number: 11
-  s_trough3:
-    number: 10
   s_right_flipper:
     number: 0
     tags: right_flipper
   s_left_flipper:
     number: 1
-    tags: left_flipper
-  s_plunger_lane:
-    number: 13
+    tags: left_flipper  
+  s_start:
+    number: 2
+    tags: start
   s_tilt:
     number: 3
-  s_right_inlane_c:
+  s_left_target:
+    number: 10
+    tags: playfield_active
+  s_middle_target:
+    number: 11
+    tags: playfield_active
+  s_right_target:
+    number: 12
+    tags: playfield_active
+  s_left_top_rubber:
+    number: 13
+    tags: playfield_active
+  s_left_middle_rubber:
     number: 14
     tags: playfield_active
-  s_right_outlane_h:
+  s_left_bottom_rubber:
     number: 15
     tags: playfield_active
-  s_kickback_t:
-    number: 16
-    tags: kickback, playfield_active
-  s_left_slingshot:
-    number: 17
-    tags: playfield_active
-  s_left_inlane_e:
+  s_left_top_rubber:
     number: 18
     tags: playfield_active
-  s_left_lock_rollover:
+  s_r_top_lane:
     number: 19
     tags: playfield_active
-  s_left_lock_kickout:
+  s_o1_top_lane:
     number: 20
-    tags: 
-  s_right_drop_target:
+    tags: playfield_active
+  s_top_target:
     number: 21
     tags: playfield_active
-  s_middle_drop_target:
+  s_b_top_lane:
     number: 22
     tags: playfield_active
-  s_left_drop_target:
+  s_o2_top_lane:
     number: 23
     tags: playfield_active
-  s_bottom_l_pop_bumper:
+  s_right_top1_rubber:
     number: 24
     tags: playfield_active
-  s_top_l_pop_bumper:
+  s_right_top2_rubber:
     number: 25
     tags: playfield_active
-  s_bottom_r_pop_bumper:
+  s_right_rollover:
     number: 26
     tags: playfield_active
-  s_top_r_pop_bumper:
+  s_middle_right_rubber:
     number: 27
     tags: playfield_active
-  s_spinner:
+  s_s_target:
     number: 28
+    tags: playfield_active, sdf
+  s_d_target:
+    number: 29
+    tags: playfield_active, sdf
+  s_f_target:
+    number: 30
+    tags: playfield_active, sdf
+  s_lower_right_rubber:
+    number: 31
+    tags: playfield_active
+  s_drain_kicker:
+    number: 32
+    tags: start
+  s_trough3:
+    number: 33
+  s_trough2:
+    number: 34
+  s_trough1:
+    number: 36
+  s_plunger_lane:
+    number: 37
+  s_right_inlane_c:
+    number: 38
+    tags: playfield_active
+  s_right_outlane_h:
+    number: 39
+    tags: playfield_active
+  s_kickback_t:
+    number: 40
+    tags: kickback, playfield_active
+  s_left_slingshot:
+    number: 41
+    tags: playfield_active
+  s_left_inlane_e:
+    number: 42
+    tags: playfield_active
+  s_left_rollover:
+    number: 43
+    tags: playfield_active
+  s_left_lock_kickout:
+    number: 44
+    tags: playfield_active
+  s_right_drop_target:
+    number: 45
+    tags: playfield_active
+  s_middle_drop_target:
+    number: 46
+    tags: playfield_active
+  s_left_drop_target:
+    number: 47
+    tags: playfield_active
+  s_bottom_l_pop_bumper:
+    number: 48
+    tags: playfield_active
+  s_top_l_pop_bumper:
+    number: 49
+    tags: playfield_active
+  s_bottom_r_pop_bumper:
+    number: 50
+    tags: playfield_active
+  s_top_r_pop_bumper:
+    number: 51
+    tags: playfield_active
+  s_spinner:
+    number: 52
     tags: playfield_active
   s_top_lock_kickout:
-    number: 29
-    tags:
+    number: 53
+    tags: playfield_active
   s_right_lock_kickout:
-    number: 30
-    tags:
+    number: 54
+    tags: playfield_active
   s_right_slingshot:
-    number: 31
+    number: 55
     tags: playfield_active
 
 flippers:
@@ -124,60 +184,60 @@ flippers:
 
 coils:
   c_flipper_left_main:
-    number: 6
+    number: 8
     pulse_ms: 14
     hold_power: 1
   c_flipper_right_main:
-    number: 4
+    number: 9
     pulse_ms: 14
     hold_power: 1
   c_trough_eject:
-    number: 5
+    number: 10
     pulse_ms: 70
   c_drain_kicker:
-    number: 7
+    number: 11
     pulse_ms: 20
   c_kickback:
-    number: 8
-    pulse_ms: 20
-  c_left_slingshot:
-    number: 9
-    pulse_ms: 10
-  c_left_lock_kickout:
-    number: 10
-    pulse_ms: 20
-  c_right_slingshot:
-    number: 11
-    pulse_ms: 10
-  c_middle_drop_target:
     number: 12
     pulse_ms: 20
-  c_left_drop_target:
+  c_left_slingshot:
     number: 13
-    pulse_ms: 20
-  c_right_drop_target:
+    pulse_ms: 10
+  c_left_lock_kickout:
     number: 14
     pulse_ms: 20
-  c_right_lock_kickout:
+  c_right_slingshot:
     number: 15
+    pulse_ms: 10
+  c_middle_drop_target:
+    number: 16
+    pulse_ms: 20
+  c_left_drop_target:
+    number: 17
+    pulse_ms: 20
+  c_right_drop_target:
+    number: 18
+    pulse_ms: 20
+  c_right_lock_kickout:
+    number: 19
     pulse_ms: 20
   c_bottom_l_pop_bumper:
-    number: 16
+    number: 20
     pulse_ms: 30
   c_top_l_pop_bumper:
-    number: 17
+    number: 21
     pulse_ms: 30
   c_bottom_r_pop_bumper:
-    number: 18
+    number: 22
     pulse_ms: 30
   c_top_r_pop_bumper:
-    number: 19
+    number: 23
     pulse_ms: 30
   c_top_lock_kickout:
-    number: 20
+    number: 24
     pulse_ms: 20
   c_top_gate:
-    number: 21
+    number: 25
     pulse_ms: 20
 
 ball_devices:
