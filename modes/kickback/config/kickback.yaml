@@ -2,9 +2,9 @@
 
 
 mode:
-    #start_events: game_started
+    start_events: game_started
     #start_events: mode_base_starting
-    start_events: ball_starting
+    #start_events: ball_starting
     stop_events: timer_kickback_grace_period_complete
     priority: 200
 

@@ -165,23 +165,23 @@ leds:
   l_robo_5:
     number: 0-39
     label: led39
-    tags: playfield
+    tags: robo_hotdog, playfield
   l_robo_4:
     number: 0-40
     label: led40
-    tags: playfield
+    tags: robo_hotdog, playfield
   l_robo_3:
     number: 0-41
     label: led41
-    tags: playfield
+    tags: robo_hotdog, playfield
   l_robo_2:
     number: 0-42
     label: led42
-    tags: playfield
+    tags: robo_hotdog, playfield
   l_robo_1:
     number: 0-43
     label: led43
-    tags: playfield
+    tags: robo_hotdog, playfield
   l_kickback:
     number: 0-44
     label: led44

@@ -7,16 +7,23 @@ mode:
 shot_groups:
   tech_lanes:
     rotate_left_events: sw_left_flipper
+#    rotate_right_events: sw_right_flipper
+    reset_events:
+      tech_lanes_default_lit_complete: 10ms
+  robo_lanes:
+#    rotate_left_events: sw_left_flipper
     rotate_right_events: sw_right_flipper
     reset_events:
-      tech_lanes_default_lit_complete: 10ms  
+      robo_lanes_default_lit_complete: 10ms    
 
 show_player:
    tech_lanes_default_lit_complete:
       tech_lanes_complete:
         loops: 3
-#        #priority: 1
       tech_hotdog:
-#        #priority: 2   
         loops: 0
-#        #duration: 1
+   robo_lanes_default_lit_complete:
+      robo_lanes_complete:
+        loops: 3
+      robo_hotdog:   
+        loops: 0

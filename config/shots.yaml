@@ -1,14 +1,6 @@
 #config_version=4
 
 shots:
-#  r_lane:
-#    switch: s_r
-#    show_tokens:
-#      light: l_r_light
-#  o_lane:
-#    switch:
-#    show_tokens:
-#      light: l_o_light
    left_outlane_t:
      switch: s_kickback_t 
      show_tokens:
@@ -28,6 +20,27 @@ shots:
      #profile: quick_flash
      show_tokens:
        leds: l_right_outlane_h
+   r_top_lane:
+     switch: s_r_top_lane
+     show_tokens:
+       leds: l_r_light
+   o1_top_lane:
+     switch: s_o1_top_lane
+     show_tokens:
+       leds: l_o_light
+   b_top_lane:
+     switch: s_b_top_lane
+     show_tokens:
+       leds: l_b_light
+   o2_top_lane:
+     switch: s_o2_top_lane
+     show_tokens:
+       leds: l_o2_light
+   left_target:
+     switch: s_left_target
+     profile: quick_flash
+     show_tokens:
+       leds: l_t1
 
 shot_groups:
   tech_lanes:
@@ -36,14 +49,20 @@ shot_groups:
     - left_inlane_e
     - right_inlane_c
     - right_outlane_h
+  robo_lanes:
+    shots:
+    - r_top_lane
+    - o1_top_lane
+    - b_top_lane
+    - o2_top_lane
 
 shot_profiles:
   quick_flash:
     states:
     - name: unlit
-      show: off
+      show: flash
     - name: lit
-      show: quick_flash
+      show: on
       loops: 0
 
 

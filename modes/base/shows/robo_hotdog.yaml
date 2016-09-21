@@ -1,0 +1,36 @@
+#show_version=4
+
+- time: 0
+  leds:
+    robo_hotdog: off
+- time: +100ms
+  leds:
+    robo_hotdog: red
+- time: +100ms
+  leds:
+    robo_hotdog: off
+- time: +100ms
+  leds:
+    robo_hotdog: red
+- time: +100ms
+  leds:
+    robo_hotdog: off
+- time: +100ms
+  leds:
+    robo_hotdog: red
+- time: +100ms
+  leds:
+    robo_hotdog: off
+- time: +100ms
+  leds:
+    robo_hotdog: red
+- time: +100ms
+  leds:
+    robo_hotdog: off
+- time: +100ms
+  leds:
+    robo_hotdog: red
+- duration: -1
+  leds:
+    robo_hotdog: red
+
