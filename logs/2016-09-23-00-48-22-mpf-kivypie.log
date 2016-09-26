@@ -1,9 +1,0 @@
-2016-09-23 00:48:22,513 : INFO : Machine : Mission Pinball Framework Core Engine v0.31.3
-2016-09-23 00:48:22,517 : INFO : Machine : Machine path: /home/sysop/robotech
-2016-09-23 00:48:23,941 : INFO : Machine : Loading cached config: /tmp/b22896e0955c8faa276a6ac3f6f5f4b5config
-2016-09-23 00:48:24,049 : INFO : FAST : Connecting to /dev/ttyUSB1 at 921600bps
-2016-09-23 00:48:24,059 : INFO : FAST : Connected! Processor: NET, Board Type: FP-CPU-002-2, Firmware: 01.00
-2016-09-23 00:48:24,075 : INFO : FAST : Connecting to /dev/ttyUSB2 at 921600bps
-2016-09-23 00:48:24,083 : INFO : FAST : Connected! Processor: RGB, Board Type: FP-CPU-002-2, Firmware: 01.00
-2016-09-23 00:48:24,172 : INFO : kivy : [Logger      ] Record log in /home/sysop/.kivy/logs/kivy_16-09-23_3.txt
-2016-09-23 00:48:24,172 : ERROR : kivy : [Core        ] option -V not recognized
