@@ -5,32 +5,32 @@
     robo_hotdog: off
 - time: +100ms
   leds:
-    robo_hotdog: red
+    robo_hotdog: (color)
 - time: +100ms
   leds:
     robo_hotdog: off
 - time: +100ms
   leds:
-    robo_hotdog: red
+    robo_hotdog: (color)
 - time: +100ms
   leds:
     robo_hotdog: off
 - time: +100ms
   leds:
-    robo_hotdog: red
+    robo_hotdog: (color)
 - time: +100ms
   leds:
     robo_hotdog: off
 - time: +100ms
   leds:
-    robo_hotdog: red
+    robo_hotdog: (color)
 - time: +100ms
   leds:
     robo_hotdog: off
 - time: +100ms
   leds:
-    robo_hotdog: red
+    robo_hotdog: (color)
 - duration: -1
   leds:
-    robo_hotdog: red
+    robo_hotdog: (color)
 

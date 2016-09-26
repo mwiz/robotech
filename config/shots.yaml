@@ -41,8 +41,38 @@ shots:
      profile: quick_flash
      show_tokens:
        leds: l_t1
+   middle_target:
+     switch: s_middle_target
+     profile: quick_flash
+     show_tokens:
+       leds: l_t2
+   right_target:
+     switch: s_right_target
+     profile: quick_flash
+     show_tokens:
+       leds: l_t3
+   left_drop:
+     switch: s_left_drop_target
+     profile: quick_flash
+     show_tokens:
+       leds: l_t4
+   middle_drop:
+     switch: s_middle_drop_target
+     profile: quick_flash
+     show_tokens:
+       leds: l_t5
+   right_drop:
+     switch: s_right_drop_target
+     profile: quick_flash
+     show_tokens:
+       leds: l_t6
 
 shot_groups:
+  invid_target_group:
+    shots:
+    - left_target
+    - middle_target
+    - right_target
   tech_lanes:
     shots:
     - left_outlane_t
@@ -60,9 +90,7 @@ shot_profiles:
   quick_flash:
     states:
     - name: unlit
-      show: flash
+      show: quick_flash
     - name: lit
       show: on
-      loops: 0
-
 

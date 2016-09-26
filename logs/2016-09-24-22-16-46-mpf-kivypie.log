@@ -1,0 +1,112 @@
+2016-09-24 22:16:46,073 : INFO : Machine : Mission Pinball Framework Core Engine v0.31.3
+2016-09-24 22:16:46,077 : DEBUG : Machine : Command line arguments: {'force_platform': None, 'logfile': 'logs/2016-09-24-22-16-46-mpf-kivypie.log', 'no_load_cache': False, 'pause': False, 'create_config_cache': True, 'bcp': False, 'mpfconfigfile': '/usr/local/lib/python3.4/dist-packages/mpf/mpfconfig.yaml', 'configfile': ['config'], 'loglevel': 10, 'consoleloglevel': 20}
+2016-09-24 22:16:46,077 : DEBUG : Machine : MPF path: /usr/local/lib/python3.4/dist-packages/mpf
+2016-09-24 22:16:46,078 : INFO : Machine : Machine path: /home/sysop/robotech
+2016-09-24 22:16:46,080 : DEBUG : Machine : Command line arguments: {'force_platform': None, 'logfile': 'logs/2016-09-24-22-16-46-mpf-kivypie.log', 'no_load_cache': False, 'pause': False, 'create_config_cache': True, 'bcp': False, 'mpfconfigfile': '/usr/local/lib/python3.4/dist-packages/mpf/mpfconfig.yaml', 'configfile': ['config'], 'loglevel': 10, 'consoleloglevel': 20}
+2016-09-24 22:16:46,080 : DEBUG : Machine : Python version: 3.4.2
+2016-09-24 22:16:46,080 : DEBUG : Machine : Platform: linux
+2016-09-24 22:16:46,080 : DEBUG : Machine : Python executable location: /usr/bin/python3
+2016-09-24 22:16:46,081 : DEBUG : Machine : 32-bit Python? True
+2016-09-24 22:16:46,082 : DEBUG : Machine : Machine path: /home/sysop/robotech
+2016-09-24 22:16:47,566 : INFO : Machine : Loading cached config: /tmp/b22896e0955c8faa276a6ac3f6f5f4b5config
+2016-09-24 22:16:47,570 : DEBUG : Clock : Starting tickless clock
+2016-09-24 22:16:47,571 : DEBUG : asyncio : Using selector: EpollSelector
+2016-09-24 22:16:47,572 : DEBUG : Clock : Scheduled a recurring clock callback (callback=<bound method MachineController._check_crash_queue of <mpf.core.machine.MachineController object at 0x76245c50>>, timeout=1)
+2016-09-24 22:16:47,610 : DEBUG : FAST : Configuring FAST hardware.
+2016-09-24 22:16:47,610 : DEBUG : Machine : Setting default platform to 'fast'
+2016-09-24 22:16:47,611 : DEBUG : Machine : Loading core modules...
+2016-09-24 22:16:47,611 : DEBUG : Machine : Loading 'mpf.core.events.EventManager' core module
+2016-09-24 22:16:47,620 : DEBUG : Machine : Loading 'mpf.core.mode_controller.ModeController' core module
+2016-09-24 22:16:47,628 : DEBUG : Events : Registered ModeController._load_modes as a handler for 'init_phase_2', priority: 1, kwargs: {}
+2016-09-24 22:16:47,629 : DEBUG : Events : Registered ModeController._ball_ending as a handler for 'ball_ending', priority: 0, kwargs: {}
+2016-09-24 22:16:47,629 : DEBUG : Events : Registered ModeController._ball_starting as a handler for 'ball_starting', priority: 0, kwargs: {}
+2016-09-24 22:16:47,629 : DEBUG : Events : Registered type._player_added as a handler for 'player_add_success', priority: 0, kwargs: {}
+2016-09-24 22:16:47,630 : DEBUG : Events : Registered ModeController._player_turn_start as a handler for 'player_turn_start', priority: 1000000, kwargs: {}
+2016-09-24 22:16:47,630 : DEBUG : Events : Registered ModeController._player_turn_stop as a handler for 'player_turn_stop', priority: 1000000, kwargs: {}
+2016-09-24 22:16:47,631 : DEBUG : Machine : Loading 'mpf.core.config_processor.ConfigProcessor' core module
+2016-09-24 22:16:47,631 : DEBUG : Machine : Loading 'mpf.core.shot_profile_manager.ShotProfileManager' core module
+2016-09-24 22:16:47,633 : DEBUG : ShotProfileManager : Registering Shot Profile: 'quick_flash'
+2016-09-24 22:16:47,636 : DEBUG : ShotProfileManager : Processed 'quick_flash' profile configuration: {'state_names_to_rotate': [], 'loop': False, 'rotation_pattern': deque(['right']), 'state_names_to_not_rotate': [], 'advance_on_hit': True, 'block': True, 'show': None, 'show_when_disabled': False, 'player_variable': '%_quick_flash', 'states': [{'priority': 0, 'speed': 1.0, 'show_tokens': {}, 'name': 'unlit', 'manual_advance': False, 'show': 'flash', 'action': 'play', 'sync_ms': 0, 'start_step': 1, 'loops': -1}, {'priority': 0, 'speed': 1.0, 'show_tokens': {}, 'name': 'lit', 'manual_advance': False, 'show': 'on', 'action': 'play', 'sync_ms': 0, 'start_step': 1, 'loops': 0}]}
+2016-09-24 22:16:47,636 : DEBUG : ShotProfileManager : Registering Shot Profile: 'default'
+2016-09-24 22:16:47,639 : DEBUG : ShotProfileManager : Processed 'default' profile configuration: {'state_names_to_rotate': [], 'loop': False, 'rotation_pattern': deque(['right']), 'state_names_to_not_rotate': [], 'advance_on_hit': True, 'block': True, 'show': None, 'show_when_disabled': False, 'player_variable': '%_default', 'states': [{'priority': 0, 'speed': 1.0, 'show_tokens': {}, 'name': 'unlit', 'manual_advance': False, 'show': 'off', 'action': 'play', 'sync_ms': 0, 'start_step': 1, 'loops': -1}, {'priority': 0, 'speed': 1.0, 'show_tokens': {}, 'name': 'lit', 'manual_advance': False, 'show': 'on', 'action': 'play', 'sync_ms': 0, 'start_step': 1, 'loops': -1}]}
+2016-09-24 22:16:47,639 : DEBUG : Mode Controller : Registering <bound method ShotProfileManager.mode_start_for_shots of <mpf.core.shot_profile_manager.ShotProfileManager object at 0x7614c990>> as a mode start method. Config section: shots, priority: 0, kwargs: {}
+2016-09-24 22:16:47,639 : DEBUG : Mode Controller : Registering <bound method ShotProfileManager.mode_start_for_shot_groups of <mpf.core.shot_profile_manager.ShotProfileManager object at 0x7614c990>> as a mode start method. Config section: shot_groups, priority: 0, kwargs: {}
+2016-09-24 22:16:47,640 : DEBUG : Events : Registered ShotProfileManager._player_turn_start as a handler for 'player_turn_start', priority: 1000000, kwargs: {}
+2016-09-24 22:16:47,640 : DEBUG : Events : Registered ShotProfileManager._player_turn_stop as a handler for 'player_turn_stop', priority: 0, kwargs: {}
+2016-09-24 22:16:47,641 : DEBUG : Machine : Loading 'mpf.core.device_manager.DeviceManager' core module
+2016-09-24 22:16:47,642 : DEBUG : Events : Registered DeviceManager._load_device_modules as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-24 22:16:47,642 : DEBUG : Events : Registered DeviceManager.create_machinewide_device_control_events as a handler for 'init_phase_2', priority: 1, kwargs: {}
+2016-09-24 22:16:47,642 : DEBUG : Events : Registered DeviceManager.create_collection_control_events as a handler for 'init_phase_2', priority: 1, kwargs: {}
+2016-09-24 22:16:47,643 : DEBUG : Machine : Loading 'mpf.core.switch_controller.SwitchController' core module
+2016-09-24 22:16:47,649 : DEBUG : Events : Registered SwitchController._initialize_switches as a handler for 'init_phase_2', priority: 1000, kwargs: {}
+2016-09-24 22:16:47,650 : DEBUG : Events : Registered SwitchController.log_active_switches as a handler for 'machine_reset_phase_3', priority: 1, kwargs: {}
+2016-09-24 22:16:47,650 : DEBUG : Machine : Loading 'mpf.core.ball_controller.BallController' core module
+2016-09-24 22:16:47,652 : DEBUG : BallController : Loading the BallController
+2016-09-24 22:16:47,653 : DEBUG : Events : Registered BallController.request_to_start_game as a handler for 'request_to_start_game', priority: 1, kwargs: {}
+2016-09-24 22:16:47,653 : DEBUG : Events : Registered BallController._initialize as a handler for 'machine_reset_phase_2', priority: 1, kwargs: {}
+2016-09-24 22:16:47,653 : DEBUG : Events : Registered BallController._init2 as a handler for 'init_phase_2', priority: 1, kwargs: {}
+2016-09-24 22:16:47,654 : DEBUG : Machine : Loading 'mpf.core.assets.AsyncioSyncAssetManager' core module
+2016-09-24 22:16:47,657 : DEBUG : AssetManager : Initializing...
+2016-09-24 22:16:47,658 : DEBUG : Mode Controller : Registering <bound method AsyncioSyncAssetManager._load_mode_assets of <mpf.core.assets.AsyncioSyncAssetManager object at 0x76159850>> as a mode start method. Config section: None, priority: 0, kwargs: {}
+2016-09-24 22:16:47,659 : DEBUG : Events : Registered AsyncioSyncAssetManager._create_assets as a handler for 'init_phase_3', priority: 1, kwargs: {}
+2016-09-24 22:16:47,659 : DEBUG : Events : Registered AsyncioSyncAssetManager._bcp_client_asset_load as a handler for 'assets_to_load', priority: 1, kwargs: {}
+2016-09-24 22:16:47,659 : DEBUG : Machine : Loading 'mpf.core.show_controller.ShowController' core module
+2016-09-24 22:16:47,664 : DEBUG : Events : Registered ShowController._initialize as a handler for 'init_phase_3', priority: 1, kwargs: {}
+2016-09-24 22:16:47,665 : DEBUG : Machine : Loading 'mpf.core.bcp.bcp.Bcp' core module
+2016-09-24 22:16:47,676 : DEBUG : Events : Registered BcpInterface.bcp_player_added as a handler for 'player_add_success', priority: 1, kwargs: {}
+2016-09-24 22:16:47,677 : DEBUG : Events : Registered BcpInterface.bcp_reset as a handler for 'machine_reset_phase_1', priority: 1, kwargs: {}
+2016-09-24 22:16:47,677 : DEBUG : Mode Controller : Registering <bound method BcpInterface.bcp_mode_start of <BCP Interface>> as a mode start method. Config section: mode, priority: 0, kwargs: {}
+2016-09-24 22:16:47,677 : DEBUG : Events : Registered BcpTransportManager.shutdown as a handler for 'shutdown', priority: 1, kwargs: {}
+2016-09-24 22:16:47,678 : DEBUG : Machine : Loading 'mpf.core.logic_blocks.LogicBlocks' core module
+2016-09-24 22:16:47,680 : DEBUG : Mode Controller : Registering <bound method LogicBlocks._process_config of <mpf.core.logic_blocks.LogicBlocks object at 0x76159b70>> as a mode start method. Config section: logic_blocks, priority: 0, kwargs: {}
+2016-09-24 22:16:47,681 : DEBUG : Events : Registered LogicBlocks._create_player_logic_blocks as a handler for 'player_add_success', priority: 1, kwargs: {}
+2016-09-24 22:16:47,681 : DEBUG : Events : Registered LogicBlocks.player_turn_start as a handler for 'player_turn_start', priority: 1, kwargs: {}
+2016-09-24 22:16:47,682 : DEBUG : Events : Registered LogicBlocks.player_turn_stop as a handler for 'player_turn_stop', priority: 1, kwargs: {}
+2016-09-24 22:16:47,682 : DEBUG : Machine : Loading 'mpf.core.scoring.ScoreController' core module
+2016-09-24 22:16:47,684 : DEBUG : Score : Loading the Score Controller
+2016-09-24 22:16:47,684 : DEBUG : Mode Controller : Registering <bound method ScoreController.mode_start of <mpf.core.scoring.ScoreController object at 0x761640f0>> as a mode start method. Config section: scoring, priority: 0, kwargs: {}
+2016-09-24 22:16:47,685 : DEBUG : Machine : Loading 'mpf.core.service_controller.ServiceController' core module
+2016-09-24 22:16:47,689 : DEBUG : Machine : Loading 'mpf.core.settings_controller.SettingsController' core module
+2016-09-24 22:16:47,695 : INFO : FAST : Connecting to /dev/ttyUSB1 at 921600bps
+2016-09-24 22:16:47,698 : ERROR : root : [Errno 2] could not open port /dev/ttyUSB1: [Errno 2] No such file or directory: '/dev/ttyUSB1'
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/serial/serialposix.py", line 244, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB1'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/mpf/commands/game.py", line 134, in __init__
+    MachineController(mpf_path, machine_path, vars(args)).run()
+  File "/usr/local/lib/python3.4/dist-packages/mpf/core/machine.py", line 117, in __init__
+    self._initialize_platforms()
+  File "/usr/local/lib/python3.4/dist-packages/mpf/core/machine.py", line 184, in _initialize_platforms
+    platform.initialize()
+  File "/usr/local/lib/python3.4/dist-packages/mpf/platforms/fast/fast.py", line 90, in initialize
+    self._connect_to_hardware()
+  File "/usr/local/lib/python3.4/dist-packages/mpf/platforms/fast/fast.py", line 150, in _connect_to_hardware
+    baud=self.config['baud']))
+  File "/usr/local/lib/python3.4/dist-packages/mpf/platforms/fast/fast_serial_communicator.py", line 67, in __init__
+    super().__init__(platform, port, baud)
+  File "/usr/local/lib/python3.4/dist-packages/mpf/platforms/base_serial_communicator.py", line 27, in __init__
+    self.machine.clock.loop.run_until_complete(self._connect_to_hardware(port, baud))
+  File "/usr/lib/python3.4/asyncio/base_events.py", line 276, in run_until_complete
+    return future.result()
+  File "/usr/lib/python3.4/asyncio/futures.py", line 277, in result
+    raise self._exception
+  File "/usr/lib/python3.4/asyncio/tasks.py", line 237, in _step
+    result = next(coro)
+  File "/usr/local/lib/python3.4/dist-packages/mpf/platforms/base_serial_communicator.py", line 35, in _connect_to_hardware
+    self.reader, self.writer = yield from connector
+  File "/usr/local/lib/python3.4/dist-packages/mpf/core/clock.py", line 121, in open_serial_connection
+    **kwargs)
+  File "/usr/lib/python3.4/asyncio/coroutines.py", line 141, in coro
+    res = func(*args, **kw)
+  File "/usr/local/lib/python3.4/dist-packages/mpf/pyserial_asyncio/serial_asyncio/__init__.py", line 412, in create_serial_connection
+    ser = serial.serial_for_url(*args, **kwargs)
+  File "/usr/local/lib/python3.4/dist-packages/serial/__init__.py", line 88, in serial_for_url
+    instance.open()
+  File "/usr/local/lib/python3.4/dist-packages/serial/serialposix.py", line 247, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB1: [Errno 2] No such file or directory: '/dev/ttyUSB1'

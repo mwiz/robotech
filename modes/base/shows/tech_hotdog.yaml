@@ -5,32 +5,32 @@
     tech_hotdog: off
 - time: +100ms
   leds:
-    tech_hotdog: blue
+    tech_hotdog: (color)
 - time: +100ms
   leds:
     tech_hotdog: off
 - time: +100ms
   leds:
-    tech_hotdog: blue
+    tech_hotdog: (color)
 - time: +100ms
   leds:
     tech_hotdog: off
 - time: +100ms
   leds:
-    tech_hotdog: blue
+    tech_hotdog: (color)
 - time: +100ms
   leds:
     tech_hotdog: off
 - time: +100ms
   leds:
-    tech_hotdog: blue
+    tech_hotdog: (color)
 - time: +100ms
   leds:
     tech_hotdog: off
 - time: +100ms
   leds:
-    tech_hotdog: blue
+    tech_hotdog: (color)
 - duration: -1
   leds:
-    tech_hotdog: blue
+    tech_hotdog: (color)
   

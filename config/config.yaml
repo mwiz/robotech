@@ -367,7 +367,8 @@ drop_target_banks:
     debug: True
     drop_targets: left_drop, middle_drop, right_drop
     reset_events:
-        drop_target_bank_bank_down: 1s
+         ball_starting: 0.5s
+#        drop_target_bank_bank_down: 1s
 
 #ball_saves:
 #  default:

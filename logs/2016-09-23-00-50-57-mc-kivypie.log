@@ -1,0 +1,62 @@
+2016-09-23 00:50:59,552 : INFO : kivy : Factory: 193 symbols loaded
+2016-09-23 00:51:00,208 : INFO : kivy : VideoGstplayer: Using Gstreamer 1.4.4.0
+2016-09-23 00:51:00,213 : INFO : kivy : Video: Provider: gstplayer
+2016-09-23 00:51:00,309 : INFO : kivy : Loading MPF-MC controller
+2016-09-23 00:51:00,315 : INFO : mpfmc : Mission Pinball Framework Media Controller v0.31.3
+2016-09-23 00:51:00,321 : INFO : mpfmc : Machine path: /home/sysop/robotech
+2016-09-23 00:51:00,325 : INFO : mpfmc : Starting clock at 60.0Hz
+2016-09-23 00:51:00,352 : INFO : kivy : Text: Provider: sdl2
+2016-09-23 00:51:01,944 : INFO : kivy : Window: Provider: egl_rpi
+2016-09-23 00:51:01,971 : INFO : kivy : GL: OpenGL version <b'OpenGL ES 2.0'>
+2016-09-23 00:51:01,976 : INFO : kivy : GL: OpenGL vendor <b'Broadcom'>
+2016-09-23 00:51:01,980 : INFO : kivy : GL: OpenGL renderer <b'VideoCore IV HW'>
+2016-09-23 00:51:01,985 : INFO : kivy : GL: OpenGL parsed version: 2, 0
+2016-09-23 00:51:01,989 : INFO : kivy : GL: Shading version <b'OpenGL ES GLSL ES 1.00'>
+2016-09-23 00:51:01,993 : INFO : kivy : GL: Texture max size <2048>
+2016-09-23 00:51:01,997 : INFO : kivy : GL: Texture max units <8>
+2016-09-23 00:51:02,049 : INFO : kivy : Shader: fragment shader: <b'Compiled'>
+2016-09-23 00:51:02,054 : INFO : kivy : Shader: vertex shader: <b'Compiled'>
+2016-09-23 00:51:02,107 : INFO : kivy : Base: Adding binding for mouse move
+2016-09-23 00:51:02,112 : INFO : kivy : Window: virtual keyboard not allowed, single mode, not docked
+2016-09-23 00:51:02,123 : INFO : SoundSystem : SoundSystem: Using default 'sound_system' settings
+2016-09-23 00:51:02,173 : ERROR : AudioInterface : Mix_OpenAudio error - b"ALSA: Couldn't open audio device: No such file or directory"
+2016-09-23 00:51:02,178 : ERROR : SoundSystem : Could not initialize the audio interface. Audio features will not be available.
+2016-09-23 00:51:02,212 : INFO : kivy : OSC: using <multiprocessing> for socket
+2016-09-23 00:51:02,246 : INFO : kivy : ProbeSysfs: device match: /dev/input/event0
+2016-09-23 00:51:02,251 : INFO : kivy : MTD: Read event from </dev/input/event0>
+2016-09-23 00:51:02,256 : INFO : kivy : ProbeSysfs: device match: /dev/input/event1
+2016-09-23 00:51:02,260 : INFO : kivy : MTD: Read event from </dev/input/event1>
+2016-09-23 00:51:02,265 : INFO : kivy : ProbeSysfs: device match: /dev/input/event0
+2016-09-23 00:51:02,269 : INFO : kivy : HIDInput: Read event from </dev/input/event0>
+2016-09-23 00:51:02,274 : INFO : kivy : ProbeSysfs: device match: /dev/input/event1
+2016-09-23 00:51:02,278 : INFO : kivy : HIDInput: Read event from </dev/input/event1>
+2016-09-23 00:51:02,283 : INFO : kivy : ProbeSysfs: device match: /dev/input/event0
+2016-09-23 00:51:02,287 : INFO : kivy : HIDInput: Read event from </dev/input/event0>
+2016-09-23 00:51:02,291 : INFO : kivy : ProbeSysfs: device match: /dev/input/event1
+2016-09-23 00:51:02,296 : INFO : kivy : HIDInput: Read event from </dev/input/event1>
+2016-09-23 00:51:02,300 : INFO : kivy : Base: Start application main loop
+2016-09-23 00:51:02,305 : INFO : kivy : MTD: </dev/input/event0> range position X is 0 - 0
+2016-09-23 00:51:02,310 : INFO : kivy : MTD: </dev/input/event0> range position Y is 0 - 0
+2016-09-23 00:51:02,314 : INFO : kivy : MTD: </dev/input/event0> range touch major is 0 - 0
+2016-09-23 00:51:02,315 : INFO : kivy : MTD: </dev/input/event1> range position X is 0 - 0
+2016-09-23 00:51:02,317 : INFO : kivy : HIDMotionEvent: using <b'Chicony USB Keyboard\x00                                                                                                                                                                                                                                           '>
+2016-09-23 00:51:02,319 : INFO : kivy : HIDMotionEvent: using <b'Chicony USB Keyboard\x00                                                                                                                                                                                                                                           '>
+2016-09-23 00:51:02,319 : INFO : kivy : MTD: </dev/input/event0> range touch minor is 0 - 0
+2016-09-23 00:51:02,323 : INFO : kivy : MTD: </dev/input/event1> range position Y is 0 - 0
+2016-09-23 00:51:02,330 : INFO : kivy : HIDMotionEvent: using <b'Chicony USB Keyboard\x00                                                                                                                                                                                                                                           '>
+2016-09-23 00:51:02,337 : INFO : kivy : HIDMotionEvent: using <b'Chicony USB Keyboard\x00                                                                                                                                                                                                                                           '>
+2016-09-23 00:51:02,364 : INFO : kivy : MTD: </dev/input/event0> range pressure is 0 - 255
+2016-09-23 00:51:02,372 : INFO : kivy : MTD: </dev/input/event1> range touch major is 0 - 0
+2016-09-23 00:51:02,376 : INFO : kivy : MTD: </dev/input/event1> range touch minor is 0 - 0
+2016-09-23 00:51:02,401 : INFO : kivy : MTD: </dev/input/event0> axes invertion: X is 0, Y is 0
+2016-09-23 00:51:02,412 : INFO : kivy : MTD: </dev/input/event1> range pressure is 0 - 255
+2016-09-23 00:51:02,427 : INFO : kivy : MTD: </dev/input/event0> rotation set to 0
+2016-09-23 00:51:02,439 : INFO : kivy : MTD: </dev/input/event1> axes invertion: X is 0, Y is 0
+2016-09-23 00:51:02,460 : INFO : kivy : MTD: </dev/input/event1> rotation set to 0
+2016-09-23 00:51:02,543 : INFO : MPF-MC BCP Server : Starting up on localhost port 5050
+2016-09-23 00:51:02,559 : INFO : MPF-MC BCP Server : Waiting for a connection...
+2016-09-23 00:51:02,658 : INFO : MPF-MC BCP Server : Received connection from: 127.0.0.1:58664
+2016-09-23 00:54:08,725 : INFO : kivy : Base: Leaving application in progress...
+2016-09-23 00:54:08,748 : INFO : mpfmc : Stopping...
+2016-09-23 00:54:08,759 : INFO : mpfmc : Loop rate 77.24 Hz
+2016-09-23 00:54:08,803 : INFO : MPF-MC BCP Server : Stopping BCP sending thread

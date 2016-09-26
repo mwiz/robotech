@@ -2,15 +2,16 @@
 
 - time: 0
   leds:
-    l_r_light: 000000
-    l_o_light: 000000
-    l_b_light: 000000
-    l_o2_light: 000000
+    toplanes: 000000
+    #l_o_light: 000000
+    #l_b_light: 000000
+    #l_o2_light: 000000
 - time: +100ms
   leds:
-    l_r_light: red
-    l_o_light: red
-    l_b_light: red
-    l_o2_light: red
+    toplanes: (color)
+    #l_r_light: (color)
+    #l_o_light: red
+    #L_b_light: red
+    #l_o2_light: red
 - time: +100ms
 

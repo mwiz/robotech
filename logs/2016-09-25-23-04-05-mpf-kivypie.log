@@ -1,0 +1,128 @@
+2016-09-25 23:04:05,155 : INFO : Machine : Mission Pinball Framework Core Engine v0.31.3
+2016-09-25 23:04:05,158 : INFO : Machine : Machine path: /home/sysop/robotech
+2016-09-25 23:04:06,587 : INFO : Machine : Loading cached config: /tmp/b22896e0955c8faa276a6ac3f6f5f4b5config
+2016-09-25 23:04:06,695 : INFO : FAST : Connecting to /dev/ttyUSB1 at 921600bps
+2016-09-25 23:04:06,705 : INFO : FAST : Connected! Processor: NET, Board Type: FP-CPU-002-2, Firmware: 01.00
+2016-09-25 23:04:06,722 : INFO : FAST : Connecting to /dev/ttyUSB2 at 921600bps
+2016-09-25 23:04:06,729 : INFO : FAST : Connected! Processor: RGB, Board Type: FP-CPU-002-2, Firmware: 01.00
+2016-09-25 23:04:07,060 : WARNING : SwitchController : Received a status update from hardware switch ('17', 1), but that switch is not in your config. Just FYI.
+2016-09-25 23:04:07,062 : WARNING : SwitchController : Received a status update from hardware switch ('2F', 1), but that switch is not in your config. Just FYI.
+2016-09-25 23:04:07,064 : WARNING : SwitchController : Received a status update from hardware switch ('0F', 1), but that switch is not in your config. Just FYI.
+2016-09-25 23:04:07,066 : WARNING : SwitchController : Received a status update from hardware switch ('37', 1), but that switch is not in your config. Just FYI.
+2016-09-25 23:04:07,069 : WARNING : SwitchController : Received a status update from hardware switch ('1F', 1), but that switch is not in your config. Just FYI.
+2016-09-25 23:04:07,071 : WARNING : SwitchController : Received a status update from hardware switch ('27', 1), but that switch is not in your config. Just FYI.
+2016-09-25 23:04:07,738 : INFO : SwitchController : Active Switch|s_trough1
+2016-09-25 23:04:07,740 : INFO : SwitchController : Active Switch|s_plunger_lane
+2016-09-25 23:04:07,742 : INFO : SwitchController : Active Switch|s_trough2
+2016-09-25 23:04:07,744 : INFO : Mode.attract : Mode Starting. Priority: 10
+2016-09-25 23:04:10,019 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:0 >>>>>
+2016-09-25 23:04:10,088 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:1 >>>>>
+2016-09-25 23:04:10,105 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:0 >>>>>
+2016-09-25 23:04:11,133 : INFO : SwitchController : <<<<< switch: s_drain_kicker, State:1 >>>>>
+2016-09-25 23:04:11,283 : INFO : SwitchController : <<<<< switch: s_drain_kicker, State:0 >>>>>
+2016-09-25 23:04:11,288 : WARNING : BallController : BallController denies game start. Not enough balls
+2016-09-25 23:04:11,376 : INFO : SwitchController : <<<<< switch: s_trough1, State:0 >>>>>
+2016-09-25 23:04:11,380 : INFO : SwitchController : <<<<< switch: s_trough2, State:0 >>>>>
+2016-09-25 23:04:11,447 : INFO : SwitchController : <<<<< switch: s_trough2, State:1 >>>>>
+2016-09-25 23:04:11,452 : INFO : SwitchController : <<<<< switch: s_trough1, State:1 >>>>>
+2016-09-25 23:04:11,469 : INFO : SwitchController : <<<<< switch: s_trough1, State:0 >>>>>
+2016-09-25 23:04:11,485 : INFO : SwitchController : <<<<< switch: s_trough1, State:1 >>>>>
+2016-09-25 23:04:11,712 : INFO : SwitchController : <<<<< switch: s_trough3, State:1 >>>>>
+2016-09-25 23:04:11,887 : INFO : SwitchController : <<<<< switch: s_start, State:1 >>>>>
+2016-09-25 23:04:12,003 : INFO : SwitchController : <<<<< switch: s_start, State:0 >>>>>
+2016-09-25 23:04:12,007 : WARNING : BallController : BallController denies game start. Not enough balls
+2016-09-25 23:04:12,770 : INFO : SwitchController : <<<<< switch: s_start, State:1 >>>>>
+2016-09-25 23:04:12,955 : INFO : SwitchController : <<<<< switch: s_start, State:0 >>>>>
+2016-09-25 23:04:12,983 : INFO : Mode.game : Mode Starting. Priority: 20
+2016-09-25 23:04:12,993 : INFO : Mode.game : Player added successfully. Total players: 1
+2016-09-25 23:04:12,999 : INFO : Mode.kickback : Mode Starting. Priority: 200
+2016-09-25 23:04:13,009 : INFO : Mode.ball_save : Mode Starting. Priority: 8500
+2016-09-25 23:04:13,014 : INFO : Mode.base : Mode Starting. Priority: 100
+2016-09-25 23:04:13,151 : INFO : SwitchController : <<<<< switch: s_trough1, State:0 >>>>>
+2016-09-25 23:04:13,367 : INFO : SwitchController : <<<<< switch: s_trough2, State:0 >>>>>
+2016-09-25 23:04:13,371 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:1 >>>>>
+2016-09-25 23:04:13,417 : INFO : SwitchController : <<<<< switch: s_trough3, State:0 >>>>>
+2016-09-25 23:04:13,470 : INFO : SwitchController : <<<<< switch: s_trough2, State:1 >>>>>
+2016-09-25 23:04:13,491 : INFO : SwitchController : <<<<< switch: s_trough1, State:1 >>>>>
+2016-09-25 23:04:14,284 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:0 >>>>>
+2016-09-25 23:04:14,325 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:1 >>>>>
+2016-09-25 23:04:14,344 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:0 >>>>>
+2016-09-25 23:04:16,674 : INFO : SwitchController : <<<<< switch: s_r_top_lane, State:1 >>>>>
+2016-09-25 23:04:16,776 : INFO : SwitchController : <<<<< switch: s_r_top_lane, State:0 >>>>>
+2016-09-25 23:04:16,923 : INFO : SwitchController : <<<<< switch: s_top_l_pop_bumper, State:1 >>>>>
+2016-09-25 23:04:16,939 : INFO : SwitchController : <<<<< switch: s_top_l_pop_bumper, State:0 >>>>>
+2016-09-25 23:04:16,980 : INFO : SwitchController : <<<<< switch: s_left_top_rubber, State:1 >>>>>
+2016-09-25 23:04:16,988 : INFO : SwitchController : <<<<< switch: s_left_top_rubber, State:0 >>>>>
+2016-09-25 23:04:17,684 : INFO : SwitchController : <<<<< switch: s_top_r_pop_bumper, State:1 >>>>>
+2016-09-25 23:04:17,699 : INFO : SwitchController : <<<<< switch: s_top_r_pop_bumper, State:0 >>>>>
+2016-09-25 23:04:17,833 : INFO : SwitchController : <<<<< switch: s_top_r_pop_bumper, State:1 >>>>>
+2016-09-25 23:04:17,853 : INFO : SwitchController : <<<<< switch: s_top_r_pop_bumper, State:0 >>>>>
+2016-09-25 23:04:17,936 : INFO : SwitchController : <<<<< switch: s_o2_top_lane, State:1 >>>>>
+2016-09-25 23:04:17,960 : INFO : SwitchController : <<<<< switch: s_o2_top_lane, State:0 >>>>>
+2016-09-25 23:04:18,417 : INFO : SwitchController : <<<<< switch: s_top_lock_kickout, State:1 >>>>>
+2016-09-25 23:04:18,436 : INFO : SwitchController : <<<<< switch: s_top_lock_kickout, State:0 >>>>>
+2016-09-25 23:04:18,504 : INFO : SwitchController : <<<<< switch: s_top_lock_kickout, State:1 >>>>>
+2016-09-25 23:04:19,061 : INFO : SwitchController : <<<<< switch: s_top_lock_kickout, State:0 >>>>>
+2016-09-25 23:04:21,280 : INFO : SwitchController : <<<<< switch: s_left_target, State:1 >>>>>
+2016-09-25 23:04:21,397 : INFO : SwitchController : <<<<< switch: s_left_target, State:0 >>>>>
+2016-09-25 23:04:21,896 : INFO : SwitchController : <<<<< switch: s_middle_target, State:1 >>>>>
+2016-09-25 23:04:22,033 : INFO : SwitchController : <<<<< switch: s_middle_target, State:0 >>>>>
+2016-09-25 23:04:22,498 : INFO : SwitchController : <<<<< switch: s_right_target, State:1 >>>>>
+2016-09-25 23:04:22,620 : INFO : SwitchController : <<<<< switch: s_right_target, State:0 >>>>>
+2016-09-25 23:04:23,144 : INFO : SwitchController : <<<<< switch: s_right_drop_target, State:1 >>>>>
+2016-09-25 23:04:23,609 : INFO : SwitchController : <<<<< switch: s_middle_drop_target, State:1 >>>>>
+2016-09-25 23:04:24,017 : INFO : SwitchController : <<<<< switch: s_left_drop_target, State:1 >>>>>
+2016-09-25 23:04:26,851 : INFO : SwitchController : <<<<< switch: s_right_target, State:1 >>>>>
+2016-09-25 23:04:26,925 : INFO : SwitchController : <<<<< switch: s_right_target, State:0 >>>>>
+2016-09-25 23:04:27,224 : INFO : SwitchController : <<<<< switch: s_middle_target, State:1 >>>>>
+2016-09-25 23:04:27,233 : INFO : SwitchController : <<<<< switch: s_right_target, State:1 >>>>>
+2016-09-25 23:04:27,295 : INFO : SwitchController : <<<<< switch: s_right_target, State:0 >>>>>
+2016-09-25 23:04:27,328 : INFO : SwitchController : <<<<< switch: s_middle_target, State:0 >>>>>
+2016-09-25 23:04:27,534 : INFO : SwitchController : <<<<< switch: s_left_target, State:1 >>>>>
+2016-09-25 23:04:27,616 : INFO : SwitchController : <<<<< switch: s_left_target, State:0 >>>>>
+2016-09-25 23:04:27,923 : INFO : SwitchController : <<<<< switch: s_right_target, State:1 >>>>>
+2016-09-25 23:04:27,975 : INFO : SwitchController : <<<<< switch: s_right_target, State:0 >>>>>
+2016-09-25 23:04:29,977 : INFO : SwitchController : <<<<< switch: s_kickback_t, State:1 >>>>>
+2016-09-25 23:04:30,004 : INFO : SwitchController : <<<<< switch: s_kickback_t, State:0 >>>>>
+2016-09-25 23:04:31,534 : INFO : SwitchController : <<<<< switch: s_bottom_r_pop_bumper, State:1 >>>>>
+2016-09-25 23:04:31,550 : INFO : SwitchController : <<<<< switch: s_bottom_r_pop_bumper, State:0 >>>>>
+2016-09-25 23:04:33,443 : INFO : SwitchController : <<<<< switch: s_right_slingshot, State:1 >>>>>
+2016-09-25 23:04:33,503 : INFO : SwitchController : <<<<< switch: s_right_slingshot, State:0 >>>>>
+2016-09-25 23:04:37,862 : INFO : SwitchController : <<<<< switch: s_left_slingshot, State:1 >>>>>
+2016-09-25 23:04:37,878 : INFO : SwitchController : <<<<< switch: s_left_slingshot, State:0 >>>>>
+2016-09-25 23:04:38,040 : INFO : SwitchController : <<<<< switch: s_right_slingshot, State:1 >>>>>
+2016-09-25 23:04:38,106 : INFO : SwitchController : <<<<< switch: s_right_slingshot, State:0 >>>>>
+2016-09-25 23:04:38,163 : INFO : SwitchController : <<<<< switch: s_left_slingshot, State:1 >>>>>
+2016-09-25 23:04:38,184 : INFO : SwitchController : <<<<< switch: s_left_slingshot, State:0 >>>>>
+2016-09-25 23:04:39,527 : INFO : SwitchController : <<<<< switch: s_lower_right_rubber, State:1 >>>>>
+2016-09-25 23:04:39,541 : INFO : SwitchController : <<<<< switch: s_lower_right_rubber, State:0 >>>>>
+2016-09-25 23:04:43,040 : INFO : SwitchController : <<<<< switch: s_drain_kicker, State:1 >>>>>
+2016-09-25 23:04:43,210 : INFO : Mode.ball_save : Mode Starting. Priority: 8500
+2016-09-25 23:04:43,214 : INFO : Mode.base : Mode Starting. Priority: 100
+2016-09-25 23:04:43,313 : INFO : SwitchController : <<<<< switch: s_middle_drop_target, State:0 >>>>>
+2016-09-25 23:04:43,317 : INFO : SwitchController : <<<<< switch: s_left_drop_target, State:0 >>>>>
+2016-09-25 23:04:43,321 : INFO : SwitchController : <<<<< switch: s_right_drop_target, State:0 >>>>>
+2016-09-25 23:04:43,338 : INFO : SwitchController : <<<<< switch: s_trough1, State:0 >>>>>
+2016-09-25 23:04:43,499 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:1 >>>>>
+2016-09-25 23:04:43,521 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:0 >>>>>
+2016-09-25 23:04:43,533 : INFO : SwitchController : <<<<< switch: s_plunger_lane, State:1 >>>>>
+2016-09-25 23:04:43,566 : INFO : SwitchController : <<<<< switch: s_trough2, State:0 >>>>>
+2016-09-25 23:04:43,687 : INFO : SwitchController : <<<<< switch: s_trough1, State:1 >>>>>
+2016-09-25 23:04:43,772 : INFO : SwitchController : <<<<< switch: s_trough1, State:0 >>>>>
+2016-09-25 23:04:43,937 : INFO : SwitchController : <<<<< switch: s_trough1, State:1 >>>>>
+2016-09-25 23:04:44,280 : INFO : SwitchController : <<<<< switch: s_drain_kicker, State:0 >>>>>
+2016-09-25 23:04:44,353 : INFO : SwitchController : <<<<< switch: s_trough1, State:0 >>>>>
+2016-09-25 23:04:44,377 : INFO : SwitchController : <<<<< switch: s_trough3, State:1 >>>>>
+2016-09-25 23:04:44,388 : INFO : SwitchController : <<<<< switch: s_trough3, State:0 >>>>>
+2016-09-25 23:04:44,421 : INFO : SwitchController : <<<<< switch: s_trough1, State:1 >>>>>
+2016-09-25 23:04:44,755 : INFO : SwitchController : <<<<< switch: s_trough3, State:1 >>>>>
+2016-09-25 23:04:44,826 : INFO : SwitchController : <<<<< switch: s_trough3, State:0 >>>>>
+2016-09-25 23:04:44,859 : INFO : SwitchController : <<<<< switch: s_trough2, State:1 >>>>>
+2016-09-25 23:04:49,750 : INFO : Machine : Shutting down...
+2016-09-25 23:04:49,754 : ERROR : FAST : Stop called on serial connection /dev/ttyUSB2
+2016-09-25 23:04:49,758 : ERROR : FAST : Stop called on serial connection /dev/ttyUSB1
+2016-09-25 23:04:49,763 : WARNING : FAST : Serial error: 
+2016-09-25 23:04:49,766 : WARNING : FAST : Serial closed.
+2016-09-25 23:04:49,771 : WARNING : FAST : Serial error: 
+2016-09-25 23:04:49,774 : WARNING : FAST : Serial closed.
+2016-09-25 23:04:49,779 : INFO : root : MPF run loop ended.

@@ -69,11 +69,11 @@ leds:
   l_right_inlane_c:
     number: 0-15
     label: led15
-    tags: playfield
+    tags: bottomlanes, playfield
   l_right_outlane_h:
     number: 0-16
     label: led16
-    tags: playfield
+    tags: bottomlanes, playfield
   l_shoot_again:
     number: 0-17
     label: led17
@@ -141,27 +141,27 @@ leds:
   l_t6:
     number: 0-33
     label: led33
-    tags: playfield
+    tags: invid_target, playfield
   l_t5:
     number: 0-34
     label: led34
-    tags: playfield
+    tags: invid_target, playfield
   l_t4:
     number: 0-35
     label: led35
-    tags: playfield
+    tags: invid_target, playfield
   l_t3:
     number: 0-36
     label: led36
-    tags: playfield
+    tags: invid_target, playfield
   l_t2:
     number: 0-37
     label: led37
-    tags: playfield
+    tags: invid_target, playfield
   l_t1:
     number: 0-38
     label: led38
-    tags: playfield
+    tags: invid_target, playfield
   l_robo_5:
     number: 0-39
     label: led39
@@ -189,11 +189,11 @@ leds:
   l_left_outlane_t:
     number: 0-45
     label: led45
-    tags: playfield
+    tags: bottomlanes, playfield
   l_left_inlane_e:
     number: 0-46
     label: led46
-    tags: playfield
+    tags: bottomlanes, playfield
   l_llock_arrow:
     number: 0-47
     label: led47
@@ -235,15 +235,15 @@ leds:
   l_r_light:
     number: 0-56
     label: led56
-    tags: playfield
+    tags: toplanes, playfield
   l_o_light:
     number: 0-57
     label: led57
-    tags: playfield
+    tags: toplanes, playfield
   l_b_light:
     number: 0-58
     label: led58
-    tags: playfield
+    tags: toplanes, playfield
   l_tlock_arrow:
     number: 0-59
     label: led59
@@ -251,4 +251,4 @@ leds:
   l_o2_light:
     number: 0-60
     label: led60
-    tags: playfield
+    tags: toplanes, playfield

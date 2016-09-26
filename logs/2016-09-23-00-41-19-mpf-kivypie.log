@@ -1,0 +1,103 @@
+2016-09-23 00:41:19,250 : INFO : Machine : Mission Pinball Framework Core Engine v0.31.3
+2016-09-23 00:41:19,255 : DEBUG : Machine : Command line arguments: {'configfile': ['config'], 'loglevel': 10, 'bcp': False, 'consoleloglevel': 20, 'force_platform': None, 'logfile': 'logs/2016-09-23-00-41-19-mpf-kivypie.log', 'pause': False, 'no_load_cache': False, 'create_config_cache': True, 'mpfconfigfile': '/usr/local/lib/python3.4/dist-packages/mpf/mpfconfig.yaml'}
+2016-09-23 00:41:19,256 : DEBUG : Machine : MPF path: /usr/local/lib/python3.4/dist-packages/mpf
+2016-09-23 00:41:19,256 : INFO : Machine : Machine path: /home/sysop/robotech
+2016-09-23 00:41:19,259 : DEBUG : Machine : Command line arguments: {'configfile': ['config'], 'loglevel': 10, 'bcp': False, 'consoleloglevel': 20, 'force_platform': None, 'logfile': 'logs/2016-09-23-00-41-19-mpf-kivypie.log', 'pause': False, 'no_load_cache': False, 'create_config_cache': True, 'mpfconfigfile': '/usr/local/lib/python3.4/dist-packages/mpf/mpfconfig.yaml'}
+2016-09-23 00:41:19,259 : DEBUG : Machine : Python version: 3.4.2
+2016-09-23 00:41:19,259 : DEBUG : Machine : Platform: linux
+2016-09-23 00:41:19,260 : DEBUG : Machine : Python executable location: /usr/bin/python3
+2016-09-23 00:41:19,260 : DEBUG : Machine : 32-bit Python? True
+2016-09-23 00:41:19,261 : DEBUG : Machine : Machine path: /home/sysop/robotech
+2016-09-23 00:41:20,713 : INFO : Machine : Loading config from original files
+2016-09-23 00:41:20,717 : DEBUG : YAML File Interface : Loading file: /usr/local/lib/python3.4/dist-packages/mpf/mpfconfig.yaml
+2016-09-23 00:41:21,087 : INFO : Machine : Machine config file #1: /home/sysop/robotech/config/config
+2016-09-23 00:41:21,095 : DEBUG : YAML File Interface : Loading file: /home/sysop/robotech/config/config.yaml
+2016-09-23 00:41:21,524 : DEBUG : YAML File Interface : Loading file: /home/sysop/robotech/config/leds.yaml
+2016-09-23 00:41:21,830 : DEBUG : YAML File Interface : Loading file: /home/sysop/robotech/config/shots.yaml
+2016-09-23 00:41:21,913 : DEBUG : YAML File Interface : Loading file: /home/sysop/robotech/config/lightscripts.yaml
+2016-09-23 00:41:21,968 : INFO : Machine : Config file cache created: /tmp/b22896e0955c8faa276a6ac3f6f5f4b5config
+2016-09-23 00:41:21,971 : DEBUG : Clock : Starting tickless clock
+2016-09-23 00:41:21,972 : DEBUG : asyncio : Using selector: EpollSelector
+2016-09-23 00:41:21,973 : DEBUG : Clock : Scheduled a recurring clock callback (callback=<bound method MachineController._check_crash_queue of <mpf.core.machine.MachineController object at 0x76258c70>>, timeout=1)
+2016-09-23 00:41:22,013 : DEBUG : FAST : Configuring FAST hardware.
+2016-09-23 00:41:22,013 : DEBUG : Machine : Setting default platform to 'fast'
+2016-09-23 00:41:22,014 : DEBUG : Machine : Loading core modules...
+2016-09-23 00:41:22,014 : DEBUG : Machine : Loading 'mpf.core.events.EventManager' core module
+2016-09-23 00:41:22,023 : DEBUG : Machine : Loading 'mpf.core.mode_controller.ModeController' core module
+2016-09-23 00:41:22,032 : DEBUG : Events : Registered ModeController._load_modes as a handler for 'init_phase_2', priority: 1, kwargs: {}
+2016-09-23 00:41:22,032 : DEBUG : Events : Registered ModeController._ball_ending as a handler for 'ball_ending', priority: 0, kwargs: {}
+2016-09-23 00:41:22,033 : DEBUG : Events : Registered ModeController._ball_starting as a handler for 'ball_starting', priority: 0, kwargs: {}
+2016-09-23 00:41:22,033 : DEBUG : Events : Registered type._player_added as a handler for 'player_add_success', priority: 0, kwargs: {}
+2016-09-23 00:41:22,034 : DEBUG : Events : Registered ModeController._player_turn_start as a handler for 'player_turn_start', priority: 1000000, kwargs: {}
+2016-09-23 00:41:22,034 : DEBUG : Events : Registered ModeController._player_turn_stop as a handler for 'player_turn_stop', priority: 1000000, kwargs: {}
+2016-09-23 00:41:22,034 : DEBUG : Machine : Loading 'mpf.core.config_processor.ConfigProcessor' core module
+2016-09-23 00:41:22,035 : DEBUG : Machine : Loading 'mpf.core.shot_profile_manager.ShotProfileManager' core module
+2016-09-23 00:41:22,036 : DEBUG : ShotProfileManager : Registering Shot Profile: 'quick_flash'
+2016-09-23 00:41:22,039 : DEBUG : ShotProfileManager : Processed 'quick_flash' profile configuration: {'player_variable': '%_quick_flash', 'rotation_pattern': deque(['right']), 'state_names_to_rotate': [], 'state_names_to_not_rotate': [], 'advance_on_hit': True, 'block': True, 'show': None, 'show_when_disabled': False, 'states': [{'show_tokens': {}, 'name': 'unlit', 'show': 'flash', 'sync_ms': 0, 'action': 'play', 'loops': -1, 'start_step': 1, 'manual_advance': False, 'priority': 0, 'speed': 1.0}, {'show_tokens': {}, 'name': 'lit', 'show': 'on', 'sync_ms': 0, 'action': 'play', 'loops': 0, 'start_step': 1, 'manual_advance': False, 'priority': 0, 'speed': 1.0}], 'loop': False}
+2016-09-23 00:41:22,039 : DEBUG : ShotProfileManager : Registering Shot Profile: 'default'
+2016-09-23 00:41:22,042 : DEBUG : ShotProfileManager : Processed 'default' profile configuration: {'player_variable': '%_default', 'rotation_pattern': deque(['right']), 'state_names_to_rotate': [], 'state_names_to_not_rotate': [], 'advance_on_hit': True, 'block': True, 'show': None, 'show_when_disabled': False, 'states': [{'show_tokens': {}, 'name': 'unlit', 'show': 'off', 'sync_ms': 0, 'action': 'play', 'loops': -1, 'start_step': 1, 'manual_advance': False, 'priority': 0, 'speed': 1.0}, {'show_tokens': {}, 'name': 'lit', 'show': 'on', 'sync_ms': 0, 'action': 'play', 'loops': -1, 'start_step': 1, 'manual_advance': False, 'priority': 0, 'speed': 1.0}], 'loop': False}
+2016-09-23 00:41:22,042 : DEBUG : Mode Controller : Registering <bound method ShotProfileManager.mode_start_for_shots of <mpf.core.shot_profile_manager.ShotProfileManager object at 0x7615f6d0>> as a mode start method. Config section: shots, priority: 0, kwargs: {}
+2016-09-23 00:41:22,042 : DEBUG : Mode Controller : Registering <bound method ShotProfileManager.mode_start_for_shot_groups of <mpf.core.shot_profile_manager.ShotProfileManager object at 0x7615f6d0>> as a mode start method. Config section: shot_groups, priority: 0, kwargs: {}
+2016-09-23 00:41:22,043 : DEBUG : Events : Registered ShotProfileManager._player_turn_start as a handler for 'player_turn_start', priority: 1000000, kwargs: {}
+2016-09-23 00:41:22,043 : DEBUG : Events : Registered ShotProfileManager._player_turn_stop as a handler for 'player_turn_stop', priority: 0, kwargs: {}
+2016-09-23 00:41:22,044 : DEBUG : Machine : Loading 'mpf.core.device_manager.DeviceManager' core module
+2016-09-23 00:41:22,044 : DEBUG : Events : Registered DeviceManager._load_device_modules as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,045 : DEBUG : Events : Registered DeviceManager.create_machinewide_device_control_events as a handler for 'init_phase_2', priority: 1, kwargs: {}
+2016-09-23 00:41:22,045 : DEBUG : Events : Registered DeviceManager.create_collection_control_events as a handler for 'init_phase_2', priority: 1, kwargs: {}
+2016-09-23 00:41:22,046 : DEBUG : Machine : Loading 'mpf.core.switch_controller.SwitchController' core module
+2016-09-23 00:41:22,053 : DEBUG : Events : Registered SwitchController._initialize_switches as a handler for 'init_phase_2', priority: 1000, kwargs: {}
+2016-09-23 00:41:22,053 : DEBUG : Events : Registered SwitchController.log_active_switches as a handler for 'machine_reset_phase_3', priority: 1, kwargs: {}
+2016-09-23 00:41:22,054 : DEBUG : Machine : Loading 'mpf.core.ball_controller.BallController' core module
+2016-09-23 00:41:22,056 : DEBUG : BallController : Loading the BallController
+2016-09-23 00:41:22,056 : DEBUG : Events : Registered BallController.request_to_start_game as a handler for 'request_to_start_game', priority: 1, kwargs: {}
+2016-09-23 00:41:22,057 : DEBUG : Events : Registered BallController._initialize as a handler for 'machine_reset_phase_2', priority: 1, kwargs: {}
+2016-09-23 00:41:22,057 : DEBUG : Events : Registered BallController._init2 as a handler for 'init_phase_2', priority: 1, kwargs: {}
+2016-09-23 00:41:22,057 : DEBUG : Machine : Loading 'mpf.core.assets.AsyncioSyncAssetManager' core module
+2016-09-23 00:41:22,061 : DEBUG : AssetManager : Initializing...
+2016-09-23 00:41:22,061 : DEBUG : Mode Controller : Registering <bound method AsyncioSyncAssetManager._load_mode_assets of <mpf.core.assets.AsyncioSyncAssetManager object at 0x761bdb50>> as a mode start method. Config section: None, priority: 0, kwargs: {}
+2016-09-23 00:41:22,062 : DEBUG : Events : Registered AsyncioSyncAssetManager._create_assets as a handler for 'init_phase_3', priority: 1, kwargs: {}
+2016-09-23 00:41:22,062 : DEBUG : Events : Registered AsyncioSyncAssetManager._bcp_client_asset_load as a handler for 'assets_to_load', priority: 1, kwargs: {}
+2016-09-23 00:41:22,062 : DEBUG : Machine : Loading 'mpf.core.show_controller.ShowController' core module
+2016-09-23 00:41:22,067 : DEBUG : Events : Registered ShowController._initialize as a handler for 'init_phase_3', priority: 1, kwargs: {}
+2016-09-23 00:41:22,068 : DEBUG : Machine : Loading 'mpf.core.bcp.bcp.Bcp' core module
+2016-09-23 00:41:22,077 : DEBUG : Events : Registered BcpInterface.bcp_player_added as a handler for 'player_add_success', priority: 1, kwargs: {}
+2016-09-23 00:41:22,078 : DEBUG : Events : Registered BcpInterface.bcp_reset as a handler for 'machine_reset_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,078 : DEBUG : Mode Controller : Registering <bound method BcpInterface.bcp_mode_start of <BCP Interface>> as a mode start method. Config section: mode, priority: 0, kwargs: {}
+2016-09-23 00:41:22,078 : DEBUG : Events : Registered BcpTransportManager.shutdown as a handler for 'shutdown', priority: 1, kwargs: {}
+2016-09-23 00:41:22,079 : DEBUG : Machine : Loading 'mpf.core.logic_blocks.LogicBlocks' core module
+2016-09-23 00:41:22,081 : DEBUG : Mode Controller : Registering <bound method LogicBlocks._process_config of <mpf.core.logic_blocks.LogicBlocks object at 0x76173cd0>> as a mode start method. Config section: logic_blocks, priority: 0, kwargs: {}
+2016-09-23 00:41:22,082 : DEBUG : Events : Registered LogicBlocks._create_player_logic_blocks as a handler for 'player_add_success', priority: 1, kwargs: {}
+2016-09-23 00:41:22,082 : DEBUG : Events : Registered LogicBlocks.player_turn_start as a handler for 'player_turn_start', priority: 1, kwargs: {}
+2016-09-23 00:41:22,083 : DEBUG : Events : Registered LogicBlocks.player_turn_stop as a handler for 'player_turn_stop', priority: 1, kwargs: {}
+2016-09-23 00:41:22,083 : DEBUG : Machine : Loading 'mpf.core.scoring.ScoreController' core module
+2016-09-23 00:41:22,085 : DEBUG : Score : Loading the Score Controller
+2016-09-23 00:41:22,085 : DEBUG : Mode Controller : Registering <bound method ScoreController.mode_start of <mpf.core.scoring.ScoreController object at 0x7616c510>> as a mode start method. Config section: scoring, priority: 0, kwargs: {}
+2016-09-23 00:41:22,086 : DEBUG : Machine : Loading 'mpf.core.service_controller.ServiceController' core module
+2016-09-23 00:41:22,090 : DEBUG : Machine : Loading 'mpf.core.settings_controller.SettingsController' core module
+2016-09-23 00:41:22,097 : INFO : FAST : Connecting to /dev/ttyUSB1 at 921600bps
+2016-09-23 00:41:22,108 : INFO : FAST : Connected! Processor: NET, Board Type: FP-CPU-002-2, Firmware: 01.00
+2016-09-23 00:41:22,125 : INFO : FAST : Connecting to /dev/ttyUSB2 at 921600bps
+2016-09-23 00:41:22,136 : INFO : FAST : Connected! Processor: RGB, Board Type: FP-CPU-002-2, Firmware: 01.00
+2016-09-23 00:41:22,140 : DEBUG : Clock : Scheduled a recurring clock callback (callback=<bound method HardwarePlatform._update_watchdog of <Platform.FAST>>, timeout=0.5)
+2016-09-23 00:41:22,147 : DEBUG : Events : Registered RandomEventPlayer._initialize_in_mode as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,148 : DEBUG : Events : Registered RandomEventPlayer._initialise_system_wide as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,151 : DEBUG : Events : Registered GiPlayer._initialize_in_mode as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,151 : DEBUG : Events : Registered GiPlayer._initialise_system_wide as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,153 : DEBUG : Events : Registered EventPlayer._initialize_in_mode as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,154 : DEBUG : Events : Registered EventPlayer._initialise_system_wide as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,156 : DEBUG : Events : Registered ShowPlayer._initialize_in_mode as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,157 : DEBUG : Events : Registered ShowPlayer._initialise_system_wide as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,159 : DEBUG : Events : Registered CoilPlayer._initialize_in_mode as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,159 : DEBUG : Events : Registered CoilPlayer._initialise_system_wide as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,161 : DEBUG : Events : Registered LightPlayer._initialize_in_mode as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,162 : DEBUG : Events : Registered LightPlayer._initialise_system_wide as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,164 : DEBUG : Events : Registered TriggerPlayer._initialize_in_mode as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,165 : DEBUG : Events : Registered TriggerPlayer._initialise_system_wide as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,167 : DEBUG : Events : Registered LedPlayer._initialize_in_mode as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,167 : DEBUG : Events : Registered LedPlayer._initialise_system_wide as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,169 : DEBUG : Events : Registered FlasherPlayer._initialize_in_mode as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,170 : DEBUG : Events : Registered FlasherPlayer._initialise_system_wide as a handler for 'init_phase_1', priority: 1, kwargs: {}
+2016-09-23 00:41:22,170 : DEBUG : Machine : Registering Plugin Config Players
+2016-09-23 00:41:22,171 : DEBUG : Machine : Registering widget_player = mpfmc.config_players.widget_player:register_with_mpf
+2016-09-23 00:41:22,257 : INFO : kivy : [Logger      ] Record log in /home/sysop/.kivy/logs/kivy_16-09-23_0.txt
+2016-09-23 00:41:22,252 : ERROR : kivy : [Core        ] option -v not recognized
