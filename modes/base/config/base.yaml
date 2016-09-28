@@ -14,10 +14,7 @@ shot_groups:
 #    rotate_left_events: sw_left_flipper
     rotate_right_events: sw_right_flipper
     reset_events:
-      robo_lanes_default_lit_complete: 10ms
-  invid_target_group:
-    reset_events:
-       invid_target_group_lit_complete: 20ms    
+      robo_lanes_default_lit_complete: 10ms    
 
 show_player:
    tech_lanes_default_lit_complete:
@@ -38,7 +35,7 @@ show_player:
         loops: 0
         show_tokens: 
            color: red
-   invid_target_group_default_lit_complete:
+   invid_target_group_complete:
       invid_targets_complete:
         loops: 0
         show_tokens:

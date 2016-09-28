@@ -18,7 +18,19 @@
 - time: +100ms
   leds:
     invid_target: (color)
-- duration: -1
+- time: +100ms
+  leds:
+    invid_target: off
+- time: +100ms
   leds:
     invid_target: (color)
+- time: +100ms
+  leds:
+    invid_target: off
+- time: +100ms
+  leds:
+    invid_target: (color)
+- duration: -1
+  leds:
+    invid_target: off
 

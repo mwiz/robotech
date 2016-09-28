@@ -1,7 +1,5 @@
 #config_version=4
 
-#led_settings:
-
 
 leds:
   l_rlock_left_roller:

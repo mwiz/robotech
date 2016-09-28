@@ -73,6 +73,9 @@ shot_groups:
     - left_target
     - middle_target
     - right_target
+    - left_drop
+    - middle_drop
+    - right_drop
   tech_lanes:
     shots:
     - left_outlane_t
@@ -91,6 +94,7 @@ shot_profiles:
     states:
     - name: unlit
       show: quick_flash
-    - name: lit
+    #- name: lit
+    - name: complete
       show: on
 

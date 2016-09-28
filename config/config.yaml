@@ -5,9 +5,13 @@ hardware:
   platform: fast
   driverboards: fast
 
+mpf:
+  default_led_hw_update_hz: 30
+
 fast:
   ports: /dev/ttyUSB1, /dev/ttyUSB2
   config_number_format: int
+  rgb_buffer: 100
 
 config:
 - leds.yaml
@@ -185,11 +189,11 @@ flippers:
 coils:
   c_flipper_left_main:
     number: 8
-    pulse_ms: 14
+    pulse_ms: 12
     hold_power: 1
   c_flipper_right_main:
     number: 9
-    pulse_ms: 14
+    pulse_ms: 12
     hold_power: 1
   c_trough_eject:
     number: 10
@@ -202,13 +206,13 @@ coils:
     pulse_ms: 20
   c_left_slingshot:
     number: 13
-    pulse_ms: 10
+    pulse_ms: 9
   c_left_lock_kickout:
     number: 14
     pulse_ms: 20
   c_right_slingshot:
     number: 15
-    pulse_ms: 10
+    pulse_ms: 9
   c_middle_drop_target:
     number: 16
     pulse_ms: 20
@@ -368,6 +372,7 @@ drop_target_banks:
     drop_targets: left_drop, middle_drop, right_drop
     reset_events:
          ball_starting: 0.5s
+         invid_target_group_complete: 2s
 #        drop_target_bank_bank_down: 1s
 
 #ball_saves:
