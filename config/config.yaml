@@ -5,18 +5,19 @@ hardware:
   platform: fast
   driverboards: fast
 
-mpf:
-  default_led_hw_update_hz: 30
+#mpf:
+#  default_led_hw_update_hz: 30
 
 fast:
   ports: /dev/ttyUSB1, /dev/ttyUSB2
   config_number_format: int
-  rgb_buffer: 100
+#  rgb_buffer: 100
 
 config:
 - leds.yaml
 - shots.yaml
 - lightscripts.yaml
+- audio.yaml
 
 modes:
 - base
@@ -394,3 +395,12 @@ drop_target_banks:
 #  ball_save_default_disabled:
 #    ball_save_flash:
 #      action: stop  
+
+sound_player:
+   mode_base_started:
+       main_title:
+           action: play
+   
+   mode_base_stopping:
+       main_title:
+           action: stop

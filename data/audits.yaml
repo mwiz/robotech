@@ -1,8 +1,8 @@
 '3': 185
 events:
   ball_search_begin_phase1: 0
-  game_ended: 351
-  game_started: 623
+  game_ended: 359
+  game_started: 637
 h3: 261
 player:
   score:
@@ -18,73 +18,73 @@ player:
     - 0
     - 0
     - 0
-    total: 351
+    total: 359
 shots:
-  b_top_lane: 242
-  left_drop: 112
-  left_inlane_e: 576
-  left_outlane_t: 492
-  left_target: 398
-  middle_drop: 151
-  middle_target: 242
-  o1_top_lane: 292
-  o2_top_lane: 269
-  r_top_lane: 175
-  right_drop: 108
-  right_inlane_c: 721
-  right_outlane_h: 389
-  right_target: 209
+  b_top_lane: 271
+  left_drop: 136
+  left_inlane_e: 593
+  left_outlane_t: 514
+  left_target: 445
+  middle_drop: 189
+  middle_target: 275
+  o1_top_lane: 321
+  o2_top_lane: 287
+  r_top_lane: 188
+  right_drop: 140
+  right_inlane_c: 751
+  right_outlane_h: 410
+  right_target: 247
 switches:
-  s_b_top_lane: 279
-  s_bottom_l_pop_bumper: 3460
-  s_bottom_r_pop_bumper: 3835
-  s_d_target: 245
+  s_b_top_lane: 308
+  s_bottom_l_pop_bumper: 3554
+  s_bottom_r_pop_bumper: 3927
+  s_d_target: 274
   s_drain: 0
-  s_drain_kicker: 1920
-  s_f_target: 220
-  s_kickback_t: 816
-  s_left_bottom_rubber: 311
-  s_left_drop_target: 1184
-  s_left_flipper: 17413
-  s_left_inlane_e: 825
-  s_left_lock_kickout: 473
+  s_drain_kicker: 1963
+  s_f_target: 244
+  s_kickback_t: 838
+  s_left_bottom_rubber: 339
+  s_left_drop_target: 1208
+  s_left_flipper: 17870
+  s_left_inlane_e: 842
+  s_left_lock_kickout: 516
   s_left_lock_rollover: 0
-  s_left_middle_rubber: 460
+  s_left_middle_rubber: 521
   s_left_rollover: 0
   s_left_sling: 15
-  s_left_slingshot: 3257
-  s_left_target: 468
-  s_left_top_rubber: 156
-  s_lower_right_rubber: 118
-  s_middle_drop_target: 1439
-  s_middle_right_rubber: 105
-  s_middle_target: 434
-  s_o1_top_lane: 335
-  s_o2_top_lane: 330
-  s_plunger_lane: 3515
-  s_r_top_lane: 197
-  s_right_drop_target: 1013
-  s_right_flipper: 16631
-  s_right_inlane_c: 970
+  s_left_slingshot: 3358
+  s_left_target: 515
+  s_left_top_rubber: 164
+  s_lower_right_rubber: 130
+  s_middle_drop_target: 1477
+  s_middle_right_rubber: 115
+  s_middle_target: 467
+  s_o1_top_lane: 364
+  s_o2_top_lane: 348
+  s_plunger_lane: 3610
+  s_r_top_lane: 210
+  s_right_drop_target: 1045
+  s_right_flipper: 17107
+  s_right_inlane_c: 1000
   s_right_kickout: 25
-  s_right_lock_kickout: 337
-  s_right_outlane_h: 538
+  s_right_lock_kickout: 355
+  s_right_outlane_h: 559
   s_right_rollover: 0
   s_right_sling: 24
-  s_right_slingshot: 3288
-  s_right_target: 375
-  s_right_top1_rubber: 137
-  s_right_top2_rubber: 1244
-  s_s_target: 251
-  s_spinner: 6321
+  s_right_slingshot: 3409
+  s_right_target: 413
+  s_right_top1_rubber: 142
+  s_right_top2_rubber: 1253
+  s_s_target: 281
+  s_spinner: 7179
   s_spinnter: 2295
   s_start: 52
   s_tilt: 68
   s_top_kickout: 88
-  s_top_l_pop_bumper: 5878
-  s_top_lock_kickout: 346
-  s_top_r_pop_bumper: 5963
+  s_top_l_pop_bumper: 6066
+  s_top_lock_kickout: 360
+  s_top_r_pop_bumper: 6097
   s_top_target: 1
-  s_trough1: 4462
-  s_trough2: 4013
-  s_trough3: 2310
+  s_trough1: 4587
+  s_trough2: 4162
+  s_trough3: 2365
