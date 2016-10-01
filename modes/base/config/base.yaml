@@ -40,3 +40,24 @@ show_player:
         loops: 0
         show_tokens:
            color: red
+
+logic_blocks:
+   accruals:
+       light_multiplier:
+           events:
+               - robo_lanes_default_lit_complete, tech_lanes_default_lit_complete
+           events_when_complete: increment_multipliers, light_multiplier_led
+           enable_events: ball_started
+           disable_events: ball_ended
+           reset_events: ball_ended
+   counters:
+       multiplier_count:
+           count_events: increment_multipliers
+           starting_count: 1
+           count_complete_value: 5
+           direction: up
+
+show_player:
+   light_multiplier_led:
+     leds: l_2x
+#     show: on
