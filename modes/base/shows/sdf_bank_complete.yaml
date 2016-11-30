@@ -1,0 +1,11 @@
+# show_version=4
+
+- time: 0
+  leds:
+    sdf: off
+
+- time: +100ms
+  leds:
+    sdf: (color)
+
+- time: +100ms 

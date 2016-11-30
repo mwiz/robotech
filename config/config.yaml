@@ -24,28 +24,45 @@ modes:
 - kickback
 - attract
 - ball_save
+#- skill_shot_auto
+#- skill_shot_flipper
+- skill_shot
+- super_spinner
 
 window:
-  width: 1280
-  height: 800
+  width: 800
+  height: 480
   title: Robotech
   resizable: false
-  fullscreen: auto
+  fullscreen: false
   borderless: false
   exit_on_escape: true
+
+displays:
+  window:
+
+slides:
+  welcome_slide:
+    widgets:
+      - type: text
+        text: PINBALL!
+        font_size: 50
+        color: red
+      - type: rectangle
+        width: 240
+        height: 60
 
 kivy_config:
   graphics:
         fbo: force-hardware
 
-
 switches:
   s_right_flipper:
     number: 0
-    tags: right_flipper
+    tags: right_flipper, flipper
   s_left_flipper:
     number: 1
-    tags: left_flipper  
+    tags: left_flipper, flipper
   s_start:
     number: 2
     tags: start
@@ -68,6 +85,12 @@ switches:
     tags: playfield_active
   s_left_bottom_rubber:
     number: 15
+    tags: playfield_active
+  s_gate_top_left:
+    number: 16
+    tags: playfield_active
+  s_gate_top_right:
+    number: 17
     tags: playfield_active
   s_left_top_rubber:
     number: 18
@@ -180,70 +203,73 @@ switches:
 flippers:
   lower_left:
     main_coil: c_flipper_left_main
+    hold_coil: c_flipper_left_hold
     activation_switch: s_left_flipper
     label: Left Main Flipper
   lower_right:
     main_coil: c_flipper_right_main
+    hold_coil: c_flipper_right_hold
     activation_switch: s_right_flipper
     label: Right Main Flipper
 
 coils:
   c_flipper_left_main:
-    number: 8
-    pulse_ms: 12
-    hold_power: 1
+    number: 6
+    pulse_ms: 18
+  c_flipper_left_hold:
+    number: 7
+    allow_enable: true
   c_flipper_right_main:
+    number: 8
+    pulse_ms: 19
+  c_flipper_right_hold:
     number: 9
-    pulse_ms: 12
-    hold_power: 1
+    allow_enable: true
   c_trough_eject:
     number: 10
-    pulse_ms: 70
+    pulse_ms: 10
   c_drain_kicker:
     number: 11
-    pulse_ms: 20
+    pulse_ms: 12
   c_kickback:
     number: 12
-    pulse_ms: 20
+    pulse_ms: 15
   c_left_slingshot:
     number: 13
-    pulse_ms: 9
+    pulse_ms: 3
   c_left_lock_kickout:
     number: 14
-    pulse_ms: 20
+    pulse_ms: 15
   c_right_slingshot:
     number: 15
-    pulse_ms: 9
+    pulse_ms: 3
   c_middle_drop_target:
     number: 16
-    pulse_ms: 20
+    pulse_ms: 15
   c_left_drop_target:
     number: 17
-    pulse_ms: 20
+    pulse_ms: 15
   c_right_drop_target:
     number: 18
-    pulse_ms: 20
+    pulse_ms: 15
   c_right_lock_kickout:
     number: 19
-    pulse_ms: 20
+    pulse_ms: 15
   c_bottom_l_pop_bumper:
     number: 20
-    pulse_ms: 30
+    pulse_ms: 7
   c_top_l_pop_bumper:
     number: 21
-    pulse_ms: 30
+    pulse_ms: 7
   c_bottom_r_pop_bumper:
     number: 22
-    pulse_ms: 30
+    pulse_ms: 7
   c_top_r_pop_bumper:
     number: 23
-    pulse_ms: 30
+    pulse_ms: 7
   c_top_lock_kickout:
     number: 24
-    pulse_ms: 20
-  c_top_gate:
-    number: 25
-    pulse_ms: 20
+    pulse_ms: 15
 
 ball_devices:
   bd_trough:
@@ -259,10 +285,10 @@ ball_devices:
     eject_timeouts: 3s
     tags: ball_add_live
     mechanical_eject: true
-  drain:
+  bd_drain:
     ball_switches: s_drain_kicker
     eject_coil: c_drain_kicker
-    entrance_count_delay: 100ms
+    #entrance_count_delay: 100ms
     confirm_eject_type: target
     eject_targets: bd_trough
     tags: drain
@@ -382,7 +408,7 @@ drop_target_banks:
 #    hurry_up_time: 2s
 #    grace_period: 3s
 #    enable_events: mode_base_started
-#    timer_start_events: #       
+#    timer_start_events: #
 #    balldevice_bd_plunger_ball_eject_success
 #    auto_launch: false
 #    balls_to_save: 1
@@ -394,13 +420,13 @@ drop_target_banks:
 #    loops: -1
 #  ball_save_default_disabled:
 #    ball_save_flash:
-#      action: stop  
+#      action: stop
 
 sound_player:
-   mode_base_started:
-       main_title:
-           action: play
-   
-   mode_base_stopping:
-       main_title:
-           action: stop
+  mode_attract_starting:
+    main_title:
+      action: play
+
+  mode_attract_stopping:
+    main_title:
+      action: stop

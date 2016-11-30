@@ -30,3 +30,11 @@
   leds:
     playfield: 000000-f200ms
 
+- duration: 100ms
+  leds:
+    flasher: White
+
+- duration: 500ms 
+  leds:
+    flasher: off
+

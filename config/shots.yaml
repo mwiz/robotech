@@ -66,6 +66,21 @@ shots:
      profile: quick_flash
      show_tokens:
        leds: l_t6
+   s_target:
+     switch: s_s_target
+     #profile: quick_flash
+     show_tokens:
+       leds: l_s_led
+   d_target:
+     switch: s_d_target
+     #profile: quick_flash
+     show_tokens:
+       leds: l_d_led
+   f_target:
+     switch: s_f_target
+     #profile: quick_flash
+     show_tokens:
+       leds: l_f_led
 
 shot_groups:
   invid_target_group:
@@ -88,6 +103,11 @@ shot_groups:
     - o1_top_lane
     - b_top_lane
     - o2_top_lane
+  sdf_bank:
+    shots:
+    - s_target
+    - d_target
+    - f_target
 
 shot_profiles:
   quick_flash:

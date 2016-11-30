@@ -2,24 +2,25 @@
 # Robotech pinball 
 
 sound_system:
-  buffer: 2048
-  frequency: 44100
-  channels: 1
-  master_volume: 1
-  tracks:
-    voice:
-      volume: 1
-      simultaneous_sounds: 1
-    sfx:
-      volume: 1
-      simultaneous_sounds: 3
-    music:
+   buffer: 2048
+   frequency: 44100
+   channels: 2
+   master_volume: 1
+   debug: true
+   tracks:
+     voice:
        volume: 1
        simultaneous_sounds: 1
-      
+     sfx:
+       volume: 1
+       simultaneous_sounds: 3
+     music:
+        volume: 1
+        simultaneous_sounds: 1    
+   enabled: true
 
 assets:
-    sounds:
+     sounds:
         default:
             load: preload
         voice:

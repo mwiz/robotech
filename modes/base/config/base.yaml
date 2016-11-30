@@ -17,6 +17,11 @@ shot_groups:
       robo_lanes_default_lit_complete: 10ms    
 
 show_player:
+   sdf_bank_default_lit_complete:
+      sdf_bank_complete:
+        loops: 3
+        show_tokens:
+           color: blue
    tech_lanes_default_lit_complete:
       tech_lanes_complete:
         loops: 3
