@@ -4,6 +4,9 @@ mode:
   start_events: ball_starting
   priority: 100
 
+#config:
+#- display
+
 shot_groups:
   tech_lanes:
     rotate_left_events: sw_left_flipper

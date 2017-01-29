@@ -27,4 +27,8 @@ show_player:
       light_kickback:
         action: stop
       flash_kickback:
-        loops: -1  
+        loops: -1
+      kickback_flasher:
+        loops: 0
+
+

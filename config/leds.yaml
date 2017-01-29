@@ -2,233 +2,241 @@
 
 
 leds:
-  l_rlock_left_roller:
+  l_rorbit_bot_roller:
     number: 0-0
     label: led0
-    tags: rlock_rollover, playfield
-  l_rlock_right_roller:
+    tags: rorbit_roller, playfield
+  l_rorbit_top_roller:
     number: 0-1
     label: led1
-    tags: rlock_rollover, playfield
-  l_right orbit arrow:
+    tags: rorbit_roller, playfield
+  l_rlock_left_roller:
     number: 0-2
     label: led2
-    tags: playfield
-  l_rlock__arrow:
+    tags: rlock_rollover, playfield
+  l_rlock_right_roller:
     number: 0-3
     label: led3
-    tags: playfield
-  l_s_led:
+    tags: rlock_rollover, playfield
+  l_right orbit arrow:
     number: 0-4
     label: led4
-    tags: sdf, playfield
-  l_d_led:
+    tags: playfield
+  l_rlock__arrow:
     number: 0-5
     label: led5
-    tags: sdf, playfield
-  l_f_led:
+    tags: playfield
+  l_s_led:
     number: 0-6
     label: led6
     tags: sdf, playfield
-  l_sdf_arrow_led:
+  l_d_led:
     number: 0-7
     label: led7
-    tags: playfield
-  l_tech_1:
+    tags: sdf, playfield
+  l_f_led:
     number: 0-8
     label: led8
-    tags: tech_hotdog, playfield
-  l_tech_2:
+    tags: sdf, playfield
+  l_sdf_arrow_led:
     number: 0-9
     label: led9
-    tags: tech_hotdog, playfield
-  l_tech_3:
+    tags: playfield
+  l_tech_1:
     number: 0-10
     label: led10
     tags: tech_hotdog, playfield
-  l_tech_4:
+  l_tech_2:
     number: 0-11
     label: led11
     tags: tech_hotdog, playfield
-  l_tech_5:
+  l_tech_3:
     number: 0-12
     label: led12
     tags: tech_hotdog, playfield
-  l_right_inlane_c:
+  l_tech_4:
     number: 0-13
     label: led13
-    tags: bottomlanes, playfield
-  l_right_outlane_h:
+    tags: tech_hotdog, playfield
+  l_tech_5:
     number: 0-14
     label: led14
-    tags: bottomlanes, playfield
-  l_shoot_again:
+    tags: tech_hotdog, playfield
+  l_right_inlane_c:
     number: 0-15
     label: led15
-    tags: playfield
-  l_b1:
+    tags: bottomlanes, playfield
+  l_right_outlane_h:
     number: 0-16
     label: led16
-    tags: playfield
-  l_3x:
+    tags: bottomlanes, playfield
+  l_shoot_again:
     number: 0-17
     label: led17
     tags: playfield
-  l_2x:
+  l_b1:
     number: 0-18
     label: led18
     tags: playfield
-  l_b2:
+  l_3x:
     number: 0-19
     label: led19
     tags: playfield
-  l_4x:
+  l_2x:
     number: 0-20
     label: led20
     tags: playfield
-  l_5x:
+  l_b2:
     number: 0-21
     label: led21
     tags: playfield
-  l_b3:
+  l_4x:
     number: 0-22
     label: led22
     tags: playfield
-  l_b4:
+  l_5x:
     number: 0-23
     label: led23
     tags: playfield
-  l_b5:
+  l_b3:
     number: 0-24
     label: led24
     tags: playfield
-  l_b6:
+  l_b4:
     number: 0-25
     label: led25
     tags: playfield
-  l_b7:
+  l_b5:
     number: 0-26
     label: led26
     tags: playfield
-  l_b8:
+  l_b6:
     number: 0-27
     label: led27
     tags: playfield
-  l_b9:
+  l_b7:
     number: 0-28
     label: led28
     tags: playfield
-  l_b10:
+  l_b8:
     number: 0-29
     label: led29
     tags: playfield
-  l_b20:
+  l_b9:
     number: 0-30
     label: led30
     tags: playfield
-  l_t6:
+  l_b10:
     number: 0-31
     label: led31
-    tags: invid_target, playfield
-  l_t5:
+    tags: playfield
+  l_b20:
     number: 0-32
     label: led32
-    tags: invid_target, playfield
-  l_t4:
+    tags: playfield
+  l_t6:
     number: 0-33
     label: led33
     tags: invid_target, playfield
-  l_t3:
+  l_t5:
     number: 0-34
     label: led34
     tags: invid_target, playfield
-  l_t2:
+  l_t4:
     number: 0-35
     label: led35
     tags: invid_target, playfield
-  l_t1:
+  l_t3:
     number: 0-36
     label: led36
     tags: invid_target, playfield
-  l_robo_5:
+  l_t2:
     number: 0-37
     label: led37
-    tags: robo_hotdog, playfield
-  l_robo_4:
+    tags: invid_target, playfield
+  l_t1:
     number: 0-38
     label: led38
-    tags: robo_hotdog, playfield
-  l_robo_3:
+    tags: invid_target, playfield
+  l_robo_5:
     number: 0-39
     label: led39
     tags: robo_hotdog, playfield
-  l_robo_2:
+  l_robo_4:
     number: 0-40
     label: led40
     tags: robo_hotdog, playfield
-  l_robo_1:
+  l_robo_3:
     number: 0-41
     label: led41
     tags: robo_hotdog, playfield
-  l_kickback:
+  l_robo_2:
     number: 0-42
     label: led42
-    tags: playfield
-  l_left_outlane_t:
+    tags: robo_hotdog, playfield
+  l_robo_1:
     number: 0-43
     label: led43
-    tags: bottomlanes, playfield
-  l_left_inlane_e:
+    tags: robo_hotdog, playfield
+  l_kickback:
     number: 0-44
     label: led44
-    tags: bottomlanes, playfield
-  l_llock_arrow:
+    tags: playfield
+  l_left_outlane_t:
     number: 0-45
     label: led45
-    tags: playfield
-  l_llock_rollover_top:
+    tags: bottomlanes, playfield
+  l_left_inlane_e:
     number: 0-46
     label: led46
-    tags: llock_rollover, playfield
-  l_llock_rollover_bottom:
+    tags: bottomlanes, playfield
+  l_llock_arrow:
     number: 0-47
     label: led47
-    tags: llock_rollover, playfield
-  l_left_orbit_arrow:
+    tags: playfield
+  l_llock_rollover_top:
     number: 0-48
     label: led48
-    tags: playfield
-  l_r_light:
+    tags: llock_rollover, playfield
+  l_llock_rollover_bottom:
     number: 0-49
     label: led49
-    tags: toplanes, playfield
-  l_o_light:
+    tags: llock_rollover, playfield
+  l_left_orbit_arrow:
     number: 0-50
     label: led50
-    tags: toplanes, playfield
-  l_b_light:
+    tags: playfield
+  l_r_light:
     number: 0-51
     label: led51
     tags: toplanes, playfield
-  l_tlock_arrow:
+  l_o_light:
     number: 0-52
     label: led52
-    tags: playfield
-  l_o2_light:
+    tags: toplanes, playfield
+  l_b_light:
     number: 0-53
     label: led53
     tags: toplanes, playfield
-  l_50k:
+  l_tlock_arrow:
     number: 0-54
     label: led54
     tags: playfield
-  l_20k:
+  l_o2_light:
     number: 0-55
     label: led55
-    tags: playfield
-  l_10k:
+    tags: toplanes, playfield
+  l_50k:
     number: 0-56
     label: led56
+    tags: playfield
+  l_20k:
+    number: 0-57
+    label: led57
+    tags: playfield
+  l_10k:
+    number: 0-58
+    label: led58
     tags: playfield
   l_top_right_flasher:
     number: 1-0
@@ -264,4 +272,19 @@ leds:
     number: 1-6
     type: grb
     label: led7
+    tags: flasher, playfield
+  l_top_left_flasher:
+    number: 1-7
+    type: grb
+    label: led8
+    tags: flasher, playfield
+  l_left_lock_flaher:
+    number: 1-8
+    type: grb
+    label: led9
+    tags: flasher, playfield
+  l_kickback_flasher:
+    number: 1-9
+    type: grb
+    label: led10
     tags: flasher, playfield
