@@ -1,0 +1,224 @@
+#config_version=5
+
+# Relay through event_player because widget_player doesn't like conditions/priorities
+event_player:
+  player_added:
+    # Give a small delay to allow the player vars to initialize, lest the placeholder text show goofy
+    - add_player_2{num==2}|150ms
+    # - add_player_3{num==3}|150ms
+    # - add_player_4{num==4}|150ms
+  player_turn_started{game.num_players>1}:
+    - multiplayer_turn_start_1{number==1}
+    - multiplayer_turn_start_2{number==2}
+    # - multiplayer_turn_start_3{number==3}
+    # - multiplayer_turn_start_4{number==4}
+  player_turn_ended{game.num_players>1}:
+    - multiplayer_turn_end_1{number==1}
+    - multiplayer_turn_end_2{number==2}
+
+show_player:
+  ball_will_end:
+    turn_off_all_lights:
+      action: play
+      priority: 9999
+  ball_starting:
+    turn_off_all_lights:
+      action: stop
+    # - multiplayer_turn_end_3{number==3}
+    # - multiplayer_turn_end_4{number==4}
+  # If a second player joins during player1's turn, swap singleplayer_slide for multiplayer_slide
+  #multiplayer_game{mode["field"].active and not mode["field"].stopping}: show_multiplayer_slide
+
+
+# slide_player:
+#   show_base_slide:
+#     singleplayer_slide{not is_multiplayer}:
+#       action: play
+#       priority: 1
+#     multiplayer_slide{is_multiplayer}:
+#       action: play
+#       priority: 2
+#   show_multiplayer_slide:
+#     multiplayer_slide:
+#       action: play
+#     singleplayer_slide:
+#       action: remove
+#   ball_will_end:
+#     singleplayer_slide:
+#       action: remove
+#     multiplayer_slide:
+#       action: remove
+
+widget_player:
+  # First event, before additional players have a chance to enter
+  game_started:
+    base_score_widget:
+      slide: base_slide
+    base_ball_widget:
+      slide: base_slide
+    base_screen_outline_widget:
+      slide: base_slide
+    # base_score_outline_widget:
+    #   slide: base_slide
+  # Player 2 has entered the game, add widgets for player1 and player2
+  add_player_2:
+    mp_box_widget_2_players_player_1:
+      slide: base_slide
+      action: add
+    mp_box_widget_2_players_player_2:
+      slide: base_slide
+      action: add
+    # Start with player1 name, player2 score
+    mp_player_widget_2_players_player_1:
+      slide: base_slide
+      action: add
+    mp_score_widget_2_players_player_2:
+      slide: base_slide
+      action: add
+  # # Player 3 has entered the game
+  # add_player_3:
+  #   mp_score_widget_player_3:
+  #     slide: multiplayer_slide
+  #   # Remove the "Level" widget and place the player3 score
+  #   base_level_widget:
+  #     action: remove
+  # # Player 4 has entered the game
+  # add_player_4:
+  #   mp_score_widget_player_4:
+  #     slide: multiplayer_slide
+  #   # Remove the "Ball" widget and place the player4 score
+  #   base_ball_widget:
+  #     action: remove
+  # Player Turns: Swap scores -> names when turn starts, revert when turn ends
+  multiplayer_turn_start_1:
+    mp_player_widget_2_players_player_1:
+      action: add
+      slide: base_slide
+    mp_score_widget_2_players_player_2:
+      action: add
+      slide: base_slide
+  multiplayer_turn_end_1:
+    mp_player_widget_2_players_player_1:
+      action: remove
+    mp_score_widget_2_players_player_2:
+      action: remove
+  multiplayer_turn_start_2:
+    mp_player_widget_2_players_player_2:
+      action: add
+      slide: base_slide
+    mp_score_widget_2_players_player_1:
+      action: add
+      slide: base_slide
+  multiplayer_turn_end_2:
+    mp_player_widget_2_players_player_2:
+      action: remove
+    mp_score_widget_2_players_player_1:
+      action: remove
+
+
+slides:
+  base_slide: []
+
+
+slide_player:
+  single_player_ball_started: base_slide
+  # multi_player_ball_started: multiplayer_slide
+  # multiplayer_game:
+  #   base_slide:
+  #     action: remove
+  #   multiplayer_slide:
+  #     action: play
+  # ball_will_end:
+  #   base_slide:
+  #     action: remove
+  #   multiplayer_slide:
+  #     action: play
+
+# slides:
+#   singleplayer_slide:
+#     widgets:
+#       - type: text
+#         text: (score)
+#         style: score_style_singleplayer
+#   multiplayer_slide:
+#     widgets:
+#       - type: text
+#         text: (score)
+#         style: score_style_multiplayer
+
+widgets:
+  base_screen_outline_widget:
+    - type: line
+      points: 0, 0, 0, 720, 1280, 720, 1280, 0, 0, 0
+      thickness: 3
+      color: red
+  base_score_widget:
+    - type: text
+      text: (score)
+      style: score_style_singleplayer
+      x: center
+      y: center-225
+  base_score_outline_widget:
+    - type: line
+      points: 440, 95, 440, 155, 840, 155, 840, 95, 440, 95
+      thickness: 2
+      color: red
+  base_ball_widget:
+    - type: line
+      points: 580, 720, 580, 670, 700, 670, 700, 720
+      thickness: 2
+      color: red
+    - type: text
+      text: BALL (ball)
+      y: top - 25
+      x: center
+      font_size: 30
+      color: white
+  mp_box_widget_2_players_player_1:
+    - type: line
+      points: 440, 30, 440, 70, 640, 70, 640, 30, 440, 30
+      thickness: 2
+      color: red
+  mp_box_widget_2_players_player_2:
+    - type: line
+      points: 640, 70, 840, 70, 840, 30, 640, 30
+      thickness: 2
+      color: red
+  mp_player_widget_2_players_player_1:
+    - type: text
+      text: PLAYER (number)
+      x: 490
+      y: 35
+      font_size: 30
+      anchor_x: left
+      anchor_y: bottom
+      color: white
+  mp_player_widget_2_players_player_2:
+    - type: text
+      text: PLAYER (number)
+      x: 690
+      y: 35
+      font_size: 30
+      anchor_x: left
+      anchor_y: bottom
+      color: white
+  mp_score_widget_2_players_player_1:
+    - type: text
+      text: (player1|score)
+      x: 540
+      y: 55
+      font_size: 30
+      # anchor_x: left
+      # anchor_y: bottom
+      color: red
+      number_grouping: true
+  mp_score_widget_2_players_player_2:
+    - type: text
+      text: (player2|score)
+      x: 740
+      y: 55
+      font_size: 30
+      # anchor_x: left
+      # anchor_y: bottom
+      color: red
+      number_grouping: true

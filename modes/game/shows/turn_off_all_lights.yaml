@@ -1,0 +1,11 @@
+#show_version=5
+
+#- duration: 1
+#  lights:
+#    playfield: off
+#- duration: 1
+
+- time: 0
+  lights:
+    playfield: off
+- time: -1
