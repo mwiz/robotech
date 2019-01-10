@@ -1,0 +1,18 @@
+#show_version=5
+
+# - time: 0
+#   lights:
+#     (leds): 2E0854 # (indigo) #9B30FF (purple1)
+#
+# - time: +250
+#   lights:
+#     (leds): off
+
+
+- duration: 125ms
+  lights:
+    (leds): 2E0854 # (indigo) #9B30FF (purple1)
+
+- duration: 125ms
+  lights:
+    (leds): off
