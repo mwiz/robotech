@@ -1,0 +1,87 @@
+#config_version=5
+
+mode:
+   start_events: start_intro_rand_mode
+   stop_events: mode_rand_mode_started, game_ending
+   #restart_on_next_ball: true
+   priority: 2100
+
+queue_event_player:
+  mode_intro_rand_mode_started:
+    queue_event: my_queue_rand_mode
+    events_when_finished: start_rand_mode
+
+queue_relay_player:
+  my_queue_rand_mode:
+    post: start_rand_mode_multiball_intro
+    wait_for: rand_mode_multiball_show_ended
+  balldevice_bd_trough_ball_eject_attempt:
+    post: wait_for_rand_mode_instructions
+    wait_for: rand_mode_multiball_show_ended
+  balldevice_bd_left_lock_ball_eject_attempt:
+    post: wait_for_rand_mode_instructions
+    wait_for: rand_mode_multiball_show_ended
+
+shows:
+  rand_mode_multiball_intro:
+    - duration: 12s
+      slides:
+        rand_collected_slide:
+          widgets:
+            - type: text
+              text: RAND Collected
+              color: red
+              font_size: 80
+              x: center
+              y: center+300
+              expire: 2s
+            - type: video
+              video: start_rand_mode_video
+    - duration: 2s
+      slides:
+        intro_rand_mode_slide:
+          widgets:
+            - type: image
+              image: three_invid
+            - type: text
+              text: Defeat Invid Shock Trooper Patrol
+              color: red
+              font_size: 80
+              x: center
+              y: center+300
+
+
+
+show_player:
+  start_rand_mode_multiball_intro:
+    rand_mode_multiball_intro:
+      loops: 0
+      events_when_stopped: rand_mode_multiball_show_ended
+    # alert_show:
+    #   loops: -1
+  flipper_cancel:
+    rand_mode_multiball_intro:
+      action: stop
+
+
+# multiball_locks:
+#   invid_invasion_multiball:
+#   #invid_invasion_ball_lock:
+#   #invid_invasion_ball_hold:
+#     #balls_to_hold: 1
+#     balls_to_lock: 1
+#     lock_devices: bd_right_lock
+#     #hold_devices: bd_left_lock
+#     #lock_devices: bd_left_lock
+#     #release_one_events: start_mission_1
+#     #reset_events: machine_reset_phase_3, ball_starting, ball_will_end, service_mode_entered, start_mission_1
+#     #reset_count_for_current_player_events: quick_2_ball_start
+#     disable_events: invid_invasion_quick_2_ball_started
+
+# sound_player:
+#   mode_intro_invid_invasion_started:
+#     invid_invasion_start:
+#       action: play
+#   flipper_cancel:
+#     invid_invasion_start:
+#       action: stop
