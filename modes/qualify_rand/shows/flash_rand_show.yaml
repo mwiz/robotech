@@ -1,0 +1,18 @@
+#show_version=5
+
+# - time: 0
+#   lights:
+#     l_llock_arrow: red
+#
+# - time: 500ms
+#   lights:
+#     l_llock_arrow: off
+#
+# - time: 500ms
+
+- duration: 500ms
+  lights:
+    l_llock_arrow: red
+- duration: 1000ms
+  lights:
+    l_llock_arrow: off
