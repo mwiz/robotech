@@ -1,9 +1,24 @@
-#show_version=4
+#show_version=5
 
 - time: 0
-  leds:
+  lights:
+    l_left_outlane_t: white
     l_shoot_again: white
+    l_right_outlane_h: white
 - time: +500ms
-  leds:
-    l_shoot_again: 000000
+  lights:
+    l_left_outlane_t: off
+    l_shoot_again: off
+    l_right_outlane_h: off
+
 - time: +500ms
+
+
+#- time: 0
+#      lights:
+#        l_shoot_again:
+#          color: black
+#    - time: '+1'
+#      lights:
+#        l_shoot_again:
+#          color: white
