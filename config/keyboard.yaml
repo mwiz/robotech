@@ -1,0 +1,33 @@
+#config_version=5
+
+virtual_platform_start_active_switches: s_trough1, s_trough2, s_trough3, s_trough4
+
+
+keyboard:
+
+  1:
+    switch: s_trough1
+    toggle: true
+  2: 
+    switch: s_trough2
+    toggle: true
+  3:
+    switch: s_trough3
+    toggle: true
+  4:
+    switch: s_trough4
+    toggle: true
+  s:
+    switch: s_start
+  p:
+    switch: s_plunger_lane
+    toggle: true
+  shift-s:
+    switch: s_spinner
+  z:
+    switch: s_left_flipper
+  m:
+    switch: s_right_flipper
+  ctrl-1:
+    event: top_lanes_skill_lit_hit
+  
