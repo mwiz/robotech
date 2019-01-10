@@ -1,0 +1,198 @@
+#config_version=5
+
+mode:
+  start_events: ball_starting{ball==1}, mode_end_invid_invasion_stopped
+  stop_events: protoculture_collected, mode_invid_invasion_started
+  restart_on_next_ball: true
+  priority: 4000
+
+event_player:
+  P_5_unlit_hit: protoculture_award_extra_ball
+
+
+counters:
+  protoculture_hit_counter:
+    count_events: s_top_target_active
+    starting_count: 0
+    direction: up
+    count_complete_value: 10
+    reset_on_complete: false
+    events_when_complete: protoculture_collected
+    persist_state: true
+
+
+# show_player:
+#   mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=1}:
+#     P1_show_on:
+#       action: play
+#   mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=2}:
+#     P2_show_on:
+#       action: play
+#   # s_top_target_active{device.counters.protoculture_collected_counter.value==1}:
+#   #   P1_show_on:
+#   #     action: play
+#   # s_top_target_active{device.counters.protoculture_collected_counter.value==2}:
+#   #   P2_show_on:
+#   #     action: play
+#   # mode_bonus_will_start:
+#   #   P1_show_on:
+#   #     action: stop
+#   #   P2_show_on:
+#   #     action: stop
+# #
+# shows:
+#   P1_show_on:
+#     - time: 0
+#       lights:
+#         l_b1: 2F4F4F
+#     - time: -1
+#   P2_show_on:
+#     - time: 0
+#       lights:
+#         l_b2: 2F4F4F
+#     - time: -1
+
+shot_groups:
+  protoculture_shot_group:
+    shots: P_1, P_2, P_3, P_4, P_5, P_6, P_7, P_8, P_9
+    # enable_events: mode_end_invid_invasion_stopped
+    # disable_events: mode_invid_invasion_started
+    debug: true
+
+
+shots:
+  P_1:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_b1
+    enable_events:
+      - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=0}
+    #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=0}
+    # disable_events:
+    #   - mode_invid_invasion_started
+    advance_events: P_1_unlit_hit
+    debug: true
+  P_2:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_b2
+    enable_events:
+      - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=1}
+      - P_1_unlit_hit
+    #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=1}
+    # disable_events:
+    #   #- mode_protoculture_started{device.counters.protoculture_hit_counter.value<1 or device.counters.protoculture_hit_counter.value>1}
+    #   - mode_invid_invasion_started
+    advance_events: P_2_unlit_hit
+    debug: true
+  P_3:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_b3
+    enable_events:
+      - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=2}
+      - P_2_unlit_hit
+    #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=2}
+    # disable_events:
+    #   #- mode_protoculture_started{device.counters.protoculture_hit_counter.value<2 or device.counters.protoculture_hit_counter.value>2}
+    #   - mode_invid_invasion_started
+    advance_events: P_3_unlit_hit
+    debug: true
+  P_4:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_b4
+    enable_events:
+      - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=3}
+      - P_3_unlit_hit
+    #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=3}
+    # disable_events:
+    #   #- mode_protoculture_started{device.counters.protoculture_hit_counter.value<3 or device.counters.protoculture_hit_counter.value>3}
+    #   - mode_invid_invasion_started
+    advance_events: P_4_unlit_hit
+    debug: true
+  P_5:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_b5
+    enable_events:
+      - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=4}
+      - P_4_unlit_hit
+    #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=4}
+    # disable_events:
+    #   #- mode_protoculture_started{device.counters.protoculture_hit_counter.value<3 or device.counters.protoculture_hit_counter.value>3}
+    #   - mode_invid_invasion_started
+    advance_events: P5_unlit_hit
+    debug: true
+  P_6:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_b6
+    enable_events:
+      - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=5}
+      - P_5_unlit_hit
+    advance_events: P6_unlit_hit
+    debug: true
+  P_7:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_b7
+    enable_events:
+      - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=6}
+      - P_6_unlit_hit
+    advance_events: P7_unlit_hit
+    debug: true
+  P_8:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_b8
+    enable_events:
+      - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=7}
+      - P_7_unlit_hit
+    advance_events: P8_unlit_hit
+    debug: true
+  P_9:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_b9
+    enable_events:
+      - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=8}
+      - P_8_unlit_hit
+    advance_events: P9_unlit_hit
+    debug: true
+
+shot_profiles:
+  protoculture_profile:
+    advance_on_hit: true
+    states:
+    - name: unlit
+      show: off
+    - name: hit
+      show: protoculture_cell_on
+
+variable_player:
+  P_1_unlit_hit:
+    score: 2000
+  P_2_unlit_hit:
+    score: 2000
+  P_3_unlit_hit:
+    score: 2000
+  P_4_unlit_hit:
+    score: 2000
+  P_5_unlit_hit:
+    score: 2000
+  P_6_unlit_hit:
+    score: 2000
+  P_7_unlit_hit:
+    score: 2000
+  P_8_unlit_hit:
+    score: 2000
