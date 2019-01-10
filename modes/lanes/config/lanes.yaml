@@ -1,0 +1,283 @@
+#config_version=5
+
+mode:
+  start_events: ball_starting
+  priority: 200
+
+shots:
+  r_top_lane_shot:
+    switch: s_r_top_lane
+    show_tokens:
+      leds: l_r_light
+  o1_top_lane_shot:
+    switch: s_o1_top_lane
+    show_tokens:
+      leds: l_o_light
+  b_top_lane_shot:
+    switch: s_b_top_lane
+    show_tokens:
+      leds: l_b_light
+  o2_top_lane_shot:
+    switch: s_o2_top_lane
+    show_tokens:
+      leds: l_o2_light
+  left_outlane_t_shot:
+    switch: s_kickback_t
+    show_tokens:
+      leds: l_left_outlane_t
+  left_inlane_e_shot:
+    switch: s_left_inlane_e
+    show_tokens:
+      leds: l_left_inlane_e
+  right_inlane_c_shot:
+    switch: s_right_inlane_c
+    show_tokens:
+      leds: l_right_inlane_c
+  right_outlane_h_shot:
+    switch: s_right_outlane_h
+    show_tokens:
+      leds: l_right_outlane_h
+
+shot_groups:
+  robotech_lanes_shots:
+    shots: r_top_lane_shot, o1_top_lane_shot, b_top_lane_shot, o2_top_lane_shot, left_outlane_t_shot, left_inlane_e_shot, right_inlane_c_shot, right_outlane_h_shot
+    rotate_left_events: sw_left_flipper_active
+    rotate_right_events: sw_right_flipper_active
+    reset_events: lanes_show, ball_started #tech_lanes_shots_lit_complete
+    enable_events: mode_lanes_starting, mode_annie_mode_stopped
+    disable_events: mode_bonus_will_start, mode_annie_mode_started
+    #debug: True
+  # robo_lanes_shots:
+  #   shots: r_top_lane_shot, o1_top_lane_shot, b_top_lane_shot, o2_top_lane_shot
+  #   rotate_right_events: sw_right_flipper_active
+  #   reset_events: lanes_show, ball_started #robo_lanes_shots_lit_complete, ball_started
+  #   #debug: true
+
+show_player:
+  lanes_show:
+    robotech_lanes_complete:
+      loops: 3
+      speed: 10
+      show_tokens:
+        color: red
+    tech_hotdog:
+      loops: 0
+      show_tokens:
+        color: red
+    # robo_lanes_complete:
+    #   loops: 3
+    #   speed: 10
+    #   show_tokens:
+    #     color: red
+    robo_hotdog:
+      loops: 0
+      show_tokens:
+        color: red
+  light_multiplier_2x:
+    light_multiplier_2x_led:
+      loops: 0
+  light_multiplier_3x:
+    light_multiplier_3x_led:
+      loops: 0
+  r_top_lane_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_r_light
+        color: white
+  r_top_lane_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_r_light
+        color: white
+  o1_top_lane_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_o_light
+        color: white
+  o1_top_lane_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_o_light
+        color: white
+  b_top_lane_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_b_light
+        color: white
+  b_top_lane_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_b_light
+        color: white
+  o2_top_lane_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_o2_light
+        color: white
+  o2_top_lane_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_o2_light
+        color: white
+  left_outlane_t_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_left_outlane_t
+        color: white
+  left_outlane_t_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_left_outlane_t
+        color: white
+  left_inlane_e_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_left_inlane_e
+        color: white
+  left_inlane_e_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_left_inlane_e
+        color: white
+  right_inlane_c_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_right_inlane_c
+        color: white
+  right_inlane_c_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_right_inlane_c
+        color: white
+  right_outlane_h_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_right_outlane_h
+        color: white
+  right_outlane_h_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_right_outlane_h
+        color: white
+
+variable_player:
+  r_top_lane_shot_unlit_hit:
+    score: 1000
+  o1_top_lane_shot_unlit_hit:
+    score: 1000
+  b_top_lane_shot_unlit_hit:
+    score: 1000
+  o2_top_lane_shot_unlit_hit:
+    score: 1000
+  r_top_lane_shot_lit_hit:
+    score: 500
+  o1_top_lane_shot_lit_hit:
+    score: 500
+  b_top_lane_shot_lit_hit:
+    score: 500
+  o2_top_lane_shot_lit_hit:
+    score: 500
+  left_outlane_t_shot_unlit_hit:
+    score: 1000
+  left_inlane_e_shot_unlit_hit:
+    score: 1000
+  right_inlane_c_shot_unlit_hit:
+    score: 1000
+  right_outlane_h_shot_unlit_hit:
+    score: 1000
+  left_outlane_t_shot_lit_hit:
+    score: 500
+  left_inlane_e_shot_lit_hit:
+    score: 500
+  right_inlane_c_shot_lit_hit:
+    score: 500
+  right_outlane_h_shot_lit_hit:
+    score: 500
+  robotech_lanes_shots_lit_complete:
+    score: 10000
+    #debug: true
+  increment_multiplier:
+    bonus_multiplier: 1
+  increment_bonus_lanes:
+    bonus_lanes: 1
+
+#counters:
+  # robo_lanes_complete_count:
+  #   count_events: robo_lanes_shots_lit_complete
+  #   starting_count: 0
+  #   direction: up
+  #   debug: true
+  # tech_lanes_complete_count:
+  #   count_events: tech_lanes_shots_lit_complete
+  #   starting_count: 0
+  #   direction: up
+  #   debug: true
+  # bonus_multiplier:
+  #   count_events: increment_multiplier
+  #   starting_count: 1
+  #   count_complete_value: 3
+  #   direction: up
+  #   debug: true
+
+accruals:
+  bonus_multiplier_2x_award:
+    events:
+      - robotech_lanes_shots_lit_complete
+    events_when_complete: increment_multiplier, light_multiplier_2x, start_bonus_multiplier_3x_award, lanes_show
+    enable_events: ball_started
+    start_enabled: True
+    disable_on_complete: true #false
+    reset_events: ball_ended
+    #debug: true
+  bonus_multiplier_3x_award:
+    events:
+      - robotech_lanes_shots_lit_complete
+    events_when_complete: increment_multiplier, light_multiplier_3x, start_bonus_lanes, lanes_show
+    enable_events: start_bonus_multiplier_3x_award
+    start_enabled: false
+    #reset_on_complete: False
+    disable_on_complete: true #false
+    reset_events: ball_ended
+    #debug: true
+  bonus_lanes:
+    events:
+      - robotech_lanes_shots_lit_complete
+    events_when_complete: increment_bonus_lanes, lanes_show
+    enable_events: start_bonus_lanes
+    start_enabled: false
+    reset_on_complete: true
+    disable_on_complete: false
+    reset_events: ball_ended
+    #debug: true
