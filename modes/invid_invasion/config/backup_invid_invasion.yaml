@@ -1,0 +1,255 @@
+#config_version=5
+
+mode:
+   start_events: start_invid_invasion
+   stop_events:
+     - timer_invid_invasion_complete
+     #- multiball_invid_invasion_quick_2_ball_ended
+     #- invid_invasion_success|1s
+     - ball_will_end
+   stop_on_ball_end: true
+   priority: 300
+
+event_player:
+  multiball_invid_invasion_quick_2_ball_started:
+    - drop_reset_up
+  drop_target_left_drop_down:
+    - drop_reset_up|1s
+  drop_target_middle_drop_down:
+    - drop_reset_up|1s
+  drop_target_right_drop_down:
+    - drop_reset_up|1s
+  mode_invid_invasion_started:
+    #- start_mission_1|3s
+    - orbit_gate_enable
+  mode_invid_invasion_stopping:
+    - orbit_gate_disable
+  timer_invid_invasion_complete:
+    - ramp_up_active{device.switches.s_ramp_switch.state == 1}
+
+slides:
+  intro_invid_invasion:
+    widgets:
+      - type: text
+        text: INVID INVASION!!!
+        color: white
+        font_size: 130
+        y: center+50
+      - type: text
+        text: Destroy 15 Enemy Invid
+        color: white
+        y: center-50
+        font_size: 80
+  ball_added_slide:
+    widgets:
+      - type: text
+        text: BALL ADDED!!
+        color: red
+        font_size: 130
+        y: center+50
+
+slide_player:
+  add_ball:
+    ball_added_slide:
+       expire: 2s
+       priority: 350
+
+widget_player:
+  timer_invid_invasion_started: ii_timer_widget
+  timer_invid_invasion_tick:
+    ii_timer_widget:
+      action: update
+
+widgets:
+  ii_timer_widget:
+    - type: text
+      text: (ticks_remaining)
+      color: white
+      font_size: 80
+      y: center-50
+
+queue_event_player:
+  mode_invid_invasion_started:
+    queue_event: my_queue
+    events_when_finished: start_multiball
+
+queue_relay_player:
+  my_queue:
+    post: start_mode_multiball_intro
+    wait_for: mode_multiball_show_ended
+  balldevice_bd_trough_ball_eject_attempt.1{not mode.qualify_invid_invasion.active and not mode.ball_save_invid_invasion.active}:
+    post: wait_for_instructions
+    wait_for: mode_multiball_show_ended
+  balldevice_bd_right_lock_ball_eject_attempt.1{not mode.qualify_invid_invasion.active and not mode.ball_save_invid_invasion.active}:
+    post: start_mode_multiball_intro
+    wait_for: mode_multiball_show_ended
+
+# queue_relay_player:
+#   my_queue:
+#     post: start_mode_multiball_intro
+#     wait_for: mode_multiball_show_ended
+#   balldevice_bd_trough_ball_eject_attempt{(not mode.qualify_invid_invasion.active) and not mode.ball_save_invid_invasion.active and mode.ball_save_invid_invasion_add_a_ball.active}:
+#     post: wait_for_instructions
+#     wait_for: mode_multiball_show_ended
+
+show_player:
+  start_mode_multiball_intro:
+    multiball_intro:
+      loops: 0
+      events_when_completed: mode_multiball_show_ended
+  invid_invasion_jackpot_show:
+    fast_flash_show:
+      key: invid_invasion_jackpot_flash
+      speed: 5
+      show_tokens:
+        leds: l_mode_start
+        color: purple
+      action: play
+      loops: -1
+
+shows:
+  multiball_intro:
+    - duration: 5
+      slides:
+        intro_invid_invasion
+
+multiball_locks:
+  invid_invasion_multiball:
+  #invid_invasion_ball_lock:
+  #invid_invasion_ball_hold:
+    #balls_to_hold: 1
+    balls_to_lock: 1
+    lock_devices: bd_right_lock
+    #hold_devices: bd_left_lock
+    #lock_devices: bd_left_lock
+    #release_one_events: start_mission_1
+    #reset_events: machine_reset_phase_3, ball_starting, ball_will_end, service_mode_entered, start_mission_1
+    #reset_count_for_current_player_events: quick_2_ball_start
+    disable_events: invid_invasion_quick_2_ball_started
+
+multiballs:
+  invid_invasion_quick_2_ball:
+    ball_count: 2
+    ball_count_type: total
+    # start_events: start_multiball
+    start_or_add_a_ball_events: start_multiball #multiball_lock_invid_invasion_multiball_locked_ball
+    ball_locks: bd_right_lock
+    shoot_again: 0
+    add_a_ball_events: add_ball
+    debug: true
+
+timers:
+   invid_invasion:
+     start_value: 60
+     end_value: 0
+     direction: down
+     tick_interval: 1s
+     control_events:
+       - action: start
+         event: mode_multiball_show_ended #start_mission_1
+      # - action: stop
+      #   event: invid_invasion_success
+
+
+# shot_profiles:
+#   restart_mball:
+#     states:
+#     - name: flashing
+#       show: start_invid_invasion
+#       show_tokens:
+#         loops: -1
+#         speed: 13
+#     - name: hit
+#       show: off
+
+counters:
+  invid_hit_counter:
+    count_events: sw_invid_active
+    starting_count: 0
+    count_complete_value: 15
+    events_when_complete: invid_invasion_success, ramp_down_active, orbit_gate_disable, invid_invasion_jackpot_show
+  add_a_ball_counter:
+    count_events: sdf_bank_shots_lit_complete
+    starting_count: 0
+    count_complete_value: 1
+    events_when_complete: add_ball
+
+  # left_lock_made:
+  #   count_events: balldevice_bd_left_lock_ball_entered
+  #   starting_count: 0
+  #   count_complete_value: 1
+  #   direction: up
+  #   #persist_state: true
+  #   #reset_on_complete: false
+  #   events_when_complete: add_ball
+  #   debug: true
+
+# shots:
+#   restart_2ball_multiball_shot:
+#     switch: s_right_lock_kickout
+#     enable_events: multiball_invid_invasion_quick_2_ball_ended
+#     profile: restart_mball
+#     hit_events: add_another_ball
+#     show_tokens:
+#       leds: l_rlock_arrow
+
+#shot_profiles:
+#  quick_flash_green:
+  #  states:
+  #  - name: unlit
+  #    show: flash_green
+    #- name: lit
+  #  - name: complete
+  #    show: off
+
+shot_profiles:
+  invid_invasion_profile:
+    show_when_disabled: false
+    states:
+      - name: flashing
+        show: flash_purple_show
+        speed: 15
+      # - name: hit
+      #   show: color_red_on
+
+shots:
+  left_target_invid_invasion:
+    switch: s_left_target
+    profile: invid_invasion_profile
+    show_tokens:
+      leds: l_t1
+  middle_target_invid_invasion:
+    switch: s_middle_target
+    profile: invid_invasion_profile
+    show_tokens:
+      leds: l_t2
+  right_target_invid_invasion:
+    switch: s_right_target
+    profile: invid_invasion_profile
+    show_tokens:
+      leds: l_t3
+  left_drop_invid_invasion:
+    switch: s_left_drop_target
+    profile: invid_invasion_profile
+    show_tokens:
+      leds: l_t4
+  middle_drop_invid_invasion:
+    switch: s_middle_drop_target
+    profile: invid_invasion_profile
+    show_tokens:
+      leds: l_t5
+      #debug: True
+  right_drop_invid_invasion:
+    switch: s_right_drop_target
+    profile: invid_invasion_profile
+    show_tokens:
+      leds: l_t6
+
+variable_player:
+  ramp_reflex_point_sequence_hit:
+    jackpot_value:
+      int: 20000 * game.balls_in_play #device.playfield.balls #balls_in_play.balls
+      action: set
+    score: 20000 * game.balls_in_play
+  sw_invid_active:
+    invid_invasion_total: 1

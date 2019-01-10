@@ -1,0 +1,5 @@
+Jackpot values:
+
+Jackpot = (#invid hit * 500) * #balls in play
+Double Jackpot = ((#invid hit * 500) * #balls in play) * 2
+Super Jackpot = ((#invid hit * 500) * #balls in play) * 3
