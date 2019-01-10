@@ -1,0 +1,29 @@
+invid_invasion_total:
+- !!python/tuple
+  - WIZ
+  - 59
+- !!python/tuple
+  - WIZ
+  - 58
+score:
+- !!python/tuple
+  - AAA
+  - 1223250
+- !!python/tuple
+  - AAA
+  - 951820
+- !!python/tuple
+  - WIZ
+  - 712520
+- !!python/tuple
+  - WIZ
+  - 709080
+- !!python/tuple
+  - WIZ
+  - 695220
+- !!python/tuple
+  - AAA
+  - 651050
+- !!python/tuple
+  - AAA
+  - 636290
