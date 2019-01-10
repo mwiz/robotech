@@ -1,0 +1,83 @@
+#config_version=5
+
+mode:
+   start_events: ball_starting{ball==1} # {not mode.qualify_invid_invasion.active} #start_pre_qualify_invid_invasion
+   stop_events: qualify_invid_invasion, game_ending
+   restart_on_next_ball: true
+   priority: 400
+
+# event_player:
+#   enable_invid_targets:
+#     - mode_pre_qualify_invid_invasion_starting{not mode.qualify_invid_invasion.active}
+
+counters:
+  invid_target_group_made_qualify_invid_invasion:
+    count_events: invid_target_group_hit_complete
+    starting_count: 0
+    direction: up
+    count_complete_value: 1
+    events_when_complete: qualify_invid_invasion,  invid_invasion_mission_ready
+    persist_state: true
+    #debug: true
+
+shot_groups:
+  invid_target_group:
+    shots: left_target, middle_target, right_target, left_drop, middle_drop, right_drop
+    #reset_events: invid_target_group_hit_complete
+    enable_events: mode_pre_qualify_invid_invasion_starting
+    disable_events: invid_target_group_hit_complete, mode_bonus_will_start # , lanes_invid_skill_cancel_sequence_timeout
+    debug: true
+
+show_player:
+  invid_target_group_hit_complete:
+    invid_targets_complete:
+      show_tokens:
+        color: red
+
+shot_profiles:
+  invid_profile:
+    show_when_disabled: false
+    states:
+      - name: flashing
+        show: flash_red_show
+        speed: 15
+      - name: hit
+        show: color_red_on
+
+shots:
+  left_target:
+    switch: s_left_target
+    profile: invid_profile
+    show_tokens:
+      leds: l_t1
+    debug: true
+  middle_target:
+    switch: s_middle_target
+    profile: invid_profile
+    show_tokens:
+      leds: l_t2
+    debug: true
+  right_target:
+    switch: s_right_target
+    profile: invid_profile
+    show_tokens:
+      leds: l_t3
+    debug: true
+  left_drop:
+    switch: s_left_drop_target
+    profile: invid_profile
+    show_tokens:
+      leds: l_t4
+    debug: true
+  middle_drop:
+    switch: s_middle_drop_target
+    profile: invid_profile
+    show_tokens:
+      leds: l_t5
+    debug: True
+  right_drop:
+    switch: s_right_drop_target
+    profile: invid_profile
+    show_tokens:
+      leds: l_t6
+    debug: true
