@@ -1,0 +1,125 @@
+#config_version=5
+
+mode:
+  priority: 600
+  start_events: game_ending, start_high_score
+  use_wait_queue: true
+
+
+high_score:
+  _overwrite: True
+  enter_initials_timeout: 60
+  award_slide_display_time: 4s
+
+  categories: !!omap
+  - score:
+    - GRAND CHAMPION
+    - HIGH SCORE 1
+    - HIGH SCORE 2
+    - HIGH SCORE 3
+    - HIGH SCORE 4
+    - HIGH SCORE 5
+    - HIGH SCORE 6
+  - invid_invasion_total:
+    - Invid Invasion Champ
+    - Invid Invasion Runner Up
+
+
+slide_player:
+  _overwrite: True
+  high_score_enter_initials: high_score_enter_initials
+  high_score_award_display: high_score_award_display
+
+
+# sound_player:
+# #TODO
+#     grand_champion: well_what_the_heck
+#
+#     high_score_enter_initials: whos_next_on_my_list
+#     shift_left_event: tiny laser
+#     shift_right_event: tiny laser
+#     select_event: making_christmas_drone
+
+
+slides:
+  _overwrite: True
+  high_score_enter_initials:
+  - type: text
+    font_size: 100
+    text: PLAYER (player_num)
+    color: red
+    # x: 105
+    y: center + 60
+
+  - type: text
+    font_size: 100
+    text: (award)
+    color: f0f0f0
+    # x: 105
+    y: center - 30
+
+  - type: text_input
+    initial_char: A
+    key: high_score
+    font_size: 100
+    max_chars: 3
+    #x: 75
+    y: middle - 120
+    shift_left_event: sw_left_flipper
+    shift_right_event: sw_right_flipper
+    select_event: sw_start
+    color: ff0000
+
+  - type: text
+    text: ''
+    key: high_score
+    font_size: 100
+    # x: 95
+    y: middle - 120
+    color: ff00ff
+    animations:
+      show_slide:
+      - property: opacity
+        value: 1
+        duration: 0.3s
+        easing: in_out_quint
+      - property: opacity
+        value: 0
+        duration: 0.3s
+        repeat: true
+        easing: in_out_quint
+
+  high_score_award_display:
+  - type: text
+    text: (player_name)
+    font_size: 150
+    anchor_y: middle
+    anchor_x: middle
+    x: middle
+    y: middle
+    color: 00ff00
+    animations:
+      show_slide:
+      - property: opacity
+        value: 1
+        duration: 0.05s
+      - property: opacity
+        value: 0
+        duration: 0.05s
+        repeat: true
+
+  - type: text
+    text: (award)
+    font_size: 100
+    #x: 105
+    y: middle - 100
+    color: 0000ff
+
+  - type: text
+    text: (value)
+    #x: 105
+    y: middle - 170
+    color: 4040FF
+    font_size: 100
+    number_grouping: true
+    min_digits: 2
