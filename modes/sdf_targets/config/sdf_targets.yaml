@@ -1,0 +1,97 @@
+#config_version=5
+
+mode:
+  start_events: ball_starting
+  #stop_events: mode_qualify_lunk_started
+  priority: 300
+
+shot_groups:
+  sdf_bank_shots:
+    shots: s_target_shot, d_target_shot, f_target_shot
+    enable_events: mode_sdf_targets_starting, mode_qualify_lunk_stopped
+    disable_events: mode_bonus_will_start, mode_qualify_lunk_started
+    reset_events:
+      sdf_bank_shots_lit_complete: 1s
+
+show_player:
+  sdf_bank_shots_lit_complete:
+    sdf_bank_complete:
+      loops: 3
+      speed: 10
+      show_tokens:
+        color: blue
+  s_target_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_s_led
+        color: white
+  s_target_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_s_led
+        color: white
+  d_target_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_d_led
+        color: white
+  d_target_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_d_led
+        color: white
+  f_target_shot_unlit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_f_led
+        color: white
+  f_target_shot_lit_hit:
+    fast_flash_show:
+      loops: 3
+      speed: 30
+      show_tokens:
+        leds: l_f_led
+        color: white
+
+variable_player:
+  s_target_shot_unlit_hit:
+    score: 1000
+  d_target_shot_unlit_hit:
+    score: 1000
+  f_target_shot_unlit_hit:
+    score: 1000
+  s_target_shot_lit_hit:
+    score: 500
+  d_target_shot_lit_hit:
+    score: 500
+  f_target_shot_lit_hit:
+    score: 500
+  sdf_bank_shots_lit_complete:
+    score: 5000
+
+shots:
+  s_target_shot:
+    switch: s_s_target
+    show_tokens:
+      leds: l_s_led
+  d_target_shot:
+    switch: s_d_target
+    show_tokens:
+      leds: l_d_led
+  f_target_shot:
+    switch: s_f_target
+    show_tokens:
+      leds: l_f_led
+
+sound_player:
+    sw_sdf_active: sdf_target_sound
