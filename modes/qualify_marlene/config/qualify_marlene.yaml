@@ -1,0 +1,324 @@
+#config_version=5
+
+mode:
+  start_events:
+    - start_qualify_marlene
+  stop_events:
+    - marlene_collected
+  restart_on_next_ball: true
+  priority: 1700
+
+event_player:
+  drop_target_left_drop_down:
+    - drop_reset_up|1s
+  drop_target_middle_drop_down:
+    - drop_reset_up|1s
+  drop_target_right_drop_down:
+    - drop_reset_up|1s
+  mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==1}:
+    - post_marlene_m
+  mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==2}:
+    - post_marlene_m
+    - post_marlene_a
+  mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==3}:
+    - post_marlene_m
+    - post_marlene_a
+    - post_marlene_r
+  mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==4}:
+    - post_marlene_m
+    - post_marlene_a
+    - post_marlene_r
+    - post_marlene_l
+  mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==5}:
+    - post_marlene_m
+    - post_marlene_a
+    - post_marlene_r
+    - post_marlene_l
+    - post_marlene_e
+  mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==6}:
+    - post_marlene_m
+    - post_marlene_a
+    - post_marlene_r
+    - post_marlene_l
+    - post_marlene_e
+    - post_marlene_n
+  m_shot_flashing_marlene_hit:
+    - post_marlene_m
+  ma_shot_flashing_marlene_hit:
+    - post_marlene_a
+  mar_shot_flashing_marlene_hit:
+    - post_marlene_r
+  marl_shot_flashing_marlene_hit:
+    - post_marlene_l
+  marle_shot_flashing_marlene_hit:
+    - post_marlene_e
+  marlen_shot_flashing_marlene_hit:
+    - post_marlene_n
+  marlene_shot_flashing_marlene_hit:
+    - post_marlene_ee
+
+widget_player:
+  post_marlene_m:
+    marlene_m_widget:
+      action: add
+      slide: base_slide
+  post_marlene_a:
+    marlene_a_widget:
+      action: add
+      slide: base_slide
+  post_marlene_r:
+    marlene_r_widget:
+      action: add
+      slide: base_slide
+  post_marlene_l:
+    marlene_l_widget:
+      action: add
+      slide: base_slide
+  post_marlene_e:
+    marlene_e_widget:
+      action: add
+      slide: base_slide
+  post_marlene_n:
+    marlene_n_widget:
+      action: add
+      slide: base_slide
+  post_marlene_ee:
+    marlene_ee_widget:
+      action: add
+      slide: base_slide
+  mode_qualify_marlene_started:
+    marlene_qualify_image:
+      action: add
+      slide: base_slide
+
+widgets:
+  marlene_qualify_image:
+    - type: image
+      image: marlene_qualify
+      x: center + 550
+      y: center - 75
+  marlene_m_widget:
+    - type: text
+      text: M
+      color: ff1493
+      font_size: 30
+      x: center + 510
+      y: center - 150
+  marlene_a_widget:
+    - type: text
+      text: A
+      color: ff1493
+      font_size: 30
+      x: center + 525
+      y: center - 150
+  marlene_r_widget:
+    - type: text
+      text: R
+      color: ff1493
+      font_size: 30
+      x: center + 540
+      y: center - 150
+  marlene_l_widget:
+    - type: text
+      text: L
+      color: ff1493
+      font_size: 30
+      x: center + 555
+      y: center - 150
+  marlene_e_widget:
+    - type: text
+      text: E
+      color: ff1493
+      font_size: 30
+      x: center + 570
+      y: center - 150
+  marlene_n_widget:
+    - type: text
+      text: N
+      color: ff1493
+      font_size: 30
+      x: center + 585
+      y: center - 150
+  marlene_ee_widget:
+    - type: text
+      text: E
+      color: ff1493
+      font_size: 30
+      x: center + 600
+      y: center - 150
+
+shot_groups:
+  marlene_shot_group:
+    shots: m_shot, ma_shot, mar_shot, marl_shot, marle_shot, marlen_shot, marlene_shot
+    enable_events: mode_rand_mode_stopped, mode_annie_mode_stopped #mode_qualify_marlene_started
+    disable_events: mode_intro_rand_mode_started, mode_annie_mode_started
+    debug: true
+
+shots:
+  m_shot:
+    switch: s_left_target
+    profile: marlene_profile
+    enable_events:
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==0}
+      - mode_skill_shot_combo_stopping
+    disable_events:
+      - m_shot_flashing_marlene_hit
+      - skill_shot_made
+    advance_events:
+      - m_shot_flashing_marlene_hit
+      - qualify_marlene_1st_time{device.counters.marlene_hit_counter.value==0}
+    show_tokens:
+      leds: l_t1
+    debug: true
+  ma_shot:
+    switch: s_middle_target
+    profile: marlene_profile
+    enable_events:
+      - ma_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==1}
+      - mode_skill_shot_combo_stopping
+    disable_events:
+      - ma_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value<1 or device.counters.marlene_hit_counter.value>1}
+      - skill_shot_made
+    advance_events:
+      - m_shot_flashing_marlene_hit
+      - ma_shot_flashing_marlene_hit
+      - qualify_marlene_1st_time{device.counters.marlene_hit_counter.value==1}
+    show_tokens:
+      leds: l_t2
+    debug: true
+  mar_shot:
+    switch: s_right_target
+    profile: marlene_profile
+    enable_events:
+      - ma_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==2}
+      - mode_skill_shot_combo_stopping
+    disable_events:
+      - mar_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value<2 or device.counters.marlene_hit_counter.value>2}
+      - skill_shot_made
+    advance_events:
+      - ma_shot_flashing_marlene_hit
+      - mar_shot_flashing_marlene_hit
+      - qualify_marlene_1st_time{device.counters.marlene_hit_counter.value==2}
+    show_tokens:
+      leds: l_t3
+    debug: true
+  marl_shot:
+    switch: s_left_drop_target
+    profile: marlene_profile
+    enable_events:
+      - mar_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==3}
+      - mode_skill_shot_combo_stopping
+    disable_events:
+      - marl_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value<3 or device.counters.marlene_hit_counter.value>3}
+      - skill_shot_made
+    advance_events:
+      - mar_shot_flashing_marlene_hit
+      - marl_shot_flashing_marlene_hit
+      - qualify_marlene_1st_time{device.counters.marlene_hit_counter.value==3}
+    show_tokens:
+      leds: l_t4
+    debug: true
+  marle_shot:
+    switch: s_middle_drop_target
+    profile: marlene_profile
+    enable_events:
+      - marl_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==4}
+      - mode_skill_shot_combo_stopping
+    disable_events:
+      - marle_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value<4 or device.counters.marlene_hit_counter.value>4}
+      - skill_shot_made
+    advance_events:
+      - marl_shot_flashing_marlene_hit
+      - marle_shot_flashing_marlene_hit
+      - qualify_marlene_1st_time{device.counters.marlene_hit_counter.value==4}
+    show_tokens:
+      leds: l_t5
+    debug: true
+  marlen_shot:
+    switch: s_right_drop_target
+    profile: marlene_profile
+    enable_events:
+      - marle_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==5}
+      - mode_skill_shot_combo_stopping
+    disable_events:
+      - marlen_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value<5 or device.counters.marlene_hit_counter.value>5}
+      - skill_shot_made
+    advance_events:
+      - marle_shot_flashing_marlene_hit
+      - marlen_shot_flashing_marlene_hit
+      - qualify_marlene_1st_time{device.counters.marlene_hit_counter.value==5}
+    show_tokens:
+      leds: l_t6
+    debug: true
+  marlene_shot:
+    switch: s_top_target
+    profile: marlene_profile
+    enable_events:
+      - marlen_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value==6}
+      - mode_skill_shot_combo_stopping
+    disable_events:
+      - marlene_shot_flashing_marlene_hit
+      - mode_qualify_marlene_started{device.counters.marlene_hit_counter.value<6}
+      - skill_shot_made
+    advance_events:
+      - marlen_shot_flashing_marlene_hit
+      - marlene_shot_flashing_marlene_hit
+      - qualify_marlene_1st_time{device.counters.marlene_hit_counter.value==6}
+    show_tokens:
+      leds: l_50k
+    debug: true
+
+shot_profiles:
+  marlene_profile:
+    advance_on_hit: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing_marlene
+      show: flash_marlene_show
+      sync_ms: 1500
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+
+counters:
+  marlene_started_first_time_counter:
+    count_events:
+      - mode_qualify_marlene_started
+    starting_count: 0
+    direction: up
+    count_complete_value: 1
+    reset_on_complete: false
+    events_when_complete: qualify_marlene_1st_time
+    persist_state: true
+  marlene_hit_counter:
+    count_events:
+      - m_shot_flashing_marlene_hit
+      - ma_shot_flashing_marlene_hit
+      - mar_shot_flashing_marlene_hit
+      - marl_shot_flashing_marlene_hit
+      - marle_shot_flashing_marlene_hit
+      - marlen_shot_flashing_marlene_hit
+      - marlene_shot_flashing_marlene_hit
+    starting_count: current_player.marlene_start_count
+    direction: up
+    count_complete_value: 7
+    reset_on_complete: false
+    events_when_complete: marlene_collected
+    persist_state: true
+
+variable_player:
+  marlene_collected:
+    team_members_collected: 1
