@@ -1,0 +1,8 @@
+#show_version=5
+
+- duration: 1
+  lights:
+    playfield: Red-f200ms
+- duration: 1
+  lights:
+    playfield: 000000-f200ms
