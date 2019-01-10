@@ -1,0 +1,51 @@
+#config_version=5
+
+mode:
+  start_events: mode_invid_invasion_started
+  stop_events:
+    - add_ball
+    #- timer_add_a_ball_grace_period_stopped
+    #- ball_will_end
+    - mode_invid_invasion_stopping
+  stop_on_ball_end: true
+  priority: 1000
+
+event_player:
+  add_ball:
+    normal_flippers_enable
+#   multiball_invid_invasion_quick_2_ball_ended:
+#     - start_add_a_ball_grace_period
+
+multiballs:
+  invid_invasion_quick_2_ball:
+    ball_count: 3
+    ball_count_type: total
+    start_or_add_a_ball_events:  mode_multiball_invid_invasion_started, add_ball
+    ball_locks: bd_right_lock
+    shoot_again: 0
+    disable_events: mode_end_invid_invasion_starting
+    #add_a_ball_events: add_ball
+    debug: true
+
+# timers:
+#   add_a_ball_grace_period:
+#     start_value: 0
+#     #end_value: 0
+#     #direction: down
+#
+#     tick_interval: 1s
+#     control_events:
+#       - action: start
+#         event: start_add_a_ball_grace_period
+#       - action: stop
+#         event: add_ball #multiball_invid_invasion_quick_2_ball_started
+
+counters:
+  add_a_ball_counter:
+    count_events: sdf_bank_shots_lit_complete
+    starting_count: 0
+    count_complete_value: 1
+    events_when_complete: add_ball
+    enable_events: multiball_invid_invasion_quick_2_ball_started
+    debug: true
+    #disable_events: multiball_invid_invasion_quick_2_ball_ended
