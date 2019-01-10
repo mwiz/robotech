@@ -1,0 +1,46 @@
+#config_version=5
+
+mode:
+  start_events:
+    - ball_starting
+  stop_events:
+    - pops_level_2
+    - ball_ended
+  priority: 2400
+
+counters:
+  pops_level_1_hit_counter:
+    count_events: pops_shot_hit
+    starting_count: 0
+    direction: up
+    count_complete_value: 75
+    reset_on_complete: true
+    events_when_complete: pops_level_2
+    disable_on_complete: false
+    persist_state: false
+
+# show_player:
+#   s_bottom_r_pop_bumper_active:
+#     flash_pop_bumper_white:
+#       loops: 0
+#       show_tokens:
+#         leds: l_lower_r_pop_bumper
+#   s_bottom_l_pop_bumper_active:
+#     flash_pop_bumper_white:
+#       loops: 0
+#       show_tokens:
+#         leds: l_lower_l_pop_bumper
+#   s_top_r_pop_bumper_active:
+#     flash_pop_bumper_white:
+#       loops: 0
+#       show_tokens:
+#         leds: l_upper_r_pop_bumper
+#   s_top_l_pop_bumper_active:
+#     flash_pop_bumper_white:
+#       loops: 0
+#       show_tokens:
+#         leds: l_upper_l_pop_bumper
+
+variable_player:
+  pops_shot_hit:
+    score: 250
