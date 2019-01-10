@@ -1,0 +1,163 @@
+#config_version=5
+
+mode:
+  start_events:
+    - start_qualify_rook
+  stop_events:
+    - rook_collected
+  restart_on_next_ball: true
+  priority: 1400
+
+event_player:
+  mode_qualify_rook_started{device.counters.rook_hit_counter.value==1}:
+    - post_rook_r
+  mode_qualify_rook_started{device.counters.rook_hit_counter.value==2}:
+    - post_rook_r
+    - post_rook_o
+  mode_qualify_rand_started{device.counters.rand_hit_counter.value==3}:
+    - post_rook_r
+    - post_rook_o
+    - post_rook_oo
+  rr_shot_flashing_rook_hit:
+    - post_rook_r
+  ro_shot_flashing_rook_hit:
+    - post_rook_o
+  roo_shot_flashing_rook_hit:
+    - post_rook_oo
+  rook_shot_flashing_rook_hit:
+    - post_rook_k
+
+widget_player:
+  post_rook_r:
+    rook_r_widget:
+      action: add
+      slide: base_slide
+  post_rook_o:
+    rook_o_widget:
+      action: add
+      slide: base_slide
+  post_rook_oo:
+    rook_oo_widget:
+      action: add
+      slide: base_slide
+  post_rook_k:
+    rook_k_widget:
+      action: add
+      slide: base_slide
+  mode_qualify_rook_started:
+    rook_qualify_image:
+      action: add
+      slide: base_slide
+
+widgets:
+  rook_qualify_image:
+    - type: image
+      image: rook_qualify
+      x: center - 580
+      y: center - 75
+  rook_r_widget:
+    - type: text
+      text: R
+      color: yellow
+      font_size: 40
+      x: center - 620
+      y: center - 150
+  rook_o_widget:
+    - type: text
+      text: O
+      color: yellow
+      font_size: 40
+      x: center - 595
+      y: center - 150
+  rook_oo_widget:
+    - type: text
+      text: O
+      color: yellow
+      font_size: 40
+      x: center - 570
+      y: center - 150
+  rook_k_widget:
+    - type: text
+      text: D
+      color: yellow
+      font_size: 40
+      x: center - 545
+      y: center - 150
+
+shot_groups:
+  rook_shot_group:
+    shots: rr_shot, ro_shot, roo_shot, rook_shot
+    enable_events:  mode_rand_mode_stopped, mode_annie_mode_stopped #,mode_qualify_rook_started
+    disable_events: mode_intro_rand_mode_started, mode_annie_mode_started
+    debug: true
+
+shots:
+  rr_shot:
+    switch: s_right_lock_kickout
+    profile: rook_profile
+    enable_events: mode_qualify_rook_started{device.counters.rook_hit_counter.value==0}
+    disable_events: rr_shot_flashing_rook_hit
+    advance_events: rr_shot_flashing_rook_hit, qualify_rook_1st_time{device.counters.rook_hit_counter.value==0}
+    debug: true
+  ro_shot:
+    switch: s_right_lock_kickout
+    profile: rook_profile
+    enable_events: rr_shot_flashing_rook_hit, mode_qualify_rook_started{device.counters.rook_hit_counter.value==1}
+    disable_events: ro_shot_flashing_rook_hit, mode_qualify_rook_started{device.counters.rook_hit_counter.value<1 or device.counters.rook_hit_counter.value>1}
+    advance_events: rr_shot_flashing_rook_hit, ro_shot_flashing_rook_hit, qualify_rook_1st_time{device.counters.rook_hit_counter.value==1}
+    debug: true
+  roo_shot:
+    switch: s_right_lock_kickout
+    profile: rook_profile
+    enable_events: ro_shot_flashing_rook_hit, mode_qualify_rook_started{device.counters.rook_hit_counter.value==2}
+    disable_events: roo_shot_flashing_rook_hit, mode_qualify_rook_started{device.counters.rook_hit_counter.value<2 or device.counters.rook_hit_counter.value>2}
+    advance_events: ro_shot_flashing_rook_hit, roo_shot_flashing_rook_hit, qualify_rook_1st_time{device.counters.rook_hit_counter.value==2}
+    debug: true
+  rook_shot:
+    switch: s_right_lock_kickout
+    profile: rook_profile
+    enable_events: roo_shot_flashing_rook_hit, mode_qualify_rook_started{device.counters.rook_hit_counter.value==3}
+    disable_events: rook_shot_flashing_rook_hit, mode_qualify_rook_started{device.counters.rook_hit_counter.value<3}
+    advance_events: roo_shot_flashing_rook_hit, rook_shot_flashing_rook_hit, qualify_rook_1st_time{device.counters.rook_hit_counter.value==3}
+    debug: true
+
+shot_profiles:
+  rook_profile:
+    advance_on_hit: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing_rook
+      show: flash_rook_show
+      sync_ms: 1500
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+
+counters:
+  rook_started_first_time_counter:
+    count_events:
+      - mode_qualify_rook_started
+    starting_count: 0
+    direction: up
+    count_complete_value: 1
+    reset_on_complete: false
+    events_when_complete: qualify_rook_1st_time
+    persist_state: true
+  rook_hit_counter:
+    count_events:
+      - rr_shot_flashing_rook_hit
+      - ro_shot_flashing_rook_hit
+      - roo_shot_flashing_rook_hit
+      - rook_shot_flashing_rook_hit
+    starting_count: current_player.rook_start_count
+    direction: up
+    count_complete_value: 4
+    reset_on_complete: false
+    events_when_complete: rook_collected
+    persist_state: true
+
+variable_player:
+  rook_collected:
+    team_members_collected: 1
