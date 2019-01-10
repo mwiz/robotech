@@ -1,0 +1,176 @@
+#config_version=5
+
+mode:
+  start_events:
+    - start_qualify_lunk
+  stop_events:
+    - lunk_collected
+  restart_on_next_ball: true
+  priority: 1600
+
+event_player:
+  mode_qualify_lunk_started{device.counters.lunk_hit_counter.value==1}:
+    - post_lunk_l
+  mode_qualify_lunk_started{device.counters.lunk_hit_counter.value==2}:
+    - post_lunk_l
+    - post_lunk_u
+  mode_qualify_lunk_started{device.counters.lunk_hit_counter.value==3}:
+    - post_lunk_l
+    - post_lunk_u
+    - post_lunk_n
+  lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==1}:
+    - post_lunk_l
+  lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==2}:
+    - post_lunk_u
+  lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==3}:
+    - post_lunk_n
+  lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==4}:
+    - post_lunk_k
+
+show_player:
+  mode_qualify_lunk_started:
+    flash_lunk_show:
+      loops: -1
+      speed: 5
+      sync_ms: 1500
+  mode_rand_mode_stopped:
+    flash_lunk_show:
+      loops: -1
+      speed: 5
+      sync_ms: 1500
+  mode_annie_mode_stopped:
+    flash_lunk_show:
+      loops: -1
+      speed: 5
+      sync_ms: 1500
+  mode_intro_rand_mode_started:
+    flash_lunk_show:
+      action: stop
+  mode_annie_mode_started:
+    flash_lunk_show:
+      action: stop
+  mode_bonus_will_start:
+    flash_lunk_show:
+      action: stop
+
+widget_player:
+  post_lunk_l:
+    lunk_l_widget:
+      action: add
+      slide: base_slide
+  post_lunk_u:
+    lunk_u_widget:
+      action: add
+      slide: base_slide
+  post_lunk_n:
+    lunk_n_widget:
+      action: add
+      slide: base_slide
+  post_lunk_k:
+    lunk_k_widget:
+      action: add
+      slide: base_slide
+  mode_qualify_lunk_started:
+    lunk_qualify_image:
+      action: add
+      slide: base_slide
+  lunk_collected:
+    lunk_qualify_image:
+      action: remove
+
+widgets:
+  lunk_qualify_image:
+    - type: image
+      image: lunk_qualify
+      x: center + 550
+      y: center + 100
+  lunk_l_widget:
+    - type: text
+      text: L
+      color: brown
+      font_size: 40
+      x: center + 520
+      y: center + 25
+  lunk_u_widget:
+    - type: text
+      text: U
+      color: brown
+      font_size: 40
+      x: center + 545
+      y: center + 25
+  lunk_n_widget:
+    - type: text
+      text: N
+      color: brown
+      font_size: 40
+      x: center + 570
+      y: center + 25
+  lunk_k_widget:
+    - type: text
+      text: K
+      color: brown
+      font_size: 40
+      x: center + 595
+      y: center + 200
+
+shot_groups:
+  lunk_shot_group:
+    shots: lunk_shot1, lunk_shot2, lunk_shot3
+    enable_events: mode_rand_mode_stopped, mode_annie_mode_stopped #mode_qualify_lunk_started,
+    disable_events: mode_intro_rand_mode_started, mode_annie_mode_started
+    reset_events:
+      lunk_shot_group_lit_complete: 1s
+    debug: true
+
+shots:
+  lunk_shot1:
+    switch: s_s_target
+    profile: lunk_profile
+    show_tokens:
+      leds: l_s_led
+    debug: true
+  lunk_shot2:
+    switch: s_d_target
+    profile: lunk_profile
+    show_tokens:
+      leds: l_d_led
+    debug: true
+  lunk_shot3:
+    switch: s_f_target
+    profile: lunk_profile
+    show_tokens:
+      leds: l_f_led
+    debug: true
+
+shot_profiles:
+  lunk_profile:
+    advance_on_hit: true
+    states:
+    - name: unlit
+      show: off
+    - name: lit
+      show: color_brown_on
+
+counters:
+  # lunk_started_first_time_counter:
+  #   count_events:
+  #     - mode_qualify_lunk_started
+  #   starting_count: 0
+  #   direction: up
+  #   count_complete_value: 1
+  #   reset_on_complete: false
+  #   events_when_complete: qualify_lunk_1st_time
+  #   persist_state: true
+  lunk_hit_counter:
+    count_events:
+      - lunk_shot_group_lit_complete
+    starting_count: current_player.lunk_start_count
+    direction: up
+    count_complete_value: 4
+    reset_on_complete: false
+    events_when_complete: lunk_collected
+    persist_state: true
+
+variable_player:
+  lunk_collected:
+    team_members_collected: 1
