@@ -1,4 +1,10 @@
-#config_version=4
+#config_version=5
+
+mode:
+  start_events: game_ended, reset_complete
+  stop_events: game_start
+  priority: 10
+  game_mode: False
 
 show_player:
   mode_attract_started:
@@ -8,17 +14,41 @@ show_player:
     all_blink:
       loops: -1
       speed: 1
-  mode_attract_stopping:
+    attract_loop:
+      loops: -1
+  mode_attract_stopped:
     #cycle_all_lights:
     #  action: stop
     all_blink:
       action: stop
-
-sound_player:
-  mode_attract_started:
-    main_title:
-      action: play
-      loops: -1
-  mode_attract_stopped:
-    main_title:
+    attract_loop:
       action: stop
+
+#sound_player:
+ # mode_attract_started:
+ #   main_title:
+  #    action: play
+    #  loops: 0
+    #  mode_end_action: stop
+
+# slides:
+#   attract_started:
+#     widgets:
+#       - type: image
+#         image: attract
+
+# slide_player:
+#   mode_attract_started:
+#     attract_started
+#   mode_attract_stopped:
+#     attract_started:
+#       action: remove
+
+slide_player:
+  flipper_cancel:
+    last_game_scores:
+      priority: 1
+      expire: 10s
+  # sw_right_flipper_active:
+  #   title_screen:
+  #     action: stop
