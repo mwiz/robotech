@@ -1,23 +1,24 @@
-# config_version=4
+#config_version=5
+# Robotech pinball machine
 
 shows:
   quick_flash:
   - time: 0
-    leds:
+    lights:
       (leds): red
   - time: +75ms
-    leds:
+    lights:
       (leds): off
   - time: +75ms
 #  - time: +75ms
-#    leds:
-#      (leds): red
+#    lights:
+#      (lights): red
 #  - time: +75ms
-#    leds:
-#      (leds): off
+#    lights:
+#      (lights): off
 #  - time: +75ms
-#    leds:
-#      (leds): red
+#    lights:
+#      (lights): red
 #  - duration: -1
-#    leds:
-#      (leds): red
+#    lights:
+#      (lights): red
