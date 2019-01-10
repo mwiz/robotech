@@ -1,0 +1,155 @@
+#show_version=5
+
+
+
+- duration: 5
+  slides:
+    title_screen:
+      - type: image
+        image: attract
+
+- duration: 5
+  slides:
+    last_game_scores:
+      - type: text
+        text: Player 1
+        y: center + 100
+        font_size: 80
+      - type: text
+        text: (machine|player1_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        y: center + 40
+      - type: text
+        text: Player 2
+        y: center - 100
+        font_size: 80
+      - type: text
+        text: (machine|player2_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        y: center - 160
+      # widgets:
+      #   - type: text
+      #     text: Player 1
+      #     y: center + 100
+      #     font_size: 80
+      #   - type: text
+      #     text: (machine|player1_score)
+      #     number_grouping: true
+      #     #min_digits: 2
+      #     font_size: 80
+      #     y: center + 40
+
+- duration: 5
+  slides:
+    attract_all_high_scores:
+      - type: text
+        text: (machine|score1_label)
+        y: center + 280
+        font_size: 45
+      - type: text
+        text: (machine|score1_name) (machine|score1_value)
+        number_grouping: true
+        y: center + 250
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score2_label)
+        y: center + 200
+        font_size: 45
+      - type: text
+        text: (machine|score2_name) (machine|score2_value)
+        number_grouping: true
+        y: center + 170
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score3_label)
+        y: center + 120
+        font_size: 45
+      - type: text
+        text: (machine|score3_name) (machine|score3_value)
+        number_grouping: true
+        y: center + 90
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score4_label)
+        y: center + 40
+        font_size: 45
+      - type: text
+        text: (machine|score4_name) (machine|score4_value)
+        number_grouping: true
+        y: center + 10
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score5_label)
+        y: center - 40
+        font_size: 45
+      - type: text
+        text: (machine|score5_name) (machine|score5_value)
+        number_grouping: true
+        y: center - 70
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score6_label)
+        y: center - 120
+        font_size: 45
+      - type: text
+        text: (machine|score6_name) (machine|score6_value)
+        number_grouping: true
+        y: center - 150
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score7_label)
+        y: center - 200
+        font_size: 45
+      - type: text
+        text: (machine|score7_name) (machine|score7_value)
+        number_grouping: true
+        y: center - 230
+        font_size: 40
+        color: red
+    # transition:
+    # type: move_in
+    # direction: right
+    # transition:
+    #   type: push
+    #   duration: 500ms
+    #   direction: left
+
+- duration: 5
+  slides:
+    attract_invid_scores:
+      - type: text
+        text: (machine|invid_invasion_total1_label)
+        y: center + 140
+        font_size: 70
+      - type: text
+        text: (machine|invid_invasion_total1_name) (machine|invid_invasion_total1_value)
+        number_grouping: true
+        y: center + 90
+        font_size: 70
+        color: purple
+      - type: text
+        text: (machine|invid_invasion_total2_label)
+        y: center
+        font_size: 60
+      - type: text
+        text: (machine|invid_invasion_total2_name) (machine|invid_invasion_total2_value)
+        number_grouping: true
+        y: center - 40
+        font_size: 60
+        color: purple
+
+- duration: 5
+  slides:
+    mpf_logo:
+      - type: image
+        image: mpf-logo-full

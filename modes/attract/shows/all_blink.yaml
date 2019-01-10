@@ -1,40 +1,39 @@
-# show_version=4
+#show_version=5
 
 #- time: 0
 - duration: 1
-  leds:
-    playfield: Deep Sky Blue-f200ms
+  lights:
+    playfield: Red-f200ms
 
 #- time: '+1'
 - duration: 1
-  leds:
+  lights:
     playfield: 000000-f200ms
 
 #- time: '+1'
 - duration: 1
-  leds:
+  lights:
     playfield: Green-f200ms
 
 #- time: '+1'
 - duration: 1
-  leds:
+  lights:
     playfield: 000000-f200ms
 
 #- time: '+1'
 - duration: 1
-  leds:
-    playfield: Gold-f200ms
+  lights:
+    playfield: Blue-f200ms
 
 #- time: '+1'
 - duration: 1
-  leds:
+  lights:
     playfield: 000000-f200ms
 
 - duration: 100ms
-  leds:
+  lights:
     flasher: White
 
-- duration: 500ms 
-  leds:
+- duration: 500ms
+  lights:
     flasher: off
-
