@@ -1,0 +1,44 @@
+#config_version=5
+#Robotech
+
+mode:
+    start_events:
+      - mode_annie_mode_will_start
+    stop_events:
+      - ball_save_annie_mode_multiball_disabled
+    priority: 9350
+
+
+ball_saves:
+  annie_mode_multiball:
+    active_time: 20s
+    hurry_up_time: 5s
+    grace_period: 5s
+    timer_start_events:
+      - mode_ball_save_annie_mode_started
+    auto_launch: true
+    balls_to_save: -1
+    debug: true
+
+show_player:
+  ball_save_annie_mode_multiball_timer_start:
+    fast_flash_show:
+      key: annie_mode_save_flash
+      speed: 3
+      show_tokens:
+        leds: l_shoot_again
+        color: FF8000 #orange
+      action: play
+  ball_save_annie_mode_multiball_hurry_up:
+    annie_mode_save_flash:
+      action: stop
+    fast_flash_show:
+      key: annie_mode_hurry_up_flash
+      action: play
+      speed: 20
+      show_tokens:
+        leds: l_shoot_again
+        color: FF8000 #orange
+  ball_save_annie_mode_multiball_grace_period:
+    annie_mode_hurry_up_flash:
+      action: stop
