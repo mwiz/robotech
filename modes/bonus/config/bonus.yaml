@@ -1,0 +1,164 @@
+#config_version=5
+
+mode_settings:
+  display_delay_ms: 1s
+  hurry_up_delay_ms: 0
+  hurry_up_event: flipper_cancel
+  keep_multiplier: false
+  bonus_entries:
+    - event: bonus_modes_display
+      score: 20000 * (current_player.modes_completed)
+      reset_player_score_entry: false
+      skip_if_zero: false
+    - event: bonus_team_members_collected
+      score: 10000 * (current_player.team_members_collected)
+      reset_player_score_entry: false
+      skip_if_zero: false
+    - event: bonus_lanes_display
+      score: 10000 * (current_player.bonus_lanes)
+      reset_player_score_entry: false
+      skip_if_zero: false
+    # - event: three_skillshots_made_display
+    #   score: 50000
+    #   player_score_entry: skill_shots_bonus
+    #   reset_player_score_entry: true
+    #   skip_if_zero: True
+
+widget_player:
+  bonus_modes_display:
+    bonus_modes_completed_widget
+  bonus_team_members_collected:
+    bonus_team_members_widget
+  bonus_lanes_display:
+    bonus_lanes_widget
+  bonus_multiplier:
+    bonus_multiplier_widget
+  bonus_total:
+    bonus_total
+
+#
+slide_player:
+  mode_bonus_started: bonus_slide
+
+slides:
+  bonus_slide:
+    widgets:
+      - type: text
+        text: "END OF BALL BONUS"
+        font_size: 80
+        color: white
+        x: center
+        y: center+260
+      - type: line
+        points: 140, 570, 1100, 570
+        thickness: 3
+        color: white
+        # x: center-50
+        # y: center+240
+
+  # bonus_skillshot_slide:
+  #   widgets:
+  #     - type: text
+  #       text: "3 Skill Shot Bonus"
+  #       font_size: 100
+  #       color: white
+  #     - type: text
+  #       text: (score)
+  #       font_size: 100
+  #       color: red
+  #       z: 110
+  #       y: center-120
+
+widgets:
+  bonus_modes_completed_widget:
+    - type: text
+      text: "Modes Completed"
+      font_size: 50
+      color: white
+      x: center-500
+      y: center+100
+      anchor_x: left
+      anchor_y: bottom
+    - type: text
+      text: "(player|modes_completed) x 20,000 = (score)"
+      font_size: 50
+      color: red
+      x: center+250
+      y: center+100
+      anchor_x: center
+      anchor_y: bottom
+      number_grouping: true
+  bonus_team_members_widget:
+    - type: text
+      text: "Team Members"
+      font_size: 50
+      color: white
+      x: center-500
+      y: center
+      anchor_x: left
+      anchor_y: bottom
+    - type: text
+      text: "(player|team_members_collected) x 10,000 = (score)"
+      font_size: 50
+      color: red
+      x: center+250
+      y: center
+      anchor_x: center
+      anchor_y: bottom
+      number_grouping: true
+  bonus_lanes_widget:
+    - type: text
+      text: "Robotech Lanes"
+      font_size: 50
+      color: white
+      x: center-500
+      y: center-100
+      anchor_x: left
+      anchor_y: bottom
+    - type: text
+      text: "(player|bonus_lanes) x 10,000 = (score)"
+      font_size: 50
+      color: red
+      x: center+250
+      y: center-100
+      anchor_x: center
+      anchor_y: bottom
+      number_grouping: true
+  bonus_multiplier_widget:
+    - type: text
+      text: "Multiplier"
+      font_size: 50
+      color: green
+      x: center-500
+      y: center-200
+      anchor_x: left
+      anchor_y: bottom
+    - type: text
+      text: "(player|bonus_multiplier)X"
+      font_size: 50
+      color: green
+      x: center+250
+      y: center-200
+      anchor_x: center
+      anchor_y: bottom
+  bonus_total:
+    - type: line
+      points: 140, 130, 1100, 130
+      thickness: 3
+      color: white
+    - type: text
+      text: "TOTAL BONUS"
+      font_size: 60
+      x: center-500
+      y: center-300
+      anchor_x: left
+      anchor_y: bottom
+    - type: text
+      text: (score)
+      number_grouping: true
+      color: red
+      font_size: 60
+      x: center+250
+      y: center-300
+      anchor_x: center
+      anchor_y: bottom
