@@ -1,40 +1,46 @@
-# config_version=4
-# Robotech pinball 
+#config_version=5
+# Robotech pinball
+
+
 
 sound_system:
    buffer: 2048
    frequency: 44100
    channels: 2
    master_volume: 1
+   enabled: true
    debug: true
    tracks:
      voice:
        volume: 1
+       priority: 2
        simultaneous_sounds: 1
+       preload: true
      sfx:
        volume: 1
-       simultaneous_sounds: 3
+       priority: 1
+       preload: true
+       simultaneous_sounds: 7
      music:
         volume: 1
-        simultaneous_sounds: 1    
-   enabled: true
+        simultaneous_sounds: 1
+
 
 assets:
-     sounds:
-        default:
-            load: preload
-        voice:
-            load: preload
-            track: voice
-        sfx: 
-            load: preload
-            track: sfx
-        music:
-            load: preload
-            track: music
+  sounds:
+    default:
+      track: sfx
+      #load: preload
+    voice:
+      #load: preload
+      track: voice
+    sfx:
+      #load: preload
+      track: sfx
+    music:
+      #load: preload
+      track: music
 
 sounds:
     main_title:
         target: music
-        
-       
