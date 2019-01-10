@@ -1,0 +1,91 @@
+#config_version=5
+
+mode:
+  start_events: start_end_invid_invasion_mode #timer_invid_invasion_complete
+  stop_events:
+    - end_end_invid_invasion #mode_qualify_rand_started
+  priority: 1100
+
+event_player:
+  mode_end_invid_invasion_started: flipper_off, disable_pop_bumper, disable_sling, kickback_disable{mode.kickback.active}
+  end_invid_invasion_show_ended:
+    - flipper_on
+    - enable_pop_bumper
+    - enable_sling
+    - kickback_enable{mode.kickback.active}
+    - start_qualify_rand
+    - start_qualify_annie
+    - start_qualify_rook
+    - start_qualify_lancer
+    - start_qualify_lunk
+    - start_qualify_marlene
+
+queue_event_player:
+  mode_end_invid_invasion_started:
+    queue_event: my_queue
+    events_when_finished: end_end_invid_invasion # start_character_modes
+
+queue_relay_player:
+  my_queue:
+    post: start_end_invid_invasion_intro
+    wait_for: end_invid_invasion_show_ended
+  balldevice_bd_trough_ball_eject_attempt:
+    post: wait_for_instructions
+    wait_for: end_invid_invasion_show_ended
+
+shows:
+  collect_team_members_intro:
+    - duration: 9
+      slides:
+        scott_crash_landing_slide:
+          widgets:
+            - type: video
+              video: end_invid_invasion
+    - duration: 5
+      slides:
+        collect_team_members_slide:
+          widgets:
+            - type: text
+              text: Make your way to Reflex Point
+              color: red
+              font_size: 80
+              y: center + 100
+            - type: text
+              text: Assemble freedom fighters...
+              color: white
+              y: center-40
+              font_size: 60
+            - type: text
+              text: "   to help defeat the Invid"
+              color: white
+              y: center - 100
+              font_size: 60
+
+
+show_player:
+  start_end_invid_invasion_intro:
+    collect_team_members_intro:
+      loops: 0
+      events_when_stopped: end_invid_invasion_show_ended
+  ball_save_end_invid_invasion_ball_save_enabled:
+    fast_flash_show:
+      key: end_invid_invasion_ball_save_flash
+      speed: 3
+      show_tokens:
+        leds: l_shoot_again
+        color: red
+      action: play
+  mode_end_invid_invasion_show_stopping:
+      end_invid_invasion_ball_save_flash:
+        action: stop
+  flipper_cancel{device.ball_devices.bd_trough.balls==4}:
+    collect_team_members_intro:
+      action: stop
+
+
+ball_saves:
+  end_invid_invasion_ball_save:
+    enable_events: mode_end_invid_invasion_started
+    auto_launch: no
+    balls_to_save: 1
+    debug: yes
