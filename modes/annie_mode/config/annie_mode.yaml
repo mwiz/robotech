@@ -1,0 +1,235 @@
+#config_version=5
+
+mode:
+  start_events:
+    - start_annie_mode{not mode.skill_shot.active}
+  stop_events:
+    - timer_annie_mode_timer_complete
+    - ball_will_end
+    - annie_mode_success
+  stop_on_ball_end: true
+  priority: 3000
+
+event_player:
+ timer_annie_mode_timer_started:
+   logicblock_annie_mode_invid_lanes_shots_made_hit:
+     count: 0
+
+# # This is with a fixed starting value
+# event_player:
+#  timer_annie_mode_timer_started:
+#    logicblock_annie_mode_invid_lanes_shots_made_hit:
+#      count: 6
+# # This is with a dynamic starting value
+# event_player:
+#  timer_annie_mode_timer_started:
+#    logicblock_annie_mode_invid_lanes_shots_made_hit:
+#      count:
+#        value: device.counters.annie_mode_invid_lanes_shots_made.value
+#        type: int
+
+widgets:
+  annie_mode_time_display_widget:
+    - type: text
+      text: TIMER
+      color: blue
+      font_size: 100
+      y: center + 220
+      x: center - 450
+      z: 1101
+  annie_mode_timer_widget:
+    - type: text
+      text: (ticks_remaining)
+      color: red
+      font_size: 100
+      y: center + 150
+      x: center - 450
+      z: 1101
+  annie_left_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 0
+      y: 190
+      z: 1100
+      width: 110
+      height: 500
+      color: black
+  annie_collected_widget:
+    - type: text
+      text: ANNIE Collected
+      color: red
+      font_size: 80
+      x: center
+      y: center+300
+      expire: 2s
+  annie_mode_invid_display_widget:
+    - type: text
+      text: "Invid"
+      color: 2E0854 #purple
+      font_size: 100
+      y: center + 220
+      x: center + 450
+  annie_mode_invid_count_widget:
+    - type: text
+      text: (count)
+      color: green
+      font_size: 100
+      y: center + 150
+      x: center + 450
+
+widget_player:
+  timer_annie_mode_timer_started:
+    annie_mode_time_display_widget:
+      action: add
+      slide: base_slide
+    annie_mode_timer_widget:
+      action: add
+      slide: base_slide
+    annie_mode_invid_display_widget:
+      action: add
+      slide: base_slide
+    annie_mode_invid_count_widget:
+      action: update
+      slide: base_slide
+  timer_annie_mode_timer_tick:
+    annie_mode_timer_widget:
+      action: update
+  mode_annie_mode_started:
+    annie_left_rectangle:
+      action: add
+      slide: base_slide
+    annie_collected_widget:
+      action: add
+      slide: base_slide
+  mode_annie_mode_stopped:
+    annie_left_rectangle:
+      action: remove
+      slide: base_slide
+  logicblock_annie_mode_invid_lanes_shots_made_hit:
+    annie_mode_invid_count_widget:
+      action: update
+      slide: base_slide
+
+timers:
+  annie_mode_timer:
+    debug: true
+    start_value: 60
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: multiball_annie_mode_multiball_started
+      # - action: add
+      #   event: spinner_shot_hit
+      #   value: 1
+      - action: add
+        event: annie_mode_invid_lanes_shots_hit_complete
+        value: 10
+
+multiballs:
+  annie_mode_multiball:
+    ball_count: 2
+    ball_count_type: total
+    start_or_add_a_ball_events:  mode_annie_mode_started, annie_mode_rand_add_ball_1_hit, annie_mode_rook_add_ball_2_hit
+    shoot_again: 0
+    disable_events: mode_annie_mode_stopping
+    debug: true
+
+shots:
+  annie_mode_lane_1_shot:
+    switch: s_r_top_lane
+    profile: invid_targets_annie_mode
+    show_tokens:
+      leds: l_r_light
+  annie_mode_lane_2_shot:
+    switch: s_o1_top_lane
+    profile: invid_targets_annie_mode
+    show_tokens:
+      leds: l_o_light
+  annie_mode_lane_3_shot:
+    switch: s_b_top_lane
+    profile: invid_targets_annie_mode
+    show_tokens:
+      leds: l_b_light
+  annie_mode_lane_4_shot:
+    switch: s_o2_top_lane
+    profile: invid_targets_annie_mode
+    show_tokens:
+      leds: l_o2_light
+  annie_mode_rand_add_ball_1:
+    switch: s_left_lock_kickout
+    profile: annie_mode_rand_add_ball_flash
+    show_tokens:
+      leds: l_llock_arrow
+    enable_events: mode_annie_mode_started
+    disable_events: annie_mode_rand_add_ball_1_hit
+  annie_mode_rook_add_ball_2:
+    switch: s_right_lock_kickout
+    profile: annie_mode_rook_add_ball_flash
+    enable_events:  enable_rook_shot
+    disable_events: mode_annie_mode_started, annie_mode_rook_add_ball_2_hit
+    show_tokens:
+      leds: l_rlock_arrow
+
+shot_groups:
+  annie_mode_invid_lanes_shots:
+    shots: annie_mode_lane_1_shot, annie_mode_lane_2_shot, annie_mode_lane_3_shot, annie_mode_lane_4_shot
+    rotate_left_events: sw_left_flipper_active
+    rotate_right_events: sw_right_flipper_active
+    reset_events: annie_mode_invid_lanes_shots_hit_complete # annie_mode_complete_lanes_show
+    enable_events: mode_annie_mode_starting
+    disable_events: mode_bonus_will_start, mode_annie_mode_stopping
+    debug: true
+
+counters:
+  enable_rook_shot_counter:
+    count_events: annie_mode_invid_lanes_shots_hit_complete
+    starting_count: 0
+    count_complete_value: 1
+    direction: up
+    persist_state: true
+    reset_on_complete: false
+    events_when_complete: enable_rook_shot
+    debug: true
+  annie_mode_invid_lanes_shots_made:
+    count_events: annie_mode_invid_lanes_shots_hit_complete
+    starting_count: 0
+    count_complete_value: 4
+    direction: up
+    persist_state: true
+    reset_on_complete: false
+    events_when_complete: annie_mode_success
+    debug: true
+
+
+shot_profiles:
+  invid_targets_annie_mode:
+    advance_on_hit: true
+    block: true
+    states:
+      - name: flashing
+        show: flash_purple_show
+        loops: -1
+        sync_ms: 250
+      - name: hit
+        show: color_purple_on
+  annie_mode_rand_add_ball_flash:
+    advance_on_hit: true
+    states:
+      - name: flashing
+        show: flash_red_show
+        loops: -1
+        speed: 10
+      - name: hit
+        show: off
+  annie_mode_rook_add_ball_flash:
+    advance_on_hit: true
+    states:
+      - name: flashing
+        show: flash_yellow_show
+        loops: -1
+        speed: 10
+      - name: hit
+        show: off
