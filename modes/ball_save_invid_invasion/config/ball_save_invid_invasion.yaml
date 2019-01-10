@@ -1,0 +1,49 @@
+#config_version=5
+#Robotech
+
+mode:
+    start_events:
+      - mode_invid_invasion_will_start
+    stop_events:
+      - ball_save_invid_invasion_multiball_disabled
+      - mode_end_invid_invasion_started
+    priority: 8500
+
+
+ball_saves:
+  invid_invasion_multiball:
+    active_time: 15s
+    hurry_up_time: 5s
+    grace_period: 5s
+    enable_events: mode_ball_save_invid_invasion_started
+    timer_start_events:
+      #- mode_ball_save_invid_invasion_started{not mode.ball_save.active}
+      - mode_ball_save_invid_invasion_started{not mode.ball_save.active}
+      - mode_ball_save_stopped
+    #early_ball_save_events: s_right_outlane_h_active, s_kickback_t_active
+    auto_launch: true
+    balls_to_save: -1
+    debug: true
+
+show_player:
+  ball_save_invid_invasion_multiball_timer_start:
+    fast_flash_show:
+      key: invid_invasion_save_flash
+      speed: 3
+      show_tokens:
+        leds: l_shoot_again
+        color: purple
+      action: play
+  ball_save_invid_invasion_multiball_hurry_up:
+    invid_invasion_save_flash:
+      action: stop
+    fast_flash_show:
+      key: invid_invasion_hurry_up_flash
+      action: play
+      speed: 20
+      show_tokens:
+        leds: l_shoot_again
+        color: purple
+  ball_save_invid_invasion_multiball_grace_period:
+    invid_invasion_hurry_up_flash:
+      action: stop
