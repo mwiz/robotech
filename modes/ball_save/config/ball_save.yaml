@@ -1,25 +1,73 @@
-# config_version=4
+#config_version=5
+#Robotech
 
 mode:
-    start_events: ball_starting
-    priority: 8500
+    start_events: ball_starting, mode_end_invid_invasion_stopped
+    stop_events: mode_ball_save_done
+    priority: 8000
+
+event_player:
+  # ball_save_default_disabled{mode.kickback.active}:
+  #   - kickback_enable
+  # ball_save_default_grace_period{mode.kickback.active}:
+  #   - kickback_enable
+  ball_save_default_disabled:
+     - mode_ball_save_done #|1s
 
 ball_saves:
   default:
-    active_time: 5s
-    hurry_up_time: 2s
-    grace_period: 10s
-    enable_events: mode_ball_save_started
-    timer_start_events: balldevice_bd_plunger_ball_eject_success
-    auto_launch: no
+    active_time: 10s
+    grace_period: 2s
+    hurry_up_time: 5s
+    enable_events:
+      - mode_ball_save_started
+    timer_start_events:
+      - sw_playfield_active #balldevice_bd_plunger_ball_eject_success
+    early_ball_save_events: s_right_outlane_h_active, s_kickback_t_active
+    auto_launch: true
     balls_to_save: 1
-    debug: yes
+    #debug: true
 
 show_player:
-  ball_save_default_enabled:
+  ball_save_default_timer_start:
     ball_save_flash:
-      speed: 4
-      loops: -1
-  ball_save_default_disabled:
+      action: play
+      speed: 3
+  ball_save_default_hurry_up:
+    ball_save_flash:
+      action: play
+      speed: 9
+  ball_save_default_grace_period:
     ball_save_flash:
       action: stop
+  # ball_save_default_disabled:
+  #   ball_save_flash:
+  #     action: stop
+
+# widgets:
+#   ball_save_left_video:
+#     - type: video
+#       video: ball_save_left
+
+# widget_player:
+#   s_kickback_t_active:
+#     ball_save_left_video:
+#       action: update
+#       widget_settings:
+#         expire: 5.5s
+#         z: 120
+
+sound_player:
+  s_kickback_t_active:
+    come_back_my_scott:
+      action: play
+      #events_when_stopped: mode_ball_save_done
+      #loops: 1
+  s_right_outlane_h_active:
+    come_back_my_scott:
+      action: play
+      #events_when_stopped: mode_ball_save_done
+#   balldevice_bd_trough_ball_enter:
+#     come_back_my_scott:
+#       action: play
+#       events_when_stopped: mode_ball_saved_done
