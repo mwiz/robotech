@@ -1,0 +1,223 @@
+#config_version=5
+
+mode:
+  start_events: start_qualify_lancer
+  stop_events:
+    - lancer_collected
+  restart_on_next_ball: true
+  priority: 1500
+
+event_player:
+  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==1}:
+    - post_lancer_l
+  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==2}:
+    - post_lancer_l
+    - post_lancer_a
+  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==3}:
+    - post_lancer_l
+    - post_lancer_a
+    - post_lancer_n
+  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==4}:
+    - post_lancer_l
+    - post_lancer_a
+    - post_lancer_n
+    - post_lancer_c
+  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==5}:
+    - post_lancer_l
+    - post_lancer_a
+    - post_lancer_n
+    - post_lancer_c
+    - post_lancer_e
+  l_shot_flashing_lancer_hit:
+    - post_lancer_l
+  la_shot_flashing_lancer_hit:
+    - post_lancer_a
+  lan_shot_flashing_lancer_hit:
+    - post_lancer_n
+  lanc_shot_flashing_lancer_hit:
+    - post_lancer_c
+  lance_shot_flashing_lancer_hit:
+    - post_lancer_e
+  lancer_shot_flashing_lancer_hit:
+    - post_lancer_r
+
+widget_player:
+  post_lancer_l:
+    lancer_l_widget:
+      action: add
+      slide: base_slide
+  post_lancer_a:
+    lancer_a_widget:
+      action: add
+      slide: base_slide
+  post_lancer_n:
+    lancer_n_widget:
+      action: add
+      slide: base_slide
+  post_lancer_c:
+    lancer_c_widget:
+      action: add
+      slide: base_slide
+  post_lancer_e:
+    lancer_e_widget:
+      action: add
+      slide: base_slide
+  post_lancer_r:
+    lancer_r_widget:
+      action: add
+      slide: base_slide
+  mode_qualify_lancer_started:
+    lancer_qualify_image:
+      action: add
+      slide: base_slide
+
+widgets:
+  lancer_qualify_image:
+    - type: image
+      image: lancer_qualify
+      x: center + 550
+      y: center + 275
+  lancer_l_widget:
+    - type: text
+      text: L
+      color: purple
+      font_size: 30
+      x: center + 500
+      y: center + 200
+  lancer_a_widget:
+    - type: text
+      text: A
+      color: purple
+      font_size: 30
+      x: center + 515
+      y: center + 200
+  lancer_n_widget:
+    - type: text
+      text: N
+      color: purple
+      font_size: 30
+      x: center + 530
+      y: center + 200
+  lancer_c_widget:
+    - type: text
+      text: C
+      color: purple
+      font_size: 30
+      x: center + 545
+      y: center + 200
+  lancer_e_widget:
+    - type: text
+      text: E
+      color: purple
+      font_size: 30
+      x: center + 560
+      y: center + 200
+  lancer_r_widget:
+    - type: text
+      text: R
+      color: purple
+      font_size: 30
+      x: center + 575
+      y: center + 200
+
+sequence_shots:
+  lancer_shot_sequence:
+    switch_sequence:
+      - s_spinner
+      - s_right_orbit_rollover
+      - s_gate_top_right
+    sequence_timeout: 2s
+
+shot_groups:
+  lancer_shot_group:
+    shots: l_shot, la_shot, lan_shot, lanc_shot, lance_shot, lancer_shot
+    enable_events: mode_rand_mode_stopped, mode_annie_mode_stopped #, mode_qualify_lancer_started
+    disable_events: mode_intro_rand_mode_started, mode_annie_mode_started
+    debug: true
+
+shots:
+  l_shot:
+    hit_events: lancer_shot_sequence_hit
+    profile: lancer_profile
+    enable_events: mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==0}
+    disable_events: l_shot_flashing_lancer_hit
+    advance_events: l_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==0}
+    debug: true
+  la_shot:
+    hit_events: lancer_shot_sequence_hit
+    profile: lancer_profile
+    enable_events: l_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==1}
+    disable_events: la_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<1 or device.counters.lancer_hit_counter.value>1}
+    advance_events: l_shot_flashing_lancer_hit, la_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==1}
+    debug: true
+  lan_shot:
+    hit_events: lancer_shot_sequence_hit
+    profile: lancer_profile
+    enable_events: la_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==2}
+    disable_events: lan_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<2 or device.counters.lancer_hit_counter.value>2}
+    advance_events: la_shot_flashing_lancer_hit, lan_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==2}
+    debug: true
+  lanc_shot:
+    hit_events: lancer_shot_sequence_hit
+    profile: lancer_profile
+    enable_events: lan_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==3}
+    disable_events: lanc_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<3 or device.counters.lancer_hit_counter.value>3}
+    advance_events: lan_shot_flashing_lancer_hit, lanc_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==3}
+    debug: true
+  lance_shot:
+    hit_events: lancer_shot_sequence_hit
+    profile: lancer_profile
+    enable_events: lanc_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==4}
+    disable_events: lance_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<4 or device.counters.lancer_hit_counter.value>4}
+    advance_events: lanc_shot_flashing_lancer_hit, lance_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==4}
+    debug: true
+  lancer_shot:
+    hit_events: lancer_shot_sequence_hit
+    profile: lancer_profile
+    enable_events: lance_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==5}
+    disable_events: lancer_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<5}
+    advance_events: lance_shot_flashing_lancer_hit, lancer_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==5}
+    debug: true
+
+shot_profiles:
+  lancer_profile:
+    advance_on_hit: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing_lancer
+      show: flash_lancer_show
+      sync_ms: 1500
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+
+counters:
+  lancer_started_first_time_counter:
+    count_events:
+      - mode_qualify_lancer_started
+    starting_count: 0
+    direction: up
+    count_complete_value: 1
+    reset_on_complete: false
+    events_when_complete: qualify_lancer_1st_time
+    persist_state: true
+  lancer_hit_counter:
+    count_events:
+      - l_shot_flashing_lancer_hit
+      - la_shot_flashing_lancer_hit
+      - lan_shot_flashing_lancer_hit
+      - lanc_shot_flashing_lancer_hit
+      - lance_shot_flashing_lancer_hit
+      - lancer_shot_flashing_lancer_hit
+    starting_count: current_player.lancer_start_count
+    direction: up
+    count_complete_value: 6
+    reset_on_complete: false
+    events_when_complete: lancer_collected
+    persist_state: true
+
+variable_player:
+  lancer_collected:
+    team_members_collected: 1
