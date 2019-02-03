@@ -4,6 +4,7 @@ mode:
   start_events: start_rand_mode #mode_rand_mode_started
   stop_events:
     - timer_rand_mode_timer_complete
+    - timer_annie_mode_timer_complete
     - ball_will_end
     - rand_mode_success
   stop_on_ball_end: true
@@ -95,8 +96,7 @@ widgets:
       color: black
 
 widget_player:
-  #timer_rand_mode_timer_started:
-  mode_rand_mode_started{not mode.annie_mode.active}:
+  timer_rand_mode_timer_started: # {not mode.annie_mode.active}:
     rand_mode_time_display_widget:
       slide: base_slide
     rand_mode_timer_widget:
@@ -104,14 +104,17 @@ widget_player:
   timer_rand_mode_timer_tick:
     rand_mode_timer_widget:
       action: update
-  mode_rand_mode_started{not mode.annie_mode.active}:
     rand_left_rectangle:
       action: add
       slide: base_slide
-  mode_rand_mode_stopped{not mode.annie_mode.active}:
+  mode_rand_mode_stopped:
     rand_left_rectangle:
       action: remove
       slide: base_slide
+  timer_annie_mode_timer_started:
+    rand_mode_timer_widget:
+      action: remove
+
 
 
 timers:
@@ -123,10 +126,13 @@ timers:
     tick_interval: 1s
     control_events:
       - action: start
-        event: multiball_rand_mode_2_ball_started
+        event: multiball_rand_mode_2_ball_started{not mode.annie_mode.active}
       - action: add
         event: rand_mode_orbits_shot_group_2_flashing_hit
         value: 5
+      - action: stop
+        event: timer_annie_mode_timer_started
+
   target_rotator_1:
     start_running: true
     tick_interval: 2s
@@ -328,7 +334,13 @@ counters:
 
 variable_player:
   rand_mode_invid_shot_group_1_flashing_hit:
-    score: 2000
+    score: 2000 * current_player.pf_multiplier
+  rand_mode_invid_shot_group_3_flashing_hit:
+    score: 3000 * current_player.pf_multiplier
+  rand_mode_orbits_shot_group_2_flashing_hit:
+    score: 3000 * current_player.pf_multiplier
+  rand_mode_invid_shot_group_4_flashing_hit:
+    score: 5000 * current_player.pf_multiplier
 
 # timers:
 #   add_a_ball_grace_period:
