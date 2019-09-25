@@ -1,0 +1,126 @@
+#config_version=5
+
+mode:
+  start_events:
+    - spinner_super
+  stop_events:
+    - ball_ended
+  priority: 7800
+
+event_player:
+  mode_spinner_super_started:
+    logicblock_spinner_super_hit_counter_hit:
+      count:
+        value: device.counters.spinner_super_hit_counter.value
+
+counters:
+  spinner_super_hit_counter:
+    count_events: spinner_shot_hit
+    starting_count: 0
+    direction: up
+    enable_events:
+      - mode_spinner_super_started
+    persist_state: true
+
+widgets:
+  # spinner_super_widget:
+    # - type: text
+    #   text: SUPER SPINNER !!!
+    #   color: purple
+    #   font_size: 80
+    #   x: center
+    #   y: center + 50
+    # - type: text
+    #   text: "Score: 2000"
+    #   color: purple
+    #   font_size: 80
+    #   x: center
+    #   y: center - 50
+  spinner_super_count_widget:
+    - type: text
+      text: "SUPER SPINNER - (count)"
+      color: purple
+      font_size: 30
+      x: center + 450
+      y: center - 240
+    - type: text
+      text: "Value: 2000"
+      color: purple
+      font_size: 30
+      x: center + 450
+      y: center - 270
+
+widget_player:
+  # mode_spinner_super_started:
+  #   spinner_super_widget:
+  #     action: add
+  #     widget_settings:
+  #       expire: 3s
+  #       #z: 110
+  logicblock_spinner_super_hit_counter_hit:
+    spinner_super_count_widget:
+      action: update
+      slide: base_slide
+
+variable_player:
+  spinner_shot_hit:
+    score: 2000 * current_player.pf_multiplier
+    super_spinner_total: 1
+  mode_spinner_level_4_started:
+    spinner_time_value:
+      int: 4
+      action: set
+
+show_player:
+  spinner_shot_hit:
+    flash_spinner_purple:
+      loops: 0
+      show_tokens:
+        leds: l_spinner_flasher
+
+sound_player:
+  mode_spinner_super_started:
+    super_spinner:
+      action: play
+  spinner_shot_hit:
+    spinner_sound4:
+      action: play
+# mode:
+#    start_events: s_left_inlane_e_active
+#    stop_events: timer_super_spinner_complete #, timer_super_spinner_stopped
+#    stop_on_ball_end: true
+#    priority: 125
+#
+# scoring:
+#   spinner_shot_hit:
+#     score:
+#       score: 1000
+#       block: True
+#
+# show_player:
+#   mode_super_spinner_started:
+#     flash_spinner:
+#       loops: -1
+
+#shots:
+#   super_spinner_shot:
+#     switch: s_spinner
+#     show_tokens:
+#       led: l_left_orbit_arrow
+#     profile: super_spinner
+
+#shot_profiles:
+#   super_spinner:
+#     states:
+#      - name: flashing
+#        show: flash
+#        speed: 7
+#     loop: no
+
+# timers:
+#    super_spinner:
+#      start_value: 1
+#      end_value: 7
+#      direction: up
+#      tick_interval: 1s
+#      start_running: true
