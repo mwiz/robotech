@@ -1,0 +1,105 @@
+#config_version=5
+
+mode:
+   start_events:
+     - mode_invid_invasion_stopped #start_pre_qualify_genesis_pit
+   stop_events:
+     - qualify_genesis_pit
+   restart_on_next_ball: true
+   priority: 420
+
+counters:
+  genesis_pit_invid_target_group_made_qualify_genesis_pit:
+    count_events: genesis_pit_invid_target_group_hit_complete
+    starting_count: 0
+    direction: up
+    count_complete_value: 1
+    events_when_complete:
+      - qualify_genesis_pit
+    persist_state: true
+    debug: true
+
+shot_groups:
+  genesis_pit_invid_target_group:
+    shots:
+      - genesis_pit_left_target
+      - genesis_pit_middle_target
+      - genesis_pit_right_target
+      - genesis_pit_left_drop
+      - genesis_pit_middle_drop
+      - genesis_pit_right_drop
+    enable_events:
+      - enable_invid_targets
+      - mode_rand_mode_stopped
+      - mode_annie_mode_stopped
+      - mode_rook_mode_stopped
+    disable_events:
+      - mode_pre_qualify_genesis_pit_starting
+      - mode_intro_rand_mode_started
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+    debug: true
+
+show_player:
+  genesis_pit_invid_target_group_hit_complete:
+    invid_targets_complete:
+      show_tokens:
+        color: red
+
+shot_profiles:
+  genesis_pit_invid_profile:
+    show_when_disabled: false
+    states:
+      - name: flashing
+        show: flash_red_show
+        speed: 5
+        sync_ms: 1500
+      - name: hit
+        show: color_red_on
+
+shots:
+  genesis_pit_left_target:
+    switch: s_left_target
+    profile: genesis_pit_invid_profile
+    show_tokens:
+      leds: l_t1
+    debug: true
+  genesis_pit_middle_target:
+    switch: s_middle_target
+    profile: genesis_pit_invid_profile
+    show_tokens:
+      leds: l_t2
+    debug: true
+  genesis_pit_right_target:
+    switch: s_right_target
+    profile: genesis_pit_invid_profile
+    show_tokens:
+      leds: l_t3
+    debug: true
+  genesis_pit_left_drop:
+    switch: s_left_drop_target
+    profile: genesis_pit_invid_profile
+    show_tokens:
+      leds: l_t4
+    debug: true
+  genesis_pit_middle_drop:
+    switch: s_middle_drop_target
+    profile: genesis_pit_invid_profile
+    show_tokens:
+      leds: l_t5
+    debug: True
+  genesis_pit_right_drop:
+    switch: s_right_drop_target
+    profile: genesis_pit_invid_profile
+    show_tokens:
+      leds: l_t6
+    debug: true
+
+variable_player:
+  genesis_pit_invid_target_group_flashing_hit:
+    score: 1000 * current_player.pf_multiplier|block
+
+# sound_player:
+#   invid_target_group_flashing_hit:
+#     spinner_sound4:
+#       action: play
