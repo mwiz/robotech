@@ -4,16 +4,16 @@
 mode:
     start_events:
       # - achievement_invid_invasion_mission_1_state_started
-      - add_ball
+      - invid_invasion_add_ball
     stop_events:
       - ball_save_invid_invasion_add_a_ball_disabled
       - multiball_invid_invasion_quick_2_ball_ended
       - mode_end_invid_invasion_started
     priority: 9000
 
-event_player:
-  mode_ball_save_invid_invasion_add_a_ball_started:
-    - play_add_a_ball_sound|1s
+#event_player:
+  # mode_ball_save_invid_invasion_add_a_ball_started:
+  #   - play_add_a_ball_sound|1s
 
 ball_saves:
   invid_invasion_add_a_ball:
@@ -36,7 +36,7 @@ show_player:
       speed: 3
       show_tokens:
         leds: l_shoot_again
-        color: purple
+        color: blue
       action: play
   ball_save_invid_invasion_add_a_ball_hurry_up:
     invid_invasion_add_a_ball_save_flash:
@@ -47,25 +47,34 @@ show_player:
       speed: 20
       show_tokens:
         leds: l_shoot_again
-        color: purple
+        color: blue
   ball_save_invid_invasion_add_a_ball_grace_period:
     invid_invasion_add_a_ball_hurry_up_flash:
       action: stop
 
-widgets:
-  add_a_ball_video:
-    - type: video
-      video: add_a_ball
+slides:
+  add_a_ball_slide:
+    widgets:
+      - type: video
+        video: add_a_ball
 
-widget_player:
+# widget_player:
+#   mode_ball_save_invid_invasion_add_a_ball_started:
+#     add_a_ball_video:
+#       action: update
+#       widget_settings:
+#         expire: 2.5s
+#         z: 110
+
+slide_player:
   mode_ball_save_invid_invasion_add_a_ball_started:
-    add_a_ball_video:
-      action: update
-      widget_settings:
-        expire: 2.5s
-        z: 110
-
-sound_player:
-  play_add_a_ball_sound:
-    launch_next_wave:
+    add_a_ball_slide:
       action: play
+      expire: 3.5s
+
+
+
+# sound_player:
+#   play_add_a_ball_sound:
+#     launch_next_wave:
+#       action: play
