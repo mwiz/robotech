@@ -1,0 +1,35 @@
+#config_version=5
+
+mode:
+    start_events: kickback_kickback_main_fired
+    stop_events:
+      - timer_kickback_grace_period_stopped
+      - ball_save_kickback_save_saving_ball
+    restart_on_next_ball: false
+    priority: 1850
+
+event_player:
+  mode_ball_save_qualify_invid_invasion_started:
+    - stop_ball_save_invid_invasion|.5s
+
+ball_saves:
+  kickback_save:
+    balls_to_save: 1
+    active_time: 5s
+    early_ball_save_events: s_right_outlane_h_active
+    auto_launch: true
+    # disable_events: mode_base_started
+    # enable_events: kickback_kickback_main_fired
+    debug: true
+
+show_player:
+  mode_ball_save_kickback_started:
+    flash_kickback:
+      loops: -1
+      speed: 20
+  timer_kickback_grace_period_stopped:
+    flash_kickback:
+      action: stop
+  ball_save_kickback_save_saving_ball:
+    flash_kickback:
+      action: stop
