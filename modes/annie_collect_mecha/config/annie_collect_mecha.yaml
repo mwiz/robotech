@@ -1,0 +1,107 @@
+#config_version=5
+
+mode:
+  start_events:
+    - annie_mode_success
+  stop_events:
+    - ball_will_end
+    - slide_annie_collect_mecha_slide_removed
+  stop_on_ball_end: true
+  priority: 2500
+
+# queue_event_player:
+#   annie_mode_collect_mecha_shot_group_flashing_hit:
+#     queue_event: my_queue_annie_mode_collect_mecha
+#     events_when_finished: annie_mode_collect_mecha_done
+#
+# queue_relay_player:
+#   my_queue_annie_mode_collect_mecha:
+#     post: start_annie_mode_collect_mecha_display
+#     wait_for: annie_mode_collect_mecha_show_ended
+#   balldevice_bd_top_lock_ball_eject_attempt:
+#     post: wait_for_annie_mode_collect_mecha_display
+#     wait_for: annie_mode_collect_mecha_show_ended
+
+
+# shot_groups:
+#     annie_collect_mecha_shot_group:
+#       shots: annie_collect_mecha_shot
+#       enable_events:
+#         - mode_annie_collect_mecha_started
+#         - mode_rand_mode_stopped
+#         - mode_rook_mode_stopped
+#         - mode_lunk_mode_stopped
+#       disable_events:
+#         - annie_collect_mecha_shot_group_flashing_hit
+#         - mode_rand_mode_started
+#         - mode_rook_mode_started
+#         - mode_lunk_mode_started
+
+
+shot_profiles:
+  annie_collect_mecha_flash:
+    advance_on_hit: true
+    states:
+      - name: flashing
+        show: flash_blue_show
+        loops: -1
+        speed: 10
+      - name: hit
+        show: off
+
+shots:
+  annie_collect_mecha_shot:
+    switch: s_left_orbit
+    profile: annie_collect_mecha_flash
+    show_tokens:
+      leds: l_annie_arrow
+      enable_events:
+        - mode_annie_collect_mecha_started
+        - mode_rand_mode_stopped
+        - mode_rook_mode_stopped
+        - mode_lunk_mode_stopped
+      disable_events:
+        - annie_collect_mecha_shot_flashing_hit
+        - mode_rand_mode_started
+        - mode_rook_mode_started
+        - mode_lunk_mode_started
+
+slides:
+  annie_collect_mecha_slide:
+    widgets:
+      - type: text
+        text: GUN Collected
+        color: red
+        font_size: 80
+        x: center
+        y: center+300
+      - type: video
+        video: annie_collect_mecha
+      - type: text
+        text: (mecha_collect_value)
+        font_size: 80
+        x: center
+        y: center-300
+        number_grouping: true
+        color: yellow
+    expire: 3
+
+slide_player:
+  annie_collect_mecha_shot_flashing_hit:
+    annie_collect_mecha_slide
+  # start_collect_mecha_rand_mode_display:
+  #   collect_mecha_rand_mode_display:
+  #     loops: 0
+  #     events_when_stopped: collect_mecha_rand_mode_show_ended
+  #   # alert_show:
+  #   #   loops: -1
+  # flipper_cancel:
+  #   collect_mecha_rand_mode_display:
+  #     action: stop
+
+variable_player:
+  annie_collect_mecha_shot_flashing_hit:
+    score: (50000 * current_player.annie_shot_multiplier) * current_player.pf_multiplier
+    mecha_collect_value:
+      int: (50000 * current_player.annie_shot_multiplier) * current_player.pf_multiplier
+      action: set
