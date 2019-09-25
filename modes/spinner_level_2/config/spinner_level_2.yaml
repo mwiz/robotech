@@ -1,0 +1,141 @@
+#config_version=5
+
+mode:
+  start_events:
+    - spinner_level_2
+  stop_events:
+    - spinner_level_3
+    - ball_ended
+  priority: 7600
+
+event_player:
+  mode_spinner_level_2_started.1{not mode.invid_invasion.active or not mode.rand_mode.active or not mode.annie_mode.active or not mode.rook_mode.active or not mode.lunk_mode.active}:
+      - enable_spinner_level_2
+  mode_spinner_level_2_started.2:
+    logicblock_spinner_level_2_hit_counter_hit:
+      count:
+        value: device.counters.spinner_level_2_hit_counter.value
+  # mode_end_invid_invasion_stopped:
+  #   logicblock_spinner_level_2_hit_counter_hit:
+  #     count:
+  #       value: device.counters.spinner_level_2_hit_counter.value
+  # mode_rand_mode_stopped:
+  #   logicblock_spinner_level_2_hit_counter_hit:
+  #     count:
+  #       value: device.counters.spinner_level_2_hit_counter.value
+  # mode_annie_mode_stopped:
+  #   logicblock_spinner_level_2_hit_counter_hit:
+  #     count:
+  #       value: device.counters.spinner_level_2_hit_counter.value
+  # mode_rook_mode_stopped:
+  #   logicblock_spinner_level_2_hit_counter_hit:
+  #     count:
+  #       value: device.counters.spinner_level_2_hit_counter.value
+
+
+counters:
+  spinner_level_2_hit_counter:
+    count_events: spinner_shot_hit
+    starting_count: current_player.spinner_initial_count
+    direction: down
+    count_complete_value: 0
+    reset_on_complete: true
+    events_when_complete: spinner_level_3
+    disable_on_complete: false
+    enable_events:
+      - enable_spinner_level_2
+      - mode_rand_mode_stopped
+      - mode_annie_mode_stopped
+      - mode_rook_mode_stopped
+      - mode_end_invid_invasion_stopped
+      - mode_lunk_mode_stopped
+    disable_events:
+      - mode_intro_rand_mode_started
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+      - mode_intro_invid_invasion_started
+      - mode_lunk_mode_started
+    persist_state: false
+
+widgets:
+  # spinner_level_2_widget:
+  #   - type: text
+  #     text: SPINNER Level 2
+  #     color: orange
+  #     font_size: 80
+  #     x: center
+  #     y: center + 50
+    # - type: text
+    #   text: "Score: 1000"
+    #   color: orange
+    #   font_size: 80
+    #   x: center
+    #   y: center - 50
+  spinner_level_2_count_widget:
+    - type: text
+      text: "SPINNER: L2 - (count)"
+      color: orange
+      font_size: 35
+      x: center + 450
+      y: center - 230
+    - type: text
+      text: "Value: 1000"
+      color: orange
+      font_size: 30
+      x: center + 450
+      y: center - 260
+
+widget_player:
+  # mode_spinner_level_2_started:
+  #   spinner_level_2_widget:
+  #     action: add
+  #     widget_settings:
+  #       expire: 3s
+        #z: 110
+  logicblock_spinner_level_2_hit_counter_hit:
+    spinner_level_2_count_widget:
+      action: update
+      slide: base_slide
+  # mode_intro_invid_invasion_started:
+  #   spinner_level_2_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_intro_rand_mode_started:
+  #   spinner_level_2_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_annie_mode_started:
+  #   spinner_level_2_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_intro_rook_mode_started:
+  #   spinner_level_2_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_lunk_mode_started:
+  #   spinner_level_2_count_widget:
+  #     action: remove
+  #     slide: base_slide
+
+variable_player:
+  spinner_shot_hit:
+    score: 1000 * current_player.pf_multiplier
+  mode_spinner_level_2_started:
+    spinner_time_value:
+      int: 2
+      action: set
+
+show_player:
+  spinner_shot_hit:
+    flash_spinner_orange:
+      loops: 0
+      show_tokens:
+        leds: l_spinner_flasher
+
+sound_player:
+  mode_spinner_level_2_started:
+    spinner_level_2:
+      action: play
+  spinner_shot_hit:
+    spinner_sound2:
+      action: play
