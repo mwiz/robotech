@@ -1,46 +1,97 @@
 #config_version=5
 
 mode:
-   start_events: qualify_invid_invasion
-   stop_events: mode_intro_invid_invasion_started, game_ending
+   start_events:
+     - qualify_invid_invasion
+   stop_events:
+     - mode_intro_invid_invasion_started
+     #- game_ending
    restart_on_next_ball: true
    priority: 700
 
-show_player:
-  mode_qualify_invid_invasion_started:
-    flash_white_show:
-      key: normal
-      speed: 5
-      show_tokens:
-        leds: l_mode_start
-      loops: -1
-  mode_qualify_invid_invasion_started{current_player.ball==3}:
-    flash_white_show:
-      key: pity
-      speed: 5
-      show_tokens:
-        leds: l_rlock_arrow
-      loops: -1
-  mode_bonus_will_start:
-    pity:
-      action: stop
-    normal:
-      action: stop
-
 event_player:
-  mode_skill_shot_stopped:
-    - ramp_down_active{mode.qualify_invid_invasion.active and not mode.skill_shot.active}|1s #   {{mode.qualify_invid_invasion.active}|1s and not mode.skill_shot.active}
+  mode_skill_shot_stopped{mode.qualify_invid_invasion.active}:
+    - ramp_down_active|.5s # {mode.qualify_invid_invasion.active}: #and not mode.skill_shot.active} #|1s #   {{mode.qualify_invid_invasion.active}|1s and not mode.skill_shot.active}
   mode_qualify_invid_invasion_started:
-    - ramp_down_active{device.switches.s_up_down_ramp_switch.state == 0}|1s  #testing
-  ramp_reflex_point_sequence_hit:
+    - play_what_is_that_flashing|.5s
+    - ramp_diverter_disable
+  #   - ramp_down_active{device.switches.s_up_down_ramp_switch.state == 0}|1s  #testing
+  #   - right_flipper_stronger_enable
+  mode_start_invid_invastion_shot_flashing_hit:
     - start_intro_invid_invasion
     - ramp_up_active
-  ball_search_stopped:
-    - ramp_down_active
-  s_right_lock_kickout_active{current_player.ball==3}:
+  # ball_search_stopped:
+  #   - ramp_down_active
+  pity_invid_invasion_shot_flashing_hit: #s_right_lock_kickout_active{current_player.ball==3}:
     - start_intro_invid_invasion
     - ramp_up_active
+  # mode_qualify_invid_invasion_stopped:
+  #   - normal_flippers_enable
 
+shots:
+  mode_start_invid_invastion_shot:
+    hit_events: ramp_reflex_point_sequence_hit
+    profile: mode_start
+    show_tokens:
+      leds: l_mode_start
+    enable_events:
+      - mode_qualify_invid_invasion_started
+      - diverter_ramp_activating
+    disable_events:
+      - mode_qualify_invid_invasion_stopped
+      - diverter_ramp_deactivating
+  pity_invid_invasion_shot:
+    switch: s_right_lock_kickout
+    profile: mode_start
+    enable_events:
+      - mode_skill_shot_stopped{current_player.ball==3}
+      - mode_qualify_invid_invasion_started{current_player.ball==3}
+    disable_events:
+      - mode_skill_shot_started
+      - mode_qualify_invid_invasion_started{current_player.ball < 3}
+    show_tokens:
+      leds: l_rlock_arrow
+
+shot_profiles:
+  mode_start:
+    advance_on_hit: true
+    states:
+    - name: flashing
+      show: flash_white_show
+      sync_ms: 1000
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+
+# show_player:
+#   mode_qualify_invid_invasion_started.1:
+#     flash_white_show:
+#       key: normal
+#       speed: 5
+#       show_tokens:
+#         leds: l_mode_start
+#       loops: -1
+    # on:
+    #   show_tokens:
+    #     leds: l_mission_1
+  # mode_qualify_invid_invasion_started.2{current_player.ball==3}:
+  #   flash_white_show:
+  #     key: pity
+  #     speed: 5
+  #     show_tokens:
+  #       leds: l_rlock_arrow
+  #     loops: -1
+  # mode_bonus_will_start:
+  #   pity:
+  #     action: stop
+  #   normal:
+  #     action: stop
+
+sound_player:
+  play_what_is_that_flashing:
+    what_is_that_flashing:
+      action: play
 
 #shots:
 #  opening_shot:
