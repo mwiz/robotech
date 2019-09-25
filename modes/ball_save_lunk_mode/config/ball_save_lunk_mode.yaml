@@ -1,0 +1,48 @@
+#config_version=5
+#Robotech
+
+mode:
+    start_events:
+      - mode_lunk_mode_will_start
+    stop_events:
+      - ball_save_lunk_mode_disabled
+    priority: 9650
+
+ball_saves:
+  lunk_mode:
+    active_time: 5s
+    hurry_up_time: 5s
+    grace_period: 3s
+    enable_events: mode_ball_save_lunk_mode_started
+    timer_start_events:
+      - mode_ball_save_lunk_mode_started{not mode.ball_save.active}
+      - mode_ball_save_stopped
+    auto_launch: true
+    early_ball_save_events:
+      - s_right_outlane_h_active
+      - s_kickback_t_active{not mode.kickback.active}
+    balls_to_save: -1
+    debug: true
+
+show_player:
+  ball_save_lunk_mode_timer_start:
+    fast_flash_show:
+      key: lunk_mode_save_flash
+      speed: 3
+      show_tokens:
+        leds: l_shoot_again
+        color: 654321
+      action: play
+  ball_save_lunk_mode_hurry_up:
+    lunk_mode_save_flash:
+      action: stop
+    fast_flash_show:
+      key: lunk_mode_hurry_up_flash
+      action: play
+      speed: 20
+      show_tokens:
+        leds: l_shoot_again
+        color: 654321
+  ball_save_lunk_mode_grace_period:
+    lunk_mode_hurry_up_flash:
+      action: stop
