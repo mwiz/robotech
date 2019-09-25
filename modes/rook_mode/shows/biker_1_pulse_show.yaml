@@ -1,0 +1,8 @@
+#show_version=5
+
+- duration: 400ms
+  lights:
+    (leds): Red-f200ms
+- duration: 400ms
+  lights:
+    (leds): black-f200ms

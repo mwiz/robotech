@@ -1,36 +1,92 @@
 #config_version=5
 
 mode:
-  start_events: start_rook_mode
+  start_events:
+    #- start_rook_mode
+    - mode_intro_rook_mode_started
   stop_events:
     - timer_rook_mode_timer_complete
     - ball_will_end
     - rook_mode_success
   stop_on_ball_end: true
-  priority: 2200
+  priority: 4700
 
 event_player:
-  mode_rook_mode_started:
-    - orbit_gate_disable
-  # multiball_rand_mode_2_ball_started:
-  #   - drop_reset_up
-  # drop_target_left_drop_down:
-  #   - drop_reset_up|1s
-  # drop_target_middle_drop_down:
-  #   - drop_reset_up|1s
-  # drop_target_right_drop_down:
-  #   - drop_reset_up|1s
-  # rand_mode_invid_shot_group_4_flashing_hit:
-  #   - rand_mode_success
+  mode_rook_mode_started.1:
+    logicblock_biker_gang_defeated_counter_hit:
+      count: 0
+    logicblock_biker_1_shots_made_counter_hit{device.counters.biker_1_shots_made_counter.value == 15}:
+      count: 15
+    logicblock_biker_2_shots_made_counter_hit{device.counters.biker_2_shots_made_counter.value == 15}:
+      count: 15
+    logicblock_biker_3_shots_made_counter_hit{device.counters.biker_3_shots_made_counter.value == 15}:
+      count: 15
+    logicblock_biker_4_shots_made_counter_hit{device.counters.biker_4_shots_made_counter.value == 15}:
+      count: 15
+    logicblock_biker_1_shots_made_counter_hit{device.counters.biker_1_shots_made_counter.value == 20}:
+      count: 20
+    logicblock_biker_2_shots_made_counter_hit{device.counters.biker_2_shots_made_counter.value == 20}:
+      count: 20
+    logicblock_biker_3_shots_made_counter_hit{device.counters.biker_3_shots_made_counter.value == 20}:
+      count: 20
+    logicblock_biker_4_shots_made_counter_hit{device.counters.biker_4_shots_made_counter.value == 20}:
+      count: 20
+  mode_rook_mode_started.2:
+    timer_rook_mode_timer_tick:
+      ticks_remaining: 60
+  mode_rook_mode_started.3:
+    - display_rook_mode_widgets
+  multiball_rook_mode_multiball_started:
+    - drop_reset_up
+    - play_rook_mode_music
+  drop_target_left_drop_down:
+    - drop_reset_up|1s
+  drop_target_middle_drop_down:
+    - drop_reset_up|1s
+  drop_target_right_drop_down:
+    - drop_reset_up|1s
+  # mode_rook_mode_stopping:
+  #   - enable_Upper_Left_pop_bumper
+  #   - enable_Upper_Right_pop_bumper
+  #   - enable_Lower_Left_pop_bumper
+  #   - enable_Lower_Right_pop_bumper
+  # timer_rook_mode_timer_started:
+  #   logicblock_biker_gang_defeated_counter_hit:
+  #     count: 0
+  #   logicblock_biker_1_shots_made_counter_hit{device.counters.biker_1_shots_made_counter.value == 15}:
+  #     count: 15
+  #   logicblock_biker_2_shots_made_counter_hit{device.counters.biker_2_shots_made_counter.value == 15}:
+  #     count: 15
+  #   logicblock_biker_3_shots_made_counter_hit{device.counters.biker_3_shots_made_counter.value == 15}:
+  #     count: 15
+  #   logicblock_biker_4_shots_made_counter_hit{device.counters.biker_4_shots_made_counter.value == 15}:
+  #     count: 15
+  #   logicblock_biker_1_shots_made_counter_hit{device.counters.biker_1_shots_made_counter.value == 20}:
+  #     count: 20
+  #   logicblock_biker_2_shots_made_counter_hit{device.counters.biker_2_shots_made_counter.value == 20}:
+  #     count: 20
+  #   logicblock_biker_3_shots_made_counter_hit{device.counters.biker_3_shots_made_counter.value == 20}:
+  #     count: 20
+  #   logicblock_biker_4_shots_made_counter_hit{device.counters.biker_4_shots_made_counter.value == 20}:
+  #     count: 20
+  logicblock_biker_gang_defeated_counter_updated.1{value==1}:
+    - biker_1st_done
+  logicblock_biker_gang_defeated_counter_updated.2{value==2}:
+    - biker_2nd_done
 
 multiballs:
   rook_mode_multiball:
-    ball_count: 2
-    ball_count_type: total
-    start_or_add_a_ball_events:  mode_rook_mode_started, rook_mode_rand_add_a_ball_hit
+    ball_count: 1
+    ball_count_type: add #total
+    start_or_add_a_ball_events:
+      #- mode_rook_mode_started
+      - stop_intro_rook_mode
+      - rook_mode_rand_add_ball_hit
+    #add_a_ball_events: rook_mode_rand_add_ball_hit
     ball_locks: bd_right_lock
     shoot_again: 0
-    disable_events: mode_rook_mode_stopping
+    # disable_events:
+    #   - mode_rook_mode_stopping
     debug: true
 
 widgets:
@@ -54,31 +110,255 @@ widgets:
     - type: rectangle
       anchor_x: left
       anchor_y: bottom
-      x: 0
+      x: 13
       y: 190
       z: 1100
-      width: 110
+      width: 125
       height: 500
       color: black
+  rook_right_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 1137
+      y: 190
+      z: 1100
+      width: 130
+      height: 500
+      color: black
+  rook_mode_gang_display_widget:
+    - type: text
+      text: "Biker Gang"
+      color: 2E0854 #purple
+      font_size: 80
+      y: center + 220
+      x: center + 450
+      z: 1101
+  rook_mode_gang_count_widget:
+    - type: text
+      text: "(count)/3"
+      color: green
+      font_size: 100
+      y: center + 150
+      x: center + 445
+      z: 1101
+  biker_1_circle:
+    - type: ellipse
+      width: 125
+      height: 125
+      x: center - 100
+      y: center + 100
+      z: 1100
+      color: red
+  biker_2_circle:
+    - type: ellipse
+      width: 125
+      height: 125
+      x: center + 100
+      y: center + 100
+      z: 1100
+      color: red
+  biker_3_circle:
+    - type: ellipse
+      width: 125
+      height: 125
+      x: center - 100
+      y: center - 100
+      z: 1100
+      color: red
+  biker_4_circle:
+    - type: ellipse
+      width: 125
+      height: 125
+      x: center + 100
+      y: center - 100
+      z: 1100
+      color: red
+  rook_mode_biker_1_count_widget:
+    - type: text
+      text: (count)
+      color: black
+      font_size: 50
+      x: center - 100
+      y: center + 100
+      z: 1101
+  rook_mode_biker_2_count_widget:
+    - type: text
+      text: (count)
+      color: black
+      font_size: 50
+      x: center + 100
+      y: center + 100
+      z: 1101
+  rook_mode_biker_3_count_widget:
+    - type: text
+      text: (count)
+      color: black
+      font_size: 50
+      x: center - 100
+      y: center - 100
+      z: 1101
+  rook_mode_biker_4_count_widget:
+    - type: text
+      text: (count)
+      color: black
+      font_size: 50
+      x: center + 100
+      y: center - 100
+      z: 1101
 
 widget_player:
-  timer_rook_mode_timer_started:
-    rook_mode_time_display_widget:
-      slide: base_slide
-    rook_mode_timer_widget:
-      slide: base_slide
-  timer_rook_mode_timer_tick:
-    rook_mode_timer_widget:
-      action: update
-  mode_rook_mode_started:
+  #timer_rook_mode_timer_started:
+  display_rook_mode_widgets:
     rook_left_rectangle:
       action: add
       slide: base_slide
-  mode_rook_mode_stopped:
-    rook_left_rectangle:
-      action: remove
+      priority: 4701
+    rook_right_rectangle:
+      action: add
       slide: base_slide
+    rook_mode_time_display_widget:
+      action: add
+      slide: base_slide
+      priority: 4702
+    rook_mode_timer_widget:
+      action: update
+      slide: base_slide
+      priority: 4703
+    rook_mode_gang_display_widget:
+      action: add
+      slide: base_slide
+      priority: 4704
+    rook_mode_gang_count_widget:
+      action: update
+      slide: base_slide
+      priority: 4705
+    biker_1_circle:
+      action: add
+      slide: base_slide
+      priority: 4706
+    biker_2_circle:
+      action: add
+      slide: base_slide
+      priority: 4707
+    biker_3_circle:
+      action: add
+      slide: base_slide
+      priority: 4708
+    biker_4_circle:
+      action: add
+      slide: base_slide
+      priority: 4709
+  timer_rook_mode_timer_tick:
+    rook_mode_timer_widget:
+      action: update
+      slide: base_slide
+      priority: 4710
+  logicblock_biker_gang_defeated_counter_hit:
+    rook_mode_gang_count_widget:
+      action: update
+      slide: base_slide
+      priority: 4711
+  logicblock_biker_1_shots_made_counter_hit:
+    rook_mode_biker_1_count_widget:
+      action: update
+      slide: base_slide
+      priority: 4712
+  logicblock_biker_2_shots_made_counter_hit:
+    rook_mode_biker_2_count_widget:
+      action: update
+      slide: base_slide
+      priority: 4713
+  logicblock_biker_3_shots_made_counter_hit:
+    rook_mode_biker_3_count_widget:
+      action: update
+      slide: base_slide
+      priority: 4714
+  logicblock_biker_4_shots_made_counter_hit:
+    rook_mode_biker_4_count_widget:
+      action: update
+      slide: base_slide
+      priority: 4715
+  # mode_rook_mode_stopped:
+  #   rook_left_rectangle:
+  #     action: remove
+  #     slide: base_slide
+  #   rook_right_rectangle:
+  #     action: remove
+  #     slide: base_slide
+  #   biker_1_circle:
+  #     action: remove
+  #     slide: base_slide
+  #   biker_2_circle:
+  #     action: remove
+  #     slide: base_slide
+  #   biker_3_circle:
+  #     action: remove
+  #     slide: base_slide
+  #   biker_4_circle:
+  #     action: remove
+  #     slide: base_slide
+  #   rook_mode_biker_1_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  #   rook_mode_biker_2_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  #   rook_mode_biker_3_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  #   rook_mode_biker_4_count_widget:
+  #     action: remove
+  #     slide: base_slide
 
+slides:
+  rook_mode_1st_kill_slide:
+    widgets:
+      - type: text
+        text: BIKER DEFEATED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: rook_mode_1st_kill
+      - type: text
+        text: (biker_kill_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  rook_mode_2nd_kill_slide:
+    widgets:
+      - type: text
+        text: BIKER DEFEATED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: rook_mode_2nd_kill
+      - type: text
+        text: (biker_kill_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+
+slide_player:
+  biker_1st_done:
+    rook_mode_1st_kill_slide:
+      expire: 6s
+  biker_2nd_done:
+    rook_mode_2nd_kill_slide:
+      expire: 6s
+      #priority: 4705
 
 timers:
   rook_mode_timer:
@@ -90,91 +370,16 @@ timers:
     control_events:
       - action: start
         event: multiball_rook_mode_multiball_started
-      # - action: add
-      #   event: rand_mode_orbits_shot_group_2_flashing_hit
-      #   value: 5
-  target_rotator_1:
-    start_running: true
-    tick_interval: 2s
-    control_events:
-      - action: start
-        event: mode_rand_mode_started
-      - action: stop
-        event: rand_mode_invid_shot_group_1_flashing_hit
-  target_rotator_3:
-    start_running: false
-    tick_interval: 1s
-    control_events:
-      - action: start
-        event: rand_mode_orbits_shot_group_2_flashing_hit{device.counters.orbit_shots_made_counter.value<=1}
-      - action: stop
-        event: rand_mode_invid_shot_group_3_flashing_hit
-    debug: true
-  target_rotator_4:
-    start_running: false
-    tick_interval: 0.75s
-    control_events:
-      - action: start
-        event: orbits_complete
-      - action: stop
-        event: rand_mode_invid_shot_group_4_flashing_hit
-
-
-shot_groups:
-  rand_mode_invid_shot_group_1:
-    shots: rand_mode_g1_invid1_shot1, rand_mode_g1_invid2_shot2, rand_mode_g1_invid3_shot3
-    #rotate_right_events:
-    rotate_left_events: timer_target_rotator_1_tick
-    enable_events: mode_rand_mode_started
-    disable_events:
-      - rand_mode_invid_shot_group_1_flashing_hit
-    debug: True
-  rand_mode_orbits_shot_group_2:
-    shots: rand_mode_g2_left_orbit_shot1, rand_mode_g2_right_orbit_shot2
-    enable_events:
-      - rand_mode_invid_shot_group_1_flashing_hit
-      - rand_mode_invid_shot_group_3_flashing_hit
-    disable_events:
-      - mode_rand_mode_started
-      - rand_mode_orbits_shot_group_2_flashing_hit
-    debug: True
-  rand_mode_invid_shot_group_3:
-    shots: rand_mode_g3_invid4_shot1, rand_mode_g3_invid5_shot2, rand_mode_g3_invid6_shot3
-    rotate_left_events: timer_target_rotator_3_tick
-    enable_events:
-      - rand_mode_orbits_shot_group_2_flashing_hit{device.counters.orbit_shots_made_counter.value<=0} # {shot_group.rand_mode_orbits_shot_group.state != "hit"}
-    disable_events:
-      - mode_rand_mode_started
-      - rand_mode_invid_shot_group_3_flashing_hit
-      # - rand_mode_orbits_shot_group_2_hit_complete
-    debug: True
-  rand_mode_invid_shot_group_4:
-    shots: rand_mode_g4_invid1_shot1, rand_mode_g4_invid2_shot2, rand_mode_g4_invid3_shot3, rand_mode_g4_invid4_shot4, rand_mode_g4_invid5_shot5, rand_mode_g4_invid6_shot6
-    rotate_right_events: timer_target_rotator_4_tick
-    enable_events: orbits_complete
-    disable_events: mode_rand_mode_started, rand_mode_invid_shot_group_4_flashing_hit
-  # rand_mode_collect_mecha_shot_group:
-  #   shots: rand_mode_collect_mecha_shot
-  #   enable_events: rand_mode_invid_shot_group_4_flashing_hit
-  #   disable_events: mode_rand_mode_started, rand_mode_collect_mecha_shot_group_flashing_hit
-
+      - action: add
+        event: spinner_shot_hit
+        value: current_player.spinner_time_value
+      - action: add
+        event: add_10s
+        value: 10
 
 shot_profiles:
-  invid_targets_rand_mode:
-    advance_on_hit: false
-    block: true
-    states:
-      - name: unlit
-        show: off
-      - name: flashing
-        show: flash_purple_show
-        loops: -1
-        speed: 10
-      - name: hit
-        show: off
-  orbits_rand_mode:
+  rook_mode_rand_add_ball_flash:
     advance_on_hit: true
-    block: true
     states:
       - name: flashing
         show: flash_red_show
@@ -182,129 +387,188 @@ shot_profiles:
         speed: 10
       - name: hit
         show: off
-  # collect_mecha_flash:
-  #   advance_on_hit: true
-  #   states:
-  #     - name: flashing
-  #       show: flash_blue_show
-  #       loops: -1
-  #       speed: 10
-  #     - name: hit
-  #       show: off
-
 
 shots:
-  rand_mode_g1_invid1_shot1:
-    switch: s_left_target
-    profile: invid_targets_rand_mode
-    #advance_events: mode_rand_mode_started
+  rook_mode_rand_add_ball:
+    switch: s_left_lock_kickout
+    profile: rook_mode_rand_add_ball_flash
     show_tokens:
-      leds: l_t1
-  rand_mode_g1_invid2_shot2:
-    switch: s_middle_target
-    profile: invid_targets_rand_mode
-    show_tokens:
-      leds: l_t2
-  rand_mode_g1_invid3_shot3:
-    switch: s_right_target
-    profile: invid_targets_rand_mode
-    advance_events: mode_rand_mode_started
-    show_tokens:
-      leds: l_t3
-  rand_mode_g2_left_orbit_shot1:
-    switch: s_left_orbit
-    profile: orbits_rand_mode
-    show_tokens:
-      leds: l_left_orbit_arrow
-  rand_mode_g2_right_orbit_shot2:
-    hit_events:  right_obit_shot_sequence_hit
-    profile: orbits_rand_mode
-    show_tokens:
-      leds: l_right_orbit_arrow
-  rand_mode_g3_invid4_shot1:
-    switch: s_left_drop_target
-    profile: invid_targets_rand_mode
-    advance_events: timer_target_rotator_3_started
-    show_tokens:
-      leds: l_t4
-  rand_mode_g3_invid5_shot2:
-    switch: s_middle_drop_target
-    profile: invid_targets_rand_mode
-    show_tokens:
-      leds: l_t5
-  rand_mode_g3_invid6_shot3:
-    switch: s_right_drop_target
-    profile: invid_targets_rand_mode
-    show_tokens:
-      leds: l_t6
-  rand_mode_g4_invid1_shot1:
-    switch: s_left_target
-    profile: invid_targets_rand_mode
-    show_tokens:
-      leds: l_t1
-  rand_mode_g4_invid2_shot2:
-    switch: s_middle_target
-    profile: invid_targets_rand_mode
-    show_tokens:
-      leds: l_t2
-  rand_mode_g4_invid3_shot3:
-    switch: s_right_target
-    profile: invid_targets_rand_mode
-    show_tokens:
-      leds: l_t3
-  rand_mode_g4_invid4_shot4:
-    switch: s_left_drop_target
-    profile: invid_targets_rand_mode
-    show_tokens:
-      leds: l_t4
-  rand_mode_g4_invid5_shot5:
-    switch: s_middle_drop_target
-    profile: invid_targets_rand_mode
-    show_tokens:
-      leds: l_t5
-  rand_mode_g4_invid6_shot6:
-    switch: s_right_drop_target
-    profile: invid_targets_rand_mode
-    advance_events: timer_target_rotator_4_started
-    show_tokens:
-      leds: l_t6
-  # rand_mode_collect_mecha_shot:
-  #   switch: s_left_lock_kickout
-  #   profile: collect_mecha_flash
-  #   show_tokens:
-  #     leds: l_llock_arrow
+      leds: l_llock_arrow
+    enable_events: ball_save_rook_mode_multiball_disabled
+    disable_events: rook_mode_rand_add_ball_hit
+  biker_1:
+    switch: s_top_l_pop_bumper
+    enable_events: mode_rook_mode_started
+    disable_events: biker_1_complete
+  biker_2:
+    switch: s_top_r_pop_bumper
+    enable_events: mode_rook_mode_started
+    disable_events: biker_2_complete
+  biker_3:
+    switch: s_bottom_l_pop_bumper
+    enable_events: mode_rook_mode_started
+    disable_events: biker_3_complete
+  biker_4:
+    switch: s_bottom_r_pop_bumper
+    enable_events: mode_rook_mode_started
+    disable_events: biker_4_complete
 
-sequence_shots:
-  right_obit_shot_sequence:
-    switch_sequence:
-      - s_spinner
-      - s_right_orbit_rollover
-      - s_gate_top_right
-    sequence_timeout: 2s
+
+# sequence_shots:
+#   right_obit_shot_sequence:
+#     switch_sequence:
+#       - s_spinner
+#       - s_right_orbit_rollover
+#       - s_gate_top_right
+#     sequence_timeout: 2s
 
 counters:
-  orbit_shots_made_counter:
-    count_events: rand_mode_orbits_shot_group_2_flashing_hit
-    starting_count: 0
-    count_complete_value: 2
-    events_when_complete: orbits_complete
+  biker_1_shots_made_counter:
+    count_events: biker_1_hit
+    starting_count: current_player.rook_mode_pop_bumpers_count
+    count_complete_value: 0
+    events_when_complete: add_10s, biker_1_complete #, disable_Upper_Left_pop_bumper
     disable_on_complete: true
     reset_on_complete: false
+    direction: down
     debug: true
+  biker_2_shots_made_counter:
+    count_events: biker_2_hit
+    starting_count: current_player.rook_mode_pop_bumpers_count
+    count_complete_value: 0
+    events_when_complete: add_10s, biker_2_complete #, disable_Upper_Right_pop_bumper
+    disable_on_complete: true
+    reset_on_complete: false
+    direction: down
+    debug: true
+  biker_3_shots_made_counter:
+    count_events: biker_3_hit
+    starting_count: current_player.rook_mode_pop_bumpers_count
+    count_complete_value: 0
+    events_when_complete: add_10s, biker_3_complete #, disable_Lower_Left_pop_bumper
+    disable_on_complete: true
+    reset_on_complete: false
+    direction: down
+    debug: true
+  biker_4_shots_made_counter:
+    count_events: biker_4_hit
+    starting_count: current_player.rook_mode_pop_bumpers_count
+    count_complete_value: 0
+    events_when_complete: add_10s, biker_4_complete #, disable_Lower_Right_pop_bumper
+    disable_on_complete: true
+    reset_on_complete: false
+    direction: down
+    debug: true
+  biker_gang_defeated_counter:
+    count_events:
+      - biker_1_complete
+      - biker_2_complete
+      - biker_3_complete
+      - biker_4_complete
+    starting_count: 0
+    count_complete_value: 3
+    events_when_complete:
+      - rook_mode_success
+      - biker_3rd_done
+
+show_player:
+  mode_rook_mode_started:
+    biker_1_pulse_show:
+      show_tokens:
+        leds: l_upper_l_pop_bumper
+      loops: -1
+    biker_2_pulse_show:
+      show_tokens:
+        leds: l_upper_r_pop_bumper
+      loops: -1
+    biker_3_pulse_show:
+      show_tokens:
+        leds: l_lower_l_pop_bumper
+      loops: -1
+    biker_4_pulse_show:
+      show_tokens:
+        leds: l_lower_r_pop_bumper
+      loops: -1
+  biker_1_hit:
+    flash_pops_red_show:
+      key: biker_1_flash_show
+      show_tokens:
+        leds: l_upper_l_pop_bumper
+      priority: 4701
+      loops: 2
+  biker_2_hit:
+    flash_pops_red_show:
+      key: biker_2_flash_show
+      show_tokens:
+        leds: l_upper_r_pop_bumper
+      priority: 4701
+      loops: 2
+  biker_3_hit:
+    flash_pops_red_show:
+      key: biker_3_flash_show
+      show_tokens:
+        leds: l_lower_l_pop_bumper
+      priority: 4701
+      loops: 2
+  biker_4_hit:
+    flash_pops_red_show:
+      key: biker_4_flash_show
+      show_tokens:
+        leds: l_lower_r_pop_bumper
+      priority: 4701
+      loops: 2
+  biker_1_complete:
+    biker_1_pulse_show:
+      action: stop
+    turn_pop_black:
+      key: biker_1_black_show
+      show_tokens:
+        leds: l_upper_l_pop_bumper
+  biker_2_complete:
+    biker_2_pulse_show:
+      action: stop
+    turn_pop_black:
+      key: biker_2_black_show
+      show_tokens:
+        leds: l_upper_r_pop_bumper
+  biker_3_complete:
+    biker_3_pulse_show:
+      action: stop
+    turn_pop_black:
+      show_tokens:
+        leds: l_lower_l_pop_bumper
+  biker_4_complete:
+    biker_4_pulse_show:
+      action: stop
+    turn_pop_black:
+      show_tokens:
+        leds: l_lower_r_pop_bumper
 
 variable_player:
-  rand_mode_invid_shot_group_1_flashing_hit:
-    score: 2000
+  biker_1st_done:
+    biker_kill_value:
+      int: 25000 * current_player.pf_multiplier
+      action: set
+    score: 25000 * current_player.pf_multiplier
+  biker_2nd_done:
+    biker_kill_value:
+      int: 35000 * current_player.pf_multiplier
+      action: set
+    score: 35000 * current_player.pf_multiplier
+  biker_3rd_done:
+    biker_kill_value:
+      int: 50000 * current_player.pf_multiplier
+      action: set
+    score: 50000 * current_player.pf_multiplier
+  rook_mode_success:
+    rook_mode_bonus_time_score:
+      int: (device.timers.rook_mode_timer.ticks * 500 * game.balls_in_play) * current_player.pf_multiplier
+      action: set
+    score: (device.timers.rook_mode_timer.ticks * 500 * game.balls_in_play) * current_player.pf_multiplier
 
-# timers:
-#   add_a_ball_grace_period:
-#     start_value: 0
-#     #end_value: 0
-#     #direction: down
-#
-#     tick_interval: 1s
-#     control_events:
-#       - action: start
-#         event: start_add_a_ball_grace_period
-#       - action: stop
-#         event: add_ball #multiball_invid_invasion_quick_2_ball_started
+sound_player:
+  rook_mode_rand_add_ball_hit: rook_add_a_ball
+  play_rook_mode_music:
+    rook_mode_confrontation:
+      action: play
+      loops: -1
