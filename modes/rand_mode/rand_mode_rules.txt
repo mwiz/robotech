@@ -1,0 +1,34 @@
+RULES
+
+This is a timed mode (60 seconds) and 2 ball multiball with ball saver.
+
+Starts with a purple flashing rotating invid target light on left 3 targets.
+
+Once hit, the right and left orbit lights start flashing red.
+
+Once one of the orbits are hit an invid target on right 3 targets starts flashing purple and rotates.
+
+Once hit, the orbit that was not hit first time is flashing red.
+
+Hit red flashing orbit light, then a purple flashing invid target on one of the 6 invid targets starts rotating.
+
+Once that light is hit the mode is complete.
+
+Hitting orbit lights add 5 seconds to timer.
+
+Hitting flashing purple invid target starts a quick 3 second ball save.
+
+Spinner hits adds seconds to timer (determined by spinner level)
+
+
+SCORING
+
+1st Invid destroyed - 20,000 * playfield_multiplier
+2nd Invid destroyed - 30,000 * playfield_multiplier
+3rd Invid destroyed - 50,000 * playfield_multiplier
+
+orbit shots - 5,000 * playfield_multiplier
+
+Total = 110,000 points
+
+Bonus = ((time left * 500) * balls_in_play) * playfield_multiplier
