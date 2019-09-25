@@ -1,24 +1,32 @@
 #config_version=5
 #Robotech Pinball Machine
-# {mode.hilo_lit.active and not mode.mystery_lit.active}:
 
 mode:
-    start_events: start_kickback_mode
-    stop_events: timer_kickback_grace_period_stopped, ball_save_kickback_save_saving_ball #, ball_will_end
+    start_events:
+      - start_kickback_mode
+    stop_events:
+      - timer_kickback_grace_period_stopped{current_player.kickback_counter==0}
+      - ball_save_kickback_save_saving_ball{current_player.kickback_counter==0}
     restart_on_next_ball: true
     priority: 1800
 
 event_player:
+  mode_ball_save_started:
+    - kickback_disable
   mode_kickback_stopping:
     - kickback_disable
-  # timer_kickback_grace_period_stopped:
-  #   - kickback_disable
-  # ball_save_kickback_save_saving_ball:
-  #   - kickback_disable
-  mode_ball_save_stopped:
-    - kickback_enable|0.5s
+  ball_save_default_grace_period:
+    - kickback_enable
+  ball_save_default_saving_ball:
+    - kickback_enable
   mode_kickback_started:
     - kickback_enable{not mode.ball_save.active}
+  mode_ball_save_stopped:
+    - kickback_enable
+  # timer_kickback_grace_period_complete:
+  #   - start_kickback_mode{current_player.kickback_counter > 0}
+  # ball_save_kickback_save_saving_ball:
+  #   - start_kickback_mode{current_player.kickback_counter > 0}
 
 timers:
   kickback_grace_period:
@@ -28,35 +36,53 @@ timers:
     control_events:
       - event: kickback_kickback_main_fired
         action: start
+      - event: timer_kickback_grace_period_complete
+        action: reset
+      - event: ball_save_kickback_save_saving_ball
+        action: reset
 
 show_player:
-    mode_kickback_started:
-      light_kickback:
-        action: play
-    mode_kickback_stopped:
-      flash_kickback:
-        action: stop
-    kickback_kickback_main_fired:
-      light_kickback:
-        action: stop
-      flash_kickback:
-        loops: -1
-        speed: 20
-      # kickback_flasher:
-      #   loops: 0
+  mode_kickback_started:
+    light_kickback:
+      action: play
+  mode_kickback_stopped:
+    light_kickback:
+      action: stop
+  kickback_kickback_main_fired:
+    kickback_fired_flasher_show:
+      loops: 3
+      speed: 10
+      show_tokens:
+        color: red
 
 sound_player:
   kickback_kickback_main_fired:
     laser:
       action: play
 
-ball_saves:
-  kickback_save:
-    balls_to_save: 1
-    active_time: 3s
-    #timer_start_events: left_outlane_t_shot_hit
-    early_ball_save_events: s_right_outlane_h_active
-    auto_launch: true
-    disable_events: mode_base_started
-    enable_events: kickback_kickback_main_fired
+# ball_saves:
+#   kickback_save:
+#     balls_to_save: 1
+#     active_time: 5s
+#     early_ball_save_events: s_right_outlane_h_active
+#     auto_launch: true
+#     disable_events: mode_base_started
+#     enable_events: kickback_kickback_main_fired
+#     debug: true
+
+counters:
+  kickback_fired_first_time_counter:
+    count_events:
+      - kickback_kickback_main_fired
+    starting_count: 0
+    direction: up
+    count_complete_value: 1
+    reset_on_complete: false
+    events_when_complete: kickback_fired_change_count
+    persist_state: true
+    restart_events: timer_kickback_grace_period_stopped, ball_save_kickback_save_saving_ball
     debug: true
+
+variable_player:
+  kickback_fired_change_count:
+    kickback_counter: -1
