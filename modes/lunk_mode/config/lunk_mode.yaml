@@ -1,0 +1,196 @@
+#config_version=5
+
+mode:
+  start_events: start_lunk_mode
+  stop_events:
+    - timer_lunk_mode_timer_complete
+    - ball_will_end
+    - lunk_mode_success
+  stop_on_ball_end: true
+  priority: 2600
+
+event_player:
+  lunk_mode_shot_group_hit_complete:
+    lunk_mode_success
+  wait_for_rand_collect_mecha_mode_display:
+    rand_collect_mecha_mode_show_ended
+
+multiballs:
+  lunk_mode_multiball:
+    ball_count: 2
+    ball_count_type: total
+    start_or_add_a_ball_events: mode_lunk_mode_started
+    shoot_again: 0
+    disable_events: mode_lunk_mode_stopping
+    debug: true
+
+slides:
+  intro_lunk_mode_slide:
+    widgets:
+      - type: text
+        text: LUNK Collected
+        color: 654321
+        font_size: 80
+        x: center
+        y: center+300
+      - type: video
+        video: intro_lunk_mode_video
+      - type: text
+        text: Shot brown arrows to rescue Kevin from biker gang
+        color: white
+        font_size: 50
+        x: center
+        y: center-300
+
+slide_player:
+  mode_lunk_mode_started:
+    intro_lunk_mode_slide:
+      priority: 2610
+      expire: 7
+
+widgets:
+  lunk_mode_time_display_widget:
+    - type: text
+      text: TIMER
+      color: blue
+      font_size: 100
+      y: center + 220
+      x: center - 450
+      z: 1101
+  lunk_mode_timer_widget:
+    - type: text
+      text: (ticks_remaining)
+      color: red
+      font_size: 100
+      y: center + 150
+      x: center - 450
+      z: 1101
+  lunk_left_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 13
+      y: 190
+      z: 1100
+      width: 125
+      height: 500
+      color: black
+  lunk_right_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 1137
+      y: 190
+      z: 1100
+      width: 130
+      height: 500
+      color: black
+
+widget_player:
+  timer_lunk_mode_timer_started:
+    lunk_mode_time_display_widget:
+      action: add
+      slide: base_slide
+    lunk_mode_timer_widget:
+      action: add
+      slide: base_slide
+    lunk_left_rectangle:
+      action: add
+      slide: base_slide
+    lunk_right_rectangle:
+      action: add
+      slide: base_slide
+  timer_lunk_mode_timer_tick:
+    lunk_mode_timer_widget:
+      action: update
+      slide: base_slide
+  mode_lunk_mode_stopped:
+    lunk_left_rectangle:
+      action: remove
+      slide: base_slide
+    lunk_right_rectangle:
+      action: remove
+      slide: base_slide
+
+timers:
+  lunk_mode_timer:
+    debug: true
+    start_value: 60
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: mode_lunk_mode_started #multiball_annie_mode_multiball_started
+      - action: add
+        event: spinner_shot_hit
+        value: current_player.spinner_time_value
+
+shot_profiles:
+  lunk_mode_shot_profile:
+    advance_on_hit: true
+    block: true
+    states:
+      - name: flashing
+        show: flash_brown_show
+        loops: -1
+        sync_ms: 1000
+        speed: 2
+      - name: hit
+        show: color_brown_on
+
+sequence_shots:
+  lunk_right_obit_shot_sequence:
+    switch_sequence:
+      - s_spinner
+      - s_gate_top_right
+    sequence_timeout: 2s
+
+
+shot_groups:
+  lunk_mode_shot_group:
+    shots:
+      - lunk_mode_rand_shot
+      - lunk_mode_annie_shot
+      - lunk_mode_rook_shot
+      - lunk_mode_lancer_shot
+      - lunk_mode_lunk_shot
+
+shots:
+  lunk_mode_rand_shot:
+    switch: s_left_lock_kickout
+    profile: lunk_mode_shot_profile
+    show_tokens:
+      leds: l_llock_arrow
+    debug: true
+  lunk_mode_annie_shot:
+    switch: s_left_orbit
+    profile: lunk_mode_shot_profile
+    show_tokens:
+      leds: l_annie_arrow
+    debug: true
+  lunk_mode_rook_shot:
+    switch: s_right_lock_kickout
+    profile: lunk_mode_shot_profile
+    show_tokens:
+      leds: l_rlock_arrow
+    debug: true
+  lunk_mode_lancer_shot:
+    hit_events: lunk_right_obit_shot_sequence_hit
+    profile: lunk_mode_shot_profile
+    show_tokens:
+      leds: l_right_orbit_arrow
+    debug: true
+  lunk_mode_lunk_shot:
+    switch: s_d_target
+    profile: lunk_mode_shot_profile
+    show_tokens:
+      leds: l_sdf_arrow_led
+    debug: true
+
+variable_player:
+  lunk_mode_success:
+    lunk_mode_bonus_time_score:
+      int: (device.timers.lunk_mode_timer.ticks * 1000  * game.balls_in_play) * current_player.pf_multiplier
+      action: set
+    score: (device.timers.lunk_mode_timer.ticks * 1000 * game.balls_in_play) * current_player.pf_multiplier
