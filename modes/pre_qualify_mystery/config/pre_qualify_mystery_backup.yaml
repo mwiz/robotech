@@ -1,0 +1,121 @@
+#config_version=5
+
+mode:
+   start_events: start_pre_qualify_mystery
+   stop_events:
+     #- qualify_mystery
+     - game_ending
+   restart_on_next_ball: true
+   priority: 7900
+
+# event_player:
+#   drop_target_left_drop_down:
+#     - drop_reset_up|1s
+#   drop_target_middle_drop_down:
+#     - drop_reset_up|1s
+#   drop_target_right_drop_down:
+#     - drop_reset_up|1s
+  # mode_annie_mode_stopped:
+  #   drop_reset_up|1s
+
+counters:
+  qualify_mystery_invid_target_group:
+    count_events: mystery_targets_invid_group_hit_complete
+    starting_count: 0
+    direction: up
+    count_complete_value: 1
+    events_when_complete: qualify_mystery
+    #persist_state: true
+    reset_on_complete: true
+    disable_on_complete: false
+    debug: true
+
+shot_groups:
+  mystery_targets_invid_group:
+    shots:
+      - mystery_invid_left_target
+      - mystery_invid_middle_target
+      - mystery_invid_right_target
+      - mystery_invid_left_drop
+      - mystery_invid_middle_drop
+      - mystery_invid_right_drop
+    #reset_events: invid_target_group_hit_complete
+    enable_events:
+      #- enable_mystery_invid_targets
+      #- mode_pre_qualify_mystery_started
+      - start_pre_qualify_mystery
+      - mode_annie_mode_stopped
+      - mode_skill_shot_stopped
+      - mode_rook_mode_stopping
+      - mode_lunk_mode_stopped
+      - mode_rand_mode_stopped
+    disable_events:
+      #- mystery_targets_invid_group_hit_complete
+      #- mode_bonus_will_start
+      - mode_invid_invasion_starting
+      - mode_intro_rand_mode_starting
+      - mode_annie_mode_starting
+      - mode_skill_shot_started
+      - mode_intro_rook_mode_starting
+      - mode_lunk_mode_starting
+    reset_events:
+      - qualify_mystery|2
+      #- mystery_targets_invid_group_hit_complete
+      - mode_skill_shot_starting
+    debug: true
+
+show_player:
+  mystery_targets_invid_group_hit_complete:
+    invid_targets_complete:
+      show_tokens:
+        color: red
+
+shot_profiles:
+  mystery_profile:
+    show_when_disabled: false
+    states:
+      - name: flashing
+        show: flash_red_show
+        sync_ms: 1500
+        loops: -1
+        speed: 5
+      - name: hit
+        show: color_red_on
+
+shots:
+  mystery_invid_left_target:
+    switch: s_left_target
+    profile: mystery_profile
+    show_tokens:
+      leds: l_t1
+    debug: true
+  mystery_invid_middle_target:
+    switch: s_middle_target
+    profile: mystery_profile
+    show_tokens:
+      leds: l_t2
+    debug: true
+  mystery_invid_right_target:
+    switch: s_right_target
+    profile: mystery_profile
+    show_tokens:
+      leds: l_t3
+    debug: true
+  mystery_invid_left_drop:
+    switch: s_left_drop_target
+    profile: mystery_profile
+    show_tokens:
+      leds: l_t4
+    debug: true
+  mystery_invid_middle_drop:
+    switch: s_middle_drop_target
+    profile: mystery_profile
+    show_tokens:
+      leds: l_t5
+    debug: True
+  mystery_invid_right_drop:
+    switch: s_right_drop_target
+    profile: mystery_profile
+    show_tokens:
+      leds: l_t6
+    debug: true
