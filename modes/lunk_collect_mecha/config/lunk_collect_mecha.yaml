@@ -1,0 +1,69 @@
+#config_version=5
+
+mode:
+  start_events:
+    - lunk_mode_success
+  stop_events:
+    - ball_will_end
+    - slide_lunk_collect_mecha_slide_removed
+  stop_on_ball_end: true
+  priority: 2700
+
+shot_profiles:
+  lunk_collect_mecha_flash:
+    advance_on_hit: true
+    states:
+      - name: flashing
+        show: flash_blue_show
+        loops: -1
+        speed: 10
+      - name: hit
+        show: off
+
+shots:
+  lunk_collect_mecha_shot:
+    switch: s_d_target
+    profile: lunk_collect_mecha_flash
+    show_tokens:
+      leds: l_sdf_arrow_led
+    enable_events:
+      - mode_lunk_collect_mecha_started
+      - mode_rand_mode_stopped
+      - mode_rook_mode_stopped
+      - mode_annie_mode_stopped
+    disable_events:
+      - lunk_collect_mecha_shot_flashing_hit
+      - mode_rand_mode_started
+      - mode_rook_mode_started
+      - mode_annie_mode_started
+
+slides:
+  lunk_collect_mecha_slide:
+    widgets:
+      - type: text
+        text: JEEP Collected
+        color: red
+        font_size: 80
+        x: center
+        y: center+300
+      - type: video
+        video: lunk_collect_mecha
+      - type: text
+        text: (mecha_collect_value)
+        font_size: 80
+        x: center
+        y: center-300
+        number_grouping: true
+        color: yellow
+    expire: 4
+
+slide_player:
+  lunk_collect_mecha_shot_flashing_hit:
+    lunk_collect_mecha_slide
+
+variable_player:
+  lunk_collect_mecha_shot_flashing_hit:
+    score: (50000 * current_player.lunk_shot_multiplier) * current_player.pf_multiplier
+    mecha_collect_value:
+      int: (50000 * current_player.lunk_shot_multiplier) * current_player.pf_multiplier
+      action: set
