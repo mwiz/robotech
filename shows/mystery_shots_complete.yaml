@@ -1,0 +1,12 @@
+#show_version=5
+
+- time: 0
+  lights:
+    llock_rollover: off
+    rorbit_rollover: off
+    rlock_rollover: off
+- time: '+1'
+  lights:
+    llock_rollover: green
+    rorbit_rollover: green
+    rlock_rollover: green
