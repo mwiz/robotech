@@ -1,21 +1,89 @@
 #config_version=5
+#Robotech Pinball Machine
 
 mode:
-  start_events: ball_starting
+  start_events: ball_will_start #ball_starting
   stop_events: ball_will_end
   priority: 100
 
+queue_relay_player:
+   ball_starting{is_extra_ball == True}:
+      post: play_shoot_again_show
+      wait_for: shoot_again_show_ended
+
 event_player:
-  mode_base_started:
-    - kickback_disable
-    - ramp_diverter_disable
+  mode_base_started{player==1 and ball==1 and not is_extra_ball}:
+    - play_start_sound
+  ball_started:
+    - start_skill_shot_mode
+    - start_spinner_level_1_mode
+    - start_pops_level_1_mode
+  # ball_started.2{current_player.kickback_counter > 0}:
+  #   - start_kickback_mode
+  diverter_ramp_activating:
+    - right_flipper_stronger_enable
+    # - ramp_diverter_enable
+  diverter_ramp_deactivating:
+    - right_flipper_normal_enable
+    #- ramp_diverter_disable
+  # mode_base_started:
+    #- kickback_disable
+    #- ramp_diverter_disable
   ball_save_kickback_save_saving_ball:      # ball save on kickback (that goes straight to right outlane) that goes around orbit to flipper
-    - orbit_gate_enable{device.switches.s_up_down_ramp_switch.state==0 and not mode.rand_mode.active} #}not mode.qualify_invid_invasion.active}
-    #- orbit_gate_disable|2s
-  achievement_invid_invasion_mission_1_state_enabled:
-    - play_what_is_that_flashing|.5s
+    - orbit_gate_enable{device.switches.s_up_down_ramp_switch.state==0 and not mode.rand_mode.active and not mode.qualify_annie.active and not mode.qualify_shot_multipliers.active}
+    - orbit_gate_disable{not mode.invid_invasion.active}|.5s
+  # achievement_invid_invasion_mission_1_state_enabled:
+  #   - play_what_is_that_flashing|.5s
   invid_target_group_hit_complete:
     - drop_reset_up|2s
+  mode_skill_shot_started:
+    - left_flipper_normal_enable
+    - ramp_diverter_enable{not mode.qualify_invid_invasion.active}
+    # - right_flipper_stronger_enable
+  # ball_save_default_timer_start:
+  #   - right_flipper_normal_enable
+  # mode_skill_shot_started.2{(device.achievements.invid_invasion_mission_1.state=="complete" or device.achievements.invid_invasion_mission_1.state=="stopped") and device.achievements.genesis_pit.state=="disabled"}:
+  #   - start_pre_qualify_genesis_pit
+  mode_skill_shot_stopped{device.switches.s_up_down_ramp_switch.state == 1}:
+    - ramp_up_active
+  mode_qualify_invid_invasion_started:
+    - ramp_down_active{device.switches.s_up_down_ramp_switch.state == 0}|1s  #testing
+    #- right_flipper_stronger_enable
+  # mode_qualify_invid_invasion_stopped:
+  #   - right_flipper_normal_enable
+  # mode_skill_shot_stopped{mode.qualify_invid_invasion.active}:
+  #   - right_flipper_stronger_enable
+  rand_annie_combo_hit:
+    - team_combo_made
+  rand_rook_combo_hit:
+    - team_combo_made
+  rand_lancer_combo_hit:
+    - team_combo_made
+  rand_lunk_combo_hit:
+    - team_combo_made
+  rook_rand_combo_hit:
+    - team_combo_made
+  rook_annie_combo_hit:
+    - team_combo_made
+  rook_lunk_combo_hit:
+    - team_combo_made
+  lunk_rand_combo_hit:
+    - team_combo_made
+  lunk_annie_combo_hit:
+    - team_combo_made
+  slide_rook_mode_3rd_kill_slide_removed: # {device.achievement.lunk_mode_collect.state != "disabled"}:
+    - play_rook_mode_success_not_lunk_started
+    - restart_main_title|2s
+  slide_rand_mode_3rd_kill_slide_removed:
+    - restart_main_title|2s
+  timer_rand_mode_timer_complete:
+    - restart_main_title
+  slide_annie_mode_4th_kill_slide_removed:
+    - restart_main_title|2s
+  timer_annie_mode_timer_complete:
+    - restart_main_title
+  timer_rook_mode_timer_complete:
+    - restart_main_title
 
 achievements:
   rand_mode_collect:
@@ -48,17 +116,31 @@ achievements:
     debug: true
   rook_mode_collect:
     show_tokens:
-      leds: l_lancer #add light for rook?
+      leds: l_rook
     show_when_enabled: on
     show_when_started: flash
     show_when_completed: color_green_on
-    events_when_enabled: start_rook_mode
+    enable_events: rook_collected
+    events_when_enabled: start_intro_rook_mode
     start_events: mode_rook_mode_started
     stop_events: mode_rook_mode_stopped
     show_when_stopped: color_red_on
-    enable_events: rook_collected
     restart_after_stop_possible: false
     complete_events: rook_mode_success
+    debug: true
+  lunk_mode_collect:
+    show_tokens:
+      leds: l_lunk
+    show_when_enabled: on
+    show_when_started: flash
+    show_when_completed: color_green_on
+    enable_events: lunk_collected
+    events_when_enabled: start_lunk_mode
+    start_events: mode_lunk_mode_started
+    stop_events: mode_lunk_mode_stopped
+    show_when_stopped: color_red_on
+    restart_after_stop_possible: false
+    complete_events: lunk_mode_success
     debug: true
   invid_invasion_mission_1:
     show_tokens:
@@ -67,38 +149,77 @@ achievements:
     show_when_started: flash
     show_when_completed: color_green_on
     show_when_stopped: color_red_on
-    enable_events: invid_invasion_mission_ready
+    enable_events: mode_qualify_invid_invasion_started # invid_invasion_mission_ready
     #events_when_started:
     #events_when_completed:
     #events_when_enabled:
     start_events: mode_invid_invasion_started
     stop_events: mode_invid_invasion_stopped #timer_invid_invasion_complete
     restart_after_stop_possible: false
-    complete_events: invid_invasion_success, increase_modes_completed_count
+    complete_events: invid_invasion_success #,increase_modes_completed_count
+    debug: true
+  genesis_pit:
+    show_tokens:
+      leds: l_mission_2
+    show_when_enabled: on
+    show_when_started: flash
+    show_when_completed: color_green_on
+    show_when_stopped: color_red_on
+    enable_events: mode_qualify_genesis_pit_started
+    #events_when_started:
+    #events_when_completed:
+    #events_when_enabled:
+    start_events: mode_genesis_pit_started
+    stop_events: mode_genesis_pit_stopped #timer_invid_invasion_complete
+    restart_after_stop_possible: false
+    complete_events: genesis_pit_success #,increase_modes_completed_count
     debug: true
 
 extra_balls:
   skillshot_extraball:
-    award_events: award_extra_ball
+    award_events: three_skillshots_award_extra_ball
   protoculture_extraball:
     award_events: protoculture_award_extra_ball
+  mystery_extraball:
+    award_events:  mystery_award_extra_ball
 
 
 sequence_shots:
+  lancer_shot_sequence:
+    switch_sequence:
+      - s_spinner
+      #- s_right_orbit_rollover
+      - s_gate_top_right
+    sequence_timeout: 2s
   ramp_reflex_point_sequence:
     switch_sequence:
       - s_back_ramp
       - s_right_lock_kickout
-    sequence_timeout: 3s
+    #sequence_timeout: 5s
   ramp_wireform_sequence:
     switch_sequence:
       - s_back_ramp
       - s_wireform_ramp
     sequence_timeout: 2s
+  rand_annie_combo:
+    event_sequence:
+      - rand_shot_group_flashing_rand_hit
+      - annie_shot_group_flashing_annie_hit
+    sequence_timeout: 3s
   rand_rook_combo:
     event_sequence:
       - rand_shot_group_flashing_rand_hit
       - rook_shot_group_flashing_rook_hit
+    sequence_timeout: 3s
+  rand_lancer_combo:
+    event_sequence:
+      - rand_shot_group_flashing_rand_hit
+      - lancer_shot_group_flashing_lancer_hit
+    sequence_timeout: 4s
+  rand_lunk_combo:
+    event_sequence:
+      - rand_shot_group_flashing_rand_hit
+      - lunk_shot_group_unlit_hit
     sequence_timeout: 3s
   rook_rand_combo:
     event_sequence:
@@ -110,42 +231,67 @@ sequence_shots:
       - rook_shot_group_flashing_rook_hit
       - annie_shot_group_flashing_annie_hit
     sequence_timeout: 3s
-  rand_lancer_combo:
+  rook_lunk_combo:
     event_sequence:
+      - rook_shot_group_flashing_rook_hit
+      - lunk_shot_group_unlit_hit
+    sequence_timeout: 3s
+  lunk_rand_combo:
+    event_sequence:
+      - lunk_shot_group_unlit_hit
       - rand_shot_group_flashing_rand_hit
-      - lancer_shot_group_flashing_lancer_hit
-    sequence_timeout: 4s
+    sequence_timeout: 3s
+  lunk_annie_combo:
+    event_sequence:
+      - lunk_shot_group_unlit_hit
+      - annie_shot_group_flashing_annie_hit
+    sequence_timeout: 3s
 
+
+# slides:
+#   base_slide: []
 
 slides:
-  default:
-    widgets:
-      - type: text
-        text: (score)
-        number_grouping: true
-        min_digits: 2
-        font_size: 100
-        color: white
-      - type: text
-        text: PLAYER (number)
-        y: 10
-        x: 10
-        font_size: 50
-        anchor_x: left
-        anchor_y: bottom
-        color: white
-      - type: text
-        text: BALL (ball)
-        y: 10
-        x: right-10
-        anchor_x: right
-        anchor_y: bottom
-        font_size: 50
-        color: white
+  # base_slide:
+  #   widgets:
+  # #    base_screen_outline_widget:
+  #     - type: line
+  #       points: 10, 20, 10, 700, 1270, 700, 1270, 20, 10, 20
+  #       thickness: 3
+  #       color: red
+  # #    base_score_widget:
+  #     - type: text
+  #       text: (score)
+  #       style: score_style_singleplayer
+  #       x: center
+  #       y: center-225
+  #   widgets:
+      # - type: text
+      #   text: (score)
+      #   number_grouping: true
+      #   min_digits: 2
+      #   font_size: 100
+      #   color: white
+      # - type: text
+      #   text: PLAYER (number)
+      #   y: 10
+      #   x: 10
+      #   font_size: 50
+      #   anchor_x: left
+      #   anchor_y: bottom
+      #   color: white
+      # - type: text
+      #   text: BALL (ball)
+      #   y: 10
+      #   x: right-10
+      #   anchor_x: right
+      #   anchor_y: bottom
+      #   font_size: 50
+      #   color: white
   extra_ball_slide:
     widgets:
       - type: text
-        text: SHOOT AGAIN
+        text: EXTRA BALL
         color: red
         font_size: 130
         y: center+50
@@ -154,8 +300,203 @@ slides:
       #   color: red
       #   y: center-50
       #   font_size: 100
+  skill_shot_lanes_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: skill_shot_lanes
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  #skill_shot_saucer_slide:
+  skill_shot_rand_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        # video: skill_shot_saucer
+        video: skill_shot_rand
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  skill_shot_sdf_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: skill_shot_sdf
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  skill_shot_invid_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: skill_shot_invid
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  skill_shot_super_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: skill_shot_sdf
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  skill_shot_secret_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      # - type: video
+      #   video: skill_shot_saucer
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  rand_mode_3rd_kill_slide:
+    widgets:
+      - type: text
+        text: INVID DESTROYED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: rand_mode_3rd_kill
+      - type: text
+        text: (invid_kill_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  annie_mode_4th_kill_slide:
+    widgets:
+      - type: text
+        text: INVID DESTROYED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: annie_mode_4th_kill
+      - type: text
+        text: (invid_kill_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  rook_mode_3rd_kill_slide:
+    widgets:
+      - type: text
+        text: BIKER DEFEATED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: rook_mode_3rd_kill
+      - type: text
+        text: (biker_kill_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
 
 widgets:
+  base_screen_outline_widget:
+    - type: line
+      points: 10, 20, 10, 700, 1270, 700, 1270, 20, 10, 20
+      thickness: 3
+      color: red
+  base_score_widget:
+    - type: text
+      text: (score)
+      style: score_style_singleplayer
+      x: center
+      y: center-225
+  base_ball_widget:
+    - type: line
+      points: 580, 700, 580, 650, 700, 650, 700, 700
+      thickness: 2
+      color: red
+    - type: text
+      text: BALL (ball)
+      y: top - 45
+      x: center
+      font_size: 30
+      color: white
   skill_shot_combo_widget:
     - type: text
       text: SKILL SHOT COMBO
@@ -163,21 +504,22 @@ widgets:
       font_size: 100
       y: center + 50
     - type: text
-      text: 10000
+      text: (combo_value)
       font_size: 100
       color: red
       y: center - 50
-  player_num_keep_shooting_widget:
-    - type: text
-      text: PLAYER (number)
-      color: blue
-      font_size: 100
-      y: center + 80
-    - type: text
-      text: Keep Shooting
-      color: red
-      y: center #- 90
-      font_size: 70
+      number_grouping: true
+  # player_num_keep_shooting_widget:
+  #   - type: text
+  #     text: PLAYER (number)
+  #     color: blue
+  #     font_size: 100
+  #     y: center + 80
+  #   - type: text
+  #     text: Keep Shooting
+  #     color: red
+  #     y: center #- 90
+  #     font_size: 70
   ball_saved_widget:
     - type: text
       text: BALL SAVED!!
@@ -189,15 +531,15 @@ widgets:
       color: red
       y: center #- 90
       font_size: 70
-  skill_shot_saucer_hit_video:
-    - type: video
-      video: skill_shot_saucer
-  skill_shot_invid_hit_video:
-    - type: video
-      video: skill_shot_invid
-  skill_shot_lanes_hit_video:
-    - type: video
-      video: skill_shot_lanes
+  # skill_shot_saucer_hit_video:
+  #   - type: video
+  #     video: skill_shot_saucer
+  # skill_shot_invid_hit_video:
+  #   - type: video
+  #     video: skill_shot_invid
+  # skill_shot_lanes_hit_video:
+  #   - type: video
+  #     video: skill_shot_lanes
   skill_shot_failure:
     - type: text
       text: SKILL SHOT MISSED!
@@ -225,7 +567,7 @@ widgets:
       y: center + 250
       # z: 120
     - type: text
-      text: SKILL SHOT SUCCESS!
+      text: SKILL SHOT SUCCESS
       font_size: 100
       color: blue
       y: center + 150
@@ -246,10 +588,47 @@ widgets:
       font_size: 100
       y: center + 50
     - type: text
-      text: 10000
+      text: (combo_value)
       font_size: 100
       color: red
       y: center-50
+      number_grouping: true
+  rand_mode_bonus_time_score_widget:
+    - type: text
+      text: RAND MODE COMPLETE
+      color: red
+      font_size: 80
+      y: center + 100
+    - type: text
+      text: "BONUS: (rand_mode_bonus_time_score)"
+      font_size: 70
+      color: yellow
+      y: center
+      number_grouping: true
+  annie_mode_bonus_time_score_widget:
+    - type: text
+      text: ANNIE MODE COMPLETE
+      color: FF8000
+      font_size: 80
+      y: center + 100
+    - type: text
+      text: "BONUS: (annie_mode_bonus_time_score)"
+      font_size: 70
+      color: yellow
+      y: center
+      number_grouping: true
+  rook_mode_bonus_time_score_widget:
+    - type: text
+      text: ROOK MODE COMPLETE
+      color: yellow
+      font_size: 80
+      y: center + 100
+    - type: text
+      text: "BONUS: (rook_mode_bonus_time_score)"
+      font_size: 70
+      color: yellow
+      y: center
+      number_grouping: true
   # skill_shot_combo_widget:
   #   - type: text
   #     text: SKILL SHOT COMBO
@@ -292,18 +671,29 @@ widgets:
   #     video: ball_save_left
 
 widget_player:
+  mode_base_started:
+    base_screen_outline_widget:
+      slide: base_slide
+      priority: 101
+    base_score_widget:
+      slide: base_slide
+      priority: 102
+    base_ball_widget:
+      slide: base_slide
+      priority: 103
   skill_shot_combo_made:
     skill_shot_combo_widget:
       action: add
       widget_settings:
         expire: 2s
-  qualify_rand_1st_time:
-    player_num_keep_shooting_widget:
-      action: add
-      slide: base_slide
-      widget_settings:
-        expire: 4s
-        z: 115
+        z: 2000
+  # qualify_rand_1st_time:
+  #   player_num_keep_shooting_widget:
+  #     action: add
+  #     slide: base_slide
+  #     widget_settings:
+  #       expire: 4s
+  #       z: 115
   ball_save_default_saving_ball:
     ball_saved_widget:
       action: add
@@ -318,24 +708,24 @@ widget_player:
         z: 115
       # expire: 2s
       # priority: 1200
-  saucer_skill_group_flashing_hit:
-    skill_shot_saucer_hit_video:
-      action: add
-      widget_settings:
-        expire: 2.5s
-        z: 110
-  invid_targets_skill_flashing_hit:
-    skill_shot_invid_hit_video:
-      action: add
-      widget_settings:
-        expire: 1.5s
-        z: 110
-  top_lanes_skill_flashing_hit:
-    skill_shot_lanes_hit_video:
-      action: add
-      widget_settings:
-        expire: 2.5s
-        z: 110
+  # saucer_skill_group_flashing_hit:
+  #   skill_shot_saucer_hit_video:
+  #     action: add
+  #     widget_settings:
+  #       expire: 2.5s
+  #       z: 110
+  # invid_targets_skill_flashing_hit:
+  #   skill_shot_invid_hit_video:
+  #     action: add
+  #     widget_settings:
+  #       expire: 1.5s
+  #       z: 110
+  # top_lanes_skill_flashing_hit:
+  #   skill_shot_lanes_hit_video:
+  #     action: add
+  #     widget_settings:
+  #       expire: 2.5s
+  #       z: 110
   skill_shot_missed:
     skill_shot_failure:
       action: update
@@ -360,25 +750,31 @@ widget_player:
       widget_settings:
         expire: 3s
         z: 120
-  rand_rook_combo_hit:
+# Team Combo
+  team_combo_made:
     team_combo_widget:
       action: add
       widget_settings:
         expire: 2s
         z: 110
-  rook_rand_combo_hit:
-    team_combo_widget:
+  slide_rand_mode_3rd_kill_slide_removed:
+    rand_mode_bonus_time_score_widget:
       action: add
       widget_settings:
-        expire: 2s
+        expire: 3s
         z: 110
-  rand_lancer_combo_hit:
-    team_combo_widget:
+  slide_annie_mode_4th_kill_slide_removed:
+    annie_mode_bonus_time_score_widget:
       action: add
       widget_settings:
-        expire: 2s
+        expire: 3s
         z: 110
-
+  slide_rook_mode_3rd_kill_slide_removed:
+    rook_mode_bonus_time_score_widget:
+      action: add
+      widget_settings:
+        expire: 5s
+        z: 110
 
   # mode_qualify_rand_started:
   #   rand_qualify_image:
@@ -405,13 +801,52 @@ widget_player:
   #       z: 120
 
 slide_player:
+  mode_base_started:
+    base_slide
   # mode_base_started:
   #   default:
   #     target: window
-  mode_base_starting{is_extra_ball}:
-    extra_ball_slide:
+  # ball_starting{is_extra_ball}:
+  #   extra_ball_slide:
+  #     expire: 3s
+  #     priority: 1199
+  top_lanes_skill_flashing_hit:
+    skill_shot_lanes_slide:
       expire: 3s
       priority: 1199
+  #     video: skill_shot_lanes
+  left_saucer_skill_flashing_hit:
+    skill_shot_rand_slide:
+      expire: 4s
+      priority: 1199
+  # saucer_skill_group_flashing_hit:
+  #   skill_shot_saucer_slide:
+  #     expire: 3s
+  #     priority: 1199
+  sdf_skill_group_flashing_hit:
+    skill_shot_sdf_slide:
+      expire: 4s
+      priority: 1199
+  invid_targets_skill_flashing_hit:
+    skill_shot_invid_slide:
+      expire: 4s
+      priority: 1199
+  super_skill_shot_flashing_hit:
+    skill_shot_super_slide:
+      expire: 4s
+      priority: 1199
+  rand_mode_success:
+    rand_mode_3rd_kill_slide:
+      expire: 4s
+      #priority: 2201
+  annie_mode_success:
+    annie_mode_4th_kill_slide:
+      expire: 10s
+      #priority: 2201
+  rook_mode_success:
+    rook_mode_3rd_kill_slide:
+      expire: 6s
+      #priority: 2201
 
 # counters:
 #   invid_target_group_made_qualify_invid_invasion:
@@ -428,8 +863,20 @@ slide_player:
 #   invid_target_group:
 #     shots: left_target, middle_target, right_target, left_drop, middle_drop, right_drop
 #     reset_events: ball_started, invid_target_group_hit_complete
+light_player:
+  mode_base_started:
+    gi_string:
+      color: on
+  mode_base_stopped:
+    gi_string:
+      color: off
+
 
 show_player:
+  play_shoot_again_show:
+    shoot_again_show:
+      loops: 0
+      events_when_stopped: shoot_again_show_ended
   # invid_target_group_hit_complete:
   #   invid_targets_complete:
   #     show_tokens:
@@ -460,50 +907,55 @@ show_player:
       key: extraball_awarded_show
       show_tokens:
         leds: l_shoot_again
+  mode_protoculture_started.1{device.counters.protoculture_hit_counter.value>=1}: P_1_show_on
+  mode_protoculture_started.2{device.counters.protoculture_hit_counter.value>=2}: P_2_show_on
+  mode_protoculture_started.3{device.counters.protoculture_hit_counter.value>=3}: P_3_show_on
+  mode_protoculture_started.4{device.counters.protoculture_hit_counter.value>=4}: P_4_show_on
+  mode_protoculture_started.5{device.counters.protoculture_hit_counter.value>=5}: P_5_show_on
+  mode_protoculture_started.6{device.counters.protoculture_hit_counter.value>=6}: P_6_show_on
+  mode_protoculture_started.7{device.counters.protoculture_hit_counter.value>=7}: P_7_show_on
+  mode_protoculture_started.8{device.counters.protoculture_hit_counter.value>=8}: P_8_show_on
+  mode_protoculture_started.9{device.counters.protoculture_hit_counter.value>=9}: P_9_show_on
+  logicblock_protoculture_hit_counter_hit.1{count==1}: P_1_show_on
+  logicblock_protoculture_hit_counter_hit.2{count==2}: P_2_show_on
+  logicblock_protoculture_hit_counter_hit.3{count==3}: P_3_show_on
+  logicblock_protoculture_hit_counter_hit.4{count==4}: P_4_show_on
+  logicblock_protoculture_hit_counter_hit.5{count==5}: P_5_show_on
+  logicblock_protoculture_hit_counter_hit.6{count==6}: P_6_show_on
+  logicblock_protoculture_hit_counter_hit.7{count==7}: P_7_show_on
+  logicblock_protoculture_hit_counter_hit.8{count==8}: P_8_show_on
+  logicblock_protoculture_hit_counter_hit.9{count==9}: P_9_show_on
+  mystery_targets_rollover_group_hit_complete:
+    mystery_shots_complete:
+      loops: 4
+      speed: 10
+  invid_target_group_hit_complete:
+    invid_targets_complete:
+      show_tokens:
+        color: red
+
 
 variable_player:
-  # r_top_lane_shot_unlit_hit:
-  #   score: 1000
-  # o1_top_lane_shot_unlit_hit:
-  #   score: 1000
-  # b_top_lane_shot_unlit_hit:
-  #   score: 1000
-  # o2_top_lane_shot_unlit_hit:
-  #   score: 1000
-  # r_top_lane_shot_lit_hit:
-  #   score: 500
-  # o1_top_lane_shot_lit_hit:
-  #   score: 500
-  # b_top_lane_shot_lit_hit:
-  #   score: 500
-  # o2_top_lane_shot_lit_hit:
-  #   score: 500
-  # robo_lanes_default_lit_complete:
-  #   score: 10000
-  # shot_left_outlane_t_hit:
-  #   score: 1000
-  # s_left_inlane_e_active:
-  #   score: 1000
-  # s_right_inlane_c_active:
-  #   score: 1000
-  # s_right_outlane_h_active:
-  #   score: 1000
+  mode_base_stopping:
+    last_game_num_players:
+      action: set_machine
+      int: game.num_players
 #  tech_lanes_default_lit_complete:
 #    score: 10000
-  spinner_shot_hit:
-    score: 100
+  # spinner_shot_hit:
+  #   score: 100 * current_player.pf_multiplier
   # pops_shot_hit:
   #   score: 100
   slings_shot_hit:
-    score: 10
+    score: 10 * current_player.pf_multiplier
   # s_top_target_active:
   #   score: 1000
   s_right_orbit_rollover_active:
-    score: 1000
+    score: 1000 * current_player.pf_multiplier
   s_right_rollover_active:
-    score: 1000
+    score: 1000 * current_player.pf_multiplier
   s_left_rollover_active:
-    score: 1000
+    score: 1000 * current_player.pf_multiplier
   # s_s_target_active:
   #   score: 1000
   # s_d_target_active:
@@ -512,54 +964,58 @@ variable_player:
   #   score: 1000
   # sdf_bank_default_lit_complete:
   #   score: 10000
-  s_left_target_active:
-    score: 1000
-  s_middle_target_active:
-    score: 1000
-  s_right_target_active:
-    score: 1000
-  s_right_drop_target_active:
-    score: 1000
-  s_middle_drop_target_active:
-    score: 1000
-  s_left_drop_target_active:
-    score: 1000
+  # s_left_target_active:
+  #   score: 250 * current_player.pf_multiplier
+  # s_middle_target_active:
+  #   score: 1000 * current_player.pf_multiplier
+  # s_right_target_active:
+  #   score: 1000 * current_player.pf_multiplier
+  # s_right_drop_target_active:
+  #   score: 1000 * current_player.pf_multiplier
+  # s_middle_drop_target_active:
+  #   score: 1000 * current_player.pf_multiplier
+  # s_left_drop_target_active:
+  #   score: 1000 * current_player.pf_multiplier
   invid_target_group_hit_complete:
-    score: 10000
+    score: 10000 * current_player.pf_multiplier
   s_right_top1_rubber_active:
-    score: 50
+    score: 50 * current_player.pf_multiplier
   s_right_top2_rubber_active:
-    score: 50
+    score: 50 * current_player.pf_multiplier
   s_middle_right_rubber_active:
-    score: 50
+    score: 50 * current_player.pf_multiplier
   s_lower_right_rubber_active:
-    score: 50
+    score: 50 * current_player.pf_multiplier
   s_left_top_rubber_active:
-    score: 50
+    score: 50 * current_player.pf_multiplier
   s_left_top_rubber2_active:
-    score: 50
+    score: 50 * current_player.pf_multiplier
   s_left_middle_rubber_active:
-    score: 50
+    score: 50 * current_player.pf_multiplier
   s_left_bottom_rubber_active:
-    score: 50
+    score: 50 * current_player.pf_multiplier
   s_left_lock_kickout_active:
-    score: 1000
+    score: (1000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
   s_right_lock_kickout_active:
-    score: 1000
+    score: (1000 * current_player.rook_shot_multiplier) * current_player.pf_multiplier
   s_top_lock_kickout_active:
-    score: 1000
-  achievement_rand_mode_collect_state_completed:
-    modes_completed: 1
+    score: 1000 * current_player.pf_multiplier
+  team_combo_made:
+    combo_value:
+      int: (10000 + (current_player.combos_made * 1250)) * current_player.pf_multiplier
+      action: set
+    score: (10000 + (current_player.combos_made * 1250)) * current_player.pf_multiplier
+    combos_made: 1
   achievement_invid_invasion_mission_1_state_completed:
     modes_completed: 1
-  rand_rook_combo_hit:
-    score: 10000
-  rook_rand_combo_hit:
-    score: 10000
-  rand_lancer_combo_hit:
-    score: 10000
-  rook_combo_shot_flashing_combo_hit:
-    score: 10000
+  achievement_rand_mode_collect_state_completed:
+    modes_completed: 1
+  achievement_annie_mode_collect_state_completed:
+    modes_completed: 1
+  achievement_rook_mode_collect_state_completed:
+    modes_completed: 1
+  achievement_lunk_mode_collect_state_completed:
+    modes_completed: 1
 
 #shows:
 #  flash_green:
@@ -585,7 +1041,67 @@ variable_player:
 #               #   show: off
 #         # show_tokens:
 #         #   color: red
-
+shows:
+  P_1_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+    - time: -1
+  P_2_show_on:
+    - time: 0
+      lights:
+        l_b2: 2F4F4F
+    - time: -1
+  P_3_show_on:
+    - time: 0
+      lights:
+        l_b3: 2F4F4F
+    - time: -1
+  P_4_show_on:
+    - time: 0
+      lights:
+        l_b4: 2F4F4F
+    - time: -1
+  P_5_show_on:
+    - time: 0
+      lights:
+        l_b5: 2F4F4F
+    - time: -1
+  P_6_show_on:
+    - time: 0
+      lights:
+        l_b6: 2F4F4F
+    - time: -1
+  P_7_show_on:
+    - time: 0
+      lights:
+        l_b7: 2F4F4F
+    - time: -1
+  P_8_show_on:
+    - time: 0
+      lights:
+        l_b8: 2F4F4F
+    - time: -1
+  P_9_show_on:
+    - time: 0
+      lights:
+        l_b9: 2F4F4F
+    - time: -1
+  shoot_again_show:
+    - duration: 3
+      slides:
+        shoot_again_slide:
+          widgets:
+            - type: text
+              text: PLAYER (number)
+              color: blue
+              font_size: 120
+              y: center + 90
+            - type: text
+              text: Shoot Again
+              color: red
+              y: center - 10
+              font_size: 90
 # shows:
   # invid_flash_red_show:
   #   - time: 0
@@ -609,75 +1125,92 @@ shots:
   spinner_shot:
     switch: s_spinner
   slings_shot:
-    switch: s_right_slingshot, s_left_slingshot
+    switch:
+      - s_right_slingshot
+      - s_left_slingshot
   pops_shot:
-    switch: s_top_r_pop_bumper, s_top_l_pop_bumper, s_bottom_r_pop_bumper, s_bottom_l_pop_bumper
-  # left_target:
-  #   switch: s_left_target
-  #   profile: invid_profile
-  #   show_tokens:
-  #     leds: l_t1
-  # middle_target:
-  #   switch: s_middle_target
-  #   profile: invid_profile
-  #   show_tokens:
-  #     leds: l_t2
-  # right_target:
-  #   switch: s_right_target
-  #   profile: invid_profile
-  #   show_tokens:
-  #     leds: l_t3
-  # left_drop:
-  #   switch: s_left_drop_target
-  #   profile: invid_profile
-  #   show_tokens:
-  #     leds: l_t4
-  # middle_drop:
-  #   switch: s_middle_drop_target
-  #   profile: invid_profile
-  #   show_tokens:
-  #     leds: l_t5
-  #   #debug: True
-  # right_drop:
-  #   switch: s_right_drop_target
-  #   profile: invid_profile
-  #   show_tokens:
-  #     leds: l_t6
-  # right_orbit_rollover:
-  #   switch: s_right_orbit_rollover
-  #   show_tokens: rorbit_rollover
-  #     leds: rorbit_rollover
-  # left_rollover:
-  #   switch: s_left_rollover
-  #   show_tokens:
-  #     leds: llock_rollover
-  # right_rollover:
-  #   switch: s_right_rollover
-  #   show_tokens:
-  #     leds: rlock_rollover
-
-  # s_target_shot:
-  #   switch: s_s_target
-  # d_target_shot:
-  #   switch: s_d_target
-  #    #profile: quick_flash
-  #   show_tokens:
-  #     leds: l_d_led
-  # f_target_shot:
-  #   switch: s_f_target
-  #   #profile: quick_flash
-  #   show_tokens:
-  #     leds: l_f_led
+    switch:
+      - s_top_r_pop_bumper
+      - s_top_l_pop_bumper
+      - s_bottom_r_pop_bumper
+      - s_bottom_l_pop_bumper
 
 sound_player:
-  ball_started{player==1 and ball==1}:
+  #ball_started{player==1 and ball==1}:
+  play_start_sound:
     start:
       action: play
-  play_what_is_that_flashing:
-    what_is_that_flashing:
-      action: play
+  # play_what_is_that_flashing:
+  #   what_is_that_flashing:
+  #     action: play
   s_plunger_lane_inactive: firepower_launch_sound
   slings_shot_hit: sling_sound
+  #mode_base_started:
+  #mode_skill_shot_started:
+  mode_skill_shot_started:
+    main_title:
+      action: play
+      loops: -1
+      #mode_end_action: stop
+  restart_main_title:
+    main_title:
+      action: play
+      loops: -1
+  mode_base_stopping:
+    main_title:
+      action: stop
+  mode_intro_invid_invasion_starting:
+    main_title:
+      action: stop
+    alien_attack:
+      action: play
+      loops: -1
+  mode_invid_invasion_stopping:
+    alien_attack:
+      action: stop
+  mode_intro_rand_mode_started:
+    main_title:
+      action: stop
+  mode_rand_mode_stopping:
+    rand_mode_cyclone_theme:
+      action: stop
+  mode_intro_rook_mode_started:
+    main_title:
+      action: stop
+  mode_rook_mode_stopping:
+    rook_mode_confrontation:
+      action: stop
+  mode_intro_annie_mode_started:
+    main_title:
+      action: stop
+  mode_annie_mode_stopping:
+    annie_mode_the_15th_squadron:
+      action: stop
+  mode_lunk_mode_started:
+    main_title:
+      action: stop
+  ball_save_default_saving_ball:
+    come_back_my_scott:
+      action: play
+  slide_rand_mode_3rd_kill_slide_removed:
+    rand_mode_success:
+      action: play
+      priority: 9999
+  slide_annie_mode_4th_kill_slide_removed:
+    annie_mode_success:
+      action: play
+      priority: 9999
+  play_rook_mode_success_not_lunk_started:
+    rook_mode_success_not_lunk_started:
+      action: play
+      priority: 9999
+  team_combo_made:
+    combo:
+      action: play
+
+  # ball_ending:
+  #   main_title:
+  #     action: stop
   # sw_sdf_active: sdf_target_sound
   #s_spinner_active: spinner
 
