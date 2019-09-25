@@ -1,0 +1,207 @@
+#config_version=5
+
+mode:
+   start_events:
+     - qualify_mystery
+   stop_events:
+     - stop_qualify_mystery
+   restart_on_next_ball: true
+   priority: 8000
+
+event_player:
+  mystery_award_increase_bonus_multiplier:
+    - display_mystery_increase_bonus_multiplier|2.5s
+    - robotech_lanes_shots_lit_complete|3s
+  mystery_award_light_kickback.1{not mode.kickback.active}:
+    - display_mystery_light_kickback|2.5s
+    - add_to_kickback_counter
+    - start_kickback_mode|3s
+  mystery_award_light_kickback.2{mode.kickback.active}:
+    - display_mystery_light_kickback|2.5s
+    - add_to_kickback_counter
+  mystery_award_extra_ball:
+    - display_award_extra_ball|2.5s
+  mystery_award_big_points:
+    - display_award_big_points|2.5s
+  advance_pops_level.1{mode.pops_level_1.active}:
+    - display_advance_pops_level|2.5s
+    - pops_level_2|3s
+  advance_pops_level.2{mode.pops_level_2.active}:
+    - display_advance_pops_level|2.5s
+    - pops_level_3|3s
+  advance_pops_level.3{mode.pops_level_3.active}:
+    - display_advance_pops_level|2.5s
+    - pops_super|3s
+  advance_pops_level.4{mode.pops_super.active}:
+    - start_mystery_award
+  advance_spinner_level.1{mode.spinner_level_1.active}:
+    - display_advance_spinner_level|2.5s
+    - spinner_level_2|3s
+  advance_spinner_level.2{mode.spinner_level_2.active}:
+    - display_advance_spinner_level|2.5s
+    - spinner_level_3|3s
+  advance_spinner_level.3{mode.spinner_level_3.active}:
+    - display_advance_spinner_level|2.5s
+    - spinner_super|3s
+  advance_spinner_level.4{mode.spinner_super.active}:
+    - start_mystery_award
+  mystery_show_ended:
+    - start_pre_qualify_mystery|1s
+
+show_player:
+  start_mystery_award:
+    play_mystery_intro_video:
+      loops: 0
+      events_when_stopped: mystery_show_ended
+
+queue_event_player:
+  mystery_shot_flashing_hit:
+    queue_event: my_mystery_award
+    events_when_finished: stop_qualify_mystery
+
+queue_relay_player:
+  my_mystery_award:
+    post: start_mystery_award
+    wait_for: mystery_show_ended
+  balldevice_bd_top_lock_ball_eject_attempt:
+    post: wait_for_instructions
+    wait_for: mystery_show_ended
+
+random_event_player:
+  start_mystery_award:
+    events:
+      - mystery_award_big_points
+      - advance_pops_level
+      - advance_spinner_level
+      - mystery_award_light_kickback
+      - mystery_award_increase_bonus_multiplier
+      - mystery_award_extra_ball
+      # - ball_save?
+      # - 3 protoculture cells?
+      # - add_time_to_mode?
+      # - light shot multipliers?
+
+shot_profiles:
+  mystery_shot_profile:
+    show_when_disabled: false
+    states:
+      - name: flashing
+        show: mystery_flash_show
+        sync_ms: 1500
+        loops: -1
+        speed: 5
+      - name: hit
+        show: off
+
+shots:
+  mystery_shot:
+    switch: s_top_lock_kickout
+    profile: mystery_shot_profile
+    # show_tokens:
+    #   leds: l_left_orbit_arrow
+    disable_events:
+      - mode_skill_shot_started
+    enable_events:
+      - mode_qualify_mystery_started
+      - mode_skill_shot_stopped
+    reset_events: mode_qualify_mystery_started
+    debug: true
+
+shows:
+  play_mystery_intro_video:
+    - duration: 5s
+      slides:
+        mystery_collected_slide:
+          widgets:
+            - type: text
+              text: MYSTERY
+              color: red
+              font_size: 80
+              x: center
+              y: center+300
+            - type: video
+              video: mystery_video
+
+widgets:
+  award_big_points_widget:
+    - type: text
+      text: "BIG POINTS: 50,000"
+      color: white
+      font_size: 60
+      x: center
+      y: center-300
+      z: 8100
+  advance_pops_level_widget:
+    - type: text
+      text: "POPS LEVEL ADVANCE"
+      color: white
+      font_size: 60
+      x: center
+      y: center-300
+      z: 8100
+  advance_spinner_level_widget:
+    - type: text
+      text: "SPINNER LEVEL ADVANCE"
+      color: white
+      font_size: 60
+      x: center
+      y: center-300
+      z: 8100
+  mystery_extra_ball_widget:
+    - type: text
+      text: "EXTRA BALL"
+      color: white
+      font_size: 60
+      x: center
+      y: center-300
+      z: 8100
+  mystery_light_kickback_widget:
+    - type: text
+      text: "KICKBACK ENABLED"
+      color: white
+      font_size: 60
+      x: center
+      y: center-300
+      z: 8100
+  mystery_increase_bonus_multiplier_widget:
+    - type: text
+      text: "INCREASE BONUS MULTIPLIER"
+      color: white
+      font_size: 60
+      x: center
+      y: center-300
+      z: 8100
+
+
+widget_player:
+  display_mystery_increase_bonus_multiplier:
+    mystery_increase_bonus_multiplier_widget:
+      action: add
+      slide: mystery_collected_slide
+  display_award_big_points:
+    award_big_points_widget:
+      action: add
+      slide: mystery_collected_slide
+  display_advance_pops_level:
+    advance_pops_level_widget:
+      action: add
+      slide: mystery_collected_slide
+  display_advance_spinner_level:
+    advance_spinner_level_widget:
+      action: add
+      slide: mystery_collected_slide
+  display_award_extra_ball:
+    mystery_extra_ball_widget:
+      action: add
+      slide: mystery_collected_slide
+  display_mystery_light_kickback:
+    mystery_light_kickback_widget:
+      action: add
+      slide: mystery_collected_slide
+
+
+variable_player:
+  award_big_points:
+    score: 50000
+  add_to_kickback_counter:
+    kickback_counter: 1
