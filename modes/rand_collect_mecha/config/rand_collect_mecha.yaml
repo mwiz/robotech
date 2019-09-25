@@ -1,0 +1,109 @@
+#config_version=5
+
+mode:
+  start_events:
+    - rand_mode_success
+  stop_events:
+    - ball_will_end
+    - rand_collect_mecha_mode_done
+  stop_on_ball_end: true
+  priority: 2300
+
+# event_player:
+#   s_left_lock_kickout_active{mode.lunk_mode.active}:
+#     left_lock_eject
+
+queue_event_player:
+  rand_collect_mecha_shot_flashing_hit:
+    queue_event: my_queue_rand_collect_mecha_mode
+    events_when_finished: rand_collect_mecha_mode_done
+
+queue_relay_player:
+  my_queue_rand_collect_mecha_mode:
+    post: start_rand_collect_mecha_mode_display
+    wait_for: rand_collect_mecha_mode_show_ended
+  balldevice_bd_left_lock_ball_eject_attempt{not mode.rook_mode.active and not mode.annie_mode.active and not mode.lunk_mode.active and device.shots.rand_collect_mecha_shot.state_name=="hit"}:
+    post: wait_for_rand_collect_mecha_mode_display
+    wait_for: rand_collect_mecha_mode_show_ended
+
+# shot_groups:
+#   rand_collect_mecha_shot_group:
+#     shots: rand_collect_mecha_shot
+#     enable_events:
+#       - mode_rand_collect_mecha_started
+#       - mode_annie_mode_stopped
+#       - mode_rook_mode_stopped
+#       - mode_lunk_mode_stopped
+#     disable_events:
+#       - rand_collect_mecha_shot_group_flashing_hit
+#       - mode_annie_mode_started
+#       - mode_rook_mode_started
+#       - mode_lunk_mode_started
+
+
+shot_profiles:
+  rand_collect_mecha_flash:
+    advance_on_hit: true
+    states:
+      - name: flashing
+        show: flash_blue_show
+        loops: -1
+        speed: 10
+      - name: hit
+        show: off
+
+shots:
+  rand_collect_mecha_shot:
+    switch: s_left_lock_kickout
+    profile: rand_collect_mecha_flash
+    show_tokens:
+      leds: l_llock_arrow
+    enable_events:
+      - mode_rand_collect_mecha_started
+      - mode_annie_mode_stopped
+      - mode_rook_mode_stopped
+      - mode_lunk_mode_stopped
+    disable_events:
+      #- rand_collect_mecha_shot_flashing_hit
+      - mode_annie_mode_started
+      - mode_rook_mode_started
+      - mode_lunk_mode_started
+    debug: true
+
+shows:
+  rand_collect_mecha_mode_display:
+    - duration: 5
+      slides:
+        rand_collect_mecha_slide:
+          widgets:
+            - type: text
+              text: CYCLONE Collected
+              color: red
+              font_size: 80
+              x: center
+              y: center+300
+            - type: video
+              video: rand_collect_mecha_video
+            - type: text
+              text: (mecha_collect_value)
+              font_size: 80
+              x: center
+              y: center-300
+              color: yellow
+              number_grouping: true
+
+show_player:
+  start_rand_collect_mecha_mode_display:
+    rand_collect_mecha_mode_display:
+      loops: 0
+      events_when_stopped: rand_collect_mecha_mode_show_ended
+  flipper_cancel:
+    rand_collect_mecha_mode_display:
+      action: stop
+
+variable_player:
+  rand_collect_mecha_shot_flashing_hit:
+    score: (50000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
+    mecha_collect_value:
+      int: (50000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
+      action: set
