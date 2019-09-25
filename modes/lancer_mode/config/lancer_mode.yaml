@@ -1,0 +1,51 @@
+#config_version=5
+
+mode:
+  start_events: start_lancer_mode
+  stop_events:
+    - ball_will_end
+  stop_on_ball_end: true
+  priority: 6000
+
+variable_player:
+  mode_lancer_mode_started:
+    pf_multiplier: 2
+  mode_lancer_mode_stopping:
+    pf_multiplier: -2
+  # spinner_shot_hit:
+  #   score: 500 * current_player.pf_multiplier|block
+
+widgets:
+  lancer_collected_widget:
+    - type: text
+      text: LANCER Collected
+      color: blue
+      font_size: 80
+      x: center
+      y: center+290
+  3x_pf_scoring_widget:
+    - type: text
+      text: 3X playfield scoring!
+      color: yellow
+      font_size: 80
+      y: center # + 50
+
+widget_player:
+  mode_lancer_mode_started:
+    lancer_collected_widget:
+      action: add
+      widget_settings:
+        expire: 3s
+    3x_pf_scoring_widget:
+      action: add
+      widget_settings:
+        expire: 3s
+
+show_player:
+  mode_lancer_mode_started:
+    flash_multiplier_3x_led:
+      loops: -1
+      sync_ms: 1000
+  mode_lancer_mode_stopping:
+    flash_multiplier_3x_led:
+      action: stop
