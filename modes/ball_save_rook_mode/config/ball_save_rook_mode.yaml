@@ -1,0 +1,49 @@
+#config_version=5
+#Robotech
+
+mode:
+    start_events:
+      - stop_intro_rook_mode #mode_rook_mode_will_start
+    stop_events:
+      - ball_save_rook_mode_multiball_disabled
+    priority: 9550
+
+event_player:
+  mode_ball_save_rook_mode_started:
+    - orbit_gate_enable
+  mode_ball_save_rook_mode_stopping:
+    - orbit_gate_disable
+
+ball_saves:
+  rook_mode_multiball:
+    active_time: 15s
+    hurry_up_time: 5s
+    grace_period: 5s
+    timer_start_events:
+      - mode_ball_save_rook_mode_started
+    auto_launch: true
+    balls_to_save: -1
+    debug: true
+
+show_player:
+  ball_save_rook_mode_multiball_timer_start:
+    fast_flash_show:
+      key: rook_mode_save_flash
+      speed: 3
+      show_tokens:
+        leds: l_shoot_again
+        color: yellow
+      action: play
+  ball_save_rook_mode_multiball_hurry_up:
+    rook_mode_save_flash:
+      action: stop
+    fast_flash_show:
+      key: rook_mode_hurry_up_flash
+      action: play
+      speed: 20
+      show_tokens:
+        leds: l_shoot_again
+        color: yellow
+  ball_save_rook_mode_multiball_grace_period:
+    rook_mode_hurry_up_flash:
+      action: stop
