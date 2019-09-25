@@ -1,83 +1,144 @@
 #config_version=5
 
 mode:
-  start_events: ball_starting
-  #stop_events: mode_qualify_lunk_started
+  start_events:
+    - ball_starting{ball==1}
+    # - mode_lunk_mode_stopped
+  stop_events:
+    # - mode_qualify_lunk_started
+    - game_ending
+  restart_on_next_ball: true
   priority: 300
+
+counters:
+  light_shot_multipliers_count:
+    count_events:
+      - sdf_bank_shots_lit_complete
+      - lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value < 4}
+    starting_count: 0
+    count_complete_value: 1
+    direction: up
+    reset_on_complete: true
+    events_when_complete: qualify_shot_multipliers
+    disable_on_complete: false
+    enable_events:
+      - mode_skill_shot_stopped
+      #- mode_end_invid_invasion_stopped
+      - mode_rand_mode_stopped
+      - mode_annie_mode_stopped
+      - mode_rook_mode_stopped
+      - mode_lunk_mode_stopped
+    disable_events:
+      - mode_skill_shot_starting
+      - invid_invasion_add_ball
+      - mode_rand_mode_starting
+      - mode_annie_mode_starting
+      - mode_rook_mode_starting
+      #- lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==4}
+    # reset_events:
+    #   - mode_invid_invasion_starting
+    #   #- ball_ending
+    #   - mode_skill_shot_starting
+    debug: true
 
 shot_groups:
   sdf_bank_shots:
-    shots: s_target_shot, d_target_shot, f_target_shot
-    enable_events: mode_sdf_targets_starting, mode_qualify_lunk_stopped
-    disable_events: mode_bonus_will_start, mode_qualify_lunk_started
+    shots:
+      - s_target_shot
+      - d_target_shot
+      - f_target_shot
+    enable_events:
+      - mode_lunk_mode_stopped
+    disable_events:
+      #- mode_lunk_mode_started
+      - mode_qualify_lunk_started
     reset_events:
-      sdf_bank_shots_lit_complete: 1s
+     - sdf_bank_shots_lit_complete|1
+     - mode_skill_shot_started
+     - mode_rand_mode_started
+     - mode_annie_mode_started
+     - mode_rook_mode_started
+     - mode_lunk_mode_stopped
+     - mode_intro_invid_invasion_started
 
 show_player:
-  sdf_bank_shots_lit_complete:
+  sdf_bank_shots_lit_complete: # {not mode.qualify_lunk.active}:
     sdf_bank_complete:
       loops: 3
       speed: 10
       show_tokens:
         color: blue
-  s_target_shot_unlit_hit:
+      priority: 10
+  #s_target_shot_unlit_hit:
+  s_target_shot_hit: # {not mode.qualify_lunk.active}:
     fast_flash_show:
+      key: s_target_flash
       loops: 3
       speed: 30
       show_tokens:
         leds: l_s_led
         color: white
-  s_target_shot_lit_hit:
+  # s_target_shot_lit_hit:
+  #   fast_flash_show:
+  #     key: s_target_lit_flash
+  #     loops: 3
+  #     speed: 30
+  #     show_tokens:
+  #       leds: l_s_led
+  #       color: white
+  d_target_shot_hit: # {not mode.qualify_lunk.active}:
+  #d_target_shot_unlit_hit:
     fast_flash_show:
-      loops: 3
-      speed: 30
-      show_tokens:
-        leds: l_s_led
-        color: white
-  d_target_shot_unlit_hit:
-    fast_flash_show:
-      loops: 3
-      speed: 30
-      show_tokens:
-        leds: l_d_led
-        color: white
-  d_target_shot_lit_hit:
-    fast_flash_show:
+      key: d_target_flash
       loops: 3
       speed: 30
       show_tokens:
         leds: l_d_led
         color: white
-  f_target_shot_unlit_hit:
+  # d_target_shot_lit_hit:
+  #   fast_flash_show:
+  #     key: d_target_lit_flash
+  #     loops: 3
+  #     speed: 30
+  #     show_tokens:
+  #       leds: l_d_led
+  #       color: white
+  f_target_shot_hit: # {not mode.qualify_lunk.active}:
+  #f_target_shot_unlit_hit:
     fast_flash_show:
+      key: f_target_flash
       loops: 3
       speed: 30
       show_tokens:
         leds: l_f_led
         color: white
-  f_target_shot_lit_hit:
-    fast_flash_show:
-      loops: 3
-      speed: 30
-      show_tokens:
-        leds: l_f_led
-        color: white
+  # f_target_shot_lit_hit:
+  #   fast_flash_show:
+  #     loops: 3
+  #     speed: 30
+  #     show_tokens:
+  #       leds: l_f_led
+  #       color: white
 
 variable_player:
-  s_target_shot_unlit_hit:
-    score: 1000
-  d_target_shot_unlit_hit:
-    score: 1000
-  f_target_shot_unlit_hit:
-    score: 1000
-  s_target_shot_lit_hit:
-    score: 500
-  d_target_shot_lit_hit:
-    score: 500
-  f_target_shot_lit_hit:
-    score: 500
+  sdf_bank_shots_unlit_hit:
+    score: 1000 * current_player.pf_multiplier
+  sdf_bank_shots_lit_hit:
+    score: 500 * current_player.pf_multiplier
+  # s_target_shot_unlit_hit:
+  #   score: 1000
+  # d_target_shot_unlit_hit:
+  #   score: 1000
+  # f_target_shot_unlit_hit:
+  #   score: 1000
+  # s_target_shot_lit_hit:
+  #   score: 500
+  # d_target_shot_lit_hit:
+  #   score: 500
+  # f_target_shot_lit_hit:
+  #   score: 500
   sdf_bank_shots_lit_complete:
-    score: 5000
+    score: 5000 * current_player.pf_multiplier
 
 shots:
   s_target_shot:
@@ -93,5 +154,11 @@ shots:
     show_tokens:
       leds: l_f_led
 
+# sound_player:
+#   sw_sdf_active: sdf_target_sound
+#
+# sound_player:
+#   sdf_bank_shots_unlit_hit: sdf_target_sound
+
 sound_player:
-    sw_sdf_active: sdf_target_sound
+  sdf_bank_shots_hit: sdf_target_sound
