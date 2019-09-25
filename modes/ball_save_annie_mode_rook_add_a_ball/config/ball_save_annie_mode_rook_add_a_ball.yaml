@@ -3,9 +3,10 @@
 
 mode:
     start_events:
-      - annie_mode_rook_add_ball_2_hit
+      - annie_mode_rook_add_ball_hit
     stop_events:
       - ball_save_annie_mode_rook_add_a_ball_disabled
+      - mode_annie_mode_stopped
     priority: 9450
 
 # event_player:
@@ -17,10 +18,10 @@ ball_saves:
     active_time: 10s
     hurry_up_time: 5s
     grace_period: 2s
-    enable_events: mode_ball_save_annie_mode_rook_add_a_ball_started
+    #enable_events: mode_ball_save_annie_mode_rook_add_a_ball_started
     timer_start_events:
-      - mode_ball_save_annie_mode_rook_add_a_ball_started{not mode.ball_save_annie_mode.active}
-      - mode_ball_save_annie_mode_stopped
+      - mode_ball_save_annie_mode_rook_add_a_ball_started # {not mode.ball_save_annie_mode.active}
+      #- mode_ball_save_annie_mode_stopped
     auto_launch: true
     balls_to_save: -1
     debug: true
