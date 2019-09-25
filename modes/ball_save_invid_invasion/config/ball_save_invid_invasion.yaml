@@ -32,7 +32,7 @@ show_player:
       speed: 3
       show_tokens:
         leds: l_shoot_again
-        color: purple
+        color: red #purple
       action: play
   ball_save_invid_invasion_multiball_hurry_up:
     invid_invasion_save_flash:
@@ -43,7 +43,7 @@ show_player:
       speed: 20
       show_tokens:
         leds: l_shoot_again
-        color: purple
+        color: red #purple
   ball_save_invid_invasion_multiball_grace_period:
     invid_invasion_hurry_up_flash:
       action: stop
