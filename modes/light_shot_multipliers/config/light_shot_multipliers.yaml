@@ -1,0 +1,123 @@
+#config_version=5
+
+mode:
+  start_events:
+    - mode_qualify_shot_multipliers_started
+  stop_events:
+    - mode_qualify_shot_multipliers_stopped
+  restart_on_next_ball: false
+  priority: 6900
+
+show_player:
+  annie_shot_multiplier_flashing_shot_multiplier_hit:
+    color_green_on:
+      key: annie_2x_light
+      show_tokens:
+        leds: l_annie_x
+      action: play
+  ramp_down_active{device.achievements.annie_2x_shot_collected.state == "completed"}:
+    annie_2x_light:
+      action: stop
+  ramp_up_active{device.achievements.annie_2x_shot_collected.state == "completed"}:
+    color_green_on:
+      key: annie_2x_light
+      show_tokens:
+        leds: l_annie_x
+      action: play
+  ramp_shot_multiplier_flashing_shot_multiplier_hit:
+    color_green_on:
+      key: ramp_2x_light
+      show_tokens:
+        leds: l_annie_x
+      action: play
+  ramp_up_active{device.achievements.ramp_2x_shot_collected.state == "completed"}:
+    ramp_2x_light:
+      action: stop
+  ramp_down_active{device.achievements.ramp_2x_shot_collected.state == "completed"}:
+    color_green_on:
+      key: ramp_2x_light
+      show_tokens:
+        leds: l_annie_x
+      action: play
+
+
+achievements:
+  rand_2x_shot_collected:
+    show_tokens:
+      leds: l_rand_x
+    #show_when_enabled: on
+    #show_when_started: flash
+    show_when_completed: color_green_on
+    #show_when_stopped: color_red_on
+    #enable_events: mode_light_shot_multipliers_started
+    #events_when_enabled: start_intro_rand_mode
+    start_events: mode_light_shot_multipliers_started
+    #stop_events: mode_rand_mode_stopped
+    #restart_after_stop_possible: false
+    complete_events: rand_shot_multiplier_flashing_shot_multiplier_hit
+    restart_on_next_ball_when_started: false
+    reset_events:
+      - mode_qualify_shot_multipliers_stopped #mode_light_shot_multipliers_stopped
+    debug: true
+  annie_2x_shot_collected:
+    # show_tokens:
+    #   leds: l_annie_x
+    # show_when_completed: color_green_on
+    start_events: mode_light_shot_multipliers_started
+    complete_events: annie_shot_multiplier_flashing_shot_multiplier_hit
+    # disable_events: achievement_invid_invasion_mission_1_state_enabled #ramp_down_active
+    # show_when_disabled: color_red_on
+    restart_on_next_ball_when_started: false
+    reset_events:
+      - mode_light_shot_multipliers_stopped
+    debug: true
+  ramp_2x_shot_collected:
+    # show_tokens:
+    #   leds: l_annie_x
+    # show_when_completed: color_green_on
+    start_events: mode_light_shot_multipliers_started
+    complete_events: ramp_shot_multiplier_flashing_shot_multiplier_hit
+    restart_on_next_ball_when_started: false
+    reset_events:
+      - mode_light_shot_multipliers_stopped
+    debug: true
+  rook_2x_shot_collected:
+    show_tokens:
+      leds: l_rook_x
+    show_when_completed: color_green_on
+    start_events: mode_light_shot_multipliers_started
+    complete_events: rook_shot_multiplier_flashing_shot_multiplier_hit
+    restart_on_next_ball_when_started: false
+    reset_events:
+      - mode_light_shot_multipliers_stopped
+    debug: true
+  lancer_2x_shot_collected:
+    show_tokens:
+      leds: l_lancer_x
+    show_when_completed: color_green_on
+    start_events: mode_light_shot_multipliers_started
+    complete_events: lancer_shot_multiplier_flashing_shot_multiplier_hit
+    restart_on_next_ball_when_started: false
+    reset_events:
+      - mode_light_shot_multipliers_stopped
+    debug: true
+  lunk_2x_shot_collected:
+    show_tokens:
+      leds: l_lunk_x
+    show_when_completed: color_green_on
+    start_events: mode_light_shot_multipliers_started
+    complete_events: lunk_shot_multiplier_flashing_shot_multiplier_hit
+    restart_on_next_ball_when_started: false
+    reset_events:
+      - mode_light_shot_multipliers_stopped
+    debug: true
+  protoculture_2x_shot_collected:
+    show_tokens:
+      leds: l_10k
+    show_when_completed: color_green_on
+    start_events: mode_light_shot_multipliers_started
+    complete_events: protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    restart_on_next_ball_when_started: false
+    reset_events:
+      - mode_light_shot_multipliers_stopped
+    debug: true
