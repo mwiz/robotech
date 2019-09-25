@@ -1,0 +1,8 @@
+#show_version=5
+
+- time: 0
+  lights:
+    (leds): purple #2E0854
+- time: 100ms
+  lights:
+    (leds): off

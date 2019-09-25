@@ -1,0 +1,144 @@
+#config_version=5
+
+mode:
+  start_events:
+    - pops_super
+  stop_events:
+    - ball_ended
+  priority: 7400
+
+event_player:
+  mode_pops_super_started:
+    logicblock_pops_super_hit_counter_hit:
+      count:
+        value: device.counters.pops_super_hit_counter.value
+  # mode_end_invid_invasion_stopped:
+  #   logicblock_pops_super_hit_counter_hit:
+  #     count:
+  #       value: device.counters.pops_super_hit_counter.value
+  # mode_rand_mode_stopped:
+  #   logicblock_pops_super_hit_counter_hit:
+  #     count:
+  #       value: device.counters.pops_super_hit_counter.value
+  # mode_annie_mode_stopped:
+  #   logicblock_pops_super_hit_counter_hit:
+  #     count:
+  #       value: device.counters.pops_super_hit_counter.value
+  # mode_rook_mode_stopped:
+  #   logicblock_pops_super_hit_counter_hit:
+  #     count:
+  #       value: device.counters.pops_super_hit_counter.value
+
+counters:
+  pops_super_hit_counter:
+    count_events: pops_shot_hit
+    starting_count: 0
+    direction: up
+    #count_complete_value: 0
+    #reset_on_complete: true
+    #events_when_complete: pops_super
+    #disable_on_complete: false
+    enable_events:
+      - mode_pops_super_started
+      # - mode_rand_mode_stopped
+      # - mode_annie_mode_stopped
+      # - mode_rook_mode_stopped
+      # - mode_end_invid_invasion_stopped
+    # disable_events:
+    #   - mode_rand_mode_started
+    #   - mode_annie_mode_started
+    #   - mode_rook_mode_started
+    #   - mode_intro_invid_invasion_started
+    persist_state: true
+
+widgets:
+  # pops_super_widget:
+  #   - type: text
+  #     text: SUPER POPS !!!
+  #     color: purple
+  #     font_size: 80
+  #     x: center
+  #     y: center + 50
+    # - type: text
+    #   text: "Score: 1000"
+    #   color: purple
+    #   font_size: 80
+    #   x: center
+    #   y: center - 50
+  pops_super_count_widget:
+    - type: text
+      text: "SUPER POPS - (count)"
+      color: purple
+      font_size: 30
+      x: center - 450
+      y: center - 240
+    - type: text
+      text: "Value: 1000"
+      color: purple
+      font_size: 30
+      x: center - 450
+      y: center - 270
+
+widget_player:
+  # mode_pops_super_started:
+  #   pops_super_widget:
+  #     action: add
+  #     widget_settings:
+  #       expire: 3s
+  #       #z: 110
+  logicblock_pops_super_hit_counter_hit:
+    pops_super_count_widget:
+      action: update
+      slide: base_slide
+  # mode_intro_invid_invasion_started:
+  #   pops_super_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_rand_mode_started:
+  #   pops_super_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_annie_mode_started:
+  #   pops_super_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_rook_mode_started:
+  #   pops_super_count_widget:
+  #     action: remove
+  #     slide: base_slide
+
+show_player:
+  s_bottom_r_pop_bumper_active:
+    flash_pop_bumper_purple:
+      key: bottom_right_pop_flash
+      loops: 0
+      show_tokens:
+        leds: l_lower_r_pop_bumper
+  s_bottom_l_pop_bumper_active:
+    flash_pop_bumper_purple:
+      key: bottom_left_pop_flash
+      loops: 0
+      show_tokens:
+        leds: l_lower_l_pop_bumper
+  s_top_r_pop_bumper_active:
+    flash_pop_bumper_purple:
+      key: top_right_pop_flash
+      loops: 0
+      show_tokens:
+        leds: l_upper_r_pop_bumper
+  s_top_l_pop_bumper_active:
+    flash_pop_bumper_purple:
+      key: top_left_pop_flash
+      loops: 0
+      show_tokens:
+        leds: l_upper_l_pop_bumper
+
+variable_player:
+  pops_shot_hit:
+    score: 1000 * current_player.pf_multiplier
+    super_pops_total: 1
+
+sound_player:
+  mode_pops_super_started:
+    super_pops:
+      action: play
