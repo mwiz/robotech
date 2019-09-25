@@ -1,10 +1,451 @@
 #config_version=5
 
 mode:
-  start_events: game_ended, reset_complete
-  stop_events: game_start
+  start_events:
+    - game_ended
+    - reset_complete
+  stop_events:
+    - game_start
   priority: 10
   game_mode: False
+
+event_player:
+  mode_attract_started.1{machine.last_game_num_players==1}:
+    - play_attract_slide_1
+  mode_attract_started.2{machine.last_game_num_players==2}:
+    - play_attract_slide_2
+  mode_attract_started.3{machine.last_game_num_players==3}:
+    - play_attract_slide_3
+  mode_attract_started.4{machine.last_game_num_players==4}:
+    - play_attract_slide_4
+  timer_attract_slide_cycle_timer_complete:
+    - play_next_attract_slide_right
+  play_attract_slide_1:
+    - start_slide_cycle_timer
+  play_attract_slide_2:
+    - start_slide_cycle_timer
+  play_attract_slide_3:
+    - start_slide_cycle_timer
+  play_attract_slide_4:
+    - start_slide_cycle_timer
+  play_attract_slide_5:
+    - start_slide_cycle_timer
+  play_attract_slide_6:
+    - start_slide_cycle_timer
+  play_attract_slide_7:
+    - start_slide_cycle_timer
+  play_attract_slide_8:
+    - start_slide_cycle_timer
+  play_attract_slide_9:
+    - start_slide_cycle_timer
+  play_attract_slide_10:
+    - start_slide_cycle_timer
+  play_next_attract_slide_right.1{machine.current_attract_slide==1}:
+    - play_attract_slide_5
+  play_next_attract_slide_right.2{machine.current_attract_slide==2}:
+    - play_attract_slide_6
+  play_next_attract_slide_right.3{machine.current_attract_slide==3}:
+    - play_attract_slide_7
+  play_next_attract_slide_right.4{machine.current_attract_slide==4}:
+    - play_attract_slide_8
+  play_next_attract_slide_right.5{machine.current_attract_slide==5}:
+    - play_attract_slide_9
+  play_next_attract_slide_right.6{machine.current_attract_slide==6}:
+    - play_attract_slide_10
+  play_next_attract_slide_right.7{machine.current_attract_slide==7 and machine.last_game_num_players==1}:
+    - play_attract_slide_1
+  play_next_attract_slide_right.8{machine.current_attract_slide==7 and machine.last_game_num_players==2}:
+    - play_attract_slide_2
+  play_next_attract_slide_right.9{machine.current_attract_slide==7 and machine.last_game_num_players==3}:
+    - play_attract_slide_3
+  play_next_attract_slide_right.10{machine.current_attract_slide==7 and machine.last_game_num_players==4}:
+    - play_attract_slide_4
+  play_next_attract_slide_left.1{machine.current_attract_slide==2 and machine.last_game_num_players==1}:
+    - play_attract_slide_1
+  play_next_attract_slide_left.2{machine.current_attract_slide==2 and machine.last_game_num_players==2}:
+    - play_attract_slide_2
+  play_next_attract_slide_left.3{machine.current_attract_slide==2 and machine.last_game_num_players==3}:
+    - play_attract_slide_3
+  play_next_attract_slide_left.4{machine.current_attract_slide==2 and machine.last_game_num_players==4}:
+    - play_attract_slide_4
+  play_next_attract_slide_left.5{machine.current_attract_slide==3}:
+    - play_attract_slide_5
+  play_next_attract_slide_left.6{machine.current_attract_slide==4}:
+    - play_attract_slide_6
+  play_next_attract_slide_left.7{machine.current_attract_slide==5}:
+    - play_attract_slide_7
+  play_next_attract_slide_left.8{machine.current_attract_slide==6}:
+    - play_attract_slide_8
+  play_next_attract_slide_left.9{machine.current_attract_slide==7}:
+    - play_attract_slide_9
+  play_next_attract_slide_left.10{machine.current_attract_slide==1}:
+    - play_attract_slide_10
+  s_right_flipper_active:
+    - play_next_attract_slide_right
+  s_left_flipper_active:
+    - play_next_attract_slide_left
+  flipper_cancel.1{machine.last_game_num_players==1}:
+    - play_attract_slide_1
+  flipper_cancel.2{machine.last_game_num_players==2}:
+    - play_attract_slide_2
+  flipper_cancel.3{machine.last_game_num_players==3}:
+    - play_attract_slide_3
+  flipper_cancel.4{machine.last_game_num_players==4}:
+    - play_attract_slide_4
+
+
+timers:
+  attract_slide_cycle_timer:
+    start_value: 4
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: restart
+        event: start_slide_cycle_timer
+      # - action: add
+      #   event: slide_cycle_timer_gimme_one_more_second
+      #   value: 1
+      # - action: add
+      #   event: slide_cycle_timer_gimme_two_more_seconds
+      #   value: 2
+      - action: stop
+        event: stop_slide_cycle_timer
+
+slides:
+  attract_slide_1_player:
+    widgets:
+      - type: text
+        text: Player 1
+        y: center + 140
+        font_size: 80
+      - type: text
+        text: (machine|player1_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        y: center + 80
+  attract_slide_2_players:
+    widgets:
+      - type: text
+        text: Player 1
+        #y: center + 140
+        x: center - 300
+        y: center + 140
+        font_size: 80
+      - type: text
+        text: (machine|player1_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        #y: center + 80
+        x: center - 300
+        y: center + 80
+      - type: text
+        text: Player 2
+        #y: center + 140 #center - 80
+        x: center + 250
+        y: center + 140
+        font_size: 80
+      - type: text
+        text: (machine|player2_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        #y: center - 140
+        x: center + 250
+        y: center + 80
+  attract_slide_3_players:
+    widgets:
+      - type: text
+        text: Player 1
+        x: center - 300
+        y: center + 140
+        font_size: 80
+      - type: text
+        text: (machine|player1_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        x: center - 300
+        y: center + 80
+      - type: text
+        text: Player 2
+        x: center + 250
+        y: center + 140
+        font_size: 80
+      - type: text
+        text: (machine|player2_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        x: center + 250
+        y: center + 80
+      - type: text
+        text: Player 3
+        x: center - 300
+        y: center - 80
+        font_size: 80
+      - type: text
+        text: (machine|player3_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        x: center - 300
+        y: center - 140
+  attract_slide_4_players:
+    widgets:
+      - type: text
+        text: Player 1
+        x: center - 300
+        y: center + 140
+        font_size: 80
+      - type: text
+        text: (machine|player1_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        x: center - 300
+        y: center + 80
+      - type: text
+        text: Player 2
+        x: center + 250
+        y: center + 140
+        font_size: 80
+      - type: text
+        text: (machine|player2_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        x: center + 250
+        y: center + 80
+      - type: text
+        text: Player 3
+        x: center - 300
+        y: center - 80
+        font_size: 80
+      - type: text
+        text: (machine|player3_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        x: center - 300
+        y: center - 140
+      - type: text
+        text: Player 4
+        x: center + 250
+        y: center - 80
+        font_size: 80
+      - type: text
+        text: (machine|player4_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        x: center + 250
+        y: center - 140
+  attract_all_high_scores:
+    widgets:
+      - type: text
+        text: (machine|score1_label)
+        y: center + 280
+        font_size: 45
+      - type: text
+        text: (machine|score1_name) (machine|score1_value)
+        number_grouping: true
+        y: center + 250
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score2_label)
+        y: center + 200
+        font_size: 45
+      - type: text
+        text: (machine|score2_name) (machine|score2_value)
+        number_grouping: true
+        y: center + 170
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score3_label)
+        y: center + 120
+        font_size: 45
+      - type: text
+        text: (machine|score3_name) (machine|score3_value)
+        number_grouping: true
+        y: center + 90
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score4_label)
+        y: center + 40
+        font_size: 45
+      - type: text
+        text: (machine|score4_name) (machine|score4_value)
+        number_grouping: true
+        y: center + 10
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score5_label)
+        y: center - 40
+        font_size: 45
+      - type: text
+        text: (machine|score5_name) (machine|score5_value)
+        number_grouping: true
+        y: center - 70
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score6_label)
+        y: center - 120
+        font_size: 45
+      - type: text
+        text: (machine|score6_name) (machine|score6_value)
+        number_grouping: true
+        y: center - 150
+        font_size: 40
+        color: red
+      - type: text
+        text: (machine|score7_label)
+        y: center - 200
+        font_size: 45
+      - type: text
+        text: (machine|score7_name) (machine|score7_value)
+        number_grouping: true
+        y: center - 230
+        font_size: 40
+        color: red
+  attract_invid_scores:
+    widgets:
+      - type: text
+        text: (machine|invid_invasion_total1_label)
+        y: center + 140
+        font_size: 70
+      - type: text
+        text: (machine|invid_invasion_total1_name) (machine|invid_invasion_total1_value)
+        number_grouping: true
+        y: center + 90
+        font_size: 70
+        color: red
+      - type: text
+        text: (machine|invid_invasion_total2_label)
+        y: center
+        font_size: 60
+      - type: text
+        text: (machine|invid_invasion_total2_name) (machine|invid_invasion_total2_value)
+        number_grouping: true
+        y: center - 40
+        font_size: 60
+        color: red
+  attract_pops_spinner_scores:
+    widgets:
+      - type: text
+        text: (machine|super_pops_total1_label)
+        y: center + 170
+        font_size: 70
+        color: purple
+      - type: text
+        text: (machine|super_pops_total1_name) (machine|super_pops_total1_value)
+        number_grouping: true
+        y: center + 120
+        font_size: 70
+        color: red
+      - type: text
+        text: (machine|super_spinner_total1_label)
+        y: center - 70
+        font_size: 70
+        color: purple
+      - type: text
+        text: (machine|super_spinner_total1_name) (machine|super_spinner_total1_value)
+        number_grouping: true
+        y: center - 120
+        font_size: 70
+        color: red
+  attract_combo_champ_scores:
+    widgets:
+      - type: text
+        text: (machine|combos_made1_label)
+        y: center + 140
+        font_size: 70
+        color: yellow
+      - type: text
+        text: (machine|combos_made1_name) (machine|combos_made1_value)
+        number_grouping: true
+        y: center + 90
+        font_size: 70
+        color: red
+  title_screen:
+    widgets:
+      - type: image
+        image: attract
+  mpf_logo:
+    widgets:
+      - type: image
+        image: mpf-logo-full
+
+slide_player:
+  play_attract_slide_1:
+    attract_slide_1_player
+  play_attract_slide_2:
+    attract_slide_2_players
+  play_attract_slide_3:
+    attract_slide_3_players
+  play_attract_slide_4:
+    attract_slide_4_players
+  play_attract_slide_5:
+    attract_all_high_scores
+  play_attract_slide_6:
+    attract_invid_scores
+  play_attract_slide_7:
+    attract_pops_spinner_scores
+  play_attract_slide_8:
+    attract_combo_champ_scores
+  play_attract_slide_9:
+    title_screen
+  play_attract_slide_10:
+    mpf_logo
+
+variable_player:
+  play_attract_slide_1:
+    current_attract_slide:
+      action: set_machine
+      int: 1
+  play_attract_slide_2:
+    current_attract_slide:
+      action: set_machine
+      int: 1
+  play_attract_slide_3:
+    current_attract_slide:
+      action: set_machine
+      int: 1
+  play_attract_slide_4:
+    current_attract_slide:
+      action: set_machine
+      int: 1
+  play_attract_slide_5:
+    current_attract_slide:
+      action: set_machine
+      int: 2
+  play_attract_slide_6:
+    current_attract_slide:
+      action: set_machine
+      int: 3
+  play_attract_slide_7:
+    current_attract_slide:
+      action: set_machine
+      int: 4
+  play_attract_slide_8:
+    current_attract_slide:
+      action: set_machine
+      int: 5
+  play_attract_slide_9:
+    current_attract_slide:
+      action: set_machine
+      int: 6
+  play_attract_slide_10:
+    current_attract_slide:
+      action: set_machine
+      int: 7
 
 show_player:
   mode_attract_started:
@@ -14,15 +455,28 @@ show_player:
     all_blink:
       loops: -1
       speed: 1
-    attract_loop:
-      loops: -1
+    # attract_loop:
+    #   #loops: -1
+    #   #priority: 100
+    #   manual_advance: false
   mode_attract_stopped:
     #cycle_all_lights:
     #  action: stop
     all_blink:
       action: stop
-    attract_loop:
-      action: stop
+    # attract_loop:
+    #   action: stop
+#   s_right_flipper_active:
+#     attract_loop:
+#       action: advance
+#       manual_advance: false
+
+
+
+  # s_left_flipper_active:
+  #   attract_loop:
+  #     action: step_back
+  #     manual_advance: false
 
 #sound_player:
  # mode_attract_started:
@@ -44,11 +498,114 @@ show_player:
 #     attract_started:
 #       action: remove
 
-slide_player:
-  flipper_cancel:
-    last_game_scores:
-      priority: 1
-      expire: 10s
+# slide_player:
+  #flipper_cancel:
+  # mode_attract_started:
+  #   last_game_scores:
+      # priority: 100
+      # expire: 4s
+      #manual_advance: false
+  # slide_last_game_scores_removed:
+  #   attract_all_high_scores:
+  #     expire: 4s
+      # priority: 100
+    # attract_display_loop:
+    #   priority: 100
+    #   manual_advance: false
   # sw_right_flipper_active:
   #   title_screen:
   #     action: stop
+
+
+
+# slides:
+#   last_game_scores:
+#     - type: text
+#       text: Player 1
+#       y: center + 100
+#       font_size: 80
+#     - type: text
+#       text: (machine|player1_score)
+#       number_grouping: true
+#       font_size: 80
+#       y: center + 40
+#     - type: text
+#       text: Player 2
+#       y: center - 100
+#       font_size: 80
+#     - type: text
+#       text: (machine|player2_score)
+#       number_grouping: true
+#       font_size: 80
+#       y: center - 160
+#   attract_all_high_scores:
+#     - type: text
+#       text: (machine|score1_label)
+#       y: center + 280
+#       font_size: 45
+#     - type: text
+#       text: (machine|score1_name) (machine|score1_value)
+#       number_grouping: true
+#       y: center + 250
+#       font_size: 40
+#       color: red
+#     - type: text
+#       text: (machine|score2_label)
+#       y: center + 200
+#       font_size: 45
+#     - type: text
+#       text: (machine|score2_name) (machine|score2_value)
+#       number_grouping: true
+#       y: center + 170
+#       font_size: 40
+#       color: red
+#     - type: text
+#       text: (machine|score3_label)
+#       y: center + 120
+#       font_size: 45
+#     - type: text
+#       text: (machine|score3_name) (machine|score3_value)
+#       number_grouping: true
+#       y: center + 90
+#       font_size: 40
+#       color: red
+#     - type: text
+#       text: (machine|score4_label)
+#       y: center + 40
+#       font_size: 45
+#     - type: text
+#       text: (machine|score4_name) (machine|score4_value)
+#       number_grouping: true
+#       y: center + 10
+#       font_size: 40
+#       color: red
+#     - type: text
+#       text: (machine|score5_label)
+#       y: center - 40
+#       font_size: 45
+#     - type: text
+#       text: (machine|score5_name) (machine|score5_value)
+#       number_grouping: true
+#       y: center - 70
+#       font_size: 40
+#       color: red
+#     - type: text
+#       text: (machine|score6_label)
+#       y: center - 120
+#       font_size: 45
+#     - type: text
+#       text: (machine|score6_name) (machine|score6_value)
+#       number_grouping: true
+#       y: center - 150
+#       font_size: 40
+#       color: red
+#     - type: text
+#       text: (machine|score7_label)
+#       y: center - 200
+#       font_size: 45
+#     - type: text
+#       text: (machine|score7_name) (machine|score7_value)
+#       number_grouping: true
+#       y: center - 230
+#       font_size: 40
+#       color: red
