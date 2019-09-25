@@ -1,28 +1,31 @@
 #config_version=5
 
 mode:
-  start_events: start_qualify_lancer
+  start_events:
+    - mode_invid_invasion_stopped
   stop_events:
     - lancer_collected
   restart_on_next_ball: true
   priority: 1500
 
 event_player:
-  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==1}:
+  mode_skill_shot_stopped.1:
+    - post_lancer_image
+  mode_skill_shot_stopped.2{device.counters.lancer_hit_counter.value==1}:
     - post_lancer_l
-  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==2}:
+  mode_skill_shot_stopped.3{device.counters.lancer_hit_counter.value==2}:
     - post_lancer_l
     - post_lancer_a
-  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==3}:
+  mode_skill_shot_stopped.4{device.counters.lancer_hit_counter.value==3}:
     - post_lancer_l
     - post_lancer_a
     - post_lancer_n
-  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==4}:
+  mode_skill_shot_stopped.5{device.counters.lancer_hit_counter.value==4}:
     - post_lancer_l
     - post_lancer_a
     - post_lancer_n
     - post_lancer_c
-  mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==5}:
+  mode_skill_shot_stopped.6{device.counters.lancer_hit_counter.value==5}:
     - post_lancer_l
     - post_lancer_a
     - post_lancer_n
@@ -42,34 +45,41 @@ event_player:
     - post_lancer_r
 
 widget_player:
+  post_lancer_image:
+    lancer_qualify_image:
+      action: add
+      slide: base_slide
+      priority: 1501
   post_lancer_l:
     lancer_l_widget:
       action: add
       slide: base_slide
+      priority: 1502
   post_lancer_a:
     lancer_a_widget:
       action: add
       slide: base_slide
+      priority: 1503
   post_lancer_n:
     lancer_n_widget:
       action: add
       slide: base_slide
+      priority: 1504
   post_lancer_c:
     lancer_c_widget:
       action: add
       slide: base_slide
+      priority: 1505
   post_lancer_e:
     lancer_e_widget:
       action: add
       slide: base_slide
+      priority: 1506
   post_lancer_r:
     lancer_r_widget:
       action: add
       slide: base_slide
-  mode_qualify_lancer_started:
-    lancer_qualify_image:
-      action: add
-      slide: base_slide
+      priority: 1507
 
 widgets:
   lancer_qualify_image:
@@ -120,71 +130,164 @@ widgets:
       x: center + 575
       y: center + 200
 
-sequence_shots:
-  lancer_shot_sequence:
-    switch_sequence:
-      - s_spinner
-      - s_right_orbit_rollover
-      - s_gate_top_right
-    sequence_timeout: 2s
+# sequence_shots:
+#   lancer_shot_sequence:
+#     switch_sequence:
+#       - s_spinner
+#       #- s_right_orbit_rollover
+#       - s_gate_top_right
+#     sequence_timeout: 2s
 
 shot_groups:
   lancer_shot_group:
-    shots: l_shot, la_shot, lan_shot, lanc_shot, lance_shot, lancer_shot
-    enable_events: mode_rand_mode_stopped, mode_annie_mode_stopped #, mode_qualify_lancer_started
-    disable_events: mode_intro_rand_mode_started, mode_annie_mode_started
+    shots:
+      - l_shot
+      - la_shot
+      - lan_shot
+      - lanc_shot
+      - lance_shot
+      - lancer_shot
+    # enable_events:
+    #   - mode_rand_mode_stopped
+    #   - mode_annie_mode_stopped
+    #   - mode_skill_shot_stopped
+    #   - mode_rook_mode_stopped
+    #   - mode_lunk_mode_stopped
+    # disable_events:
+    #   - mode_intro_rand_mode_started
+    #   - mode_annie_mode_started
+    #   - mode_skill_shot_started
+    #   - mode_intro_rook_mode_started
+    #   - mode_lunk_mode_started
     debug: true
 
 shots:
   l_shot:
+    #switch: s_gate_top_right
     hit_events: lancer_shot_sequence_hit
     profile: lancer_profile
-    enable_events: mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==0}
-    disable_events: l_shot_flashing_lancer_hit
-    advance_events: l_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==0}
+    enable_events:
+      - mode_annie_mode_stopped{device.counters.lancer_hit_counter.value==0}
+      - mode_rand_mode_stopped{device.counters.lancer_hit_counter.value==0}
+      - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==0}
+      - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==0}
+      - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==0}
+    disable_events:
+      - l_shot_flashing_lancer_hit
+      - mode_intro_annie_mode_started
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
+    #advance_events: l_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==0}
     debug: true
   la_shot:
+    #switch: s_gate_top_right
     hit_events: lancer_shot_sequence_hit
     profile: lancer_profile
-    enable_events: l_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==1}
-    disable_events: la_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<1 or device.counters.lancer_hit_counter.value>1}
-    advance_events: l_shot_flashing_lancer_hit, la_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==1}
+    enable_events:
+      - l_shot_flashing_lancer_hit
+      - mode_annie_mode_stopped{device.counters.lancer_hit_counter.value==1}
+      - mode_rand_mode_stopped{device.counters.lancer_hit_counter.value==1}
+      - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==1}
+      - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==1}
+      - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==1}
+    disable_events:
+      - la_shot_flashing_lancer_hit
+      - mode_intro_annie_mode_started
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
+    #advance_events: l_shot_flashing_lancer_hit, la_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==1}
     debug: true
   lan_shot:
+    #switch: s_gate_top_right
     hit_events: lancer_shot_sequence_hit
     profile: lancer_profile
-    enable_events: la_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==2}
-    disable_events: lan_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<2 or device.counters.lancer_hit_counter.value>2}
-    advance_events: la_shot_flashing_lancer_hit, lan_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==2}
+    enable_events:
+      - la_shot_flashing_lancer_hit
+      - mode_annie_mode_stopped{device.counters.lancer_hit_counter.value==2}
+      - mode_rand_mode_stopped{device.counters.lancer_hit_counter.value==2}
+      - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==2}
+      - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==2}
+      - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==2}
+    disable_events:
+      - lan_shot_flashing_lancer_hit
+      - mode_intro_annie_mode_started
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
+    #advance_events: la_shot_flashing_lancer_hit, lan_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==2}
     debug: true
   lanc_shot:
+    #switch: s_gate_top_right
     hit_events: lancer_shot_sequence_hit
     profile: lancer_profile
-    enable_events: lan_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==3}
-    disable_events: lanc_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<3 or device.counters.lancer_hit_counter.value>3}
-    advance_events: lan_shot_flashing_lancer_hit, lanc_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==3}
+    enable_events:
+      - lan_shot_flashing_lancer_hit
+      - mode_annie_mode_stopped{device.counters.lancer_hit_counter.value==3}
+      - mode_rand_mode_stopped{device.counters.lancer_hit_counter.value==3}
+      - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==3}
+      - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==3}
+      - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==3}
+    disable_events:
+      - lanc_shot_flashing_lancer_hit
+      - mode_intro_annie_mode_started
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
+    #advance_events: lan_shot_flashing_lancer_hit, lanc_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==3}
     debug: true
   lance_shot:
+    #switch: s_gate_top_right
     hit_events: lancer_shot_sequence_hit
     profile: lancer_profile
-    enable_events: lanc_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==4}
-    disable_events: lance_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<4 or device.counters.lancer_hit_counter.value>4}
-    advance_events: lanc_shot_flashing_lancer_hit, lance_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==4}
+    enable_events:
+      - lanc_shot_flashing_lancer_hit
+      - mode_annie_mode_stopped{device.counters.lancer_hit_counter.value==4}
+      - mode_rand_mode_stopped{device.counters.lancer_hit_counter.value==4}
+      - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==4}
+      - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==4}
+      - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==4}
+    disable_events:
+      - lance_shot_flashing_lancer_hit
+      - mode_intro_annie_mode_started
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
+    #advance_events: lanc_shot_flashing_lancer_hit, lance_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==4}
     debug: true
   lancer_shot:
+    #switch: s_gate_top_right
     hit_events: lancer_shot_sequence_hit
     profile: lancer_profile
-    enable_events: lance_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value==5}
-    disable_events: lancer_shot_flashing_lancer_hit, mode_qualify_lancer_started{device.counters.lancer_hit_counter.value<5}
-    advance_events: lance_shot_flashing_lancer_hit, lancer_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==5}
+    enable_events:
+      - lance_shot_flashing_lancer_hit
+      - mode_annie_mode_stopped{device.counters.lancer_hit_counter.value==5}
+      - mode_rand_mode_stopped{device.counters.lancer_hit_counter.value==5}
+      - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==5}
+      - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==5}
+      - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==5}
+    disable_events:
+      - lancer_shot_flashing_lancer_hit
+      - mode_into_annie_mode_started
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
+    #advance_events: lance_shot_flashing_lancer_hit, lancer_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==5}
     debug: true
 
 shot_profiles:
   lancer_profile:
-    advance_on_hit: false
+    advance_on_hit: true #false
     states:
-    - name: unlit
-      show: off
+    # - name: unlit
+    #   show: off
     - name: flashing_lancer
       show: flash_lancer_show
       sync_ms: 1500
@@ -194,30 +297,58 @@ shot_profiles:
       show: off
 
 counters:
-  lancer_started_first_time_counter:
-    count_events:
-      - mode_qualify_lancer_started
-    starting_count: 0
-    direction: up
-    count_complete_value: 1
-    reset_on_complete: false
-    events_when_complete: qualify_lancer_1st_time
-    persist_state: true
+  # lancer_started_first_time_counter:
+  #   count_events:
+  #     - mode_qualify_lancer_started
+  #   starting_count: 0
+  #   direction: up
+  #   count_complete_value: 1
+  #   reset_on_complete: false
+  #   events_when_complete: qualify_lancer_1st_time
+  #   persist_state: true
   lancer_hit_counter:
     count_events:
-      - l_shot_flashing_lancer_hit
-      - la_shot_flashing_lancer_hit
-      - lan_shot_flashing_lancer_hit
-      - lanc_shot_flashing_lancer_hit
-      - lance_shot_flashing_lancer_hit
-      - lancer_shot_flashing_lancer_hit
+      - lancer_shot_group_flashing_lancer_hit
+      # - l_shot_flashing_lancer_hit
+      # - la_shot_flashing_lancer_hit
+      # - lan_shot_flashing_lancer_hit
+      # - lanc_shot_flashing_lancer_hit
+      # - lance_shot_flashing_lancer_hit
+      # - lancer_shot_flashing_lancer_hit
     starting_count: current_player.lancer_start_count
     direction: up
     count_complete_value: 6
     reset_on_complete: false
-    events_when_complete: lancer_collected
+    events_when_complete:
+      - lancer_collected
+      - start_lancer_mode
     persist_state: true
+  # lancer_first_time_hit_counter:
+  #   count_events:
+  #     - lancer_shot_group_flashing_lancer_hit
+  #   starting_count: 0
+  #   direction: up
+  #   count_complete_value: 1
+  #   events_when_complete: play_yellow_dancer_sound
+  #   reset_on_complete: false
+  #   persist_state: true
 
 variable_player:
   lancer_collected:
     team_members_collected: 1
+
+sound_player:
+  lancer_shot_group_flashing_lancer_hit:
+  #play_yellow_dancer_sound:
+    #rand_yellow_dancer
+    qualify_lancer_sounds:
+      action: play
+
+sound_pools:
+  qualify_lancer_sounds:
+    type: random_force_all
+    track: voice
+    sounds:
+      - rand_yellow_dancer
+      - annie_yellow_dancer
+      - annie2_yellow_dancer
