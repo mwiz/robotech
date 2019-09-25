@@ -3,9 +3,7 @@ This is a timed mode (60 seconds) that starts as a 3 ball multiball with ball sa
 
 You can add-a-ball by completing the SDF target bank the first time.
 
-The second time you complete the SDF target bank you add 10 seconds to the timer.
-
-Also each spinner hit adds 1 second to timer.
+Also each spinner hit adds 1,2,3,or 4 seconds to timer depending on your current spinner level.
 
 The mode is considered complete when 20 Invid targets are hit.
 
@@ -13,9 +11,10 @@ Once 20 Invid targets hit the ramp will come down for Jackpot shots.
 
 Jackpot values:
 
-Jackpot = (#invid hit * 500) * #balls in play
-Double Jackpot = ((#invid hit * 500) * #balls in play) * 2
-Super Jackpot = ((#invid hit * 500) * #balls in play) * 3
+Jackpot = (#invid hit * 1000) * ramp_shot_multiplier
+Double Jackpot = ((#invid hit * 1000) * 2) * ramp_shot_multiplier
+Triple Jackpot = ((#invid hit * 1000) * 3) * ramp_shot_multiplier
+Super Jackpot = ((#invid hit * 1000) * 4) * ramp_shot_multiplier
 
 When the timer is complete the flippers are disabled.
 
