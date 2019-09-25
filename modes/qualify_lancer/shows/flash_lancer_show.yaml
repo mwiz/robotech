@@ -11,7 +11,7 @@
 
 - duration: 500ms
   lights:
-    l_right_orbit_arrow: 340034
+    l_right_orbit_arrow: 2E0854 #8A2BE2 #340034
 - duration: 1000ms
   lights:
     l_right_orbit_arrow: off
