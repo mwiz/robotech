@@ -1,0 +1,98 @@
+#config_version=5
+
+mode:
+   start_events:
+     - start_intro_rook_mode
+   stop_events:
+     - stop_intro_rook_mode
+   priority: 4600
+
+queue_event_player:
+  mode_intro_rook_mode_started{game.balls_in_play == 1}:
+    queue_event: my_queue_rook_mode
+    events_when_finished: stop_intro_rook_mode
+  mode_intro_rook_mode_started.2{game.balls_in_play > 1}:
+    queue_event: my_queue_rook_mode_more_than_1_ball
+    events_when_finished: stop_intro_rook_mode
+
+queue_relay_player:
+  my_queue_rook_mode:
+    post: start_rook_mode_intro
+    wait_for: rook_mode_show_ended
+  my_queue_rook_mode_more_than_1_ball:
+    post: start_rook_mode_intro_more_than_1_ball
+    wait_for: rook_mode_show_ended
+  # balldevice_bd_trough_ball_eject_attempt:
+  #   post: wait_for_rook_mode_instructions
+  #   wait_for: rook_mode_show_ended
+  balldevice_bd_right_lock_ball_eject_attempt:
+    post: wait_for_rook_mode_instructions
+    wait_for: rook_mode_show_ended
+
+shows:
+  rook_mode_intro:
+    - duration: 23s
+      slides:
+        rook_collected_slide:
+          widgets:
+            - type: text
+              text: ROOK Collected
+              color: yellow
+              font_size: 80
+              x: center
+              y: center+300
+              #expire: 3s
+            - type: video
+              video: intro_rook_mode_video
+            - type: text
+              text: "Hit 3 pop bumpers (rook_mode_pop_bumpers_count) times each to defeat biker gang"
+              color: white
+              font_size: 50
+              x: center
+              y: center-300
+  rook_mode_intro_more_than_1_ball:
+    - duration: 3s
+      slides:
+        rook_collected_slide:
+          widgets:
+            - type: text
+              text: ROOK Collected
+              color: yellow
+              font_size: 80
+              x: center
+              y: center+300
+            - type: image
+              image: gang
+            - type: text
+              text: "Hit 3 pop bumpers (rook_mode_pop_bumpers_count) times each to defeat biker gang"
+              color: white
+              font_size: 50
+              x: center
+              y: center-300
+
+show_player:
+  start_rook_mode_intro:
+    rook_mode_intro:
+      loops: 0
+      events_when_stopped: rook_mode_show_ended
+  start_rook_mode_intro_more_than_1_ball:
+    rook_mode_intro_more_than_1_ball:
+      loops: 0
+      events_when_stopped: rook_mode_show_ended
+  flipper_cancel:
+    rook_mode_intro:
+      action: stop
+
+light_player:
+  mode_intro_rook_mode_started{game.balls_in_play == 1}:
+    gi_string:
+      color: off
+    playfield:
+      color: off
+      priority: 8000
+  mode_intro_rook_mode_stopped{game.balls_in_play == 1}:
+    gi_string:
+      color: off
+    playfield:
+      color: off
+      priority: 8000

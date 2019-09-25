@@ -1,0 +1,104 @@
+#config_version=5
+
+mode:
+   start_events: start_intro_rook_mode
+   stop_events:
+     - stop_intro_rook_mode
+     #- mode_rook_mode_started
+     #- game_ending
+   priority: 4600
+
+queue_event_player:
+  mode_intro_rook_mode_started:
+    queue_event: my_queue_rook_mode
+    events_when_finished: stop_intro_rook_mode #start_rook_mode
+
+queue_relay_player:
+  my_queue_rook_mode:
+    post: start_rook_mode_intro
+    wait_for: rook_mode_show_ended
+  # balldevice_bd_trough_ball_eject_attempt:
+  #   post: wait_for_rook_mode_instructions
+  #   wait_for: rook_mode_show_ended
+  balldevice_bd_right_lock_ball_eject_attempt:
+    post: wait_for_rook_mode_instructions
+    wait_for: rook_mode_show_ended
+
+shows:
+  rook_mode_intro:
+    - duration: 23s
+      slides:
+        rook_collected_slide:
+          widgets:
+            - type: text
+              text: ROOK Collected
+              color: yellow
+              font_size: 80
+              x: center
+              y: center+300
+              #expire: 3s
+            - type: video
+              video: intro_rook_mode_video
+            - type: text
+              text: "Hit 3 pop bumpers (rook_mode_pop_bumpers_count) times each to defeat biker gang"
+              color: white
+              font_size: 50
+              x: center
+              y: center-300
+    # - duration: 2s
+    #   slides:
+    #     intro_rand_mode_slide:
+    #       widgets:
+    #         - type: image
+    #           image: three_invid
+    #         - type: text
+    #           text: Defeat Invid Shock Trooper Patrol
+    #           color: red
+    #           font_size: 80
+    #           x: center
+    #           y: center+300
+
+show_player:
+  start_rook_mode_intro:
+    rook_mode_intro:
+      loops: 0
+      events_when_stopped: rook_mode_show_ended
+  flipper_cancel:
+    rook_mode_intro:
+      action: stop
+
+light_player:
+  mode_intro_rook_mode_started:
+    gi_string:
+      color: off
+    playfield:
+      color: off
+      priority: 8000
+  mode_intro_rook_mode_stopped:
+    gi_string:
+      color: off
+    playfield:
+      color: off
+      priority: 8000
+
+# multiball_locks:
+#   invid_invasion_multiball:
+#   #invid_invasion_ball_lock:
+#   #invid_invasion_ball_hold:
+#     #balls_to_hold: 1
+#     balls_to_lock: 1
+#     lock_devices: bd_right_lock
+#     #hold_devices: bd_left_lock
+#     #lock_devices: bd_left_lock
+#     #release_one_events: start_mission_1
+#     #reset_events: machine_reset_phase_3, ball_starting, ball_will_end, service_mode_entered, start_mission_1
+#     #reset_count_for_current_player_events: quick_2_ball_start
+#     disable_events: invid_invasion_quick_2_ball_started
+
+# sound_player:
+#   mode_intro_invid_invasion_started:
+#     invid_invasion_start:
+#       action: play
+#   flipper_cancel:
+#     invid_invasion_start:
+#       action: stop
