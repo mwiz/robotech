@@ -1,8 +1,6 @@
 #config_version=5
 # Robotech pinball
 
-
-
 sound_system:
    buffer: 2048
    frequency: 44100
@@ -20,11 +18,10 @@ sound_system:
        volume: 1
        priority: 1
        preload: true
-       simultaneous_sounds: 7
+       simultaneous_sounds: 32
      music:
-        volume: 1
+        volume: 0.6
         simultaneous_sounds: 1
-
 
 assets:
   sounds:
@@ -40,7 +37,3 @@ assets:
     music:
       #load: preload
       track: music
-
-sounds:
-    main_title:
-        target: music

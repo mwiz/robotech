@@ -1,0 +1,51 @@
+#config_version=5# Override config for "desktop" mode which renders both the LCD and DMD in a
+# single on-screen window.
+
+# To use, run the mpf-mc like this:
+# mpf mc -c desktop
+
+
+displays:
+  # _overwrite: true will completely replace the existing displays: section
+  window:
+    width: 1280
+    height: 768
+
+#hardware:
+#  platform: smart_virtual
+#  rgb_dmd: smart_virtual
+
+#slides:
+#  desktop:
+#    - type: slide_frame
+#      name: stage
+#      width: 1280
+#
+
+slide_player:
+  mc_ready:
+    desktop:
+      target: window
+
+config:
+  - leds.yaml
+  - shots.yaml
+  - lightscripts.yaml
+  - audio.yaml
+  - machine_config.yaml
+
+window:
+  width: 1280
+  height: 768
+  title: Mission Pinball Framework - RoboTech
+  resizable: false
+  fullscreen: false
+  borderless: false
+  exit_on_escape: true
+  source_display: window
+
+mpf:
+    default_led_hw_update_hz: 20
+
+led_settings:
+    default_led_fade_ms: 0

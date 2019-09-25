@@ -1,0 +1,125 @@
+#config_version=5
+
+
+sounds:
+  lunk_waiting:
+    file: lunk_waiting.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  lunk_engineer:
+    file: lunk_engineer.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  here_we_go:
+    file: here_we_go.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  combo:
+    file: combo.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  that_takes_care_of_them:
+    file: that_takes_care_of_them.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  pops_level_2:
+    file: pops_level_2.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  pops_level_3:
+    file: pops_level_3.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  super_pops:
+    file: super_pops.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  spinner_level_2:
+    file: spinner_level_2.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  spinner_level_3:
+    file: spinner_level_3.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  super_spinner:
+    file: super_spinner.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  what_is_that_flashing:
+    file: what_is_that_flashing.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  main_title:
+    target: music
+  alien_attack:
+    target: music
+  rand_mode_cyclone_theme:
+    target: music
+  annie_mode_the_15th_squadron:
+    target: music
+  rook_mode_confrontation:
+    target: music
+  sdf_target_sound:
+    simultaneous_limit: 1
+    stealing_method: skip

@@ -8,7 +8,7 @@ keyboard:
   1:
     switch: s_trough1
     toggle: true
-  2: 
+  2:
     switch: s_trough2
     toggle: true
   3:
@@ -28,6 +28,15 @@ keyboard:
     switch: s_left_flipper
   m:
     switch: s_right_flipper
-  ctrl-1:
-    event: top_lanes_skill_lit_hit
-  
+  w:
+    event: top_lanes_skill_flashing_hit
+  i:
+    event: invid_targets_skill_flashing_hit
+  l:
+    event: skill_shot_top_saucer_lunk_combo_hit
+  t:
+    event: start_skillshot_saucer_timer
+  d:
+    event: debug_dump_stats
+  e:
+    event: start_end_invid_invasion_mode

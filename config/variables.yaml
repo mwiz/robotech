@@ -1,0 +1,139 @@
+#config_version=5
+# Robotech Pinball Machine
+
+machine_vars:
+  last_game_num_players:
+    value_type: int
+    persist: true
+
+player_vars:
+  #multiplier:
+  bonus_multiplier:
+    value_type: int
+    initial_value: 1
+  #after 3x you get bonus for completing more robotech lanes
+  bonus_lanes:
+    value_type: int
+    initial_value: 0
+  #keep count of how many combos made
+  combos_made:
+    value_type: int
+    initial_value: 0
+  combo_value:
+    value_type: int
+    initial_value: 0
+  super_pops_total:
+    value_type: int
+    initial_value: 0
+  super_spinner_total:
+    value_type: int
+    initial_value: 0
+  protoculture_value:
+    value_type: int
+    initial_value: 0
+  skill_shot_value:
+    value_type: int
+    initial_value: 0
+  invid_kill_value:
+    value_type: int
+    initial_value: 0
+  biker_kill_value:
+    value_type: int
+    initial_value: 0
+  jackpot_value:
+    value_type: int
+    initial_value: 0
+  super_jackpot_value:
+    value_type: int
+    initial_value: 0
+  rand_mode_bonus_time_score:
+    value_type: int
+    initial_value: 0
+  annie_mode_bonus_time_score:
+    value_type: int
+    initial_value: 0
+  rook_mode_bonus_time_score:
+    value_type: int
+    initial_value: 0
+  lunk_mode_bonus_time_score:
+    value_type: int
+    initial_value: 0
+  invid_invasion_total:
+    value_type: int
+    initial_value: 0
+  # pop_bumper_hits:
+  #   value_type: int
+  #   initial_value: 0
+  modes_completed:
+    value_type: int
+    initial_value: 0
+  # skill_shots_bonus:
+  #   value_type: int
+  #   initial_value: 0
+  team_members_collected:
+    value_type: int
+    initial_value: 0
+  rand_start_count:
+    value_type: int
+    initial_value: 1
+  annie_start_count:
+    value_type: int
+    initial_value: 1
+  rook_start_count:
+    value_type: int
+    initial_value: 1
+  lancer_start_count:
+    value_type: int
+    initial_value: 0
+  lunk_start_count:
+    value_type: int
+    initial_value: 1
+  marlene_start_count:
+    value_type: int
+    initial_value: 1
+  # multipliers
+  pf_multiplier:
+    value_type: int
+    initial_value: 1
+  rand_shot_multiplier:
+    value_type: int
+    initial_value: 1
+  annie_shot_multiplier:
+    value_type: int
+    initial_value: 1
+  rook_shot_multiplier:
+    value_type: int
+    initial_value: 1
+  lancer_shot_multiplier:
+    value_type: int
+    initial_value: 1
+  lunk_shot_multiplier:
+    value_type: int
+    initial_value: 1
+  ramp_shot_multiplier:
+    value_type: int
+    initial_value: 1
+  protoculture_shot_multiplier:
+    value_type: int
+    initial_value: 1
+  mecha_collect_value:
+    value_type: int
+    initial_value: 0
+  pops_initial_count:
+    value_type: int
+    initial_value: 35
+  spinner_initial_count:
+    value_type: int
+    initial_value: 15
+  rook_mode_pop_bumpers_count:
+    value_type: int
+    initial_value: 15
+  kickback_counter:
+    value_type: int
+    initial_value: 0
+  spinner_time_value:
+    value_type: int
+    initial_value: 0
+  skill_shot_start_value:
+    value_type: int
+    initial_value: 7

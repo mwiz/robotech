@@ -4,26 +4,30 @@
 hardware:
   platform: fast
   driverboards: fast
+  #lights: fadecandy
   #platform: smart_virtual
 
 mpf:
-#  default_led_hw_update_hz: 30
-  default_pulse_ms: 10
+  default_light_hw_update_hz: 40
+  #default_pulse_ms: 10
 
 fast:
   #ports: /dev/ttyUSB1, /dev/ttyUSB2  #for RPi3
-  ports: com6, com7
+  ports: com6, com7 # com4, com5
+  hardware_led_fade_time: 20
   #debug: true
   #config_number_format: int
-#  rgb_buffer: 100
+  #rgb_buffer: 3000
 
 config:
-  - leds.yaml
+  - lights.yaml
   - lightscripts.yaml
   - audio.yaml
   - switches.yaml
   - keyboard.yaml
   - display.yaml
+  - variables.yaml
+  - sounds.yaml
   #- machine_config.yaml
 
 logging:
@@ -35,51 +39,76 @@ modes:
   - attract                             #priority: 10
   # - game                              #priority: 20
   - base                                #priority: 100
-  - lanes                               #priority: 150 -> 200
-  - sdf_targets                         #priority: 200 -> 300
-  - pre_qualify_invid_invasion          #priority: 225 -> 400
+  - lanes                               #priority: 200
+  - sdf_targets                         #priority: 300
+  - pre_qualify_invid_invasion          #priority: 400
+  - pre_qualify_genesis_pit             #priority: 420
   - bonus                               #priority: 500
   - high_score                          #priority: 600
-  - qualify_invid_invasion              #priority: 250 -> 700
-  - intro_invid_invasion                #priority: 300 -> 800
-  - invid_invasion                      #priority: 350 -> 900
-  - multiball_invid_invasion            #priority: 375 -> 1000
-  - end_invid_invasion                  #priority: 385 -> 1100
-  - qualify_rand                        #priority: 400 -> 1200
-  - qualify_annie                       #priority: 425 -> 1300
-  - qualify_rook                        #priority: 450 -> 1400
-  - qualify_lancer                      #priority: 475 -> 1500
-  - qualify_lunk                        #priority: 485 -> 1600
-  - qualify_marlene                     #priority: 495 -> 1700
-  - kickback                            #priority: 900 -> 1800
-  - skill_shot                          #priority: 1000 -> 1900
-  - skill_shot_combo                    #priority: 1025 -> 2000
-  - intro_rand_mode                     #priority: 1050 -> 2100
-  - rand_mode                           #priority: 1100 -> 2200
-  - collect_mecha_rand_mode             #priority: 1200 -> 2300
-  - pops_level_1                        #priority: 2400
-  - pops_level_2                        #priority: 2500
-  - pops_level_3                        #priority: 2600
-  - super_pops                          #priority: 2700
-  - annie_mode                          #priority: 3000
-  - protoculture                        #priority: 4000
-  - ball_save                           #priority: 8000
+  - qualify_invid_invasion              #priority: 700
+  - qualify_genesis_pit                 #priority: 710
+  - ball_save_qualify_invid_invasion    #priority: 750
+  - intro_invid_invasion                #priority: 800
+  - invid_invasion                      #priority: 900
+  - multiball_invid_invasion            #priority: 1000
+  - end_invid_invasion                  #priority: 1100
+  - qualify_rand                        #priority: 1200
+  - qualify_annie                       #priority: 1300
+  - qualify_rook                        #priority: 1400
+  - qualify_lancer                      #priority: 1500
+  - qualify_lunk                        #priority: 1600
+  - qualify_marlene                     #priority: 1700
+  - kickback                            #priority: 1800
+  - ball_save_kickback                  #priority: 1850
+  - skill_shot                          #priority: 1900
+  - skill_shot_combo                    #priority: 2000
+  - intro_rand_mode                     #priority: 2100
+  - rand_mode                           #priority: 2200
+  - rand_collect_mecha                  #priority: 2300
+  - intro_annie_mode                    #priority: 2350
+  - annie_mode                          #priority: 2400
+  - annie_collect_mecha                 #priority: 2500
+  - lunk_mode                           #priority: 2600
+  - lunk_collect_mecha                  #priority: 2700
+  - intro_rook_mode                     #priority: 4600
+  - rook_mode                           #priority: 4700
+  - rook_collect_mecha                  #priority: 4800
+  - marlene_mode                        #priority: 5000
+  - lancer_mode                         #priority: 6000
+  - qualify_shot_multipliers            #priority: 6800
+  - light_shot_multipliers              #priority: 6900
+  - protoculture                        #priority: 7000
+  - pops_level_1                        #priority: 7100
+  - pops_level_2                        #priority: 7200
+  - pops_level_3                        #priority: 7300
+  - pops_super                          #priority: 7400
+  - spinner_level_1                     #priority: 7500
+  - spinner_level_2                     #priority: 7600
+  - spinner_level_3                     #priority: 7700
+  - spinner_super                       #priority: 7800
+  - pre_qualify_mystery                 #priority: 7900
+  - qualify_mystery                     #priority: 8000
+  - ball_save                           #priority: 8400
   - ball_save_invid_invasion            #priority: 8500
   - ball_save_invid_invasion_add_a_ball #priority: 9000
+  - ball_save_end_invid_invasion        #priority: 9100
   - ball_save_rand_mode                 #priority: 9250
   - ball_save_annie_mode                #priority: 9350
   - ball_save_annie_mode_rook_add_a_ball #priority: 9450
+  - ball_save_rook_mode                 #priority 9550
+  - ball_save_rook_mode_rand_add_a_ball #priority: 9600
+  - ball_save_lunk_mode                 #priority: 9650
   - tilt                                #priority: 10,000
   #- carousel
-  #- super_spinner
+
 
 playfields:
   playfield:
      tags: default
      default_source_device: bd_plunger
      enable_ball_search: True
-     ball_search_timeout: 25s
-     ball_search_wait_after_iteration: 12s
+     ball_search_timeout: 15s #how long before ball search starts
+     ball_search_wait_after_iteration: 10s
      ball_search_interval: 500ms
      debug: true
 
@@ -89,108 +118,195 @@ flippers:
     hold_coil: c_flipper_left_hold
     activation_switch: s_left_flipper
     label: Left Main Flipper
-    enable_events: ball_started, flipper_on, normal_flippers_enable
-    disable_events: ball_will_end, flipper_off, weak_flipper_2_ball_enable
+    enable_events: flipper_on, left_flipper_normal_enable #ball_started
+    disable_events: flipper_off, ball_will_end #left_flipper_weak_2_ball_enable
+    debug: true
   lower_right:
     main_coil: c_flipper_right_main
     hold_coil: c_flipper_right_hold
     activation_switch: s_right_flipper
     label: Right Main Flipper
-    enable_events: ball_started, flipper_on, normal_flippers_enable
-    disable_events: ball_will_end, flipper_off, weak_flipper_2_ball_enable
-  left_weak_2_ball:
-    main_coil: c_flipper_left_main
-    hold_coil: c_flipper_left_hold
-    main_coil_overwrite:
-      pulse_ms: 22
-    activation_switch: s_left_flipper
-    enable_events: weak_flipper_2_ball_enable
-    disable_events: normal_flippers_enable, weak_flipper_1_ball_enable, flipper_off
-  right_weak_2_ball:
+    enable_events: flipper_on, right_flipper_normal_enable #ball_started
+    disable_events: flipper_off, right_flipper_stronger_enable, ball_will_end, #right_flipper_weak_2_ball_enable
+    debug: true
+  right_flipper_stronger:
     main_coil: c_flipper_right_main
     hold_coil: c_flipper_right_hold
     main_coil_overwrite:
-      pulse_ms: 22
+      pulse_ms: 26
+      pulse_power: 1
     activation_switch: s_right_flipper
-    enable_events: weak_flipper_2_ball_enable
-    disable_events: normal_flippers_enable, weak_flipper_1_ball_enable, flipper_off
-  left_weak_1_ball:
-    main_coil: c_flipper_left_main
-    hold_coil: c_flipper_left_hold
-    main_coil_overwrite:
-      pulse_ms: 19
-    activation_switch: s_left_flipper
-    enable_events: weak_flipper_1_ball_enable
-    disable_events: normal_flippers_enable, flipper_off
-  right_weak_1_ball:
-    main_coil: c_flipper_right_main
-    hold_coil: c_flipper_right_hold
-    main_coil_overwrite:
-      pulse_ms: 19
-    activation_switch: s_right_flipper
-    enable_events: weak_flipper_1_ball_enable
-    disable_events: normal_flippers_enable, flipper_off
+    enable_events: right_flipper_stronger_enable
+    disable_events: right_flipper_normal_enable, flipper_off, ball_will_end
+    debug: true
+  # left_weak_2_ball:
+  #   main_coil: c_flipper_left_main
+  #   hold_coil: c_flipper_left_hold
+  #   main_coil_overwrite:
+  #     pulse_ms: 20
+  #   activation_switch: s_left_flipper
+  #   enable_events: left_flipper_weak_2_ball_enable
+  #   disable_events: left_flipper_normal_enable, left_flipper_weak_1_ball_enable, flipper_off
+  #   debug: true
+  # right_weak_2_ball:
+  #   main_coil: c_flipper_right_main
+  #   hold_coil: c_flipper_right_hold
+  #   main_coil_overwrite:
+  #     pulse_ms: 20
+  #   activation_switch: s_right_flipper
+  #   enable_events: right_flipper_weak_2_ball_enable
+  #   disable_events: right_flipper_normal_enable, right_flipper_weak_1_ball_enable, flipper_off,right_flipper_stronger_enable
+  #   debug: true
+  # left_weak_1_ball:
+  #   main_coil: c_flipper_left_main
+  #   hold_coil: c_flipper_left_hold
+  #   main_coil_overwrite:
+  #     pulse_ms: 18
+  #   activation_switch: s_left_flipper
+  #   enable_events: left_flipper_weak_1_ball_enable
+  #   disable_events: left_flipper_normal_enable, flipper_off
+  #   debug: true
+  # right_weak_1_ball:
+  #   main_coil: c_flipper_right_main
+  #   hold_coil: c_flipper_right_hold
+  #   main_coil_overwrite:
+  #     pulse_ms: 18
+  #   activation_switch: s_right_flipper
+  #   enable_events: right_flipper_weak_1_ball_enable
+  #   disable_events: right_flipper_normal_enable, flipper_off, right_flipper_stronger_enable
+  #   debug: true
 
-player_vars:
-  #multiplier:
-  bonus_multiplier:
-    value_type: int
-    initial_value: 1
-  #after 3x you get bonus for completing more robotech lanes
-  bonus_lanes:
-    value_type: int
-    initial_value: 0
-  #keep count of how many combos made
-  combos_made:
-    value_type: int
-    initial_value: 0
-  skill_shot_value:
-    value_type: int
-    initial_value: 0
-  jackpot_value:
-    value_type: int
-    initial_value: 0
-  super_jackpot_value:
-    value_type: int
-    initial_value: 0
-  invid_invasion_total:
-    value_type: int
-    initial_value: 0
-  pop_bumper_hits:
-    value_type: int
-    initial_value: 0
-  modes_completed:
-    value_type: int
-    initial_value: 0
-  skill_shots_bonus:
-    value_type: int
-    initial_value: 0
-  team_members_collected:
-    value_type: int
-    initial_value: 0
-  rand_start_count:
-    value_type: int
-    initial_value: 0
-  annie_start_count:
-    value_type: int
-    initial_value: 0
-  rook_start_count:
-    value_type: int
-    initial_value: 0
-  lancer_start_count:
-    value_type: int
-    initial_value: 3
-  lunk_start_count:
-    value_type: int
-    initial_value: 2
-  marlene_start_count:
-    value_type: int
-    initial_value: 0
+# machine_vars:
+#   last_game_num_players:
+#     value_type: int
+#     persist: true
+#
+# player_vars:
+#   #multiplier:
+#   bonus_multiplier:
+#     value_type: int
+#     initial_value: 1
+#   #after 3x you get bonus for completing more robotech lanes
+#   bonus_lanes:
+#     value_type: int
+#     initial_value: 0
+#   #keep count of how many combos made
+#   combos_made:
+#     value_type: int
+#     initial_value: 0
+#   super_pops_total:
+#     value_type: int
+#     initial_value: 0
+#   super_spinner_total:
+#     value_type: int
+#     initial_value: 0
+#   protoculture_value:
+#     value_type: int
+#     initial_value: 0
+#   skill_shot_value:
+#     value_type: int
+#     initial_value: 0
+#   invid_kill_value:
+#     value_type: int
+#     initial_value: 0
+#   jackpot_value:
+#     value_type: int
+#     initial_value: 0
+#   super_jackpot_value:
+#     value_type: int
+#     initial_value: 0
+#   rand_mode_bonus_time_score:
+#     value_type: int
+#     initial_value: 0
+#   annie_mode_bonus_time_score:
+#     value_type: int
+#     initial_value: 0
+#   rook_mode_bonus_time_score:
+#     value_type: int
+#     initial_value: 0
+#   lunk_mode_bonus_time_score:
+#     value_type: int
+#     initial_value: 0
+#   invid_invasion_total:
+#     value_type: int
+#     initial_value: 0
+#   # pop_bumper_hits:
+#   #   value_type: int
+#   #   initial_value: 0
+#   modes_completed:
+#     value_type: int
+#     initial_value: 0
+#   # skill_shots_bonus:
+#   #   value_type: int
+#   #   initial_value: 0
+#   team_members_collected:
+#     value_type: int
+#     initial_value: 0
+#   rand_start_count:
+#     value_type: int
+#     initial_value: 1
+#   annie_start_count:
+#     value_type: int
+#     initial_value: 1
+#   rook_start_count:
+#     value_type: int
+#     initial_value: 1
+#   lancer_start_count:
+#     value_type: int
+#     initial_value: 0
+#   lunk_start_count:
+#     value_type: int
+#     initial_value: 2
+#   marlene_start_count:
+#     value_type: int
+#     initial_value: 1
+#   # multipliers
+#   pf_multiplier:
+#     value_type: int
+#     initial_value: 1
+#   rand_shot_multiplier:
+#     value_type: int
+#     initial_value: 1
+#   annie_shot_multiplier:
+#     value_type: int
+#     initial_value: 1
+#   rook_shot_multiplier:
+#     value_type: int
+#     initial_value: 1
+#   lunk_shot_multiplier:
+#     value_type: int
+#     initial_value: 1
+#   mecha_collect_value:
+#     value_type: int
+#     initial_value: 0
+#   pops_initial_count:
+#     value_type: int
+#     initial_value: 35
+#   spinner_initial_count:
+#     value_type: int
+#     initial_value: 15
+#   rook_mode_pop_bumpers_count:
+#     value_type: int
+#     initial_value: 20
+#   kickback_counter:
+#     value_type: int
+#     initial_value: 0
+#   spinner_time_value:
+#     value_type: int
+#     initial_value: 0
+#   skill_shot_start_value:
+#     value_type: int
+#     initial_value: 7
+#
 
 coils:
   #BEGIN 0804 (0 0-3)
-  #free
+  gi_string_1:
+    number: 0-0
+    allow_enable: True
   #BEGIN 3208 (1 0-7)
+    #free
+    #number: 1-0
   c_top_lock_kickout:
     number: 1-1
     default_pulse_ms: 10
@@ -199,8 +315,8 @@ coils:
     #debug: true
   c_flipper_left_main:
     number: 1-2
-    default_pulse_ms: 27
-    default_pulse_power: .90
+    default_pulse_ms: 19
+    default_pulse_power: 1
     label: FP-DN-06
   c_flipper_left_hold:
     number: 1-3
@@ -208,8 +324,8 @@ coils:
     label: FP-DN-07
   c_flipper_right_main:
     number: 1-4
-    default_pulse_ms: 29
-    default_pulse_power: .95
+    default_pulse_ms: 20
+    default_pulse_power: 1
     label: FP-DN-08
   c_flipper_right_hold:
     number: 1-5
@@ -217,7 +333,8 @@ coils:
     label: FP-DN-09
   c_auto_launch:
     number: 1-6
-    default_pulse_ms: 16
+    default_pulse_ms: 20
+    default_pulse_power: 1
     label: FP-DN-0A
   c_trough_eject:
     number: 1-7
@@ -245,21 +362,25 @@ coils:
     label: FP-DN-0F
   c_middle_drop_target:
     number: 2-4
-    default_pulse_ms: 10
+    default_pulse_ms: 14
+    default_pulse_power: .97
     label: FP-DN-10
   c_left_drop_target:
     number: 2-5
-    default_pulse_ms: 10
+    default_pulse_ms: 13
+    default_pulse_power: .95
     label: FP-DN-11
   c_right_drop_target:
     number: 2-6
-    default_pulse_ms: 10 #15
+    default_pulse_ms: 13
+    default_pulse_power: .95
     label: FP-DN-12
   c_right_lock_kickout:
     number: 2-7
-    default_pulse_ms: 30
-    default_pulse_power: .90
+    default_pulse_ms: 20
+    default_pulse_power: .85
     label: FP-DN-13
+    #debug: true
   c_bottom_l_pop_bumper:
     number: 2-8
     default_pulse_ms: 6
@@ -283,11 +404,11 @@ coils:
     label: FP-DN-18
   c_ramp_up:
     number: 2-13
-    default_pulse_ms: 20
+    default_pulse_ms: 25
     label: FP-DN-19
   c_ramp_down:
     number: 2-14
-    default_pulse_ms: 35
+    default_pulse_ms: 20
     label: FP-DN-1A
   c_orbit_gate:
     number: 2-15
@@ -308,10 +429,11 @@ ball_devices:
     eject_timeouts: 1500ms #2.5s
     eject_coil_retry_pulse: 8ms
     label: Main Trough
-    auto_fire_on_unexpected_ball: False
+    auto_fire_on_unexpected_ball: True
+  #  player_controlled_eject_event: tilt
   bd_plunger:
     ball_switches: s_plunger_lane
-    entrance_count_delay: 0 #1s
+    entrance_count_delay: .3s
     eject_timeouts: 4s
     #tags: ball_add_live
     mechanical_eject: true
@@ -331,15 +453,19 @@ ball_devices:
     tags: left_lock
     eject_timeouts: 500ms
     eject_all_events: game_ended
-    #debug: true
+    # eject_events: left_lock_eject
+    # debug: true
   bd_right_lock:
     label: right lock
     ball_switches: s_right_lock_kickout
     eject_coil: c_right_lock_kickout
     exit_count_delay: 250ms
     tags: right_lock
-    eject_timeouts: 500ms
+    eject_timeouts: 1000ms
     eject_all_events: game_ended
+    eject_coil_retry_pulse: 35
+    retries_before_increasing_pulse: 1
+    debug: true
   bd_top_lock:
     label: top lock
     ball_switches: s_top_lock_kickout
@@ -351,11 +477,11 @@ ball_devices:
 
 game:
   balls_per_game: 3
-  max_players: 2
+  max_players: 4
 
 machine:
   balls_installed: 4
-  min_balls: 3
+  min_balls: 4
 
 widget_styles:
   text_default:
@@ -378,38 +504,40 @@ autofire_coils:
     coil: c_left_slingshot
     disable_events: ball_ending, service_mode_entered, disable_sling
     enable_events: ball_started, enable_sling
+    ball_search_order: 0
   right_slingshot:
     coil: c_right_slingshot
     switch: s_right_slingshot
     disable_events: ball_ending, service_mode_entered, disable_sling
     enable_events: ball_started, enable_sling
+    ball_search_order: 0
   bottom_l_pop_bumper:
     coil: c_bottom_l_pop_bumper
     switch: s_bottom_l_pop_bumper
-    disable_events: ball_ending, service_mode_entered, disable_pop_bumper
-    enable_events: ball_started, enable_pop_bumper
+    disable_events: ball_ending, service_mode_entered, disable_Lower_Left_pop_bumper
+    enable_events: ball_started, enable_Lower_Left_pop_bumper
   bottom_r_pop_bumper:
     coil: c_bottom_r_pop_bumper
     switch: s_bottom_r_pop_bumper
-    disable_events: ball_ending, service_mode_entered, disable_pop_bumper
-    enable_events: ball_started, enable_pop_bumper
+    disable_events: ball_ending, service_mode_entered, disable_Lower_Right_pop_bumper
+    enable_events: ball_started, enable_Lower_Right_pop_bumper
   top_l_pop_bumper:
     coil: c_top_l_pop_bumper
     switch: s_top_l_pop_bumper
-    disable_events: ball_ending, service_mode_entered, disable_pop_bumper
-    enable_events: ball_started, enable_pop_bumper
+    disable_events: ball_ending, service_mode_entered, disable_Upper_Left_pop_bumper
+    enable_events: ball_started, enable_Upper_Left_pop_bumper
   top_r_pop_bumper:
     coil: c_top_r_pop_bumper
     switch: s_top_r_pop_bumper
-    disable_events: ball_ending, service_mode_entered, disable_pop_bumper
-    enable_events: ball_started, enable_pop_bumper
+    disable_events: ball_ending, service_mode_entered, disable_Upper_Right_pop_bumper
+    enable_events: ball_started, enable_Upper_Right_pop_bumper
 
 kickbacks:
   kickback_main:
     coil: c_kickback
     switch: s_kickback_t
     enable_events: kickback_enable
-    disable_events: kickback_disable #, ball_starting # {not mode.kickback.active}, disable_kickback
+    disable_events: kickback_disable
     debug: true
 
 drop_targets:
@@ -417,22 +545,16 @@ drop_targets:
      switch: s_left_drop_target
      reset_coil: c_left_drop_target
      reset_events: drop_reset_up, ball_starting
-     # enable_keep_up_events: ball_starting
-     # disable_keep_up_events: s_plunger_lane_inactive
      debug: true
    middle_drop:
      switch: s_middle_drop_target
      reset_coil: c_middle_drop_target
      reset_events: drop_reset_up, ball_starting
-     # enable_keep_up_events: ball_starting
-     # disable_keep_up_events: s_plunger_lane_inactive
      debug: true
    right_drop:
      switch: s_right_drop_target
      reset_coil: c_right_drop_target
      reset_events: drop_reset_up, ball_starting
-     # enable_keep_up_events: ball_starting
-     # disable_keep_up_events: s_plunger_lane_inactive
      debug: True
 
 # drop_target_banks:
@@ -451,37 +573,48 @@ diverters:
     activation_time: 2s
     activation_switches: s_gate_top_right
     deactivation_switches: s_left_orbit
-    enable_events: orbit_gate_enable
-    disable_events: orbit_gate_disable
+    enable_events:
+      - orbit_gate_enable
+      - mode_skill_shot_starting
+    disable_events:
+      - mode_skill_shot_stopping
+      - orbit_gate_disable #, diverter_orbit_gate_deactivating
     debug: True
-  ramp_down:
-    activation_coil: c_ramp_down
-    activate_events: ramp_down_active #mode_skill_shot_starting
-    type: pulse
-    enable_events: ball_started
-  #   enable_events: ramp_down_enable #mode_skill_shot_starting #ball_starting
-  #   # disable_events: ramp_down_disable #mode_skill_shot_stopping
-    debug: True
-  ramp_up:
-    activation_coil: c_ramp_up
-    # #activation_switches: s_right_orbit_rollover # (look into this)
-    activate_events: ramp_up_active
-    type: pulse
-    #enable_events: mode_skill_shot_starting #mode_skill_shot_starting
-    #disable_events: mode_skill_shot_stopping
-    debug: True
+  # ramp_down:
+  #   activation_coil: c_ramp_down
+  #   activate_events: ramp_down_active #mode_skill_shot_starting
+  #   type: pulse
+  #   enable_events: ball_started
+  # #   enable_events: ramp_down_enable #mode_skill_shot_starting #ball_starting
+  # #   # disable_events: ramp_down_disable #mode_skill_shot_stopping
+  #   debug: True
+  # ramp_up:
+  #   activation_coil: c_ramp_up
+  #   # #activation_switches: s_right_orbit_rollover # (look into this)
+  #   activate_events: ramp_up_active
+  #   type: pulse
+  #   #enable_events: mode_skill_shot_starting #mode_skill_shot_starting
+  #   #disable_events: mode_skill_shot_stopping
+  #   debug: True
   ramp_diverter:
     activation_coil: c_ramp_diverter
     type: hold
     activation_time: 1s
     activation_switches: s_back_ramp
-    enable_events: ramp_diverter_enable #ball_started
-    disable_events: ramp_diverter_disable
+    enable_events:
+      - ramp_diverter_enable
+      #- mode_skill_shot_starting{not mode.qualify_invid_invasion.active} #ball_started
+    disable_events:
+      - ramp_diverter_disable
     debug: true
-  # ramp:
-  #   activation_coil: c_ramp_down
-  #   deactivation_coil: c_ramp_up
-  #   type: pulse
-  #   activate_events: ramp_down_active
-  #   deactivate_events: ramp_up_active
-  #   debug: True
+  ramp:
+    activation_coil: c_ramp_down
+    deactivation_coil: c_ramp_up
+    type: pulse
+    activate_events:
+      - ramp_down_active
+      - mode_skill_shot_starting # {device.switches.s_up_down_ramp_switch.state == 0}
+    deactivate_events: ramp_up_active
+    enable_events: ball_started
+    ball_search_order: 1
+    debug: True
