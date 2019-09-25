@@ -1,0 +1,184 @@
+#config_version=5
+
+mode:
+  start_events:
+    - mode_skill_shot_stopped # ball_starting
+    #- qualify_shot_multipliers{not mode.invid_invasion.active}
+  stop_events:
+    - ball_ending
+    - mode_end_invid_invasion_started
+    #- stop_qualify_shot_multipliers_mode
+  restart_on_next_ball: false
+  priority: 6800
+
+event_player:
+  qualify_shot_multipliers{not mode.invid_invasion.active}:
+  #mode_qualify_shot_multipliers_started:
+    shot_multipliers|1s
+
+
+shot_profiles:
+  shot_multiplier_profile:
+    advance_on_hit: false
+    states:
+    # - name: unlit
+    #   show: off
+    - name: flashing_shot_multiplier
+      show: flashing_shot_multiplier_green
+      sync_ms: 1500
+      loops: -1
+      speed: 10
+    - name: hit
+      show: color_green_on
+
+shots:
+  rand_shot_multiplier:
+    switch: s_left_lock_kickout
+    profile: shot_multiplier_profile
+    show_tokens:
+      leds: l_rand_x
+    enable_events: shot_multipliers{device.achievements.rand_2x_shot_collected.state != "completed"}
+    disable_events:
+      - mode_qualify_shot_multipliers_started
+      - rand_shot_multiplier_flashing_shot_multiplier_hit
+      - annie_shot_multiplier_flashing_shot_multiplier_hit
+      - ramp_shot_multiplier_flashing_shot_multiplier_hit
+      - rook_shot_multiplier_flashing_shot_multiplier_hit
+      - lancer_shot_multiplier_flashing_shot_multiplier_hit
+      - lunk_shot_multiplier_flashing_shot_multiplier_hit
+      - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    debug: true
+  annie_shot_multiplier:
+    switch: s_left_orbit
+    profile: shot_multiplier_profile
+    show_tokens:
+      leds: l_annie_x
+    enable_events: shot_multipliers{device.achievements.annie_2x_shot_collected.state != "completed"}
+    disable_events:
+      - mode_qualify_shot_multipliers_started
+      - rand_shot_multiplier_flashing_shot_multiplier_hit
+      - annie_shot_multiplier_flashing_shot_multiplier_hit
+      - ramp_shot_multiplier_flashing_shot_multiplier_hit
+      - rook_shot_multiplier_flashing_shot_multiplier_hit
+      - lancer_shot_multiplier_flashing_shot_multiplier_hit
+      - lunk_shot_multiplier_flashing_shot_multiplier_hit
+      - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    debug: true
+  ramp_shot_multiplier:
+    switch: s_back_ramp
+    profile: shot_multiplier_profile
+    show_tokens:
+      leds: l_annie_x
+    enable_events: shot_multipliers{device.achievements.ramp_2x_shot_collected.state != "completed"}
+    disable_events:
+      - mode_qualify_shot_multipliers_started
+      - rand_shot_multiplier_flashing_shot_multiplier_hit
+      - annie_shot_multiplier_flashing_shot_multiplier_hit
+      - ramp_shot_multiplier_flashing_shot_multiplier_hit
+      - rook_shot_multiplier_flashing_shot_multiplier_hit
+      - lancer_shot_multiplier_flashing_shot_multiplier_hit
+      - lunk_shot_multiplier_flashing_shot_multiplier_hit
+      - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    debug: true
+  rook_shot_multiplier:
+    switch: s_right_lock_kickout
+    profile: shot_multiplier_profile
+    show_tokens:
+      leds: l_rook_x
+    enable_events: shot_multipliers{device.achievements.rook_2x_shot_collected.state != "completed"}
+    disable_events:
+      - mode_qualify_shot_multipliers_started
+      - rand_shot_multiplier_flashing_shot_multiplier_hit
+      - annie_shot_multiplier_flashing_shot_multiplier_hit
+      - ramp_shot_multiplier_flashing_shot_multiplier_hit
+      - rook_shot_multiplier_flashing_shot_multiplier_hit
+      - lancer_shot_multiplier_flashing_shot_multiplier_hit
+      - lunk_shot_multiplier_flashing_shot_multiplier_hit
+      - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    debug: true
+  lancer_shot_multiplier:
+    hit_events: lancer_shot_sequence_hit
+    profile: shot_multiplier_profile
+    show_tokens:
+      leds: l_lancer_x
+    enable_events: shot_multipliers{device.achievements.lancer_2x_shot_collected.state != "completed"}
+    disable_events:
+      - mode_qualify_shot_multipliers_started
+      - rand_shot_multiplier_flashing_shot_multiplier_hit
+      - annie_shot_multiplier_flashing_shot_multiplier_hit
+      - ramp_shot_multiplier_flashing_shot_multiplier_hit
+      - rook_shot_multiplier_flashing_shot_multiplier_hit
+      - lancer_shot_multiplier_flashing_shot_multiplier_hit
+      - lunk_shot_multiplier_flashing_shot_multiplier_hit
+      - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    debug: true
+  lunk_shot_multiplier:
+    switch: s_d_target
+    profile: shot_multiplier_profile
+    show_tokens:
+      leds: l_lunk_x
+    enable_events: shot_multipliers{device.achievements.lunk_2x_shot_collected.state != "completed"}
+    disable_events:
+      - mode_qualify_shot_multipliers_started
+      - rand_shot_multiplier_flashing_shot_multiplier_hit
+      - annie_shot_multiplier_flashing_shot_multiplier_hit
+      - ramp_shot_multiplier_flashing_shot_multiplier_hit
+      - rook_shot_multiplier_flashing_shot_multiplier_hit
+      - lancer_shot_multiplier_flashing_shot_multiplier_hit
+      - lunk_shot_multiplier_flashing_shot_multiplier_hit
+      - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    debug: true
+  protoculture_shot_multiplier:
+    switch: s_top_target
+    profile: shot_multiplier_profile
+    show_tokens:
+      leds: l_10k
+    enable_events: shot_multipliers{device.achievements.protoculture_2x_shot_collected.state != "completed"}
+    disable_events:
+      - mode_qualify_shot_multipliers_started
+      - rand_shot_multiplier_flashing_shot_multiplier_hit
+      - annie_shot_multiplier_flashing_shot_multiplier_hit
+      - ramp_shot_multiplier_flashing_shot_multiplier_hit
+      - rook_shot_multiplier_flashing_shot_multiplier_hit
+      - lancer_shot_multiplier_flashing_shot_multiplier_hit
+      - lunk_shot_multiplier_flashing_shot_multiplier_hit
+      - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    debug: true
+
+variable_player:
+  rand_shot_multiplier_flashing_shot_multiplier_hit:
+    rand_shot_multiplier: 1
+  annie_shot_multiplier_flashing_shot_multiplier_hit:
+    annie_shot_multiplier: 1
+  rook_shot_multiplier_flashing_shot_multiplier_hit:
+    rook_shot_multiplier: 1
+  lancer_shot_multiplier_flashing_shot_multiplier_hit:
+    lancer_shot_multiplier: 1
+  lunk_shot_multiplier_flashing_shot_multiplier_hit:
+    lancer_shot_multiplier: 1
+  ramp_shot_multiplier_flashing_shot_multiplier_hit:
+    ramp_shot_multiplier: 1
+  protoculture_shot_multiplier_flashing_shot_multiplier_hit:
+    protoculture_shot_multiplier: 1
+  mode_qualify_shot_multipliers_stopping:
+    rand_shot_multiplier:
+      int: 1
+      action: set
+    annie_shot_multiplier:
+      int: 1
+      action: set
+    rook_shot_multiplier:
+      int: 1
+      action: set
+    lancer_shot_multiplier:
+      int: 1
+      action: set
+    lunk_shot_multiplier:
+      int: 1
+      action: set
+    ramp_shot_multiplier:
+      int: 1
+      action: set
+    protoculture_shot_multiplier:
+      int: 1
+      action: set
