@@ -1,0 +1,67 @@
+#config_version=5
+#Robotech
+
+mode:
+    start_events:
+      - rook_mode_rand_add_ball_hit
+    stop_events:
+      - ball_save_rook_mode_rand_add_a_ball_disabled
+    priority: 9600
+
+# event_player:
+#   mode_ball_saveannie_mode_rook_add_ball_started:
+#     - play_add_a_ball_sound|1s
+
+ball_saves:
+  rook_mode_rand_add_a_ball:
+    active_time: 10s
+    hurry_up_time: 5s
+    grace_period: 2s
+    #enable_events: mode_ball_save_rook_mode_rand_add_a_ball_started
+    timer_start_events:
+      - mode_ball_save_rook_mode_rand_add_a_ball_started # {not mode.ball_save_annie_mode.active}
+      #- mode_ball_save_annie_mode_stopped
+    auto_launch: true
+    balls_to_save: -1
+    debug: true
+
+show_player:
+  ball_save_rook_mode_rand_add_a_ball_timer_start:
+    fast_flash_show:
+      key: rook_mode_rand_add_a_ball_save_flash
+      speed: 3
+      show_tokens:
+        leds: l_shoot_again
+        color: red
+      action: play
+  ball_save_rook_mode_rand_add_a_ball_hurry_up:
+    rook_mode_rand_add_a_ball_save_flash:
+      action: stop
+    fast_flash_show:
+      key: rook_mode_rand_add_a_ball_hurry_up_flash
+      action: play
+      speed: 20
+      show_tokens:
+        leds: l_shoot_again
+        color: red
+  ball_save_rook_mode_rand_add_a_ball_grace_period:
+    rook_mode_rand_add_a_ball_hurry_up_flash:
+      action: stop
+
+# widgets:
+#   add_a_ball_video:
+#     - type: video
+#       video: add_a_ball
+#
+# widget_player:
+#   mode_ball_save_invid_invasion_add_a_ball_started:
+#     add_a_ball_video:
+#       action: update
+#       widget_settings:
+#         expire: 2.5s
+#         z: 110
+#
+# sound_player:
+#   play_add_a_ball_sound:
+#     launch_next_wave:
+#       action: play
