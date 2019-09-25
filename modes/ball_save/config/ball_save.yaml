@@ -2,31 +2,44 @@
 #Robotech
 
 mode:
-    start_events: ball_starting, mode_end_invid_invasion_stopped
-    stop_events: mode_ball_save_done
-    priority: 8000
+    start_events:
+      - ball_starting
+      - mode_end_invid_invasion_stopped
+    stop_events:
+      - qualify_invid_invasion
+      - ball_save_default_disabled #mode_ball_save_done
+      - mode_intro_invid_invasion_started
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_annie_mode_started
+      - kickback_kickback_main_fired
+    priority: 8400
 
-event_player:
-  # ball_save_default_disabled{mode.kickback.active}:
-  #   - kickback_enable
-  # ball_save_default_grace_period{mode.kickback.active}:
-  #   - kickback_enable
-  ball_save_default_disabled:
-     - mode_ball_save_done #|1s
+# event_player:
+#   # ball_save_default_disabled{mode.kickback.active}:
+#   #   - kickback_enable
+#   # ball_save_default_grace_period{mode.kickback.active}:
+#   #   - kickback_enable
+#   ball_save_default_disabled:
+#      - mode_ball_save_done #|1s
 
 ball_saves:
   default:
     active_time: 10s
     grace_period: 2s
     hurry_up_time: 5s
-    enable_events:
-      - mode_ball_save_started
+    # enable_events:
+    #   - mode_ball_save_started
     timer_start_events:
-      - sw_playfield_active #balldevice_bd_plunger_ball_eject_success
-    early_ball_save_events: s_right_outlane_h_active, s_kickback_t_active
+      - sw_playfield_active
+      - invid_targets_skill_hit
+    early_ball_save_events:
+      - s_right_outlane_h_active
+      - s_kickback_t_active{not mode.kickback.active}
     auto_launch: true
     balls_to_save: 1
-    #debug: true
+    debug: true
 
 show_player:
   ball_save_default_timer_start:
@@ -57,15 +70,15 @@ show_player:
 #         expire: 5.5s
 #         z: 120
 
-sound_player:
-  s_kickback_t_active:
-    come_back_my_scott:
-      action: play
-      #events_when_stopped: mode_ball_save_done
-      #loops: 1
-  s_right_outlane_h_active:
-    come_back_my_scott:
-      action: play
+# sound_player:
+  # s_kickback_t_active:
+  #   come_back_my_scott:
+  #     action: play
+  #     #events_when_stopped: mode_ball_save_done
+  #     #loops: 1
+  # s_right_outlane_h_active:
+  #   come_back_my_scott:
+  #     action: play
       #events_when_stopped: mode_ball_save_done
 #   balldevice_bd_trough_ball_enter:
 #     come_back_my_scott:
