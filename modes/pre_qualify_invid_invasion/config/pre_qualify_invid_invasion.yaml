@@ -1,14 +1,13 @@
 #config_version=5
 
 mode:
-   start_events: ball_starting{ball==1} # {not mode.qualify_invid_invasion.active} #start_pre_qualify_invid_invasion
-   stop_events: qualify_invid_invasion, game_ending
+   start_events:
+     - ball_starting{current_player.ball==1 and not is_extra_ball} # {not mode.qualify_invid_invasion.active} #start_pre_qualify_invid_invasion
+   stop_events:
+     - qualify_invid_invasion
+     #- mode_intro_invid_invasion_started
    restart_on_next_ball: true
    priority: 400
-
-# event_player:
-#   enable_invid_targets:
-#     - mode_pre_qualify_invid_invasion_starting{not mode.qualify_invid_invasion.active}
 
 counters:
   invid_target_group_made_qualify_invid_invasion:
@@ -16,23 +15,35 @@ counters:
     starting_count: 0
     direction: up
     count_complete_value: 1
-    events_when_complete: qualify_invid_invasion,  invid_invasion_mission_ready
+    events_when_complete:
+      - qualify_invid_invasion
+      #- start_qualify_invid_invasion_ball_save #not mode.ball_save.active or not mode.ball_save_kickback.active}
     persist_state: true
     #debug: true
 
 shot_groups:
   invid_target_group:
-    shots: left_target, middle_target, right_target, left_drop, middle_drop, right_drop
-    #reset_events: invid_target_group_hit_complete
-    enable_events: mode_pre_qualify_invid_invasion_starting
-    disable_events: invid_target_group_hit_complete, mode_bonus_will_start # , lanes_invid_skill_cancel_sequence_timeout
+    shots:
+      - left_target
+      - middle_target
+      - right_target
+      - left_drop
+      - middle_drop
+      - right_drop
+    enable_events:
+      - enable_invid_targets
+    disable_events:
+      #- invid_target_group_hit_complete
+      #- mode_bonus_will_start
+      - mode_pre_qualify_invid_invasion_starting
+      #lanes_invid_skill_cancel_sequence_timeout
     debug: true
 
-show_player:
-  invid_target_group_hit_complete:
-    invid_targets_complete:
-      show_tokens:
-        color: red
+# show_player:
+#   invid_target_group_hit_complete:
+#     invid_targets_complete:
+#       show_tokens:
+#         color: red
 
 shot_profiles:
   invid_profile:
@@ -40,7 +51,8 @@ shot_profiles:
     states:
       - name: flashing
         show: flash_red_show
-        speed: 15
+        speed: 5
+        sync_ms: 1500
       - name: hit
         show: color_red_on
 
@@ -81,3 +93,12 @@ shots:
     show_tokens:
       leds: l_t6
     debug: true
+
+variable_player:
+  invid_target_group_flashing_hit:
+    score: 1000 * current_player.pf_multiplier|block
+
+# sound_player:
+#   invid_target_group_flashing_hit:
+#     spinner_sound4:
+#       action: play
