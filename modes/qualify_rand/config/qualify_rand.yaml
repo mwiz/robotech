@@ -2,19 +2,21 @@
 
 mode:
   start_events:
-    - start_qualify_rand
+    - mode_invid_invasion_stopped #mode_end_invid_invasion_stopped
   stop_events:
     - rand_collected
   restart_on_next_ball: true
   priority: 1200
 
 event_player:
-  mode_qualify_rand_started{device.counters.rand_hit_counter.value==1}:
+  mode_skill_shot_stopped.1:
+    - post_rand_image
+  mode_skill_shot_stopped.2{device.counters.rand_hit_counter.value==1}:
     - post_rand_r
-  mode_qualify_rand_started{device.counters.rand_hit_counter.value==2}:
+  mode_skill_shot_stopped.3{device.counters.rand_hit_counter.value==2}:
     - post_rand_r
     - post_rand_a
-  mode_qualify_rand_started{device.counters.rand_hit_counter.value==3}:
+  mode_skill_shot_stopped.4{device.counters.rand_hit_counter.value==3}:
     - post_rand_r
     - post_rand_a
     - post_rand_n
@@ -28,109 +30,148 @@ event_player:
     - post_rand_d
 
 widget_player:
+  post_rand_image:
+    rand_qualify_image:
+      action: add
+      slide: base_slide
+      priority: 1201
   post_rand_r:
     rand_r_widget:
       action: add
       slide: base_slide
+      priority: 1202
   post_rand_a:
     rand_a_widget:
       action: add
       slide: base_slide
+      priority: 1203
   post_rand_n:
     rand_n_widget:
       action: add
       slide: base_slide
+      priority: 1204
   post_rand_d:
     rand_d_widget:
       action: add
       slide: base_slide
-  mode_qualify_rand_started:
-    rand_qualify_image:
-      action: add
-      slide: base_slide
-  rand_collected:
-    rand_qualify_image:
-      action: remove
+      priority: 1205
 
 widgets:
   rand_qualify_image:
     - type: image
       image: rand_qualify
-      x: center - 580
+      x: center - 560
       y: center + 275
   rand_r_widget:
     - type: text
       text: R
       color: red
-      font_size: 40
-      x: center - 620
+      font_size: 35
+      x: center - 595
       y: center + 200
   rand_a_widget:
     - type: text
       text: A
       color: red
-      font_size: 40
-      x: center - 595
+      font_size: 35
+      x: center - 575
       y: center + 200
   rand_n_widget:
     - type: text
       text: N
       color: red
-      font_size: 40
-      x: center - 570
+      font_size: 35
+      x: center - 555
       y: center + 200
   rand_d_widget:
     - type: text
       text: D
       color: red
-      font_size: 40
-      x: center - 545
+      font_size: 35
+      x: center - 535
       y: center + 200
 
 shot_groups:
   rand_shot_group:
-    shots: r_shot, ra_shot, ran_shot, rand_shot
-    enable_events: mode_annie_mode_stopped
-    disable_events:  mode_annie_mode_started
+    shots:
+      - r_shot
+      - ra_shot
+      - ran_shot
+      - rand_shot
     debug: true
 
 shots:
   r_shot:
     switch: s_left_lock_kickout
     profile: rand_profile
-    enable_events: mode_qualify_rand_started{device.counters.rand_hit_counter.value==0}
-    disable_events: r_shot_flashing_rand_hit
-    advance_events: r_shot_flashing_rand_hit, qualify_rand_1st_time{device.counters.rand_hit_counter.value==0}
+    enable_events:
+      - mode_annie_mode_stopped{device.counters.rand_hit_counter.value==0}
+      - mode_rook_mode_stopped{device.counters.rand_hit_counter.value==0}
+      - mode_lunk_mode_stopped{device.counters.rand_hit_counter.value==0}
+      - mode_skill_shot_stopped{device.counters.rand_hit_counter.value==0}
+    disable_events:
+      - r_shot_flashing_rand_hit
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
     debug: true
   ra_shot:
     switch: s_left_lock_kickout
     profile: rand_profile
-    enable_events: r_shot_flashing_rand_hit, mode_qualify_rand_started{device.counters.rand_hit_counter.value==1}
-    disable_events: ra_shot_flashing_rand_hit, mode_qualify_rand_started{device.counters.rand_hit_counter.value<1 or device.counters.rand_hit_counter.value>1}
-    advance_events: r_shot_flashing_rand_hit, ra_shot_flashing_rand_hit, qualify_rand_1st_time{device.counters.rand_hit_counter.value==1}
+    enable_events:
+      - r_shot_flashing_rand_hit
+      - mode_annie_mode_stopped{device.counters.rand_hit_counter.value==1}
+      - mode_rook_mode_stopped{device.counters.rand_hit_counter.value==1}
+      - mode_lunk_mode_stopped{device.counters.rand_hit_counter.value==1}
+      - mode_skill_shot_stopped{device.counters.rand_hit_counter.value==1}
+    disable_events:
+      - ra_shot_flashing_rand_hit
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
     debug: true
   ran_shot:
     switch: s_left_lock_kickout
     profile: rand_profile
-    enable_events: ra_shot_flashing_rand_hit, mode_qualify_rand_started{device.counters.rand_hit_counter.value==2}
-    disable_events: ran_shot_flashing_rand_hit, mode_qualify_rand_started{device.counters.rand_hit_counter.value<2 or device.counters.rand_hit_counter.value>2}
-    advance_events: ra_shot_flashing_rand_hit, ran_shot_flashing_rand_hit, qualify_rand_1st_time{device.counters.rand_hit_counter.value==2}
+    enable_events:
+      - ra_shot_flashing_rand_hit
+      - mode_annie_mode_stopped{device.counters.rand_hit_counter.value==2}
+      - mode_rook_mode_stopped{device.counters.rand_hit_counter.value==2}
+      - mode_lunk_mode_stopped{device.counters.rand_hit_counter.value==2}
+      - mode_skill_shot_stopped{device.counters.rand_hit_counter.value==2}
+    disable_events:
+      - ran_shot_flashing_rand_hit
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
     debug: true
   rand_shot:
     switch: s_left_lock_kickout
     profile: rand_profile
-    enable_events: ran_shot_flashing_rand_hit, mode_qualify_rand_started{device.counters.rand_hit_counter.value==3}
-    disable_events: rand_shot_flashing_rand_hit, mode_qualify_rand_started{device.counters.rand_hit_counter.value<3}
-    advance_events: ran_shot_flashing_rand_hit, rand_shot_flashing_rand_hit, qualify_rand_1st_time{device.counters.rand_hit_counter.value==3}
+    enable_events:
+      - ran_shot_flashing_rand_hit
+      - mode_annie_mode_stopped{device.counters.rand_hit_counter.value==3}
+      - mode_rook_mode_stopped{device.counters.rand_hit_counter.value==3}
+      - mode_lunk_mode_stopped{device.counters.rand_hit_counter.value==3}
+      - mode_skill_shot_stopped{device.counters.rand_hit_counter.value==3}
+    disable_events:
+      - rand_shot_flashing_rand_hit
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
     debug: true
 
 
 shot_profiles:
   rand_profile:
-    advance_on_hit: false
+    advance_on_hit: true #false
     states:
-    - name: unlit
-      show: off
+    # - name: unlit
+    #   show: off
     - name: flashing_rand
       show: flash_rand_show
       sync_ms: 1500
@@ -140,22 +181,10 @@ shot_profiles:
       show: off
 
 counters:
-  rand_started_first_time_counter:
-    count_events:
-      - mode_qualify_rand_started
-    starting_count: 0
-    direction: up
-    count_complete_value: 1
-    reset_on_complete: false
-    events_when_complete: qualify_rand_1st_time
-    persist_state: true
-    debug: true
+
   rand_hit_counter:
     count_events:
-      - r_shot_flashing_rand_hit
-      - ra_shot_flashing_rand_hit
-      - ran_shot_flashing_rand_hit
-      - rand_shot_flashing_rand_hit
+      - rand_shot_group_flashing_rand_hit
     starting_count: current_player.rand_start_count
     direction: up
     count_complete_value: 4
