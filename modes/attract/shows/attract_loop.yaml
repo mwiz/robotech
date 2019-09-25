@@ -1,36 +1,39 @@
 #show_version=5
 
-
-
-- duration: 5
+- duration: 4s
   slides:
-    title_screen:
-      - type: image
-        image: attract
-
-- duration: 5
-  slides:
-    last_game_scores:
+    last_game_scores{game.num_players==1}:
       - type: text
         text: Player 1
-        y: center + 100
+        y: center + 120
         font_size: 80
       - type: text
         text: (machine|player1_score)
         number_grouping: true
         #min_digits: 2
         font_size: 80
-        y: center + 40
+        y: center + 60
+    last_game_scores{game.num_players==2}:
+      - type: text
+        text: Player 1
+        y: center + 200
+        font_size: 80
+      - type: text
+        text: (machine|player1_score)
+        number_grouping: true
+        #min_digits: 2
+        font_size: 80
+        y: center + 140
       - type: text
         text: Player 2
-        y: center - 100
+        y: center - 40
         font_size: 80
       - type: text
         text: (machine|player2_score)
         number_grouping: true
         #min_digits: 2
         font_size: 80
-        y: center - 160
+        y: center - 100
       # widgets:
       #   - type: text
       #     text: Player 1
@@ -43,7 +46,7 @@
       #     font_size: 80
       #     y: center + 40
 
-- duration: 5
+- duration: 4s
   slides:
     attract_all_high_scores:
       - type: text
@@ -124,7 +127,7 @@
     #   duration: 500ms
     #   direction: left
 
-- duration: 5
+- duration: 4s
   slides:
     attract_invid_scores:
       - type: text
@@ -136,7 +139,7 @@
         number_grouping: true
         y: center + 90
         font_size: 70
-        color: purple
+        color: red
       - type: text
         text: (machine|invid_invasion_total2_label)
         y: center
@@ -146,9 +149,56 @@
         number_grouping: true
         y: center - 40
         font_size: 60
-        color: purple
+        color: red
 
-- duration: 5
+- duration: 4s
+  slides:
+    attract_pops_spinner_scores:
+      - type: text
+        text: (machine|super_pops_total1_label)
+        y: center + 170
+        font_size: 70
+        color: purple
+      - type: text
+        text: (machine|super_pops_total1_name) (machine|super_pops_total1_value)
+        number_grouping: true
+        y: center + 120
+        font_size: 70
+        color: red
+      - type: text
+        text: (machine|super_spinner_total1_label)
+        y: center - 70
+        font_size: 70
+        color: purple
+      - type: text
+        text: (machine|super_spinner_total1_name) (machine|super_spinner_total1_value)
+        number_grouping: true
+        y: center - 120
+        font_size: 70
+        color: red
+
+- duration: 4s
+  slides:
+    attract_combo_champ_scores:
+      - type: text
+        text: (machine|combos_made1_label)
+        y: center + 140
+        font_size: 70
+        color: yellow
+      - type: text
+        text: (machine|combos_made1_name) (machine|combos_made1_value)
+        number_grouping: true
+        y: center + 90
+        font_size: 70
+        color: red
+
+- duration: 4s
+  slides:
+    title_screen:
+      - type: image
+        image: attract
+
+- duration: 4s
   slides:
     mpf_logo:
       - type: image
