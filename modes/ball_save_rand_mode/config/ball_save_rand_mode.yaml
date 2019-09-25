@@ -3,7 +3,7 @@
 
 mode:
     start_events:
-      - mode_rand_mode_will_start
+      - stop_intro_rand_mode #mode_intro_rand_mode_started # mode_rand_mode_will_start
     stop_events:
       - ball_save_rand_mode_multiball_disabled
       #- mode_end_invid_invasion_started
@@ -18,6 +18,9 @@ ball_saves:
     #enable_events: mode_ball_save_rand_mode_started
     timer_start_events:
       - mode_ball_save_rand_mode_started
+    early_ball_save_events:
+      - s_right_outlane_h_active
+      - s_kickback_t_active{not mode.kickback.active}
     auto_launch: true
     balls_to_save: -1
     debug: true
