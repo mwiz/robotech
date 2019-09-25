@@ -1,0 +1,20 @@
+This is a timed mode (60 seconds) and starts off as a 2 ball multiball with ball saver.
+
+Complete top lanes (R-O-B-O) 4 times to complete mode.
+
+After initial ball save is over the Rook shoot will be flashing to add-a-ball with ball saver.
+
+Completing top lanes adds 10 seconds to timer.
+
+Spinner hits adds seconds to timer (determined by spinner level)
+
+SCORING
+
+1st Invid destroyed - 20,000 * playfield_multiplier
+2nd Invid destroyed - 30,000 * playfield_multiplier
+3rd Invid destroyed - 40,000 * playfield_multiplier
+4th Invid destroyed - 50,000 * playfield_multiplier
+
+Total = 140,000 points
+
+Bonus = ((time left * 500) * balls_in_play) * playfield_multiplier
