@@ -1,0 +1,51 @@
+#config_version=5
+
+mode:
+   start_events:
+     - qualify_genesis_pit
+   stop_events:
+     - mode_intro_genesis_pit_started
+   restart_on_next_ball: true
+   priority: 710
+
+event_player:
+  mode_skill_shot_stopped{mode.qualify_genesis_pit.active}:
+    - ramp_down_active|.5s
+  mode_qualify_genesis_pit_started:
+    - play_what_is_that_flashing|.5s
+    - ramp_diverter_disable
+    - ramp_down_active{device.switches.s_up_down_ramp_switch.state == 0}|1s
+  mode_start_genesis_pit_shot_flashing_hit:
+    - start_intro_genesis_pit
+    - ramp_up_active
+
+shot_profiles:
+  genesis_pit_mode_start:
+    advance_on_hit: true
+    states:
+    - name: flashing
+      show: flash_white_show
+      sync_ms: 1000
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+
+
+shots:
+  mode_start_genesis_pit_shot:
+    hit_events: ramp_reflex_point_sequence_hit
+    profile: genesis_pit_mode_start
+    show_tokens:
+      leds: l_mode_start
+    enable_events:
+      - mode_qualify_genesis_pit_started
+      - diverter_ramp_activating
+    disable_events:
+      - mode_qualify_genesis_pit_stopped
+      - diverter_ramp_deactivating
+
+sound_player:
+  play_what_is_that_flashing:
+    what_is_that_flashing:
+      action: play
