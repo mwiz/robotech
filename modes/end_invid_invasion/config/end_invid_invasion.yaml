@@ -1,37 +1,72 @@
 #config_version=5
 
 mode:
-  start_events: start_end_invid_invasion_mode #timer_invid_invasion_complete
+  start_events: start_end_invid_invasion_mode
   stop_events:
-    - end_end_invid_invasion #mode_qualify_rand_started
+    - player_continue_show_ended
   priority: 1100
 
 event_player:
-  mode_end_invid_invasion_started: flipper_off, disable_pop_bumper, disable_sling, kickback_disable{mode.kickback.active}
-  end_invid_invasion_show_ended:
+  mode_end_invid_invasion_started:
+    - flipper_off
+    - disable_Upper_Left_pop_bumper
+    - disable_Upper_Right_pop_bumper
+    - disable_Lower_Left_pop_bumper
+    - disable_Lower_Right_pop_bumper
+    - disable_sling
+    - kickback_disable{mode.kickback.active}
+  player_continue_show_ended:
     - flipper_on
-    - enable_pop_bumper
+    - enable_Upper_Left_pop_bumper
+    - enable_Upper_Right_pop_bumper
+    - enable_Lower_Left_pop_bumper
+    - enable_Lower_Right_pop_bumper
     - enable_sling
     - kickback_enable{mode.kickback.active}
-    - start_qualify_rand
-    - start_qualify_annie
-    - start_qualify_rook
-    - start_qualify_lancer
-    - start_qualify_lunk
-    - start_qualify_marlene
+    #- start_pre_qualify_mystery
+    - start_skill_shot_mode
+
+# widgets:
+#   player_num_keep_shooting_widget:
+#     - type: text
+#       text: PLAYER (number)
+#       color: blue
+#       font_size: 100
+#       y: center + 80
+#     - type: text
+#       text: Keep Shooting
+#       color: red
+#       y: center #- 90
+#       font_size: 70
+#
+# widget_player:
+#   wait_for_instructions:
+#     player_num_keep_shooting_widget:
+#       action: add
+#       slide: base_slide
+#       widget_settings:
+#         expire: 4s
+#         z: 115
+
+
+# queue_event_player:
+#   mode_end_invid_invasion_started:
+#     queue_event: my_queue
+#     events_when_finished: end_end_invid_invasion
 
 queue_event_player:
   mode_end_invid_invasion_started:
     queue_event: my_queue
-    events_when_finished: end_end_invid_invasion # start_character_modes
+    events_when_finished: end_end_invid_invasion
 
 queue_relay_player:
   my_queue:
     post: start_end_invid_invasion_intro
     wait_for: end_invid_invasion_show_ended
+  #balldevice_bd_trough_ejecting_ball:
   balldevice_bd_trough_ball_eject_attempt:
     post: wait_for_instructions
-    wait_for: end_invid_invasion_show_ended
+    wait_for: player_continue_show_ended
 
 shows:
   collect_team_members_intro:
@@ -60,6 +95,35 @@ shows:
               color: white
               y: center - 100
               font_size: 60
+  player_continue_show:
+    - duration: 3
+      slides:
+        player_continue_slide:
+          widgets:
+            - type: text
+              text: PLAYER (number)
+              color: blue
+              font_size: 120
+              y: center + 90
+            - type: text
+              text: Keep Shooting
+              color: red
+              y: center - 10
+              font_size: 90
+
+light_player:
+  mode_end_invid_invasion_started:
+    gi_string:
+      color: off
+    playfield:
+      color: off
+      priority: 8000
+  mode_end_invid_invasion_stopped:
+    gi_string:
+      color: on
+    playfield:
+      color: on
+      # priority: 1801
 
 
 show_player:
@@ -67,25 +131,31 @@ show_player:
     collect_team_members_intro:
       loops: 0
       events_when_stopped: end_invid_invasion_show_ended
-  ball_save_end_invid_invasion_ball_save_enabled:
-    fast_flash_show:
-      key: end_invid_invasion_ball_save_flash
-      speed: 3
-      show_tokens:
-        leds: l_shoot_again
-        color: red
-      action: play
-  mode_end_invid_invasion_show_stopping:
-      end_invid_invasion_ball_save_flash:
-        action: stop
+  # ball_save_end_invid_invasion_ball_save_enabled:
+  #   fast_flash_show:
+  #     key: end_invid_invasion_ball_save_flash
+  #     speed: 3
+  #     show_tokens:
+  #       leds: l_shoot_again
+  #       color: red
+  #     action: play
+  # mode_end_invid_invasion_show_stopping:
+  #     end_invid_invasion_ball_save_flash:
+  #       action: stop
   flipper_cancel{device.ball_devices.bd_trough.balls==4}:
     collect_team_members_intro:
       action: stop
+  end_invid_invasion_show_ended:
+    player_continue_show:
+      loops: 0
+      events_when_stopped: player_continue_show_ended
+  # flipper_cancel:
+  #   player_continue_show:
+  #     action: stop
 
-
-ball_saves:
-  end_invid_invasion_ball_save:
-    enable_events: mode_end_invid_invasion_started
-    auto_launch: no
-    balls_to_save: 1
-    debug: yes
+# ball_saves:
+#   end_invid_invasion_ball_save:
+#     enable_events: mode_end_invid_invasion_started
+#     auto_launch: no
+#     balls_to_save: 1
+#     debug: yes
