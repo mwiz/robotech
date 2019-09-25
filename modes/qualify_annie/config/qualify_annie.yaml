@@ -2,23 +2,25 @@
 
 mode:
   start_events:
-    - start_qualify_annie
+    - mode_invid_invasion_stopped
   stop_events:
     - annie_collected
   restart_on_next_ball: true
   priority: 1300
 
 event_player:
-  mode_qualify_annie_started{device.counters.annie_hit_counter.value==1}:
+  mode_skill_shot_stopped.1:
+    - post_annie_image
+  mode_skill_shot_stopped.2{device.counters.annie_hit_counter.value==1}:
     - post_annie_a
-  mode_qualify_annie_started{device.counters.annie_hit_counter.value==2}:
+  mode_skill_shot_stopped.3{device.counters.annie_hit_counter.value==2}:
     - post_annie_a
     - post_annie_n
-  mode_qualify_annie_started{device.counters.annie_hit_counter.value==3}:
+  mode_skill_shot_stopped.4{device.counters.annie_hit_counter.value==3}:
     - post_annie_a
     - post_annie_n
     - post_annie_nn
-  mode_qualify_annie_started{device.counters.annie_hit_counter.value==4}:
+  mode_skill_shot_stopped.5{device.counters.annie_hit_counter.value==4}:
     - post_annie_a
     - post_annie_n
     - post_annie_nn
@@ -35,123 +37,175 @@ event_player:
     - post_annie_e
 
 widget_player:
+  post_annie_image:
+    annie_qualify_image:
+      action: add
+      slide: base_slide
+      priority: 1301
   post_annie_a:
     annie_a_widget:
       action: add
       slide: base_slide
+      priority: 1302
   post_annie_n:
     annie_n_widget:
       action: add
       slide: base_slide
+      priority: 1303
   post_annie_nn:
     annie_nn_widget:
       action: add
       slide: base_slide
+      priority: 1304
   post_annie_i:
     annie_i_widget:
       action: add
       slide: base_slide
+      priority: 1305
   post_annie_e:
     annie_e_widget:
       action: add
       slide: base_slide
-  mode_qualify_annie_started:
-    annie_qualify_image:
-      action: add
-      slide: base_slide
+      priority: 1306
 
 widgets:
   annie_qualify_image:
     - type: image
       image: annie_qualify
-      x: center - 580
+      x: center - 560
       y: center + 100
   annie_a_widget:
     - type: text
       text: A
       color: FF8000
-      font_size: 40
-      x: center - 630
+      font_size: 35
+      x: center - 605
       y: center + 25
   annie_n_widget:
     - type: text
       text: N
       color: FF8000
-      font_size: 40
-      x: center - 605
+      font_size: 35
+      x: center - 585
       y: center + 25
   annie_nn_widget:
     - type: text
       text: N
       color: FF8000
-      font_size: 40
-      x: center - 580
+      font_size: 35
+      x: center - 565
       y: center + 25
   annie_i_widget:
     - type: text
       text: I
       color: FF8000
-      font_size: 40
-      x: center - 555
+      font_size: 35
+      x: center - 545
       y: center + 25
   annie_e_widget:
     - type: text
       text: E
       color: FF8000
-      font_size: 40
-      x: center - 530
+      font_size: 35
+      x: center - 525
       y: center + 25
 
 shot_groups:
   annie_shot_group:
-    shots: a_shot, an_shot, ann_shot, anni_shot, annie_shot
-    enable_events: mode_rand_mode_stopped #, mode_qualify_annie_started
-    disable_events: mode_intro_rand_mode_started #, mode_bonus_will_start
-    debug: true
+    shots:
+      - a_shot
+      - an_shot
+      - ann_shot
+      - anni_shot
+      - annie_shot
 
 shots:
   a_shot:
     switch: s_left_orbit
     profile: annie_profile
-    enable_events: mode_qualify_annie_started{device.counters.annie_hit_counter.value==0}
-    disable_events: a_shot_flashing_annie_hit
-    advance_events: a_shot_flashing_annie_hit, qualify_annie_1st_time{device.counters.annie_hit_counter.value==0}
+    enable_events:
+      - mode_rand_mode_stopped{device.counters.annie_hit_counter.value==0}
+      - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==0}
+      - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==0}
+      - mode_skill_shot_stopped{device.counters.annie_hit_counter.value==0}
+    disable_events:
+      - a_shot_flashing_annie_hit
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
     debug: true
   an_shot:
     switch: s_left_orbit
     profile: annie_profile
-    enable_events: a_shot_flashing_annie_hit, mode_qualify_annie_started{device.counters.annie_hit_counter.value==1}
-    disable_events: an_shot_flashing_annie_hit, mode_qualify_annie_started{device.counters.annie_hit_counter.value<1 or device.counters.annie_hit_counter.value>1}
-    advance_events: a_shot_flashing_annie_hit, an_shot_flashing_annie_hit, qualify_annie_1st_time{device.counters.annie_hit_counter.value==1}
+    enable_events:
+      - a_shot_flashing_annie_hit
+      - mode_skill_shot_stopped{device.counters.annie_hit_counter.value==1}
+      - mode_rand_mode_stopped{device.counters.annie_hit_counter.value==1}
+      - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==1}
+      - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==1}
+    disable_events:
+      - an_shot_flashing_annie_hit
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
     debug: true
   ann_shot:
     switch: s_left_orbit
     profile: annie_profile
-    enable_events: an_shot_flashing_annie_hit, mode_qualify_annie_started{device.counters.annie_hit_counter.value==2}
-    disable_events: ann_shot_flashing_annie_hit, mode_qualify_annie_started{device.counters.annie_hit_counter.value<2 or device.counters.annie_hit_counter.value>2}
-    advance_events: an_shot_flashing_annie_hit, ann_shot_flashing_annie_hit, qualify_annie_1st_time{device.counters.annie_hit_counter.value==2}
+    enable_events:
+      - an_shot_flashing_annie_hit
+      - mode_skill_shot_stopped{device.counters.annie_hit_counter.value==2}
+      - mode_rand_mode_stopped{device.counters.annie_hit_counter.value==2}
+      - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==2}
+      - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==2}
+    disable_events:
+      - ann_shot_flashing_annie_hit
+      - mode_skill_shot_started
+      - mode_intro_rand_mode_started
+      - mode_lunk_mode_started
+      - mode_intro_rook_mode_started
     debug: true
   anni_shot:
     switch: s_left_orbit
     profile: annie_profile
-    enable_events: ann_shot_flashing_annie_hit, mode_qualify_annie_started{device.counters.annie_hit_counter.value==3}
-    disable_events: anni_shot_flashing_annie_hit, mode_qualify_annie_started{device.counters.annie_hit_counter.value<3 or device.counters.annie_hit_counter.value>3}
-    advance_events: ann_shot_flashing_annie_hit, anni_shot_flashing_annie_hit, qualify_annie_1st_time{device.counters.annie_hit_counter.value==3}
+    enable_events:
+      - ann_shot_flashing_annie_hit
+      - mode_skill_shot_stopped{device.counters.annie_hit_counter.value==3}
+      - mode_rand_mode_stopped{device.counters.annie_hit_counter.value==3}
+      - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==3}
+      - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==3}
+    disable_events:
+      - anni_shot_flashing_annie_hit
+      - mode_skill_shot_started
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
     debug: true
   annie_shot:
     switch: s_left_orbit
     profile: annie_profile
-    enable_events: anni_shot_flashing_annie_hit, mode_qualify_annie_started{device.counters.annie_hit_counter.value==4}
-    disable_events: annie_shot_flashing_annie_hit, mode_qualify_annie_started{device.counters.annie_hit_counter.value<4}
-    advance_events: anni_shot_flashing_annie_hit, annie_shot_flashing_annie_hit, qualify_annie_1st_time{device.counters.annie_hit_counter.value==4}
+    enable_events:
+      - anni_shot_flashing_annie_hit
+      - mode_skill_shot_stopped{device.counters.annie_hit_counter.value==4}
+      - mode_rand_mode_stopped{device.counters.annie_hit_counter.value==4}
+      - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==4}
+      - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==4}
+    disable_events:
+      - annie_shot_flashing_annie_hit
+      - mode_skill_shot_started
+      - mode_intro_rand_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
     debug: true
 
 shot_profiles:
   annie_profile:
-    advance_on_hit: false
+    advance_on_hit: true #false
     states:
-    - name: unlit
-      show: off
+    # - name: unlit
+    #   show: off
     - name: flashing_annie
       show: flash_annie_show
       sync_ms: 1500
@@ -161,29 +215,45 @@ shot_profiles:
       show: off
 
 counters:
-  annie_started_first_time_counter:
-    count_events:
-      - mode_qualify_annie_started
-    starting_count: 0
-    direction: up
-    count_complete_value: 1
-    reset_on_complete: false
-    events_when_complete: qualify_annie_1st_time
-    persist_state: true
   annie_hit_counter:
     count_events:
-      - a_shot_flashing_annie_hit
-      - an_shot_flashing_annie_hit
-      - ann_shot_flashing_annie_hit
-      - anni_shot_flashing_annie_hit
-      - annie_shot_flashing_annie_hit
+      - annie_shot_group_flashing_annie_hit
     starting_count: current_player.annie_start_count
     direction: up
     count_complete_value: 5
     reset_on_complete: false
     events_when_complete: annie_collected
     persist_state: true
+  annie_first_time_hit_counter:
+    count_events:
+      - annie_shot_group_flashing_annie_hit
+    starting_count: 0
+    direction: up
+    count_complete_value: 1
+    debug: true
+    events_when_complete: play_my_name_is_annie_sound
+    persist_state: true
+    reset_on_complete: false
+
 
 variable_player:
   annie_collected:
     team_members_collected: 1
+
+sound_player:
+  annie_shot_group_flashing_annie_hit{device.counters.annie_hit_counter.value > (current_player.annie_start_count + 1)}:
+    qualify_annie_sounds
+  play_my_name_is_annie_sound:
+    hey_my_name_is_annie:
+      action: play
+
+sound_pools:
+  qualify_annie_sounds:
+    type: random_force_all
+    track: voice
+    sounds:
+      - annie_giggling
+      - im_not_mint
+      - peppermints
+      - jeepers
+      - annie_i_am_not_a_boy

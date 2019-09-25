@@ -11,7 +11,7 @@
 
 - duration: 500ms
   lights:
-    l_left_orbit_arrow: FF8000
+    l_annie_arrow: FF8000
 - duration: 1000ms
   lights:
-    l_left_orbit_arrow: off
+    l_annie_arrow: off
