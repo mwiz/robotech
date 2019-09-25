@@ -1,0 +1,34 @@
+#config_version=5
+
+mode:
+  start_events:
+    - start_annie_mode
+  stop_events:
+    - annie_1st_kill
+    - slide_intro_annie_mode_slide_removed
+  stop_on_ball_end: true
+  priority: 2350
+
+slides:
+  intro_annie_mode_slide:
+    widgets:
+      - type: text
+        text: ANNIE Collected
+        color: FF8000
+        font_size: 80
+        x: center
+        y: center+300
+      - type: video
+        video: intro_annie_mode_video
+      - type: text
+        text: Complete top lanes 4 times to defeat Invid
+        color: white
+        font_size: 60
+        x: center
+        y: center-300
+
+slide_player:
+  mode_intro_annie_mode_started:
+    intro_annie_mode_slide:
+      priority: 2351
+      expire: 11
