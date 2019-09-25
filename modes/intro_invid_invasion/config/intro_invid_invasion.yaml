@@ -2,7 +2,8 @@
 
 mode:
    start_events: start_intro_invid_invasion
-   stop_events: mode_invid_invasion_started, game_ending
+   stop_events:
+     - mode_invid_invasion_started
    restart_on_next_ball: true
    priority: 800
 
@@ -24,28 +25,40 @@ queue_relay_player:
 
 shows:
   multiball_intro:
-    - duration: 6
+    - duration: 7.5
       slides:
         intro_invid_invasion_slide:
           widgets:
             - type: text
               text: INVID INVASION !!!
               color: white
-              font_size: 130
-              y: center + 100
+              font_size: 80
+              x: center
+              y: center+300
             - type: text
-              text: Destroy 20 Enemy Invid
+              text: 20 Invid Targets Hit, Lits Jackpot
               color: white
-              y: center-40
-              font_size: 80
-            - type: text
-              text: Spinner hit adds time
-              y: center-100
-              font_size: 80
-            - type: text
-              text: SDF targets Add-A-Ball
-              y: center-160
-              font_size: 80
+              x: center
+              y: center-300
+              font_size: 50
+            - type: video
+              video: intro_invid_invasion_video
+              # width: 710
+              # height: 480
+            # - type: text
+            #   text: Spinner hit adds time
+            #   y: center-100
+            #   font_size: 80
+            # - type: text
+            #   text: SDF targets Add-A-Ball
+            #   y: center-160
+            #   font_size: 80
+
+light_player:
+  mode_intro_invid_invasion_started:
+    gi_string: off
+  mode_intro_invid_invasion_stopped:
+    gi_string: on
 
 show_player:
   start_mode_multiball_intro:
@@ -74,10 +87,10 @@ multiball_locks:
     #reset_count_for_current_player_events: quick_2_ball_start
     disable_events: invid_invasion_quick_2_ball_started
 
-sound_player:
-  mode_intro_invid_invasion_started:
-    invid_invasion_start:
-      action: play
-  flipper_cancel:
-    invid_invasion_start:
-      action: stop
+# sound_player:
+#   mode_intro_invid_invasion_started:
+#     invid_invasion_start:
+#       action: play
+#   flipper_cancel:
+#     invid_invasion_start:
+#       action: stop
