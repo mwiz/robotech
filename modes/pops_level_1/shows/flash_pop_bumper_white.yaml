@@ -2,7 +2,7 @@
 
 - time: 0
   lights:
-    (leds): green
+    (leds): white
 - time: 100ms
   lights:
     (leds): off

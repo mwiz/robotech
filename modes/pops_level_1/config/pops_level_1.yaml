@@ -2,45 +2,127 @@
 
 mode:
   start_events:
-    - ball_starting
+    - start_pops_level_1_mode #ball_starting
   stop_events:
     - pops_level_2
     - ball_ended
-  priority: 2400
+  priority: 7100
+
+event_player:
+  mode_pops_level_1_started:
+    logicblock_pops_level_1_hit_counter_hit:
+      count:
+        value: device.counters.pops_level_1_hit_counter.value
+  # mode_end_invid_invasion_stopped:
+  #   logicblock_pops_level_1_hit_counter_hit:
+  #     count:
+  #       value: device.counters.pops_level_1_hit_counter.value
+  # mode_rand_mode_stopped:
+  #   logicblock_pops_level_1_hit_counter_hit:
+  #     count:
+  #       value: device.counters.pops_level_1_hit_counter.value
+  # mode_annie_mode_stopped:
+  #   logicblock_pops_level_1_hit_counter_hit:
+  #     count:
+  #       value: device.counters.pops_level_1_hit_counter.value
+  # mode_rook_mode_stopped:
+  #   logicblock_pops_level_1_hit_counter_hit:
+  #     count:
+  #       value: device.counters.pops_level_1_hit_counter.value
 
 counters:
   pops_level_1_hit_counter:
     count_events: pops_shot_hit
-    starting_count: 0
-    direction: up
-    count_complete_value: 75
+    starting_count: current_player.pops_initial_count
+    direction: down
+    count_complete_value: 0
     reset_on_complete: true
     events_when_complete: pops_level_2
     disable_on_complete: false
+    enable_events:
+      - mode_pops_level_1_started
+      - mode_rand_mode_stopped
+      - mode_annie_mode_stopped
+      - mode_rook_mode_stopped
+      - mode_end_invid_invasion_stopped
+      - mode_lunk_mode_stopped
+    disable_events:
+      - mode_intro_rand_mode_started
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+      - mode_intro_invid_invasion_started
+      - mode_lunk_mode_started
     persist_state: false
+    debug: true
 
-# show_player:
-#   s_bottom_r_pop_bumper_active:
-#     flash_pop_bumper_white:
-#       loops: 0
-#       show_tokens:
-#         leds: l_lower_r_pop_bumper
-#   s_bottom_l_pop_bumper_active:
-#     flash_pop_bumper_white:
-#       loops: 0
-#       show_tokens:
-#         leds: l_lower_l_pop_bumper
-#   s_top_r_pop_bumper_active:
-#     flash_pop_bumper_white:
-#       loops: 0
-#       show_tokens:
-#         leds: l_upper_r_pop_bumper
-#   s_top_l_pop_bumper_active:
-#     flash_pop_bumper_white:
-#       loops: 0
-#       show_tokens:
-#         leds: l_upper_l_pop_bumper
+widgets:
+  pops_level_1_count_widget:
+    - type: text
+      text: "POPS: L1 - (count)"
+      color: white
+      font_size: 35
+      x: center - 450
+      y: center - 230
+    - type: text
+      text: "Value: 250"
+      color: white
+      font_size: 30
+      x: center - 450
+      y: center - 260
+
+widget_player:
+  logicblock_pops_level_1_hit_counter_hit:
+    pops_level_1_count_widget:
+      action: update
+      slide: base_slide
+      priority: 7101
+  # mode_intro_invid_invasion_started:
+  #   pops_level_1_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_intro_rand_mode_started:
+  #   pops_level_1_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_annie_mode_started:
+  #   pops_level_1_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_intro_rook_mode_started:
+  #   pops_level_1_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  # mode_lunk_mode_started:
+  #   pops_level_1_count_widget:
+  #     action: remove
+  #     slide: base_slide
+
+show_player:
+  s_bottom_r_pop_bumper_active:
+    flash_pop_bumper_white:
+      key: bottom_right_pop_flash
+      loops: 0
+      show_tokens:
+        leds: l_lower_r_pop_bumper
+  s_bottom_l_pop_bumper_active:
+    flash_pop_bumper_white:
+      key: bottom_left_pop_flash
+      loops: 0
+      show_tokens:
+        leds: l_lower_l_pop_bumper
+  s_top_r_pop_bumper_active:
+    flash_pop_bumper_white:
+      key: top_right_pop_flash
+      loops: 0
+      show_tokens:
+        leds: l_upper_r_pop_bumper
+  s_top_l_pop_bumper_active:
+    flash_pop_bumper_white:
+      key: top_left_pop_flash
+      loops: 0
+      show_tokens:
+        leds: l_upper_l_pop_bumper
 
 variable_player:
   pops_shot_hit:
-    score: 250
+    score: 250 * current_player.pf_multiplier
