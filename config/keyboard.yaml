@@ -40,3 +40,7 @@ keyboard:
     event: debug_dump_stats
   e:
     event: start_end_invid_invasion_mode
+  n:
+    event: start_intro_invid_invasion
+  g:
+    event: start_intro_genesis_pit

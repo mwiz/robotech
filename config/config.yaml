@@ -13,7 +13,7 @@ mpf:
 
 fast:
   #ports: /dev/ttyUSB1, /dev/ttyUSB2  #for RPi3
-  ports: com6, com7 # com4, com5
+  ports: com6, com7 #com4, com5
   hardware_led_fade_time: 20
   #debug: true
   #config_number_format: int
@@ -43,11 +43,13 @@ modes:
   - sdf_targets                         #priority: 300
   - pre_qualify_invid_invasion          #priority: 400
   - pre_qualify_genesis_pit             #priority: 420
+  - pre_qualify_the_fortress            #priority: 430
   - bonus                               #priority: 500
   - high_score                          #priority: 600
   - qualify_invid_invasion              #priority: 700
   - qualify_genesis_pit                 #priority: 710
-  - ball_save_qualify_invid_invasion    #priority: 750
+  - qualify_the_fortress                #priority: 720
+  - ball_save_qualify_mode              #priority: 750
   - intro_invid_invasion                #priority: 800
   - invid_invasion                      #priority: 900
   - multiball_invid_invasion            #priority: 1000
@@ -87,17 +89,24 @@ modes:
   - spinner_level_3                     #priority: 7700
   - spinner_super                       #priority: 7800
   - pre_qualify_mystery                 #priority: 7900
-  - qualify_mystery                     #priority: 8000
+  - genesis_pit                         #priority: 8100
+  - intro_genesis_pit                   #priority: 8125
+  - end_genesis_pit                     #priority: 8150
+  - the_fortress                        #priority: 8200
+  - intro_the_fortress                  #priority: 8250
+  #- end_the_fortress                    #priority: 8300
   - ball_save                           #priority: 8400
   - ball_save_invid_invasion            #priority: 8500
   - ball_save_invid_invasion_add_a_ball #priority: 9000
-  - ball_save_end_invid_invasion        #priority: 9100
+  - ball_save_end_modes                 #priority: 9100
   - ball_save_rand_mode                 #priority: 9250
   - ball_save_annie_mode                #priority: 9350
   - ball_save_annie_mode_rook_add_a_ball #priority: 9450
   - ball_save_rook_mode                 #priority 9550
   - ball_save_rook_mode_rand_add_a_ball #priority: 9600
   - ball_save_lunk_mode                 #priority: 9650
+  - ball_save_genesis_pit               #priority: 9700
+  - qualify_mystery                     #priority: 9800
   - tilt                                #priority: 10,000
   #- carousel
 
@@ -133,7 +142,7 @@ flippers:
     main_coil: c_flipper_right_main
     hold_coil: c_flipper_right_hold
     main_coil_overwrite:
-      pulse_ms: 26
+      pulse_ms: 24
       pulse_power: 1
     activation_switch: s_right_flipper
     enable_events: right_flipper_stronger_enable
@@ -315,7 +324,7 @@ coils:
     #debug: true
   c_flipper_left_main:
     number: 1-2
-    default_pulse_ms: 19
+    default_pulse_ms: 18
     default_pulse_power: 1
     label: FP-DN-06
   c_flipper_left_hold:
@@ -324,7 +333,7 @@ coils:
     label: FP-DN-07
   c_flipper_right_main:
     number: 1-4
-    default_pulse_ms: 20
+    default_pulse_ms: 19
     default_pulse_power: 1
     label: FP-DN-08
   c_flipper_right_hold:
@@ -333,7 +342,7 @@ coils:
     label: FP-DN-09
   c_auto_launch:
     number: 1-6
-    default_pulse_ms: 20
+    default_pulse_ms: 21
     default_pulse_power: 1
     label: FP-DN-0A
   c_trough_eject:
@@ -343,7 +352,8 @@ coils:
   #BEGIN 16-16 (2 0-15)
   c_kickback:
     number: 2-0
-    default_pulse_ms: 5
+    default_pulse_ms: 6
+    default_pulse_power: 1
     label: FP-DN-0C
     #debug: true
   c_left_slingshot:
@@ -377,8 +387,8 @@ coils:
     label: FP-DN-12
   c_right_lock_kickout:
     number: 2-7
-    default_pulse_ms: 20
-    default_pulse_power: .85
+    default_pulse_ms: 19
+    default_pulse_power: .87
     label: FP-DN-13
     #debug: true
   c_bottom_l_pop_bumper:

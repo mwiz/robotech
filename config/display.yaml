@@ -1,6 +1,19 @@
 #config_version=5
 # Robotech Pinball Machine
 
+# kivy_config:
+#   kivy:
+#     desktop: 1
+#     exit_on_escape: true
+#   graphics:
+#     borderless: false
+#     fbo: hardware
+#     fullscreen: false
+#     multisamples: 2
+#     position: auto
+#     show_cursor: true
+#     resizable: true
+
 window:
   width: 1280
   height: 720

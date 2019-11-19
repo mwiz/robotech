@@ -110,6 +110,15 @@ sounds:
       attack: 100ms
       release: 300ms
       release_point: 500ms
+  return_to_battle:
+    file: afm_return_to_battle.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
   main_title:
     target: music
   alien_attack:
@@ -119,6 +128,10 @@ sounds:
   annie_mode_the_15th_squadron:
     target: music
   rook_mode_confrontation:
+    target: music
+  lunk_mode_showdown:
+    target: music
+  genesis_pit_zentraedi_theme:
     target: music
   sdf_target_sound:
     simultaneous_limit: 1

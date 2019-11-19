@@ -137,3 +137,5 @@ player_vars:
   skill_shot_start_value:
     value_type: int
     initial_value: 7
+  mode_end_action_flag:
+    initial_value: 0
