@@ -1,0 +1,11 @@
+#show_version=5
+
+
+
+- duration: 250ms
+  lights:
+    (leds): red
+
+- duration: 250ms
+  lights:
+    (leds): off

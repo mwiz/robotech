@@ -1,0 +1,175 @@
+#config_version=5
+
+mode:
+  start_events:
+    - mode_intro_the_fortress_started
+  stop_events:
+    - mode_end_the_fortress_started
+    - ball_will_end
+  priority: 8200
+
+event_player:
+  mode_the_fortress_started.1:
+    timer_the_fortress_mode_timer_tick:
+      ticks_remaining: 60
+  mode_the_fortress_started.2:
+    - display_the_fortress_mode_widgets
+
+timers:
+  the_fortress_mode_timer:
+    debug: true
+    start_value: 60
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: multiball_the_fortress_multiball_started
+      - action: add
+        event: spinner_shot_hit
+        value: current_player.spinner_time_value
+      - action: pause
+        event: mystery_shot_flashing_hit{game.balls_in_play==1}
+        value: 5
+
+multiballs:
+  the_fortress_multiball:
+    ball_count: 4
+    ball_count_type: total
+    start_or_add_a_ball_events:
+      - stop_intro_the_fortress_mode
+    ball_locks: bd_right_lock
+    shoot_again: 0
+    debug: true
+
+widgets:
+  the_fortress_mode_time_display_widget:
+    - type: text
+      text: TIMER
+      color: blue
+      font_size: 100
+      y: center + 220
+      x: center - 450
+      z: 1150
+  the_fortress_mode_timer_widget:
+    - type: text
+      text: (ticks_remaining)
+      color: red
+      font_size: 100
+      y: center + 150
+      x: center - 450
+      z: 1150
+  the_fortress_left_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 13
+      y: 190
+      z: 1100
+      width: 125
+      height: 500
+      color: black
+  the_fortress_right_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 1137
+      y: 190
+      z: 1100
+      width: 130
+      height: 500
+      color: black
+  the_fortress_jackpot_widget:
+    - type: text
+      text: JACKPOT!
+      color: green
+      font_size: 100
+      y: center + 120
+    - type: text
+      text: (jackpot_value)
+      color: red
+      font_size: 100
+      y: center
+      number_grouping: true
+  the_fortress_double_jackpot_widget:
+    - type: text
+      text: DOUBLE JACKPOT!!
+      color: yellow
+      font_size: 100
+      y: center + 120
+    - type: text
+      text: (jackpot_value)
+      color: red
+      font_size: 100
+      y: center
+      number_grouping: true
+  the_fortress_triple_jackpot_widget:
+    - type: text
+      text: TRIPLE JACKPOT!!
+      color: red
+      font_size: 100
+      y: center + 120
+    - type: text
+      text: (jackpot_value)
+      color: red
+      font_size: 100
+      y: center
+      number_grouping: true
+  the_fortress_super_jackpot_widget:
+    - type: text
+      text: SUPER JACKPOT!!!
+      color: purple
+      font_size: 100
+      y: center + 120
+    - type: text
+      text: (jackpot_value)
+      color: red
+      font_size: 100
+      y: center
+      number_grouping: true
+
+widget_player:
+  display_the_fortress_mode_widgets:
+    the_fortress_left_rectangle:
+      action: add
+      slide: base_slide
+      priority: 8201
+    the_fortress_right_rectangle:
+      action: add
+      slide: base_slide
+      priority: 8202
+    the_fortress_mode_time_display_widget:
+      action: add
+      slide: base_slide
+      priority: 8203
+    the_fortress_mode_timer_widget:
+      action: update
+      slide: base_slide
+      priority: 8204
+  timer_the_fortress_mode_timer_tick:
+    the_fortress_mode_timer_widget:
+      action: update
+      slide: base_slide
+      priority: 8205
+
+shot_profiles:
+  the_fortress_lock_shots:
+    advance_on_hit: true
+    states:
+      - name: flashing
+        show: flash_lock_shot_show
+        speed: 15
+      - name: hit
+        show: color_red_on
+
+shots:
+  the_fortress_rand_lock_shot:
+    switch: s_left_lock_kickout
+    profile: the_fortress_lock_shots
+    show_tokens:
+      leds: l_llock_arrow
+  the_fortress_rook_lock_shot:
+    switch: s_right_lock_kickout
+    profile: the_fortress_lock_shots
+    show_tokens:
+      leds: l_rlock_arrow
