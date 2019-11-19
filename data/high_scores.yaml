@@ -1,29 +1,41 @@
+combos_made:
+- !!python/tuple
+  - ELI
+  - 3
 invid_invasion_total:
 - !!python/tuple
-  - WIZ
-  - 59
+  - BMW
+  - 51
 - !!python/tuple
-  - WIZ
-  - 58
+  - BBB
+  - 37
 score:
 - !!python/tuple
-  - AAA
-  - 1223250
+  - A
+  - 1989200
+- !!python/tuple
+  - JES
+  - 1046230
 - !!python/tuple
   - AAA
-  - 951820
+  - 749870
+- !!python/tuple
+  - AAA
+  - 641780
+- !!python/tuple
+  - D F
+  - 626900
+- !!python/tuple
+  - XXX
+  - 545310
+- !!python/tuple
+  - BMW
+  - 522810
+super_pops_total:
+- !!python/tuple
+  - A
+  - 178
+super_spinner_total:
 - !!python/tuple
   - WIZ
-  - 712520
-- !!python/tuple
-  - WIZ
-  - 709080
-- !!python/tuple
-  - WIZ
-  - 695220
-- !!python/tuple
-  - AAA
-  - 651050
-- !!python/tuple
-  - AAA
-  - 636290
+  - 5
