@@ -1,0 +1,106 @@
+#config_version=5
+
+mode:
+   start_events:
+     - qualify_the_fortress
+   stop_events:
+     - mode_intro_the_fortress_started
+   restart_on_next_ball: true
+   priority: 720
+
+timers:
+  check_qualify_the_fortress_drop_targets_up_timer:
+    debug: True
+    start_value: 0
+    end_value: 2
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: start_check_qualify_the_fortress_drop_targets_up_timer
+
+event_player:
+  mode_skill_shot_stopped: # {mode.qualify_genesis_pit.active}:
+    - ramp_down_active|.5s
+  mode_qualify_the_fortress_started:
+    - play_what_is_that_flashing|.5s
+    - ramp_diverter_disable
+    - ramp_down_active{device.switches.s_up_down_ramp_switch.state == 0}|1s
+    - enable_qualify_the_fortress_drop_targets
+  mode_start_the_fortress_shot_flashing_hit:
+    - start_intro_the_fortress
+    - ramp_up_active
+  mode_intro_rand_mode_started:
+    - ramp_up_active
+    - disable_qualify_the_fortress_drop_targets
+  mode_intro_annie_mode_started:
+    - ramp_up_active
+    - disable_qualify_the_fortress_drop_targets
+  mode_intro_rook_mode_started:
+    - ramp_up_active
+    - disable_qualify_the_fortress_drop_targets
+  mode_lunk_mode_started:
+    - ramp_up_active
+    - disable_qualify_the_fortress_drop_targets
+  mode_rand_mode_stopped:
+    - ramp_down_active|.5s
+    - drop_reset_up
+    - start_check_qualify_the_fortress_drop_targets_up_timer
+  mode_annie_mode_stopped:
+    - ramp_down_active|.5s
+    - drop_reset_up
+    - start_check_qualify_the_fortress_drop_targets_up_timer
+  mode_rook_mode_stopped:
+    - ramp_down_active|.5s
+    - drop_reset_up
+    - start_check_qualify_the_fortress_drop_targets_up_timer
+  mode_lunk_mode_stopped:
+    - ramp_down_active|.5s
+    - drop_reset_up
+    - start_check_qualify_the_fortress_drop_targets_up_timer
+  timer_check_qualify_the_fortress_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
+    - drop_reset_up
+    - enable_qualify_the_fortress_drop_targets|.5s
+  timer_check_qualify_the_fortress_drop_targets_up_timer_complete.2{device.switches.s_left_drop_target.state == 0 and device.switches.s_middle_drop_target.state == 0 and device.switches.s_right_drop_target.state == 0}:
+    - enable_qualify_the_fortress_drop_targets
+
+shot_profiles:
+  the_fortress_mode_start:
+    advance_on_hit: true
+    states:
+    - name: flashing
+      show: flash_white_show
+      sync_ms: 1000
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+
+
+shots:
+  mode_start_the_fortress_shot:
+    hit_events: ramp_reflex_point_sequence_hit
+    profile: the_fortress_mode_start
+    show_tokens:
+      leds: l_mode_start
+    enable_events:
+      - enable_qualify_the_fortress_drop_targets
+      #- mode_qualify_genesis_pit_started
+      # - diverter_ramp_activating
+      # - mode_rand_mode_stopped
+      # - mode_annie_mode_stopped
+      # - mode_rook_mode_stopped
+      # - mode_lunk_mode_stopped
+    disable_events:
+      - disable_qualify_the_fortress_drop_targets
+      # - diverter_ramp_deactivating
+      # - mode_intro_rand_mode_started
+      # - mode_intro_annie_mode_started
+      # - mode_intro_rook_mode_started
+      # - mode_lunk_mode_started
+
+
+sound_player:
+  play_what_is_that_flashing:
+    what_is_that_flashing:
+      action: play
