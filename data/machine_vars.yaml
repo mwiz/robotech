@@ -1,3 +1,6 @@
+last_game_num_players:
+  expire: !!null 'null'
+  value: 1
 player1_score:
   expire: !!null 'null'
-  value: 470060
+  value: 389790
