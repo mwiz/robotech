@@ -1,0 +1,14 @@
+#show_version=5
+
+- time: 0
+  lights:
+    l_lower_r_pop_bumper: FF8000
+    l_lower_l_pop_bumper: FF8000
+    l_upper_r_pop_bumper: FF8000
+    l_upper_l_pop_bumper: FF8000
+- time: '+1'
+  lights:
+    l_lower_r_pop_bumper: off
+    l_lower_l_pop_bumper: off
+    l_upper_r_pop_bumper: off
+    l_upper_l_pop_bumper: off
