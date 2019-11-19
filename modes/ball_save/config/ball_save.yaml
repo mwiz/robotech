@@ -5,6 +5,7 @@ mode:
     start_events:
       - ball_starting
       - mode_end_invid_invasion_stopped
+      - mode_end_genesis_pit_stopped
     stop_events:
       - qualify_invid_invasion
       - ball_save_default_disabled #mode_ball_save_done

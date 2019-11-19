@@ -1,0 +1,45 @@
+#config_version=5
+tilt:
+  warnings_to_tilt: 2
+
+slide_player:
+  tilt_warning_1:
+    s_tilt_warning_1:
+      force: true
+  tilt_warning_2:
+    s_tilt_warning_2:
+      force: true
+  tilt:
+    s_tilt:
+      force: true
+  tilt_clear:
+    tilt:
+      action: remove
+
+slides:
+  s_tilt_warning_1:
+    expire: 3s
+    widgets:
+      - type: text
+        font_size: 100
+        text: DANGER!
+        color: red
+  s_tilt_warning_2:
+    expire: 3s
+    widgets:
+      - type: text
+        font_size: 100
+        text: DANGER!!
+        color: red
+        y: center+30
+      - type: text
+        font_size: 100
+        text: DANGER!!
+        color: red
+        y: center-30
+  s_tilt:
+    widgets:
+      - type: text
+        font_size: 200
+        text: TILT
+        color: red

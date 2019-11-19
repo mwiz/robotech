@@ -1,20 +1,23 @@
 #config_version=5
 
 mode:
-  start_events: start_end_invid_invasion_mode
+  start_events:
+    - start_end_invid_invasion_mode
   stop_events:
     - player_continue_show_ended
   priority: 1100
 
 event_player:
   mode_end_invid_invasion_started:
-    - flipper_off
+    - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}
+    - flipper_off|.5s
     - disable_Upper_Left_pop_bumper
     - disable_Upper_Right_pop_bumper
     - disable_Lower_Left_pop_bumper
     - disable_Lower_Right_pop_bumper
     - disable_sling
     - kickback_disable{mode.kickback.active}
+    - ramp_diverter_disable
   player_continue_show_ended:
     - flipper_on
     - enable_Upper_Left_pop_bumper
@@ -63,19 +66,66 @@ queue_relay_player:
   my_queue:
     post: start_end_invid_invasion_intro
     wait_for: end_invid_invasion_show_ended
-  #balldevice_bd_trough_ejecting_ball:
   balldevice_bd_trough_ball_eject_attempt:
     post: wait_for_instructions
     wait_for: player_continue_show_ended
 
 shows:
-  collect_team_members_intro:
+  end_invid_invasion_timer_expired:
     - duration: 9
       slides:
-        scott_crash_landing_slide:
+        end_invid_invasion_timer_expired_slide:
           widgets:
+            - type: text
+              text: "TIMER EXPIRED!"
+              color: red
+              font_size: 80
+              y: center + 300
             - type: video
               video: end_invid_invasion
+            - type: text
+              text: "DON'T MOVE"
+              font_size: 80
+              color: blue
+              x: center
+              y: center - 300
+  end_invid_invasion_ball_over:
+    - duration: 9
+      slides:
+        end_invid_invasion_ball_over_slide:
+          widgets:
+            - type: text
+              text: "BALL ENDED!"
+              color: red
+              font_size: 80
+              y: center + 300
+            - type: video
+              video: end_invid_invasion
+            - type: text
+              text: "DON'T MOVE"
+              font_size: 80
+              color: blue
+              x: center
+              y: center - 300
+  end_invid_invasion_super_jackpot_collected:
+    - duration: 9
+      slides:
+        end_invid_invasion_super_jackpot_collected_slide:
+          widgets:
+            - type: text
+              text: "SUPER JACKPOT COLLECTED!"
+              color: red
+              font_size: 80
+              y: center + 300
+            - type: video
+              video: end_invid_invasion
+            - type: text
+              text: "DON'T MOVE"
+              font_size: 80
+              color: blue
+              x: center
+              y: center - 300
+  collect_team_members:
     - duration: 5
       slides:
         collect_team_members_slide:
@@ -117,18 +167,30 @@ light_player:
       color: off
     playfield:
       color: off
-      priority: 8000
-  mode_end_invid_invasion_stopped:
-    gi_string:
-      color: on
-    playfield:
-      color: on
-      # priority: 1801
+      priority: 9900
+  # mode_end_invid_invasion_stopped:
+  #   gi_string:
+  #     color: on
+  #   playfield:
+  #     color: on
+  #     # priority: 1801
 
 
 show_player:
-  start_end_invid_invasion_intro:
-    collect_team_members_intro:
+  start_end_invid_invasion_intro.1{current_player.mode_end_action_flag == 0}:
+    end_invid_invasion_ball_over:
+      loops: 0
+      events_when_stopped: start_collect_team_members_notice
+  start_end_invid_invasion_intro.2{current_player.mode_end_action_flag == 1}:
+    end_invid_invasion_timer_expired:
+      loops: 0
+      events_when_stopped: start_collect_team_members_notice
+  start_end_invid_invasion_intro.3{current_player.mode_end_action_flag == 2}:
+    end_invid_invasion_super_jackpot_collected:
+      loops: 0
+      events_when_stopped: start_collect_team_members_notice
+  start_collect_team_members_notice:
+    collect_team_members:
       loops: 0
       events_when_stopped: end_invid_invasion_show_ended
   # ball_save_end_invid_invasion_ball_save_enabled:
@@ -142,8 +204,17 @@ show_player:
   # mode_end_invid_invasion_show_stopping:
   #     end_invid_invasion_ball_save_flash:
   #       action: stop
-  flipper_cancel{device.ball_devices.bd_trough.balls==4}:
-    collect_team_members_intro:
+  flipper_cancel.1{device.ball_devices.bd_trough.balls==4}:
+    end_invid_invasion_timer_expired:
+      action: stop
+  flipper_cancel.2{device.ball_devices.bd_trough.balls==4}:
+    end_invid_invasion_ball_over:
+      action: stop
+  flipper_cancel.3{device.ball_devices.bd_trough.balls==4}:
+    end_invid_invasion_super_jackpot_collected:
+      action: stop
+  flipper_cancel:
+    collect_team_members:
       action: stop
   end_invid_invasion_show_ended:
     player_continue_show:
@@ -159,3 +230,7 @@ show_player:
 #     auto_launch: no
 #     balls_to_save: 1
 #     debug: yes
+
+variable_player:
+  player_continue_show_ended:
+    mode_end_action_flag: 0

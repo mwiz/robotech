@@ -89,10 +89,10 @@ light_player:
       color: off
     playfield:
       color: off
-      priority: 8000
-  mode_intro_rook_mode_stopped{game.balls_in_play == 1}:
-    gi_string:
-      color: off
-    playfield:
-      color: off
-      priority: 8000
+      priority: 9900
+  # mode_intro_rook_mode_stopped{game.balls_in_play == 1}:
+  #   gi_string:
+  #     color: off
+  #   playfield:
+  #     color: off
+  #     priority: 8000

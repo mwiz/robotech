@@ -1,0 +1,80 @@
+#config_version=5
+
+mode:
+  start_events:
+   - start_intro_genesis_pit
+  stop_events:
+    - stop_intro_genesis_pit_mode #start_genesis_pit_mode #mode_genesis_pit_started
+  restart_on_next_ball: false
+  priority: 8125
+
+queue_event_player:
+  mode_intro_genesis_pit_started:
+    queue_event: my_queue_genesis_pit
+    events_when_finished: stop_intro_genesis_pit_mode
+
+queue_relay_player:
+  my_queue_genesis_pit:
+    post: start_genesis_pit_intro
+    wait_for: intro_genesis_pit_show_ended
+  balldevice_bd_trough_ball_eject_attempt:
+    post: wait_for_instructions
+    wait_for: intro_genesis_pit_show_ended
+  balldevice_bd_right_lock_ball_eject_attempt:
+    post: wait_for_instructions
+    wait_for: intro_genesis_pit_show_ended
+
+shows:
+  genesis_pit_intro:
+    - duration: 30
+      slides:
+        intro_genesis_pit_slide:
+          widgets:
+            - type: text
+              text: GENESIS PIT !!!
+              color: white
+              font_size: 80
+              x: center
+              y: center+300
+            - type: text
+              text: Defeat Prehistoric Creatures and Invid, lits Jackpot
+              color: white
+              x: center
+              y: center-300
+              font_size: 50
+            - type: video
+              video: intro_genesis_pit_video
+
+light_player:
+  mode_intro_genesis_pit_started{game.balls_in_play == 1}:
+    gi_string:
+      color: off
+    playfield:
+      color: off
+      priority: 9900
+  # mode_intro_genesis_pit_stopped{game.balls_in_play == 1}:
+  #   gi_string:
+  #     color: off
+  #   playfield:
+  #     color: off
+  #     #priority: 8000
+
+
+show_player:
+  start_genesis_pit_intro:
+    genesis_pit_intro:
+      loops: 0
+      events_when_stopped: intro_genesis_pit_show_ended
+    # alert_show:
+    #   loops: -1
+    #   priority: 9500
+  flipper_cancel:
+    genesis_pit_intro:
+      action: stop
+
+   #
+   # multiball_locks:
+   #   invid_invasion_multiball:
+   #     balls_to_lock: 1
+   #     lock_devices: bd_right_lock
+   #     disable_events: invid_invasion_quick_2_ball_started

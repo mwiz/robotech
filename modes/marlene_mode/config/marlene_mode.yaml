@@ -1,0 +1,47 @@
+#config_version=5
+
+mode:
+  start_events: start_marlene_mode
+  stop_events:
+    - ball_will_end
+  stop_on_ball_end: true
+  priority: 5000
+
+variable_player:
+  mode_marlene_mode_started:
+    pf_multiplier: 1
+  mode_marlene_mode_stopping:
+    pf_multiplier: -1
+
+slides:
+  marlene_collected_slide:
+    widgets:
+      - type: text
+        text: MARLENE Collected
+        color: ff1493
+        font_size: 80
+        x: center
+        y: center+300
+      - type: video
+        video: marlene_collected
+      - type: text
+        text: 2X playfield scoring!
+        color: green
+        font_size: 80
+        x: center
+        y: center-300
+
+slide_player:
+  mode_marlene_mode_started:
+    marlene_collected_slide:
+      priority: 5010
+      expire: 6s
+
+show_player:
+  mode_marlene_mode_started:
+    flash_multiplier_2x_led:
+      loops: -1
+      sync_ms: 1000
+  mode_marlene_mode_stopping:
+    flash_multiplier_2x_led:
+      action: stop

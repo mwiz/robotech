@@ -33,11 +33,13 @@ shot_groups:
       - mode_rand_mode_stopped
       - mode_annie_mode_stopped
       - mode_rook_mode_stopped
+      - mode_lunk_mode_stopped
     disable_events:
       - mode_pre_qualify_genesis_pit_starting
       - mode_intro_rand_mode_started
       - mode_intro_annie_mode_started
       - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
     debug: true
 
 show_player:

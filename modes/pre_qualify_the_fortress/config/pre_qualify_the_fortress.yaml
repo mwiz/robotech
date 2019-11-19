@@ -1,0 +1,107 @@
+#config_version=5
+
+mode:
+   start_events:
+     - mode_genesis_pit_stopped
+   stop_events:
+     - qualify_the_fortress
+   restart_on_next_ball: true
+   priority: 430
+
+counters:
+  the_fortress_invid_target_group_made_qualify_the_fortress:
+    count_events: the_fortress_invid_target_group_hit_complete
+    starting_count: 0
+    direction: up
+    count_complete_value: 1
+    events_when_complete:
+      - qualify_the_fortress
+    persist_state: true
+    debug: true
+
+shot_groups:
+  the_fortress_invid_target_group:
+    shots:
+      - the_fortress_left_target
+      - the_fortress_middle_target
+      - the_fortress_right_target
+      - the_fortress_left_drop
+      - the_fortress_middle_drop
+      - the_fortress_right_drop
+    enable_events:
+      - enable_invid_targets
+      - mode_rand_mode_stopped
+      - mode_annie_mode_stopped
+      - mode_rook_mode_stopped
+      - mode_lunk_mode_stopped
+    disable_events:
+      - mode_pre_qualify_the_fortress_starting
+      - mode_intro_rand_mode_started
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+    debug: true
+
+show_player:
+  the_fortress_invid_target_group_hit_complete:
+    invid_targets_complete:
+      show_tokens:
+        color: red
+
+shot_profiles:
+  the_fortress_invid_profile:
+    show_when_disabled: false
+    states:
+      - name: flashing
+        show: flash_red_show
+        speed: 5
+        sync_ms: 1500
+      - name: hit
+        show: color_red_on
+
+shots:
+  the_fortress_left_target:
+    switch: s_left_target
+    profile: the_fortress_invid_profile
+    show_tokens:
+      leds: l_t1
+    debug: true
+  the_fortress_middle_target:
+    switch: s_middle_target
+    profile: the_fortress_invid_profile
+    show_tokens:
+      leds: l_t2
+    debug: true
+  the_fortress_right_target:
+    switch: s_right_target
+    profile: the_fortress_invid_profile
+    show_tokens:
+      leds: l_t3
+    debug: true
+  the_fortress_left_drop:
+    switch: s_left_drop_target
+    profile: the_fortress_invid_profile
+    show_tokens:
+      leds: l_t4
+    debug: true
+  the_fortress_middle_drop:
+    switch: s_middle_drop_target
+    profile: the_fortress_invid_profile
+    show_tokens:
+      leds: l_t5
+    debug: True
+  the_fortress_right_drop:
+    switch: s_right_drop_target
+    profile: the_fortress_invid_profile
+    show_tokens:
+      leds: l_t6
+    debug: true
+
+variable_player:
+  the_fortress_invid_target_group_flashing_hit:
+    score: 1000 * current_player.pf_multiplier|block
+
+# sound_player:
+#   invid_target_group_flashing_hit:
+#     spinner_sound4:
+#       action: play

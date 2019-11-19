@@ -1,0 +1,403 @@
+#config_version=5
+
+mode:
+  start_events:
+    - start_annie_mode # {not mode.skill_shot.active}
+  stop_events:
+    - timer_annie_mode_timer_complete
+    - ball_will_end
+    - annie_mode_success
+  stop_on_ball_end: true
+  priority: 2400
+
+event_player:
+  timer_annie_mode_timer_started:
+    logicblock_annie_mode_invid_lanes_shots_made_hit:
+      count: 0
+  # balldevice_bd_left_lock_ball_eject_attempt:
+  #   release_locked_ball
+  # wait_for_rand_collect_mecha_mode_display:
+  #   rand_collect_mecha_mode_show_ended
+  # mode_annie_mode_started{device.achievements.rand_mode_collect.state=="enabled"}:
+  #   start_rand_mode
+
+# # This is with a fixed starting value
+# event_player:
+#  timer_annie_mode_timer_started:
+#    logicblock_annie_mode_invid_lanes_shots_made_hit:
+#      count: 6
+# # This is with a dynamic starting value
+# event_player:
+#  timer_annie_mode_timer_started:
+#    logicblock_annie_mode_invid_lanes_shots_made_hit:
+#      count:
+#        value: device.counters.annie_mode_invid_lanes_shots_made.value
+#        type: int
+slides:
+  intro_annie_mode_slide:
+    widgets:
+      - type: text
+        text: ANNIE Collected
+        color: FF8000
+        font_size: 80
+        x: center
+        y: center+300
+      - type: video
+        video: intro_annie_mode_video
+      - type: text
+        text: Complete top lanes 4 times to defeat Invid
+        color: white
+        font_size: 60
+        x: center
+        y: center-300
+  annie_mode_1st_kill_slide:
+    widgets:
+      - type: text
+        text: INVID DESTROYED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: annie_mode_1st_kill
+      - type: text
+        text: (invid_kill_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  annie_mode_2nd_kill_slide:
+    widgets:
+      - type: text
+        text: INVID DESTROYED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: annie_mode_2nd_kill
+      - type: text
+        text: (invid_kill_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  annie_mode_3rd_kill_slide:
+    widgets:
+      - type: text
+        text: INVID DESTROYED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: annie_mode_3rd_kill
+      - type: text
+        text: (invid_kill_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+
+
+slide_player:
+  mode_annie_mode_started:
+    intro_annie_mode_slide:
+      priority: 2410
+      expire: 11
+  logicblock_annie_mode_invid_lanes_shots_made_updated.1{value==1}:
+    annie_mode_1st_kill_slide:
+      priority: 2420
+      expire: 3s
+  logicblock_annie_mode_invid_lanes_shots_made_updated.2{value==2}:
+    annie_mode_2nd_kill_slide:
+      priority: 2430
+      expire: 3s
+  logicblock_annie_mode_invid_lanes_shots_made_updated.3{value==3}:
+    annie_mode_3rd_kill_slide:
+      priority: 2440
+      expire: 3s
+
+widgets:
+  annie_mode_time_display_widget:
+    - type: text
+      text: TIMER
+      color: blue
+      font_size: 100
+      y: center + 220
+      x: center - 450
+      z: 1101
+  annie_mode_timer_widget:
+    - type: text
+      text: (ticks_remaining)
+      color: red
+      font_size: 100
+      y: center + 150
+      x: center - 450
+      z: 1101
+  annie_left_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 13
+      y: 190
+      z: 1100
+      width: 125
+      height: 500
+      color: black
+  annie_right_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 1137
+      y: 190
+      z: 1100
+      width: 130
+      height: 500
+      color: black
+  # annie_collected_widget:
+  #   - type: text
+  #     text: ANNIE Collected
+  #     color: red
+  #     font_size: 80
+  #     x: center
+  #     y: center+300
+  #     expire: 2s
+  annie_mode_invid_display_widget:
+    - type: text
+      text: "Invid"
+      color: 2E0854 #purple
+      font_size: 100
+      y: center + 220
+      x: center + 450
+      z: 1101
+  annie_mode_invid_count_widget:
+    - type: text
+      text: "(count)/4"
+      color: green
+      font_size: 100
+      y: center + 150
+      x: center + 445
+      z: 1101
+  # annie_mode_1st_kill_video:
+  #   - type: video
+  #     video: annie_mode_1st_kill
+  # annie_mode_2nd_kill_video:
+  #   - type: video
+  #     video: annie_mode_2nd_kill
+
+widget_player:
+  timer_annie_mode_timer_started:
+    annie_mode_time_display_widget:
+      action: add
+      slide: base_slide
+    annie_mode_timer_widget:
+      action: add
+      slide: base_slide
+    annie_mode_invid_display_widget:
+      action: add
+      slide: base_slide
+    annie_mode_invid_count_widget:
+      action: update
+      slide: base_slide
+    annie_left_rectangle:
+      action: add
+      slide: base_slide
+    annie_right_rectangle:
+      action: add
+      slide: base_slide
+  timer_annie_mode_timer_tick:
+    annie_mode_timer_widget:
+      action: update
+      slide: base_slide
+  mode_annie_mode_stopped:
+    annie_left_rectangle:
+      action: remove
+      slide: base_slide
+    annie_right_rectangle:
+      action: remove
+      slide: base_slide
+  logicblock_annie_mode_invid_lanes_shots_made_hit:
+    annie_mode_invid_count_widget:
+      action: update
+      slide: base_slide
+  # logicblock_annie_mode_invid_lanes_shots_made_updated.1{value==1}:
+  #   annie_mode_1st_kill_video:
+  #     action: update
+  #     widget_settings:
+  #       expire: 3s
+  #       #z: 110
+  # logicblock_annie_mode_invid_lanes_shots_made_updated.2{value==2}:
+  #   annie_mode_2nd_kill_video:
+  #     action: update
+  #     widget_settings:
+  #       expire: 3s
+  #       #z: 110
+
+timers:
+  annie_mode_timer:
+    debug: true
+    start_value: 60
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: multiball_annie_mode_multiball_started
+      - action: add
+        event: spinner_shot_hit
+        value: current_player.spinner_time_value
+      - action: add
+        event: annie_mode_invid_lanes_shots_hit_complete
+        value: 10
+      # - action: add
+      #   event: mode_rand_mode_started
+      #   value: 60
+
+multiballs:
+  annie_mode_multiball:
+    ball_count: 1
+    ball_count_type: add # total
+    start_or_add_a_ball_events:
+      - mode_annie_mode_started
+      - annie_mode_rook_add_ball_hit
+    shoot_again: 0
+    disable_events: mode_annie_mode_stopping
+    debug: true
+
+shots:
+  annie_mode_lane_1_shot:
+    switch: s_r_top_lane
+    profile: invid_targets_annie_mode
+    show_tokens:
+      leds: l_r_light
+  annie_mode_lane_2_shot:
+    switch: s_o1_top_lane
+    profile: invid_targets_annie_mode
+    show_tokens:
+      leds: l_o_light
+  annie_mode_lane_3_shot:
+    switch: s_b_top_lane
+    profile: invid_targets_annie_mode
+    show_tokens:
+      leds: l_b_light
+  annie_mode_lane_4_shot:
+    switch: s_o2_top_lane
+    profile: invid_targets_annie_mode
+    show_tokens:
+      leds: l_o2_light
+  # annie_mode_rand_add_ball_1:
+  #   switch: s_left_lock_kickout
+  #   profile: annie_mode_rand_add_ball_flash
+  #   show_tokens:
+  #     leds: l_llock_arrow
+  #   enable_events: mode_annie_mode_started
+  #   disable_events: annie_mode_rand_add_ball_1_hit
+  annie_mode_rook_add_ball:
+    switch: s_right_lock_kickout
+    profile: annie_mode_rook_add_ball_flash
+    enable_events:  ball_save_annie_mode_multiball_disabled #enable_rook_shot
+    disable_events: mode_annie_mode_started, annie_mode_rook_add_ball_hit
+    show_tokens:
+      leds: l_rlock_arrow
+
+shot_groups:
+  annie_mode_invid_lanes_shots:
+    shots: annie_mode_lane_1_shot, annie_mode_lane_2_shot, annie_mode_lane_3_shot, annie_mode_lane_4_shot
+    rotate_left_events: sw_left_flipper_active
+    rotate_right_events: sw_right_flipper_active
+    reset_events: annie_mode_invid_lanes_shots_hit_complete # annie_mode_complete_lanes_show
+    enable_events:
+      - mode_annie_mode_starting
+    disable_events:
+      - mode_bonus_will_start
+      - mode_annie_mode_stopping
+    debug: true
+
+counters:
+  # enable_rook_shot_counter:
+  #   count_events: annie_mode_invid_lanes_shots_hit_complete
+  #   starting_count: 0
+  #   count_complete_value: 1
+  #   direction: up
+  #   persist_state: true
+  #   reset_on_complete: false
+  #   events_when_complete: enable_rook_shot
+  #   debug: true
+  annie_mode_invid_lanes_shots_made:
+    count_events: annie_mode_invid_lanes_shots_hit_complete
+    starting_count: 0
+    count_complete_value: 4
+    direction: up
+    persist_state: true
+    reset_on_complete: false
+    events_when_complete: annie_mode_success
+    debug: true
+
+
+shot_profiles:
+  invid_targets_annie_mode:
+    advance_on_hit: true
+    block: false #hits propogate down to lanes mode
+    states:
+      - name: flashing
+        show: flash_purple_show
+        loops: -1
+        sync_ms: 250
+      - name: hit
+        show: color_purple_on
+  annie_mode_rand_add_ball_flash:
+    advance_on_hit: true
+    states:
+      - name: flashing
+        show: flash_red_show
+        loops: -1
+        speed: 10
+      - name: hit
+        show: off
+  annie_mode_rook_add_ball_flash:
+    advance_on_hit: true
+    states:
+      - name: flashing
+        show: flash_yellow_show
+        loops: -1
+        speed: 10
+      - name: hit
+        show: off
+
+
+variable_player:
+  logicblock_annie_mode_invid_lanes_shots_made_updated{value==1}:
+    invid_kill_value:
+      int: 20000 * current_player.pf_multiplier
+      action: set
+    score: 20000 * current_player.pf_multiplier
+  logicblock_annie_mode_invid_lanes_shots_made_updated{value==2}:
+    invid_kill_value:
+      int: 30000 * current_player.pf_multiplier
+      action: set
+    score: 30000 * current_player.pf_multiplier
+  logicblock_annie_mode_invid_lanes_shots_made_updated{value==3}:
+    invid_kill_value:
+      int: 40000 * current_player.pf_multiplier
+      action: set
+    score: 40000 * current_player.pf_multiplier
+  logicblock_annie_mode_invid_lanes_shots_made_updated{value==4}:
+    invid_kill_value:
+      int: 50000 * current_player.pf_multiplier
+      action: set
+    score: 50000 * current_player.pf_multiplier
+  annie_mode_success:
+    annie_mode_bonus_time_score:
+      int: (device.timers.annie_mode_timer.ticks * 500  * game.balls_in_play) * current_player.pf_multiplier
+      action: set
+    score: (device.timers.annie_mode_timer.ticks * 500 * game.balls_in_play) * current_player.pf_multiplier

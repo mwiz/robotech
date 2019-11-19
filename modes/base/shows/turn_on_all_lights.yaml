@@ -1,0 +1,6 @@
+#show_version=5
+
+- duration: 1
+  lights:
+    playfield: black
+- duration: 1

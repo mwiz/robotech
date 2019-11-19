@@ -27,24 +27,24 @@ shot_groups:
       - mystery_rollover_rand
       - mystery_rollover_rook
       - mystery_rollover_lancer
-    # enable_events:
+    enable_events:
       #- enable_mystery_invid_targets
       #- mode_pre_qualify_mystery_started
       # - mode_pre_qualify_mystery_started
       # - mode_annie_mode_stopped
-      #- mode_skill_shot_stopped
+      - mode_skill_shot_stopped
       # - mode_rook_mode_stopping
       # - mode_lunk_mode_stopped
       # - mode_rand_mode_stopped
       #- stop_qualify_mystery
-    # disable_events:
+    disable_events:
     #   - mode_pre_qualify_mystery_stopped
       #- mystery_targets_invid_group_hit_complete
       #- mode_bonus_will_start
       # - mode_invid_invasion_starting
       # - mode_intro_rand_mode_starting
       # - mode_annie_mode_starting
-      #- mode_skill_shot_started
+      - mode_skill_shot_started
       # - mode_intro_rook_mode_starting
       # - mode_lunk_mode_starting
     reset_events:

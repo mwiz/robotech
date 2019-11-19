@@ -4,7 +4,7 @@ mode:
    start_events: start_intro_invid_invasion
    stop_events:
      - mode_invid_invasion_started
-   restart_on_next_ball: true
+   restart_on_next_ball: false
    priority: 800
 
 queue_event_player:
@@ -22,6 +22,7 @@ queue_relay_player:
   balldevice_bd_right_lock_ball_eject_attempt:
     post: wait_for_instructions
     wait_for: mode_multiball_show_ended
+
 
 shows:
   multiball_intro:

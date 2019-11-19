@@ -1,0 +1,134 @@
+#config_version=5
+
+mode:
+  start_events:
+    - start_end_the_fortress_mode
+  stop_events:
+    - end_the_fortress_player_continue_show_ended
+  priority: 8300
+
+event_player:
+  mode_end_the_fortress_started:
+    - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}
+    - flipper_off|.5s
+    - disable_Upper_Left_pop_bumper
+    - disable_Upper_Right_pop_bumper
+    - disable_Lower_Left_pop_bumper
+    - disable_Lower_Right_pop_bumper
+    - disable_sling
+    - kickback_disable{mode.kickback.active}
+    - ramp_diverter_disable
+  end_the_fortress_player_continue_show_ended:
+    - flipper_on
+    - enable_Upper_Left_pop_bumper
+    - enable_Upper_Right_pop_bumper
+    - enable_Lower_Left_pop_bumper
+    - enable_Lower_Right_pop_bumper
+    - enable_sling
+    - kickback_enable{mode.kickback.active}
+    - start_skill_shot_mode
+    - restart_main_title
+
+# queue_event_player:
+#   mode_end_the_fortress_started:
+#     queue_event: my_queue_end_the_fortress
+#     events_when_finished: end_end_the_fortress
+#
+# queue_relay_player:
+#   my_queue_end_the_fortress:
+#     post: start_end_the_fortress_intro
+#     wait_for: end_the_fortress_show_ended
+#   balldevice_bd_trough_ball_eject_attempt:
+#     post: wait_for_instructions_the_fortress
+#     wait_for: end_the_fortress_player_continue_show_ended
+#
+# shows:
+#   end_genesis_pit_timer_expired:
+#     - duration: 13
+#       slides:
+#         end_genesis_pit_timer_expired_slide:
+#           widgets:
+#             - type: text
+#               text: "TIMER EXPIRED!"
+#               color: red
+#               font_size: 80
+#               y: center + 300
+#             - type: video
+#               video: end_genesis_pit_mode_video
+#             - type: text
+#               text: "DON'T MOVE"
+#               font_size: 80
+#               color: blue
+#               x: center
+#               y: center - 300
+#   end_genesis_pit_super_jackpot_collected:
+#     - duration: 13
+#       slides:
+#         end_genesis_pit_super_jackpot_collected_slide:
+#           widgets:
+#             - type: text
+#               text: "SUPER JACKPOT COLLECTED!"
+#               color: red
+#               font_size: 80
+#               y: center + 300
+#             - type: video
+#               video: end_genesis_pit_mode_video
+#             - type: text
+#               text: "DON'T MOVE"
+#               font_size: 80
+#               color: blue
+#               x: center
+#               y: center - 300
+#   end_genesis_pit_player_continue_show:
+#     - duration: 3
+#       slides:
+#         end_genesis_pit_player_continue_slide:
+#           widgets:
+#             - type: text
+#               text: PLAYER (number)
+#               color: blue
+#               font_size: 120
+#               y: center + 90
+#             - type: text
+#               text: Keep Shooting
+#               color: red
+#               y: center - 10
+#               font_size: 90
+#
+# light_player:
+#   mode_end_genesis_pit_started:
+#     gi_string:
+#       color: off
+#     playfield:
+#       color: off
+#       priority: 8000
+#   mode_end_genesis_pit_stopped:
+#     gi_string:
+#       color: on
+#     playfield:
+#       color: on
+#       # priority: 1801
+#
+# show_player:
+#   start_end_genesis_pit_intro.1{current_player.mode_end_action_flag == 1}:
+#     end_genesis_pit_timer_expired:
+#       loops: 0
+#       events_when_stopped: end_genesis_pit_show_ended
+#   start_end_genesis_pit_intro.2{current_player.mode_end_action_flag == 2}:
+#     end_genesis_pit_super_jackpot_collected:
+#       loops: 0
+#       events_when_stopped: end_genesis_pit_show_ended
+#   flipper_cancel.1{device.ball_devices.bd_trough.balls==4}:
+#     end_genesis_pit_timer_expired:
+#       action: stop
+#   flipper_cancel.2{device.ball_devices.bd_trough.balls==4}:
+#     end_genesis_pit_super_jackpot_collected:
+#       action: stop
+#   end_genesis_pit_show_ended:
+#     end_genesis_pit_player_continue_show:
+#       loops: 0
+#       events_when_stopped: end_genesis_pit_player_continue_show_ended
+#
+# variable_player:
+#   end_genesis_pit_player_continue_show_ended:
+#     mode_end_action_flag: 0

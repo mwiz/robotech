@@ -10,6 +10,8 @@ mode:
     - mode_rook_mode_stopped
     - marlene_shot_6_flashing_marlene_hit
     - mode_lunk_mode_stopped
+    - mode_genesis_pit_stopped
+    - mode_the_fortress_stopped
   stop_events:
     - protoculture_collected
     - logicblock_marlene_hit_counter_hit{device.counters.marlene_hit_counter.value==6}
@@ -19,6 +21,8 @@ mode:
     - mode_skill_shot_started
     - mode_rook_mode_started
     - mode_lunk_mode_started
+    - mode_intro_genesis_pit_started
+    - mode_intro_the_fortress_started
   restart_on_next_ball: true
   priority: 7000
 

@@ -71,9 +71,6 @@ event_player:
     - team_combo_made
   lunk_annie_combo_hit:
     - team_combo_made
-  slide_rook_mode_3rd_kill_slide_removed: # {device.achievement.lunk_mode_collect.state != "disabled"}:
-    - play_rook_mode_success_not_lunk_started
-    - restart_main_title|2s
   slide_rand_mode_3rd_kill_slide_removed:
     - restart_main_title|2s
   timer_rand_mode_timer_complete:
@@ -84,6 +81,13 @@ event_player:
     - restart_main_title
   timer_rook_mode_timer_complete:
     - restart_main_title
+  slide_rook_mode_3rd_kill_slide_removed: # {device.achievement.lunk_mode_collect.state != "disabled"}:
+    - play_rook_mode_success_not_lunk_started
+    - restart_main_title|2s
+  timer_lunk_mode_timer_complete:
+    - restart_main_title
+  # timer_genesis_pit_mode_timer_complete:
+  #   - restart_main_title
 
 achievements:
   rand_mode_collect:
@@ -174,6 +178,22 @@ achievements:
     restart_after_stop_possible: false
     complete_events: genesis_pit_success #,increase_modes_completed_count
     debug: true
+  the_fortress:
+    show_tokens:
+      leds: l_mission_3
+    show_when_enabled: on
+    show_when_started: flash
+    show_when_completed: color_green_on
+    show_when_stopped: color_red_on
+    enable_events: mode_qualify_the_fortress_started
+    #events_when_started:
+    #events_when_completed:
+    #events_when_enabled:
+    start_events: mode_the_fortress_started
+    stop_events: mode_the_fortress_stopped
+    restart_after_stop_possible: false
+    complete_events: the_fortress_success
+    debug: true
 
 extra_balls:
   skillshot_extraball:
@@ -195,7 +215,7 @@ sequence_shots:
     switch_sequence:
       - s_back_ramp
       - s_right_lock_kickout
-    #sequence_timeout: 5s
+    sequence_timeout: 5s
   ramp_wireform_sequence:
     switch_sequence:
       - s_back_ramp
@@ -288,6 +308,23 @@ slides:
       #   anchor_y: bottom
       #   font_size: 50
       #   color: white
+  ball_save_kickback_save_slide:
+    widgets:
+      - type: text
+        text: BALL SAVED!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: kickback_save
+      - type: text
+        text: Return to Battle
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
   extra_ball_slide:
     widgets:
       - type: text
@@ -332,6 +369,26 @@ slides:
       - type: video
         # video: skill_shot_saucer
         video: skill_shot_rand
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  skill_shot_rook_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        # video: skill_shot_saucer
+        video: skill_shot_rook
       - type: text
         text: (skill_shot_value)
         font_size: 80
@@ -578,9 +635,9 @@ widgets:
       color: red
       y: center-150
       # z: 120
-  ball_save_kickback_save_video:
-    - type: video
-      video: kickback_save
+  # ball_save_kickback_save_video:
+  #   - type: video
+  #     video: kickback_save
   team_combo_widget:
     - type: text
       text: TEAM COMBO
@@ -744,12 +801,12 @@ widget_player:
       widget_settings:
         expire: 3s
         z: 120
-  ball_save_kickback_save_saving_ball:
-    ball_save_kickback_save_video:
-      action: add
-      widget_settings:
-        expire: 3s
-        z: 120
+  # ball_save_kickback_save_saving_ball:
+  #   ball_save_kickback_save_video:
+  #     action: add
+  #     widget_settings:
+  #       expire: 3s
+  #       z: 120
 # Team Combo
   team_combo_made:
     team_combo_widget:
@@ -800,7 +857,12 @@ widget_player:
   #       expire: 5.5s
   #       z: 120
 
+
 slide_player:
+  ball_save_kickback_save_saving_ball:
+    ball_save_kickback_save_slide:
+      expire: 4s
+      priority: 9999
   mode_base_started:
     base_slide
   # mode_base_started:
@@ -817,6 +879,10 @@ slide_player:
   #     video: skill_shot_lanes
   left_saucer_skill_flashing_hit:
     skill_shot_rand_slide:
+      expire: 4s
+      priority: 1199
+  right_saucer_skill_flashing_hit:
+    skill_shot_rook_slide:
       expire: 4s
       priority: 1199
   # saucer_skill_group_flashing_hit:
@@ -847,6 +913,7 @@ slide_player:
     rook_mode_3rd_kill_slide:
       expire: 6s
       #priority: 2201
+
 
 # counters:
 #   invid_target_group_made_qualify_invid_invasion:
@@ -933,7 +1000,10 @@ show_player:
     invid_targets_complete:
       show_tokens:
         color: red
-
+  genesis_pit_invid_target_group_hit_complete:
+    invid_targets_complete:
+      show_tokens:
+        color: red
 
 variable_player:
   mode_base_stopping:
@@ -1016,6 +1086,8 @@ variable_player:
     modes_completed: 1
   achievement_lunk_mode_collect_state_completed:
     modes_completed: 1
+  achievement_genesis_pit_state_completed:
+    modes_completed: 1
 
 #shows:
 #  flash_green:
@@ -1088,7 +1160,7 @@ shows:
         l_b9: 2F4F4F
     - time: -1
   shoot_again_show:
-    - duration: 3
+    - duration: 2
       slides:
         shoot_again_slide:
           widgets:
@@ -1137,6 +1209,7 @@ shots:
 
 sound_player:
   #ball_started{player==1 and ball==1}:
+  sdf_skill_group_hit: sdf_target_sound
   play_start_sound:
     start:
       action: play
@@ -1165,6 +1238,19 @@ sound_player:
     alien_attack:
       action: play
       loops: -1
+  mode_intro_genesis_pit_starting:
+    main_title:
+      action: stop
+  mode_intro_genesis_pit_stopped:
+    genesis_pit_zentraedi_theme:
+      action: play
+      loops: -1
+  mode_genesis_pit_stopping:
+    genesis_pit_zentraedi_theme:
+      action: stop
+  mode_intro_the_fortress_starting:
+    main_title:
+      action: stop
   mode_invid_invasion_stopping:
     alien_attack:
       action: stop
@@ -1189,6 +1275,12 @@ sound_player:
   mode_lunk_mode_started:
     main_title:
       action: stop
+    lunk_mode_showdown:
+      action: play
+      loops: -1
+  mode_lunk_mode_stopping:
+    lunk_mode_showdown:
+      action: stop
   ball_save_default_saving_ball:
     come_back_my_scott:
       action: play
@@ -1207,8 +1299,16 @@ sound_player:
   team_combo_made:
     combo:
       action: play
-
-  # ball_ending:
+  ball_save_kickback_save_saving_ball{game.balls_in_play == 1}:
+    return_to_battle:
+      action: play
+      priority: 9999
+  mystery_targets_rollover_group_hit_complete:
+    afm_increase_bonus_multiplier:
+      action: play
+  play_shoot_again_show:
+    afm_shoot_again:
+      action: play
   #   main_title:
   #     action: stop
   # sw_sdf_active: sdf_target_sound

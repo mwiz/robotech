@@ -9,8 +9,10 @@ mode:
     priority: 1850
 
 event_player:
-  mode_ball_save_qualify_invid_invasion_started:
-    - stop_ball_save_invid_invasion|.5s
+  #mode_ball_save_qualify_invid_invasion_started:
+  mode_ball_save_qualify_mode_started:
+    - stop_ball_save_qualify_mode|.5s
+    #- stop_ball_save_invid_invasion|.5s
 
 ball_saves:
   kickback_save:

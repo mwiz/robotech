@@ -74,7 +74,7 @@ show_player:
       speed: 10
       show_tokens:
         color: red
-      priority: 10  #testing if does not show white
+     #priority: 10  #testing if does not show white
     tech_hotdog:
       loops: 0
       show_tokens:
@@ -327,3 +327,8 @@ accruals:
     disable_on_complete: false
     reset_events: ball_ended
     debug: true
+
+sound_player:
+  lanes_show:
+    afm_increase_bonus_multiplier:
+      action: play

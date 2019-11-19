@@ -3,18 +3,11 @@
 mode:
    start_events: start_invid_invasion
    stop_events:
-     #- timer_invid_invasion_complete
-     #- ball_will_end
+     - tilt
      - mode_end_invid_invasion_started
    priority: 900
 
 event_player:
-  multiball_invid_invasion_quick_2_ball_ball_lost{game.balls_in_play==2 and device.counters.invid_hit_counter.value < 20}:
-    - weak_flipper_2_ball_enable
-  multiball_invid_invasion_quick_2_ball_ball_lost{game.balls_in_play==1 and current_player.invid_invasion_total < 20}:
-    - weak_flipper_1_ball_enable
-  invid_invasion_success:
-    - normal_flippers_enable
   multiball_invid_invasion_quick_2_ball_started:
     - drop_reset_up
   drop_target_left_drop_down:
@@ -24,35 +17,21 @@ event_player:
   drop_target_right_drop_down:
     - drop_reset_up|1s
   mode_invid_invasion_started:
-    #- start_mission_1|3s
     - orbit_gate_enable
+    - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}|1s
   mode_invid_invasion_stopping:
     - orbit_gate_disable
   timer_invid_invasion_complete:
-    - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}
     - start_end_invid_invasion_mode
-  # invid_invasion_success:
-  #   - play_hit_reflex_point|4s
-  ramp_wireform_sequence_hit{device.counters.jackpot_counter.value==1}:
-    - jackpot
-  # ramp_reflex_point_sequence_hit{device.counters.jackpot_counter.value < 3}:
-  #   - jackpot
-  ramp_wireform_sequence_hit{device.counters.jackpot_counter.value==2}:
-    - double_jackpot
-  ramp_reflex_point_sequence_hit{device.counters.jackpot_counter.value==2}:
-    - super_jackpot
-  # ramp_reflex_point_sequence_hit{device.counters.jackpot_counter.value >= 3}:
-  #   - superjackpot
-  # multiball_invid_invasion_quick_2_ball_ended:
-  #    - grace_add_a_ball_time|10s
   ball_save_fake_invid_invasion_ball_save_saving_ball:
-    - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}
     - start_end_invid_invasion_mode
-
-# queue_event_player:
-#    ball_will_end:
-#       queue_event: my_queue
-#       events_when_finished: start_end_invid_invasion_mode
+  timer_check_ramp_timer_complete{device.switches.s_up_down_ramp_switch.state == 0}:
+    - ramp_up_active
+    - ramp_down_active|1s
+  invid_invasion_triple_jackpot_shot_flashing_hit:
+    - ramp_diverter_disable
+  invid_invasion_super_jackpot_shot_flashing_hit:
+    - start_end_invid_invasion_mode|1s
 
 # slides:
 #   ball_added_slide:
@@ -62,92 +41,63 @@ event_player:
 #         color: red
 #         font_size: 130
 #         y: center+50
-  # jackpot_slide:
-  #   widgets:
-  #     - type: text
-  #       text: JACKPOT
-  #       color: red
-  #       font_size: 130
-  #       y: center + 200
-  #       x: center 100
-  #       z: 400
-  #     - type: text
-  #       text: (jackpot_value)
-  #       color: red
-  #       font_size: 130
-  #       y: center + 200
-  #       x: center + 50
-  #       z: 400
-  # super_jackpot_slide:
-  #   widgets:
-  #     - type: text
-  #       text: SUPER JACKPOT !!
-  #       color: red
-  #       font_size: 160
-  #       y: center+60
-  #     - type: text
-  #       text: (jackpot_value)
-  #       color: red
-  #       font_size: 160
-  #       y: center-60
+
 
 # slide_player:
 #   add_ball:
 #     ball_added_slide:
 #       expire: 2s
 #       priority: 375
-  # jackpot:
-  #   jackpot_slide:
-  #     expire: 2s
-  #     priority: 400
-  # superjackpot:
-  #   super_jackpot_slide:
-  #     expire: 2s
-  #     priority: 425
 
 
 widget_player:
   timer_invid_invasion_started:
     ii_time_display_widget:
+      action: add
       slide: base_slide
+      priority: 901
     ii_timer_widget:
+      action: add
       slide: base_slide
+      priority: 902
     ii_invid_display_widget:
+      action: add
       slide: base_slide
+      priority: 903
     ii_invid_count_widget:
       action: update
+      slide: base_slide
+      priority: 904
   timer_invid_invasion_tick:
     ii_timer_widget:
       action: update
+      slide: base_slide
+      priority: 905
   sw_invid_active:
     ii_invid_count_widget:
       action: update
-  jackpot:
-    jackpot_widget:
+      slide: base_slide
+      priority: 906
+  invid_invasion_jackpot_shot_flashing_hit:
+    jackpot_invid_invasion_widget:
       widget_settings:
         expire: 2s
-  double_jackpot:
-    double_jackpot_widget:
+  invid_invasion_double_jackpot_shot_flashing_hit:
+    double_jackpot_invid_invasion_widget:
       widget_settings:
         expire: 2s
-  super_jackpot:
-    super_jackpot_widget:
+  invid_invasion_triple_jackpot_shot_flashing_hit:
+    triple_jackpot_invid_invasion_widget:
       widget_settings:
         expire: 2s
-  add_10s:
-    10s_added_widget:
+  invid_invasion_super_jackpot_shot_flashing_hit:
+    super_jackpot_invid_invasion_widget:
       widget_settings:
-        expire: 3s
-  mode_invid_invasion_stopping:
-    ii_time_display_widget:
-      action: remove
-    ii_timer_widget:
-      action: remove
-    ii_invid_display_widget:
-      action: remove
-    ii_invid_count_widget:
-      action: remove
-
+        expire: 2s
+  # add_10s:
+  #   10s_added_widget:
+  #     widget_settings:
+  #       expire: 3s
 
 
 widgets:
@@ -179,128 +129,63 @@ widgets:
       font_size: 100
       y: center + 150
       x: center + 450
-  jackpot_widget:
+  jackpot_invid_invasion_widget:
     - type: text
       text: JACKPOT!
-      color: red
+      color: green
       font_size: 100
-      y: center + 150
+      y: center + 120 #150
     - type: text
       text: (jackpot_value)
       color: red
       font_size: 100
-      y: center-150
-  double_jackpot_widget:
+      y: center #-150
+      number_grouping: true
+  double_jackpot_invid_invasion_widget:
     - type: text
       text: DOUBLE JACKPOT!!
-      color: red
+      color: yellow
       font_size: 100
-      y: center + 150
+      y: center + 120 #150
     - type: text
       text: (jackpot_value)
       color: red
       font_size: 100
-      y: center-150
-  super_jackpot_widget:
+      y: center #-150
+      number_grouping: true
+  triple_jackpot_invid_invasion_widget:
+    - type: text
+      text: TRIPLE JACKPOT!!
+      color: red
+      font_size: 100
+      y: center + 120 #150
+    - type: text
+      text: (jackpot_value)
+      color: red
+      font_size: 100
+      y: center #-150
+      number_grouping: true
+  super_jackpot_invid_invasion_widget:
     - type: text
       text: SUPER JACKPOT!!!
-      color: red
+      color: purple
       font_size: 100
-      y: center + 150
+      y: center + 120 #150
     - type: text
       text: (jackpot_value)
       color: red
       font_size: 100
-      y: center-150
-  10s_added_widget:
-    - type: text
-      text: 10 seconds ADDED
-      color: green
-      font_size: 80
-      y: center - 150
-      x: center
-      #z: 400
+      y: center #-150
+      number_grouping: true
+  # 10s_added_widget:
+  #   - type: text
+  #     text: 10 seconds ADDED
+  #     color: green
+  #     font_size: 80
+  #     y: center - 150
+  #     x: center
+  #     #z: 400
 
-# queue_event_player:
-#   mode_invid_invasion_started:
-#     queue_event: my_queue
-#     events_when_finished: start_multiball
-#
-# queue_relay_player:
-#   my_queue:
-#     post: start_mode_multiball_intro
-#     wait_for: mode_multiball_show_ended
-#   balldevice_bd_trough_ball_eject_attempt.1{not mode.qualify_invid_invasion.active and not mode.ball_save_invid_invasion.active}:
-#     post: wait_for_instructions
-#     wait_for: mode_multiball_show_ended
-#   balldevice_bd_right_lock_ball_eject_attempt.1{not mode.qualify_invid_invasion.active and not mode.ball_save_invid_invasion.active}:
-#     post: start_mode_multiball_intro
-#     wait_for: mode_multiball_show_ended
-
-# queue_relay_player:
-#   my_queue:
-#     post: start_mode_multiball_intro
-#     wait_for: mode_multiball_show_ended
-#   balldevice_bd_trough_ball_eject_attempt{(not mode.qualify_invid_invasion.active) and not mode.ball_save_invid_invasion.active and mode.ball_save_invid_invasion_add_a_ball.active}:
-#     post: wait_for_instructions
-#     wait_for: mode_multiball_show_ended
-
-show_player:
-  invid_invasion_jackpot_show:
-    fast_flash_show:
-      key: invid_invasion_jackpot_flash
-      speed: 5
-      show_tokens:
-        leds: l_mode_start
-        color: purple
-      action: play
-      loops: -1
-  invid_invasion_super_jackpot_show:
-    invid_invasion_jackpot_flash:
-      action: stop
-    fast_flash_show:
-      key: invid_invasion_super_jackpot_flash
-      speed: 10
-      show_tokens:
-        leds: l_mode_start
-        color: red
-      action: play
-      loops: -1
-
-# multiball_locks:
-#   invid_invasion_multiball:
-#   #invid_invasion_ball_lock:
-#   #invid_invasion_ball_hold:
-#     #balls_to_hold: 1
-#     balls_to_lock: 1
-#     lock_devices: bd_right_lock
-#     #hold_devices: bd_left_lock
-#     #lock_devices: bd_left_lock
-#     #release_one_events: start_mission_1
-#     #reset_events: machine_reset_phase_3, ball_starting, ball_will_end, service_mode_entered, start_mission_1
-#     #reset_count_for_current_player_events: quick_2_ball_start
-#     disable_events: invid_invasion_quick_2_ball_started
-# queue_event_player:
-#   multiball_invid_invasion_quick_2_ball_ended:
-#     queue_event: my_add_a_ball_queue
-    #events_when_finished: multiball_invid_invasion_quick_2_ball_ended
-
-# queue_relay_player:
-#   my_add_a_ball_queue:
-#     post: start_add_a_ball_grace_period
-#     wait_for: timer_add_a_ball_grace_period_stopped
-
-# multiballs:
-#   invid_invasion_quick_2_ball:
-#     ball_count: 2
-#     ball_count_type: total
-#     #start_or_add_a_ball_events:  mode_invid_invasion_started
-#     start_events: mode_invid_invasion_started
-#     #start_or_add_a_ball_events: start_multiball #multiball_lock_invid_invasion_multiball_locked_ball
-#     ball_locks: bd_right_lock
-#     shoot_again: 0
-#     add_a_ball_events: add_ball
-#     debug: true
 
 timers:
   invid_invasion:
@@ -314,12 +199,25 @@ timers:
         event: multiball_invid_invasion_quick_2_ball_started #mode_multiball_show_ended #start_mission_1
       - action: add
         event: spinner_shot_hit
-        value: 1
+        value: current_player.spinner_time_value
+      # - action: add
+      #   event: add_5s
+      #   value: 5
       - action: add
-        event: add_10s
-        value: 10
-      # - action: stop
-      #   event: invid_invasion_success
+        event: s_back_ramp_active
+        value: 2
+      - action: pause
+        event: mystery_shot_flashing_hit{game.balls_in_play==1}
+        value: 5
+  check_ramp_timer:
+    debug: True
+    start_value: 0
+    end_value: 2
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: invid_invasion_success
   # add_a_ball_grace_period:
   #   start_value: 10
   #   end_value: 0
@@ -329,163 +227,216 @@ timers:
   #     - action: start
   #       event: start_add_a_ball_grace_period
 
-
-
-# shot_profiles:
-#   restart_mball:
-#     states:
-#     - name: flashing
-#       show: start_invid_invasion
-#       show_tokens:
-#         loops: -1
-#         speed: 13
-#     - name: hit
-#       show: off
-
 counters:
   disable_orbit_gate_counter:
     count_events: sw_invid_active
     starting_count: 0
-    count_complete_value: 18
+    count_complete_value: 17
     events_when_complete: orbit_gate_disable
     disable_on_complete: true
   invid_hit_counter:
     count_events: sw_invid_active
     starting_count: 0
     count_complete_value: 20
-    events_when_complete: invid_invasion_success, ramp_down_active, invid_invasion_jackpot_show, ramp_diverter_enable #, orbit_gate_disable
+    events_when_complete:
+      - invid_invasion_success
+      - ramp_down_active
+      - ramp_diverter_enable
     reset_on_complete: false
     persist_state: true
-  # add_a_ball_counter:
+    debug: true
+  # add_more_time:
   #   count_events: sdf_bank_shots_lit_complete
   #   starting_count: 0
-  #   count_complete_value: 1
-  #   events_when_complete: add_ball
-  #   enable_events: multiball_invid_invasion_quick_2_ball_started
-  #   disable_events: multiball_invid_invasion_quick_2_ball_ended
-  jackpot_counter:
-    count_events: ramp_wireform_sequence_hit
-    starting_count: 0
-    direction: up
-    count_complete_value: 2
-    reset_on_complete: false
-    disable_on_complete: true #falses
-    events_when_complete: invid_invasion_super_jackpot_show, ramp_diverter_disable
-  add_more_time:
-    count_events: sdf_bank_shots_lit_complete
-    starting_count: 0
-    count_complete_value: 2
-    direction: up
-    events_when_complete: add_10s
-    disable_on_complete: true
-    enable_events: timer_invid_invasion_started
-    debug: true
-    #disable_events: multiball_invid_invasion_quick_2_ball_ended
-
-  # left_lock_made:
-  #   count_events: balldevice_bd_left_lock_ball_entered
-  #   starting_count: 0
-  #   count_complete_value: 1
+  #   count_complete_value: 2
   #   direction: up
-  #   #persist_state: true
-  #   #reset_on_complete: false
-  #   events_when_complete: add_ball
+  #   events_when_complete: add_10s
+  #   disable_on_complete: true
+  #   enable_events: timer_invid_invasion_started
   #   debug: true
-
-# shots:
-#   restart_2ball_multiball_shot:
-#     switch: s_right_lock_kickout
-#     enable_events: multiball_invid_invasion_quick_2_ball_ended
-#     profile: restart_mball
-#     hit_events: add_another_ball
-#     show_tokens:
-#       leds: l_rlock_arrow
-
-#shot_profiles:
-#  quick_flash_green:
-  #  states:
-  #  - name: unlit
-  #    show: flash_green
-    #- name: lit
-  #  - name: complete
-  #    show: off
+    #disable_events: multiball_invid_invasion_quick_2_ball_ended
 
 shot_profiles:
   invid_invasion_profile:
     show_when_disabled: false
+    advance_on_hit: false
     states:
       - name: flashing
-        show: flash_purple_show
+        show: flash_ii_red_show
         speed: 15
-      # - name: hit
-      #   show: color_red_on
+  invid_invasion_add_a_ball:
+    advance_on_hit: true
+    block: true
+    states:
+      - name: flashing
+        show: flash_blue_show
+        speed: 4
+        sync_ms: 1000
+        loops: -1
+      - name: hit
+        show: color_blue_on
+  invid_invasion_jackpot:
+    advance_on_hit: true
+    block: true
+    states:
+      - name: flashing
+        show: invid_invasion_jackpot_flash_show
+        loops: -1
+        speed: 5
+      - name: hit
+        show: off
+
+
+shot_groups:
+  invid_invasion_add_a_ball_group:
+    shots:
+      - invid_invasion_s_target_shot
+      - invid_invasion_d_target_shot
+      - invid_invasion_f_target_shot
+    disable_events:
+      - invid_invasion_add_a_ball_group_hit_complete
 
 shots:
-  left_target_invid_invasion:
+  invid_invasion_s_target_shot:
+    switch: s_s_target
+    profile: invid_invasion_add_a_ball
+    show_tokens:
+      leds: l_s_led
+  invid_invasion_d_target_shot:
+    switch: s_d_target
+    profile: invid_invasion_add_a_ball
+    show_tokens:
+      leds: l_d_led
+  invid_invasion_f_target_shot:
+    switch: s_f_target
+    profile: invid_invasion_add_a_ball
+    show_tokens:
+      leds: l_f_led
+  invid_invasion_left_target:
     switch: s_left_target
     profile: invid_invasion_profile
     show_tokens:
       leds: l_t1
-  middle_target_invid_invasion:
+  invid_invasion_middle_target:
     switch: s_middle_target
     profile: invid_invasion_profile
     show_tokens:
       leds: l_t2
-  right_target_invid_invasion:
+  invid_invasion_right_target:
     switch: s_right_target
     profile: invid_invasion_profile
     show_tokens:
       leds: l_t3
-  left_drop_invid_invasion:
+  invid_invasion_left_drop:
     switch: s_left_drop_target
     profile: invid_invasion_profile
     show_tokens:
       leds: l_t4
-  middle_drop_invid_invasion:
+  invid_invasion_middle_drop:
     switch: s_middle_drop_target
     profile: invid_invasion_profile
     show_tokens:
       leds: l_t5
-      #debug: True
-  right_drop_invid_invasion:
+  invid_invasion_right_drop:
     switch: s_right_drop_target
     profile: invid_invasion_profile
     show_tokens:
       leds: l_t6
+  invid_invasion_jackpot_shot:
+    hit_events: ramp_wireform_sequence_hit
+    profile: invid_invasion_jackpot
+    show_tokens:
+      color: green
+    enable_events:
+      - invid_invasion_success
+    disable_events:
+      - invid_invasion_jackpot_shot_flashing_hit
+  invid_invasion_double_jackpot_shot:
+    hit_events: ramp_wireform_sequence_hit
+    profile: invid_invasion_jackpot
+    show_tokens:
+      color: yellow
+    enable_events:
+      - invid_invasion_jackpot_shot_flashing_hit
+    disable_events:
+      - invid_invasion_double_jackpot_shot_flashing_hit
+  invid_invasion_triple_jackpot_shot:
+    hit_events: ramp_wireform_sequence_hit
+    profile: invid_invasion_jackpot
+    show_tokens:
+      color: red
+    enable_events:
+      - invid_invasion_double_jackpot_shot_flashing_hit
+    disable_events:
+      - invid_invasion_triple_jackpot_shot_flashing_hit
+  invid_invasion_super_jackpot_shot:
+    hit_events: ramp_reflex_point_sequence_hit
+    profile: invid_invasion_jackpot
+    show_tokens:
+      color: purple
+    enable_events:
+      - invid_invasion_triple_jackpot_shot_flashing_hit
 
 variable_player:
-  jackpot:
+  invid_invasion_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: (current_player.invid_invasion_total * 1000) * game.balls_in_play
+      int: (current_player.invid_invasion_total * 1000) * current_player.ramp_shot_multiplier #(current_player.invid_invasion_total * 1000)  * game.balls_in_play
       action: set
-    score: (current_player.invid_invasion_total * 1000) * game.balls_in_play
-  double_jackpot:
+    score: (current_player.invid_invasion_total * 1000) * current_player.ramp_shot_multiplier  #(current_player.invid_invasion_total * 1000) * game.balls_in_play
+  invid_invasion_double_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: ((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 2
+      int: ((current_player.invid_invasion_total * 1000) * 2) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 2
       action: set
-    score: ((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 2
-  super_jackpot:
+    score: ((current_player.invid_invasion_total * 1000) * 2) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 2
+  invid_invasion_triple_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: ((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 3
+      int: ((current_player.invid_invasion_total * 1000) * 3) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 3
       action: set
-    score: ((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 3
+    score: ((current_player.invid_invasion_total * 1000) * 3) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 3
+  invid_invasion_super_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: ((current_player.invid_invasion_total * 1000) * 4) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 4
+      action: set
+    score: ((current_player.invid_invasion_total * 1000) * 4) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 4
+    mode_end_action_flag: 2
   sw_invid_active:
     invid_invasion_total: 1
-  # mode_invid_invasion_started:
-  #   modes_started: 1
+    score: 1000
+  timer_invid_invasion_complete:
+    mode_end_action_flag: 1
 
 sound_player:
   invid_invasion_success:
     that_takes_care_of_them:
       action: play
-  # play_hit_reflex_point:
-  #   hit_reflex_point:
-  #     action: play
+  mode_invid_invasion_stopping:
+    that_takes_care_of_them:
+      action: stop
+  invid_invasion_jackpot_shot_flashing_hit:
+    jackpot:
+      action: play
+      priority: 1000
+  invid_invasion_double_jackpot_shot_flashing_hit:
+    double_jackpot:
+      action: play
+      priority: 1000
+  invid_invasion_triple_jackpot_shot_flashing_hit:
+    triple_jackpot:
+      action: play
+      priority: 1000
+  invid_invasion_super_jackpot_shot_flashing_hit:
+    super_jackpot:
+      action: play
+      priority: 1000
+  invid_invasion_add_a_ball_group_hit: sdf_target_sound
+
 
 ball_saves:
   fake_invid_invasion_ball_save:
-    enable_events: timer_invid_invasion_complete, multiball_invid_invasion_quick_2_ball_ended
-    disable_events: add_ball #added to test
+    enable_events:
+      - timer_invid_invasion_complete
+      - multiball_invid_invasion_quick_2_ball_ended
+    disable_events: invid_invasion_add_ball #added to test
     auto_launch: no
     balls_to_save: 1
     debug: yes

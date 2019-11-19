@@ -1,0 +1,54 @@
+#config_version=5
+
+mode:
+   start_events:
+     - qualify_invid_invasion{not mode.ball_save.active}
+     - qualify_genesis_pit{not mode.ball_save.active}
+     - qualify_the_fortress{not mode.ball_save.active}
+   stop_events:
+     - ball_save_qualify_mode_ball_save_disabled
+     #- ball_ending
+   priority: 750
+
+event_player:
+  s_kickback_t_active{not mode.kickback.active}:
+    - early_ball_save_left_outlane_qualify_mode
+#   mode_ball_save_qualify_invid_invasion_started:
+#     kickback_disable{mode.kickback.active}
+#   ball_save_start_qualify_ii_ball_save_disabled:
+#     kickback_enable{mode.kickback.active} #|.5s
+
+ball_saves:
+  qualify_mode_ball_save:
+    active_time: 4s
+    grace_period: 2s
+    # enable_events:
+    #   - mode_ball_save_qualify_invid_invasion_started{not mode.ball_save.active}
+    #   - mode_ball_save_stopped
+    timer_start_events:
+      - mode_ball_save_qualify_mode_started
+      #- mode_ball_save_stopped
+    early_ball_save_events:
+      - s_right_outlane_h_active
+      - early_ball_save_left_outlane_qualify_mode
+    disable_events: stop_ball_save_qualify_mode
+    auto_launch: yes
+    balls_to_save: 1
+    debug: yes
+
+show_player:
+  ball_save_qualify_mode_ball_save_timer_start:
+    fast_flash_show:
+      key: qualify_mode_ball_save_flash
+      action: play
+      speed: 20
+      show_tokens:
+        leds: l_shoot_again
+        color: red
+  ball_save_qualify_mode_ball_save_grace_period:
+    qualify_mode_ball_save_flash:
+      action: stop
+  #ball_save_start_qualify_invid_invasion_ball_save_disabled:
+  # ball_save_qualify_mode_ball_save_disabled:
+  #   qualify_mode_ball_save_flash:
+  #     action: stop

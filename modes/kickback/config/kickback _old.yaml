@@ -1,0 +1,65 @@
+#config_version=5
+#Robotech Pinball Machine
+
+mode:
+    start_events: start_kickback_mode
+    stop_events:
+      - timer_kickback_grace_period_stopped
+      - ball_save_kickback_save_saving_ball #, ball_will_end
+    restart_on_next_ball: true
+    priority: 1800
+
+event_player:
+  mode_kickback_stopping:
+    - kickback_disable
+  # timer_kickback_grace_period_stopped:
+  #   - kickback_disable
+  # ball_save_kickback_save_saving_ball:
+  #   - kickback_disable
+  mode_ball_save_stopped:
+    - kickback_enable|0.5s
+  mode_kickback_started:
+    - kickback_enable{not mode.ball_save.active}
+  mode_ball_save_started:
+    - kickback_disable
+
+timers:
+  kickback_grace_period:
+    start_value: 5
+    direction: down
+    debug: Yes
+    control_events:
+      - event: kickback_kickback_main_fired
+        action: start
+
+show_player:
+    mode_kickback_started:
+      light_kickback:
+        action: play
+    mode_kickback_stopped:
+      flash_kickback:
+        action: stop
+    kickback_kickback_main_fired:
+      light_kickback:
+        action: stop
+      flash_kickback:
+        loops: -1
+        speed: 20
+      # kickback_flasher:
+      #   loops: 0
+
+sound_player:
+  kickback_kickback_main_fired:
+    laser:
+      action: play
+
+ball_saves:
+  kickback_save:
+    balls_to_save: 1
+    active_time: 3s
+    #timer_start_events: left_outlane_t_shot_hit
+    early_ball_save_events: s_right_outlane_h_active
+    auto_launch: true
+    disable_events: mode_base_started
+    enable_events: kickback_kickback_main_fired
+    debug: true

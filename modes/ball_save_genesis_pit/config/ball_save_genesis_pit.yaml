@@ -1,0 +1,52 @@
+#config_version=5
+#Robotech
+
+mode:
+  start_events:
+    - stop_intro_genesis_pit_mode
+  stop_events:
+    #- enable_invid_targets_genesis_pit
+    #- mode_genesis_pit_stopped
+    - ball_save_genesis_pit_multiball_disabled
+  priority: 9700
+
+event_player:
+  s_kickback_t_active{not mode.kickback.active}:
+    - left_outlane_early_ball_save
+
+ball_saves:
+  genesis_pit_multiball:
+    active_time: 15s
+    hurry_up_time: 5s
+    grace_period: 5s
+    timer_start_events:
+      - mode_ball_save_genesis_pit_started
+    early_ball_save_events:
+      - s_right_outlane_h_active
+      - left_outlane_early_ball_save
+    auto_launch: true
+    balls_to_save: -1
+    debug: true
+
+show_player:
+  ball_save_genesis_pit_multiball_timer_start:
+    fast_flash_show:
+      key: genesis_pit_save_flash
+      speed: 3
+      show_tokens:
+        leds: l_shoot_again
+        color: red
+      action: play
+  ball_save_genesis_pit_multiball_hurry_up:
+    genesis_pit_save_flash:
+      action: stop
+    fast_flash_show:
+      key: genesis_pit_hurry_up_flash
+      action: play
+      speed: 20
+      show_tokens:
+        leds: l_shoot_again
+        color: red
+  ball_save_genesis_pit_multiball_grace_period:
+    gensis_pit_hurry_up_flash:
+      action: stop

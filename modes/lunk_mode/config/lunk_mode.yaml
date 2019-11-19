@@ -11,9 +11,9 @@ mode:
 
 event_player:
   lunk_mode_shot_group_hit_complete:
-    lunk_mode_success
-  wait_for_rand_collect_mecha_mode_display:
-    rand_collect_mecha_mode_show_ended
+    - lunk_mode_success
+  # wait_for_rand_collect_mecha_mode_display:
+  #   - rand_collect_mecha_mode_show_ended
 
 multiballs:
   lunk_mode_multiball:
@@ -125,6 +125,9 @@ timers:
       - action: add
         event: spinner_shot_hit
         value: current_player.spinner_time_value
+      - action: pause
+        event: mystery_shot_flashing_hit{game.balls_in_play==1}
+        value: 5
 
 shot_profiles:
   lunk_mode_shot_profile:

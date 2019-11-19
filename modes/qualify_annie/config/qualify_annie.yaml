@@ -128,12 +128,16 @@ shots:
       - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==0}
       - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==0}
       - mode_skill_shot_stopped{device.counters.annie_hit_counter.value==0}
+      - mode_genesis_pit_stopped{device.counters.annie_hit_counter.value==0}
+      - mode_the_fortress_stopped{device.counters.annie_hit_counter.value==0}
     disable_events:
       - a_shot_flashing_annie_hit
       - mode_intro_rand_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
     debug: true
   an_shot:
     switch: s_left_orbit
@@ -144,12 +148,16 @@ shots:
       - mode_rand_mode_stopped{device.counters.annie_hit_counter.value==1}
       - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==1}
       - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==1}
+      - mode_genesis_pit_stopped{device.counters.annie_hit_counter.value==1}
+      - mode_the_fortress_stopped{device.counters.annie_hit_counter.value==1}
     disable_events:
       - an_shot_flashing_annie_hit
       - mode_intro_rand_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
     debug: true
   ann_shot:
     switch: s_left_orbit
@@ -160,12 +168,16 @@ shots:
       - mode_rand_mode_stopped{device.counters.annie_hit_counter.value==2}
       - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==2}
       - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==2}
+      - mode_genesis_pit_stopped{device.counters.annie_hit_counter.value==2}
+      - mode_the_fortress_stopped{device.counters.annie_hit_counter.value==2}
     disable_events:
       - ann_shot_flashing_annie_hit
-      - mode_skill_shot_started
       - mode_intro_rand_mode_started
-      - mode_lunk_mode_started
       - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
     debug: true
   anni_shot:
     switch: s_left_orbit
@@ -176,12 +188,16 @@ shots:
       - mode_rand_mode_stopped{device.counters.annie_hit_counter.value==3}
       - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==3}
       - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==3}
+      - mode_genesis_pit_stopped{device.counters.annie_hit_counter.value==3}
+      - mode_the_fortress_stopped{device.counters.annie_hit_counter.value==3}
     disable_events:
       - anni_shot_flashing_annie_hit
-      - mode_skill_shot_started
       - mode_intro_rand_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
+      - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
     debug: true
   annie_shot:
     switch: s_left_orbit
@@ -192,12 +208,16 @@ shots:
       - mode_rand_mode_stopped{device.counters.annie_hit_counter.value==4}
       - mode_rook_mode_stopped{device.counters.annie_hit_counter.value==4}
       - mode_lunk_mode_stopped{device.counters.annie_hit_counter.value==4}
+      - mode_genesis_pit_stopped{device.counters.annie_hit_counter.value==4}
+      - mode_the_fortress_stopped{device.counters.annie_hit_counter.value==4}
     disable_events:
       - annie_shot_flashing_annie_hit
-      - mode_skill_shot_started
       - mode_intro_rand_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
+      - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
     debug: true
 
 shot_profiles:

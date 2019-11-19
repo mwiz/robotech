@@ -263,6 +263,9 @@ timers:
       - action: add
         event: annie_mode_invid_lanes_shots_hit_complete
         value: 10
+      - action: pause
+        event: mystery_shot_flashing_hit{game.balls_in_play==1}
+        value: 5
       # - action: add
       #   event: mode_rand_mode_started
       #   value: 60
@@ -275,7 +278,7 @@ multiballs:
       - mode_annie_mode_started
       - annie_mode_rook_add_ball_hit
     shoot_again: 0
-    disable_events: mode_annie_mode_stopping
+    #disable_events: mode_annie_mode_stopping
     debug: true
 
 shots:
