@@ -1,0 +1,98 @@
+#config_version=5
+
+mode:
+  start_events:
+    - start_hurry_up_mode_start_ramp
+  stop_events:
+    - timer_hurry_up_mode_start_ramp_timer_complete
+    - hurry_up_mode_start_ramp_completed
+    - mode_intro_invid_invasion_started
+  priority: 320
+
+event_player:
+  mode_start_invid_invasion_shot_flashing_hit:
+    - hurry_up_mode_start_ramp_completed
+  start_mode_shot_flashing_hit:
+    - hurry_up_mode_start_ramp_completed
+  # mode_start_genesis_pit_shot_flashing_hit:
+  #   - hurry_up_mode_start_ramp_completed
+  # mode_start_the_fortress_shot_flashing_hit:
+  #   - hurry_up_mode_start_ramp_completed
+  mode_hurry_up_mode_start_ramp_started:
+    - start_hurry_up_mode_start_ramp_timer|4s
+
+
+timers:
+  hurry_up_mode_start_ramp_timer:
+    debug: True
+    start_value: 20
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: start_hurry_up_mode_start_ramp_timer
+
+variable_player:
+  mode_hurry_up_mode_start_ramp_started:
+    hurry_up_mode_hit_ramp_value:
+      int: current_player.hurry_up_mode_start_ramp_value
+      action: set
+    hurry_up_mode_start_ramp_start_holder_value:
+      int: current_player.hurry_up_mode_hit_ramp_value
+      action: set
+  timer_hurry_up_mode_start_ramp_timer_tick:
+    hurry_up_mode_start_ramp_start_holder_value:
+      int: current_player.hurry_up_mode_hit_ramp_value - 5000
+      action: set
+    hurry_up_mode_hit_ramp_value:
+      int: current_player.hurry_up_mode_start_ramp_start_holder_value
+      action: set
+  hurry_up_mode_start_ramp_completed:
+    hurry_up_value:
+      int: current_player.hurry_up_mode_hit_ramp_value * current_player.pf_multiplier
+      action: set
+    score: current_player.hurry_up_mode_hit_ramp_value * current_player.pf_multiplier
+
+
+widgets:
+  hurry_up_mode_start_ramp_text_widget:
+    - type: text
+      text: "MODE START HURRY UP:"
+      color: green
+      font_size: 60
+      x: center - 100
+      y: center - 100
+  hurry_up_mode_start_ramp_value_widget:
+    - type: text
+      text: (player|hurry_up_mode_hit_ramp_value)
+      color: red
+      font_size: 60
+      x: center + 280
+      y: center - 100
+      number_grouping: true
+
+widget_player:
+  mode_hurry_up_mode_start_ramp_started:
+    hurry_up_mode_start_ramp_text_widget:
+      action: add
+      slide: base_slide
+      priority: 321
+    hurry_up_mode_start_ramp_value_widget:
+      action: update
+      slide: base_slide
+      priority: 322
+  timer_hurry_up_mode_start_ramp_timer_tick:
+    hurry_up_mode_start_ramp_value_widget:
+      action: update
+      slide: base_slide
+      priority: 323
+  mode_hurry_up_mode_start_ramp_stopping:
+    hurry_up_mode_start_ramp_text_widget:
+      action: remove
+      slide: base_slide
+      priority: 324
+    hurry_up_mode_start_ramp_value_widget:
+      action: remove
+      slide: base_slide
+      priority: 325
