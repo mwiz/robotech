@@ -1,51 +1,71 @@
 #config_version=5
 
 mode:
-  start_events: start_lancer_mode
+  start_events:
+    - lancer_collected
   stop_events:
+    - start_end_genesis_pit_mode
+    - start_end_the_fortress_mode
+    - start_end_big_apple_mode
     - ball_will_end
   stop_on_ball_end: true
   priority: 6000
 
+event_player:
+  player_pf_multiplier.1{current_player.pf_multiplier==2 and not mode.marlene_mode.active}:
+    - play_2x_show_lancer
+    - stop_3x_show_lancer
+  player_pf_multiplier.2{current_player.pf_multiplier==3 and not mode.marlene_mode.active}:
+    - stop_2x_show_lancer
+    - play_3x_show_lancer
+  player_pf_multiplier.3{current_player.pf_multiplier==4 and mode.marlene_mode.active}:
+    - stop_2x_show_lancer
+    - play_3x_show_lancer
+
 variable_player:
   mode_lancer_mode_started:
-    pf_multiplier: 2
+    pf_multiplier: 1
   mode_lancer_mode_stopping:
-    pf_multiplier: -2
-  # spinner_shot_hit:
-  #   score: 500 * current_player.pf_multiplier|block
+    pf_multiplier: -1
 
-widgets:
-  lancer_collected_widget:
-    - type: text
-      text: LANCER Collected
-      color: blue
-      font_size: 80
-      x: center
-      y: center+290
-  3x_pf_scoring_widget:
-    - type: text
-      text: 3X playfield scoring!
-      color: yellow
-      font_size: 80
-      y: center # + 50
+slides:
+  lancer_collected_slide:
+    widgets:
+      - type: text
+        text: LANCER Collected
+        color: blue
+        font_size: 80
+        x: center
+        y: center+300
+      - type: video
+        video: lancer_collected
+      - type: text
+        text: "INCREASE PLAYFIELD MULTIPLIER BY 1X"
+        color: green
+        font_size: 50
+        x: center
+        y: center-300
 
-widget_player:
+slide_player:
   mode_lancer_mode_started:
-    lancer_collected_widget:
-      action: add
-      widget_settings:
-        expire: 3s
-    3x_pf_scoring_widget:
-      action: add
-      widget_settings:
-        expire: 3s
+    lancer_collected_slide:
+      priority: 6010
+      expire: 5s
 
 show_player:
-  mode_lancer_mode_started:
-    flash_multiplier_3x_led:
+  play_2x_show_lancer:
+    flash_multiplier_2x_led:
+      key: lancer_2x_flash
       loops: -1
       sync_ms: 1000
-  mode_lancer_mode_stopping:
+  stop_2x_show_lancer:
+    lancer_2x_flash:
+      action: stop
+  play_3x_show_lancer:
     flash_multiplier_3x_led:
+      key: lancer_3x_flash
+      loops: -1
+      sync_ms: 1000
+  stop_3x_show_lancer:
+    lancer_3x_flash:
       action: stop

@@ -21,10 +21,8 @@ event_player:
     - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}|1s
   mode_invid_invasion_stopping:
     - orbit_gate_disable
-  timer_invid_invasion_complete:
-    - start_end_invid_invasion_mode
-  ball_save_fake_invid_invasion_ball_save_saving_ball:
-    - start_end_invid_invasion_mode
+  # ball_save_fake_invid_invasion_ball_save_saving_ball:
+  #   - start_end_invid_invasion_mode
   timer_check_ramp_timer_complete{device.switches.s_up_down_ramp_switch.state == 0}:
     - ramp_up_active
     - ramp_down_active|1s
@@ -32,6 +30,10 @@ event_player:
     - ramp_diverter_disable
   invid_invasion_super_jackpot_shot_flashing_hit:
     - start_end_invid_invasion_mode|1s
+  ball_save_fake_invid_invasion_ball_save_saving_ball:
+    - start_end_invid_invasion_mode
+  timer_invid_invasion_complete:
+    - start_end_invid_invasion_mode
 
 # slides:
 #   ball_added_slide:
@@ -56,10 +58,10 @@ widget_player:
       action: add
       slide: base_slide
       priority: 901
-    ii_timer_widget:
-      action: add
-      slide: base_slide
-      priority: 902
+    # ii_timer_widget:
+    #   action: add
+    #   slide: base_slide
+    #   priority: 902
     ii_invid_display_widget:
       action: add
       slide: base_slide
@@ -296,6 +298,7 @@ shot_groups:
     disable_events:
       - invid_invasion_add_a_ball_group_hit_complete
 
+
 shots:
   invid_invasion_s_target_shot:
     switch: s_s_target
@@ -398,12 +401,16 @@ variable_player:
       int: ((current_player.invid_invasion_total * 1000) * 4) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 4
       action: set
     score: ((current_player.invid_invasion_total * 1000) * 4) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 4
-    mode_end_action_flag: 2
+    mode_end_action_flag:
+      int: 2
+      action: set
   sw_invid_active:
     invid_invasion_total: 1
     score: 1000
   timer_invid_invasion_complete:
-    mode_end_action_flag: 1
+    mode_end_action_flag:
+      int: 1
+      action: set
 
 sound_player:
   invid_invasion_success:
@@ -434,7 +441,6 @@ sound_player:
 ball_saves:
   fake_invid_invasion_ball_save:
     enable_events:
-      - timer_invid_invasion_complete
       - multiball_invid_invasion_quick_2_ball_ended
     disable_events: invid_invasion_add_ball #added to test
     auto_launch: no

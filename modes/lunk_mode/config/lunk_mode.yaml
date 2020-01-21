@@ -79,7 +79,7 @@ widgets:
     - type: rectangle
       anchor_x: left
       anchor_y: bottom
-      x: 1137
+      x: 1130
       y: 190
       z: 1100
       width: 130
@@ -194,6 +194,6 @@ shots:
 variable_player:
   lunk_mode_success:
     lunk_mode_bonus_time_score:
-      int: (device.timers.lunk_mode_timer.ticks * 1000  * game.balls_in_play) * current_player.pf_multiplier
+      int: (device.timers.lunk_mode_timer.ticks * 500  * game.balls_in_play) * current_player.pf_multiplier
       action: set
-    score: (device.timers.lunk_mode_timer.ticks * 1000 * game.balls_in_play) * current_player.pf_multiplier
+    score: (device.timers.lunk_mode_timer.ticks * 500 * game.balls_in_play) * current_player.pf_multiplier

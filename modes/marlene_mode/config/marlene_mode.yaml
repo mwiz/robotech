@@ -1,11 +1,30 @@
 #config_version=5
 
 mode:
-  start_events: start_marlene_mode
+  start_events:
+    - marlene_collected
   stop_events:
+    - start_end_genesis_pit_mode
+    - start_end_the_fortress_mode
+    - start_end_big_apple_mode
     - ball_will_end
   stop_on_ball_end: true
   priority: 5000
+
+
+event_player:
+  player_pf_multiplier.1{current_player.pf_multiplier==2 and not mode.lancer_mode.active}:
+    - play_2x_show_marlene
+    - stop_3x_show_marlene
+  player_pf_multiplier.2{current_player.pf_multiplier==3 and not mode.lancer_mode.active}:
+    - stop_2x_show_marlene
+    - play_3x_show_marlene
+  player_pf_multiplier.3{current_player.pf_multiplier==4 and mode.lancer_mode.active}:
+    - stop_3x_show_marlene
+    - play_2x_show_marlene
+  player_pf_multiplier.4{current_player.pf_multiplier==3 and mode.lancer_mode.active}:
+    - stop_2x_show_marlene
+
 
 variable_player:
   mode_marlene_mode_started:
@@ -25,9 +44,9 @@ slides:
       - type: video
         video: marlene_collected
       - type: text
-        text: 2X playfield scoring!
+        text: "INCREASE PLAYFIELD MULTIPLIER BY 1X"
         color: green
-        font_size: 80
+        font_size: 50
         x: center
         y: center-300
 
@@ -38,10 +57,19 @@ slide_player:
       expire: 6s
 
 show_player:
-  mode_marlene_mode_started:
+  play_2x_show_marlene:
     flash_multiplier_2x_led:
+      key: marlene_2x_flash
       loops: -1
       sync_ms: 1000
-  mode_marlene_mode_stopping:
-    flash_multiplier_2x_led:
+  stop_2x_show_marlene:
+    marlene_2x_flash:
+      action: stop
+  play_3x_show_marlene:
+    flash_multiplier_3x_led:
+      key: marlene_3x_flash
+      loops: -1
+      sync_ms: 1000
+  stop_3x_show_marlene:
+    marlene_3x_flash:
       action: stop

@@ -4,6 +4,10 @@ mode:
   start_events:
     - pops_super
   stop_events:
+    - mode_invid_invasion_stopped
+    - mode_genesis_pit_stopped
+    - mode_the_fortress_stopped
+    - mode_big_apple_stopped
     - ball_ended
   priority: 7400
 
@@ -69,15 +73,15 @@ widgets:
     - type: text
       text: "SUPER POPS - (count)"
       color: purple
-      font_size: 30
+      font_size: 35
       x: center - 450
-      y: center - 240
+      y: center - 230
     - type: text
       text: "Value: 1000"
       color: purple
       font_size: 30
       x: center - 450
-      y: center - 270
+      y: center - 260
 
 widget_player:
   # mode_pops_super_started:
@@ -108,30 +112,35 @@ widget_player:
   #     slide: base_slide
 
 show_player:
-  s_bottom_r_pop_bumper_active:
-    flash_pop_bumper_purple:
-      key: bottom_right_pop_flash
-      loops: 0
+  mode_pops_super_started:
+    pulse_all_pops_purple_show:
       show_tokens:
-        leds: l_lower_r_pop_bumper
-  s_bottom_l_pop_bumper_active:
-    flash_pop_bumper_purple:
-      key: bottom_left_pop_flash
-      loops: 0
-      show_tokens:
-        leds: l_lower_l_pop_bumper
-  s_top_r_pop_bumper_active:
-    flash_pop_bumper_purple:
-      key: top_right_pop_flash
-      loops: 0
-      show_tokens:
-        leds: l_upper_r_pop_bumper
-  s_top_l_pop_bumper_active:
-    flash_pop_bumper_purple:
-      key: top_left_pop_flash
-      loops: 0
-      show_tokens:
-        leds: l_upper_l_pop_bumper
+        leds: pops
+      loops: -1
+  # s_bottom_r_pop_bumper_active:
+  #   flash_pop_bumper_purple:
+  #     key: bottom_right_pop_flash
+  #     loops: 0
+  #     show_tokens:
+  #       leds: l_lower_r_pop_bumper
+  # s_bottom_l_pop_bumper_active:
+  #   flash_pop_bumper_purple:
+  #     key: bottom_left_pop_flash
+  #     loops: 0
+  #     show_tokens:
+  #       leds: l_lower_l_pop_bumper
+  # s_top_r_pop_bumper_active:
+  #   flash_pop_bumper_purple:
+  #     key: top_right_pop_flash
+  #     loops: 0
+  #     show_tokens:
+  #       leds: l_upper_r_pop_bumper
+  # s_top_l_pop_bumper_active:
+  #   flash_pop_bumper_purple:
+  #     key: top_left_pop_flash
+  #     loops: 0
+  #     show_tokens:
+  #       leds: l_upper_l_pop_bumper
 
 variable_player:
   pops_shot_hit:
