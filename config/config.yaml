@@ -17,7 +17,7 @@ fast:
   hardware_led_fade_time: 20
   #debug: true
   #config_number_format: int
-  #rgb_buffer: 3000
+  rgb_buffer: 11
 
 config:
   - lights.yaml
@@ -36,78 +36,91 @@ logging:
     show_controller: full
 
 modes:
-  - attract                             #priority: 10
-  # - game                              #priority: 20
-  - base                                #priority: 100
-  - lanes                               #priority: 200
-  - sdf_targets                         #priority: 300
-  - pre_qualify_invid_invasion          #priority: 400
-  - pre_qualify_genesis_pit             #priority: 420
-  - pre_qualify_the_fortress            #priority: 430
-  - bonus                               #priority: 500
-  - high_score                          #priority: 600
-  - qualify_invid_invasion              #priority: 700
-  - qualify_genesis_pit                 #priority: 710
-  - qualify_the_fortress                #priority: 720
-  - ball_save_qualify_mode              #priority: 750
-  - intro_invid_invasion                #priority: 800
-  - invid_invasion                      #priority: 900
-  - multiball_invid_invasion            #priority: 1000
-  - end_invid_invasion                  #priority: 1100
-  - qualify_rand                        #priority: 1200
-  - qualify_annie                       #priority: 1300
-  - qualify_rook                        #priority: 1400
-  - qualify_lancer                      #priority: 1500
-  - qualify_lunk                        #priority: 1600
-  - qualify_marlene                     #priority: 1700
-  - kickback                            #priority: 1800
-  - ball_save_kickback                  #priority: 1850
-  - skill_shot                          #priority: 1900
-  - skill_shot_combo                    #priority: 2000
-  - intro_rand_mode                     #priority: 2100
-  - rand_mode                           #priority: 2200
-  - rand_collect_mecha                  #priority: 2300
-  - intro_annie_mode                    #priority: 2350
-  - annie_mode                          #priority: 2400
-  - annie_collect_mecha                 #priority: 2500
-  - lunk_mode                           #priority: 2600
-  - lunk_collect_mecha                  #priority: 2700
-  - intro_rook_mode                     #priority: 4600
-  - rook_mode                           #priority: 4700
-  - rook_collect_mecha                  #priority: 4800
-  - marlene_mode                        #priority: 5000
-  - lancer_mode                         #priority: 6000
-  - qualify_shot_multipliers            #priority: 6800
-  - light_shot_multipliers              #priority: 6900
-  - protoculture                        #priority: 7000
-  - pops_level_1                        #priority: 7100
-  - pops_level_2                        #priority: 7200
-  - pops_level_3                        #priority: 7300
-  - pops_super                          #priority: 7400
-  - spinner_level_1                     #priority: 7500
-  - spinner_level_2                     #priority: 7600
-  - spinner_level_3                     #priority: 7700
-  - spinner_super                       #priority: 7800
-  - pre_qualify_mystery                 #priority: 7900
-  - genesis_pit                         #priority: 8100
-  - intro_genesis_pit                   #priority: 8125
-  - end_genesis_pit                     #priority: 8150
-  - the_fortress                        #priority: 8200
-  - intro_the_fortress                  #priority: 8250
-  #- end_the_fortress                    #priority: 8300
-  - ball_save                           #priority: 8400
-  - ball_save_invid_invasion            #priority: 8500
-  - ball_save_invid_invasion_add_a_ball #priority: 9000
-  - ball_save_end_modes                 #priority: 9100
-  - ball_save_rand_mode                 #priority: 9250
-  - ball_save_annie_mode                #priority: 9350
-  - ball_save_annie_mode_rook_add_a_ball #priority: 9450
-  - ball_save_rook_mode                 #priority 9550
-  - ball_save_rook_mode_rand_add_a_ball #priority: 9600
-  - ball_save_lunk_mode                 #priority: 9650
-  - ball_save_genesis_pit               #priority: 9700
-  - qualify_mystery                     #priority: 9800
-  - tilt                                #priority: 10,000
+  - attract                                 #priority: 10
+  # - game                                  #priority: 20
+  - base                                    #priority: 100
+  - lanes                                   #priority: 200
+  - sdf_targets                             #priority: 300
+  - hurry_up_mode_start_ramp                #priority: 320
+  - pre_qualify_invid_invasion              #priority: 400
+  - pre_qualify_a_mode                      #priority: 420
+  #- pre_qualify_genesis_pit                 #priority: 420
+  #- pre_qualify_the_fortress                #priority: 430
+  - bonus                                   #priority: 500
+  - high_score                              #priority: 600
+  - qualify_invid_invasion                  #priority: 700
+  - qualify_a_mode                           #priority: 710
+  # - qualify_genesis_pit                     #priority: 710
+  # - qualify_the_fortress                    #priority: 720
+  - ball_save_qualify_mode                  #priority: 750
+  - intro_invid_invasion                    #priority: 800
+  - invid_invasion                          #priority: 900
+  - multiball_invid_invasion                #priority: 1000
+  - end_invid_invasion                      #priority: 1100
+  - qualify_rand                            #priority: 1200
+  - qualify_annie                           #priority: 1300
+  - qualify_rook                            #priority: 1400
+  - qualify_lancer                          #priority: 1500
+  - qualify_lunk                            #priority: 1600
+  - qualify_marlene                         #priority: 1700
+  - kickback                                #priority: 1800
+  - ball_save_kickback                      #priority: 1850
+  - skill_shot_combo                        #priority: 1900
+  - skill_shot                              #priority: 2000
+  - intro_rand_mode                         #priority: 2100
+  - rand_mode                               #priority: 2200
+  - rand_collect_mecha                      #priority: 2300
+  - intro_annie_mode                        #priority: 2350
+  - annie_mode                              #priority: 2400
+  - annie_collect_mecha                     #priority: 2500
+  - lunk_mode                               #priority: 2600
+  - lunk_collect_mecha                      #priority: 2700
+  - intro_rook_mode                         #priority: 4600
+  - rook_mode                               #priority: 4700
+  - rook_collect_mecha                      #priority: 4800
+  - marlene_mode                            #priority: 5000
+  - lancer_mode                             #priority: 6000
+  - protoculture                            #priority: 6700
+  - qualify_shot_multipliers                #priority: 6800
+  - light_shot_multipliers                  #priority: 6900
+  - pops_level_1                            #priority: 7100
+  - pops_level_2                            #priority: 7200
+  - pops_level_3                            #priority: 7300
+  - pops_super                              #priority: 7400
+  - spinner_level_1                         #priority: 7500
+  - spinner_level_2                         #priority: 7600
+  - spinner_level_3                         #priority: 7700
+  - spinner_super                           #priority: 7800
+  - pre_qualify_mystery                     #priority: 7900
+  - qualify_corg_mode                       #priority: 7950
+  - corg_mode                               #priority: 8000
+  - intro_corg_mode                         #priority: 8050
+  - genesis_pit                             #priority: 8100
+  - intro_genesis_pit                       #priority: 8125
+  - end_genesis_pit                         #priority: 8150
+  - the_fortress                            #priority: 8200
+  - intro_the_fortress                      #priority: 8250
+  - end_the_fortress                        #priority: 8300
+  - big_apple                               #priority: 8325
+  - intro_big_apple                         #priority: 8350
+  - end_big_apple                           #priority: 8355
+  - add_1x_playfield_multiplier_mystery_award #priority: 8360
+  - ball_save                               #priority: 8400
+  - ball_save_invid_invasion                #priority: 8500
+  - ball_save_invid_invasion_add_a_ball     #priority: 9000
+  - ball_save_end_modes                     #priority: 9100
+  - ball_save_rand_mode                     #priority: 9250
+  - ball_save_annie_mode                    #priority: 9350
+  - ball_save_annie_mode_rook_add_a_ball    #priority: 9450
+  - ball_save_rook_mode                     #priority 9550
+  - ball_save_rook_mode_rand_add_a_ball     #priority: 9600
+  - ball_save_lunk_mode                     #priority: 9650
+  - ball_save_genesis_pit                   #priority: 9700
+  - ball_save_the_fortress                  #priority: 9710
+  - ball_save_the_fortress_4ball_multiball  #priority: 9750
+  - ball_save_big_apple                     #priority: 9760
+  - qualify_mystery                         #priority: 9800
+  - tilt                                    #priority: 10,000
   #- carousel
 
 
@@ -128,7 +141,7 @@ flippers:
     activation_switch: s_left_flipper
     label: Left Main Flipper
     enable_events: flipper_on, left_flipper_normal_enable #ball_started
-    disable_events: flipper_off, ball_will_end #left_flipper_weak_2_ball_enable
+    disable_events: flipper_off, left_flipper_stronger_enable, ball_will_end #left_flipper_weak_2_ball_enable
     debug: true
   lower_right:
     main_coil: c_flipper_right_main
@@ -147,6 +160,16 @@ flippers:
     activation_switch: s_right_flipper
     enable_events: right_flipper_stronger_enable
     disable_events: right_flipper_normal_enable, flipper_off, ball_will_end
+    debug: true
+  left_flipper_stronger:
+    main_coil: c_flipper_left_main
+    hold_coil: c_flipper_left_hold
+    main_coil_overwrite:
+      pulse_ms: 21
+      pulse_power: 1
+    activation_switch: s_left_flipper
+    enable_events: left_flipper_stronger_enable
+    disable_events: left_flipper_normal_enable, flipper_off, ball_will_end
     debug: true
   # left_weak_2_ball:
   #   main_coil: c_flipper_left_main
@@ -372,12 +395,12 @@ coils:
     label: FP-DN-0F
   c_middle_drop_target:
     number: 2-4
-    default_pulse_ms: 14
-    default_pulse_power: .97
+    default_pulse_ms: 13
+    default_pulse_power: .95
     label: FP-DN-10
   c_left_drop_target:
     number: 2-5
-    default_pulse_ms: 13
+    default_pulse_ms: 12
     default_pulse_power: .95
     label: FP-DN-11
   c_right_drop_target:
@@ -388,7 +411,7 @@ coils:
   c_right_lock_kickout:
     number: 2-7
     default_pulse_ms: 19
-    default_pulse_power: .87
+    default_pulse_power: .79
     label: FP-DN-13
     #debug: true
   c_bottom_l_pop_bumper:
@@ -414,7 +437,8 @@ coils:
     label: FP-DN-18
   c_ramp_up:
     number: 2-13
-    default_pulse_ms: 25
+    default_pulse_ms: 22
+    default_pulse_power: .99
     label: FP-DN-19
   c_ramp_down:
     number: 2-14
@@ -443,7 +467,7 @@ ball_devices:
   #  player_controlled_eject_event: tilt
   bd_plunger:
     ball_switches: s_plunger_lane
-    entrance_count_delay: .3s
+    entrance_count_delay: .5s
     eject_timeouts: 4s
     #tags: ball_add_live
     mechanical_eject: true
@@ -483,7 +507,9 @@ ball_devices:
     exit_count_delay: 250ms
     tags: top_lock
     eject_timeouts: 500ms
-    eject_all_events: game_ended
+    eject_all_events:
+      - game_ended
+      - eject_top_lock
 
 game:
   balls_per_game: 3

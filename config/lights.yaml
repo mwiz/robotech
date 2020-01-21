@@ -420,22 +420,22 @@ lights:
     number: 2-2
     type: rgb
     label: led4
-    tags: flasher, playfield
+    tags: flasher, playfield, pops
   l_upper_r_pop_bumper:
     number: 2-3
     type: rgb
     label: led5
-    tags: flasher, playfield
+    tags: flasher, playfield, pops
   l_upper_l_pop_bumper:
     number: 2-4
     type: rgb
     label: led6
-    tags: flasher, playfield
+    tags: flasher, playfield, pops
   l_lower_l_pop_bumper:
     number: 2-5
     type: rgb
     label: led7
-    tags: flasher, playfield
+    tags: flasher, playfield, pops
   # l_top_left_flasher:
   #   number: 2-7
   #   type: rgb

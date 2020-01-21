@@ -4,7 +4,7 @@ virtual_platform_start_active_switches: s_trough1, s_trough2, s_trough3, s_troug
 
 
 keyboard:
-
+  debug: true
   1:
     switch: s_trough1
     toggle: true
@@ -44,3 +44,25 @@ keyboard:
     event: start_intro_invid_invasion
   g:
     event: start_intro_genesis_pit
+  f:
+    event: mode_intro_the_fortress_started
+  q:
+    event: start_end_invid_invasion_mode
+  o:
+    event: invid_target_group_hit_complete
+  c:
+    event: start_switches_countdown
+  h:
+    event: start_hurry_up_mode_start_ramp
+  b:
+    event: enable_lock_shots
+  x:
+    event: mode_invid_invasion_stopped
+  j:
+    event: pre_qualify_a_mode_invid_target_group_hit_complete
+  u:
+    event: pops_shot_hit
+  v:
+    event: start_mode_shot_flashing_hit
+  r:
+    event: start_intro_corg_mode

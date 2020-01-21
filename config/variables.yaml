@@ -34,10 +34,26 @@ player_vars:
   skill_shot_value:
     value_type: int
     initial_value: 0
+  # keeps track of how many skill shots made for Skill Shot Champ
+  skill_shots_made:
+    value_type: int
+    initial_value: 0
   invid_kill_value:
     value_type: int
     initial_value: 0
   biker_kill_value:
+    value_type: int
+    initial_value: 0
+  rand_mode_score_value:
+    value_type: int
+    initial_value: 0
+  the_fortress_score_value:
+    value_type: int
+    initial_value: 0
+  genesis_pit_score_value:
+    value_type: int
+    initial_value: 0
+  big_apple_score_value:
     value_type: int
     initial_value: 0
   jackpot_value:
@@ -84,7 +100,7 @@ player_vars:
     initial_value: 1
   lancer_start_count:
     value_type: int
-    initial_value: 0
+    initial_value: 2
   lunk_start_count:
     value_type: int
     initial_value: 1
@@ -139,3 +155,18 @@ player_vars:
     initial_value: 7
   mode_end_action_flag:
     initial_value: 0
+  hurry_up_mode_start_ramp_value:
+    value_type: int
+    initial_value: 100000
+  hurry_up_mode_hit_ramp_value:
+    value_type: int
+    initial_value: 0
+  hurry_up_mode_start_ramp_start_holder_value:
+    value_type: int
+    initial_value: 0
+  hurry_up_value:
+    value_type: int
+    initial_value: 0
+  the_fortress_switches_start_value:
+    value_type: int
+    initial_value: 100
