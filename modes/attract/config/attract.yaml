@@ -250,7 +250,7 @@ slides:
         y: center + 280
         font_size: 45
       - type: text
-        text: (machine|score1_name) (machine|score1_value)
+        text: (machine|score1_name)  (machine|score1_value)
         number_grouping: true
         y: center + 250
         font_size: 40
@@ -322,7 +322,7 @@ slides:
         y: center + 140
         font_size: 70
       - type: text
-        text: (machine|invid_invasion_total1_name) (machine|invid_invasion_total1_value)
+        text: (machine|invid_invasion_total1_name) - (machine|invid_invasion_total1_value)
         number_grouping: true
         y: center + 90
         font_size: 70
@@ -332,7 +332,7 @@ slides:
         y: center
         font_size: 60
       - type: text
-        text: (machine|invid_invasion_total2_name) (machine|invid_invasion_total2_value)
+        text: (machine|invid_invasion_total2_name) - (machine|invid_invasion_total2_value)
         number_grouping: true
         y: center - 40
         font_size: 60
@@ -345,7 +345,7 @@ slides:
         font_size: 70
         color: purple
       - type: text
-        text: (machine|super_pops_total1_name) (machine|super_pops_total1_value)
+        text: (machine|super_pops_total1_name) - (machine|super_pops_total1_value)
         number_grouping: true
         y: center + 120
         font_size: 70
@@ -356,22 +356,33 @@ slides:
         font_size: 70
         color: purple
       - type: text
-        text: (machine|super_spinner_total1_name) (machine|super_spinner_total1_value)
+        text: (machine|super_spinner_total1_name) - (machine|super_spinner_total1_value)
         number_grouping: true
         y: center - 120
         font_size: 70
         color: red
-  attract_combo_champ_scores:
+  attract_combo_skillshot_champ_scores:
     widgets:
       - type: text
         text: (machine|combos_made1_label)
-        y: center + 140
+        y: center + 170
         font_size: 70
         color: yellow
       - type: text
-        text: (machine|combos_made1_name) (machine|combos_made1_value)
+        text: (machine|combos_made1_name) - (machine|combos_made1_value)
         number_grouping: true
-        y: center + 90
+        y: center + 120
+        font_size: 70
+        color: red
+      - type: text
+        text: (machine|skill_shots_made1_label)
+        y: center - 70
+        font_size: 70
+        color: blue
+      - type: text
+        text: (machine|skill_shots_made1_name) - (machine|skill_shots_made1_value)
+        number_grouping: true
+        y: center - 120
         font_size: 70
         color: red
   title_screen:
@@ -399,7 +410,7 @@ slide_player:
   play_attract_slide_7:
     attract_pops_spinner_scores
   play_attract_slide_8:
-    attract_combo_champ_scores
+    attract_combo_skillshot_champ_scores
   play_attract_slide_9:
     title_screen
   play_attract_slide_10:
