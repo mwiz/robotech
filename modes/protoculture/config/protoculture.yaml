@@ -2,43 +2,101 @@
 
 mode:
   start_events:
-    #- ball_starting{ball==1}
-    - mode_end_invid_invasion_stopped
-    - mode_annie_mode_stopped
-    - mode_rand_mode_stopped
-    - mode_skill_shot_stopped
-    - mode_rook_mode_stopped
-    - marlene_shot_6_flashing_marlene_hit
-    - mode_lunk_mode_stopped
-    - mode_genesis_pit_stopped
-    - mode_the_fortress_stopped
-  stop_events:
-    - protoculture_collected
-    - logicblock_marlene_hit_counter_hit{device.counters.marlene_hit_counter.value==6}
-    - mode_invid_invasion_started
-    - mode_annie_mode_started
-    - mode_rand_mode_started
     - mode_skill_shot_started
-    - mode_rook_mode_started
-    - mode_lunk_mode_started
-    - mode_intro_genesis_pit_started
-    - mode_intro_the_fortress_started
   restart_on_next_ball: true
-  priority: 7000
+  priority: 6700
 
 event_player:
-  logicblock_protoculture_hit_counter_hit{count==5}:
+  logicblock_protoculture_hit_counter_hit.1{count==5}:
     - protoculture_award_extra_ball
+  logicblock_protoculture_hit_counter_hit.2{count==10}:
+    - enable_corg_mode
+
+timers:
+  disable_protoculture_timer:
+    debug: true
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: top_target_protoculture_shot_flashing_hit
+      - action: reset
+        event: timer_disable_protoculture_timer_complete
+
+shot_profiles:
+  protoculture_profile:
+    advance_on_hit: true
+    block: false #true
+    states:
+    - name: flashing
+      show: protoculture_flash_show
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+
+shots:
+  top_target_protoculture_shot:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_20k
+    enable_events:
+      - mode_annie_mode_stopped
+      - mode_rand_mode_stopped
+      - mode_skill_shot_stopped
+      - mode_rook_mode_stopped
+      #- marlene_shot_6_flashing_marlene_hit
+      - mode_lunk_mode_stopped
+      # - mode_genesis_pit_stopped
+      # - mode_the_fortress_stopped
+      #- mode_big_apple_stopped
+      - mode_corg_mode_stopped
+    disable_events:
+      - protoculture_collected
+      #- logicblock_marlene_hit_counter_hit{device.counters.marlene_hit_counter.value==6}
+      - mode_invid_invasion_started
+      - mode_annie_mode_started
+      - mode_rand_mode_started
+      - mode_skill_shot_started
+      - mode_rook_mode_started
+      - mode_lunk_mode_started
+      #- player_shot_marlene_shot_6_enabled
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      #- mode_intro_big_apple_started
+      - timer_big_apple_mode_collect_protoculture_timer_complete
+      - mode_intro_corg_mode_started
+    restart_events:
+      - timer_disable_protoculture_timer_complete
+    debug: true
+
 
 counters:
   protoculture_hit_counter:
-    count_events:  s_top_target_active #protoculture_shot_group_unlit_hit
+    count_events:
+      - top_target_protoculture_shot_flashing_hit
+      - collect_rand_protoculture_big_apple
+      - collect_annie_protoculture_big_apple
+      - collect_rook_protoculture_big_apple
+      - collect_lancer_protoculture_big_apple
+      - collect_lunk_protoculture_big_apple
+      - top_target_skill_group_flashing_hit
+      - top_target_skill_group_hit
+      - logicblock_top_target_shot_made_hit
     starting_count: 0
     direction: up
-    count_complete_value: 10
+    count_complete_value: 20
     reset_on_complete: false
     events_when_complete: protoculture_collected
     persist_state: true
+    # control_events:
+    #   - event: top_target_skill_group_flashing_hit
+    #     action: add
+    #     value: 3
+    debug: true
 
 widgets:
   protoculture_hit_widget:
@@ -46,23 +104,80 @@ widgets:
       text: Protoculture Collected
       color: yellow
       font_size: 60
-      y: center + 50
+      y: center + 25
     - type: text
       text: (protoculture_value)
       font_size: 80
       color: red
-      y: center - 50
+      y: center - 40
       number_grouping: true
 
 widget_player:
-  s_top_target_active: #protoculture_shot_group_unlit_hit:
+  top_target_protoculture_shot_flashing_hit:
+    protoculture_hit_widget:
+      action: add
+      widget_settings:
+        expire: 2s
+  collect_rand_protoculture_big_apple:
+    protoculture_hit_widget:
+      action: add
+      widget_settings:
+        expire: 2s
+  collect_annie_protoculture_big_apple:
+    protoculture_hit_widget:
+      action: add
+      widget_settings:
+        expire: 2s
+  collect_rook_protoculture_big_apple:
+    protoculture_hit_widget:
+      action: add
+      widget_settings:
+        expire: 2s
+  collect_lancer_protoculture_big_apple:
+    protoculture_hit_widget:
+      action: add
+      widget_settings:
+        expire: 2s
+  collect_lunk_protoculture_big_apple:
     protoculture_hit_widget:
       action: add
       widget_settings:
         expire: 2s
 
+variable_player:
+  top_target_protoculture_shot_flashing_hit:
+    protoculture_value:
+      int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.protoculture_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.protoculture_shot_multiplier) * current_player.pf_multiplier
+  collect_rand_protoculture_big_apple:
+    protoculture_value:
+      int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.rand_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.rand_shot_multiplier) * current_player.pf_multiplier
+  collect_annie_protoculture_big_apple:
+    protoculture_value:
+      int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.annie_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.annie_shot_multiplier) * current_player.pf_multiplier
+  collect_rook_protoculture_big_apple:
+    protoculture_value:
+      int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.rook_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.rook_shot_multiplier) * current_player.pf_multiplier
+  collect_lancer_protoculture_big_apple:
+    protoculture_value:
+      int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.lancer_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.lancer_shot_multiplier) * current_player.pf_multiplier
+  collect_lunk_protoculture_big_apple:
+    protoculture_value:
+      int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.lunk_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.lunk_shot_multiplier) * current_player.pf_multiplier
+
 show_player:
-  s_top_target_active:
+  top_target_protoculture_shot_flashing_hit:
     fast_flash_show:
       key: s_top_target_flash
       loops: 4
@@ -70,186 +185,403 @@ show_player:
       show_tokens:
         leds: l_top_target_light
         color: white
+  mode_protoculture_started.1{device.counters.protoculture_hit_counter.value==1}:
+    P_1_show_on:
+      action: play
+  mode_protoculture_started.2{device.counters.protoculture_hit_counter.value==2}:
+    P_1_show_on:
+      action: play
+    P_2_show_on:
+      action: play
+  mode_protoculture_started.3{device.counters.protoculture_hit_counter.value==3}:
+    P_1_show_on:
+      action: play
+    P_2_show_on:
+      action: play
+    P_3_show_on:
+      action: play
+  mode_protoculture_started.4{device.counters.protoculture_hit_counter.value==4}:
+    P_1_show_on:
+      action: play
+    P_2_show_on:
+      action: play
+    P_3_show_on:
+      action: play
+    P_4_show_on:
+      action: play
+  mode_protoculture_started.5{device.counters.protoculture_hit_counter.value==5}:
+    P_1_show_on:
+      action: play
+    P_2_show_on:
+      action: play
+    P_3_show_on:
+      action: play
+    P_4_show_on:
+      action: play
+    P_5_show_on:
+      action: play
+  mode_protoculture_started.6{device.counters.protoculture_hit_counter.value==6}:
+    P_1_show_on:
+      action: play
+    P_2_show_on:
+      action: play
+    P_3_show_on:
+      action: play
+    P_4_show_on:
+      action: play
+    P_5_show_on:
+      action: play
+    P_6_show_on:
+      action: play
+  mode_protoculture_started.7{device.counters.protoculture_hit_counter.value==7}:
+    P_1_show_on:
+      action: play
+    P_2_show_on:
+      action: play
+    P_3_show_on:
+      action: play
+    P_4_show_on:
+      action: play
+    P_5_show_on:
+      action: play
+    P_6_show_on:
+      action: play
+    P_7_show_on:
+      action: play
+  mode_protoculture_started.8{device.counters.protoculture_hit_counter.value==8}:
+    P_1_show_on:
+      action: play
+    P_2_show_on:
+      action: play
+    P_3_show_on:
+      action: play
+    P_4_show_on:
+      action: play
+    P_5_show_on:
+      action: play
+    P_6_show_on:
+      action: play
+    P_7_show_on:
+      action: play
+    P_8_show_on:
+      action: play
+  mode_protoculture_started.9{device.counters.protoculture_hit_counter.value==9}:
+    P_1_show_on:
+      action: play
+    P_2_show_on:
+      action: play
+    P_3_show_on:
+      action: play
+    P_4_show_on:
+      action: play
+    P_5_show_on:
+      action: play
+    P_6_show_on:
+      action: play
+    P_7_show_on:
+      action: play
+    P_8_show_on:
+      action: play
+    P_9_show_on:
+      action: play
+  mode_protoculture_started.10{device.counters.protoculture_hit_counter.value==10}:
+    P_10_show_on:
+      action: play
+  mode_protoculture_started.11{device.counters.protoculture_hit_counter.value==11}:
+    P_11_show_on:
+      action: play
+  mode_protoculture_started.12{device.counters.protoculture_hit_counter.value==12}: P_12_show_on
+  mode_protoculture_started.13{device.counters.protoculture_hit_counter.value==13}: P_13_show_on
+  mode_protoculture_started.14{device.counters.protoculture_hit_counter.value==14}: P_14_show_on
+  mode_protoculture_started.15{device.counters.protoculture_hit_counter.value==15}: P_15_show_on
+  mode_protoculture_started.16{device.counters.protoculture_hit_counter.value==16}: P_16_show_on
+  mode_protoculture_started.17{device.counters.protoculture_hit_counter.value==17}: P_17_show_on
+  mode_protoculture_started.18{device.counters.protoculture_hit_counter.value==18}: P_18_show_on
+  mode_protoculture_started.19{device.counters.protoculture_hit_counter.value==19}: P_19_show_on
+  logicblock_protoculture_hit_counter_hit.1{count==1}: P_1_show_on
+  logicblock_protoculture_hit_counter_hit.2{count==2}: P_2_show_on
+  logicblock_protoculture_hit_counter_hit.3{count==3}: P_3_show_on
+  logicblock_protoculture_hit_counter_hit.4{count==4}: P_4_show_on
+  logicblock_protoculture_hit_counter_hit.5{count==5}: P_5_show_on
+  logicblock_protoculture_hit_counter_hit.6{count==6}: P_6_show_on
+  logicblock_protoculture_hit_counter_hit.7{count==7}: P_7_show_on
+  logicblock_protoculture_hit_counter_hit.8{count==8}: P_8_show_on
+  logicblock_protoculture_hit_counter_hit.9{count==9}: P_9_show_on
+  logicblock_protoculture_hit_counter_hit.10{count==10}: P_10_show_on
+  logicblock_protoculture_hit_counter_hit.11{count==11}: P_11_show_on
+  logicblock_protoculture_hit_counter_hit.12{count==12}: P_12_show_on
+  logicblock_protoculture_hit_counter_hit.13{count==13}: P_13_show_on
+  logicblock_protoculture_hit_counter_hit.14{count==14}: P_14_show_on
+  logicblock_protoculture_hit_counter_hit.15{count==15}: P_15_show_on
+  logicblock_protoculture_hit_counter_hit.16{count==16}: P_16_show_on
+  logicblock_protoculture_hit_counter_hit.17{count==17}: P_17_show_on
+  logicblock_protoculture_hit_counter_hit.18{count==18}: P_18_show_on
+  logicblock_protoculture_hit_counter_hit.19{count==19}: P_19_show_on
 
-# show_player:
-#   mode_protoculture_started{device.counters.protoculture_hit_counter.value==1}:
-#     P_1_show_on
-#   logicblock_protoculture_hit_counter_hit{count==1}:
-#     P_1_show_on
-#   logicblock_protoculture_hit_counter_hit{count==2}:
-#     P_2_show_on
-#   mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=1}:
-#     P1_show_on:
-#       action: play
-#   mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=2}:
-#     P2_show_on:
-#       action: play
-#   # s_top_target_active{device.counters.protoculture_collected_counter.value==1}:
-#   #   P1_show_on:
-#   #     action: play
-#   # s_top_target_active{device.counters.protoculture_collected_counter.value==2}:
-#   #   P2_show_on:
-#   #     action: play
-#   # mode_bonus_will_start:
-#   #   P1_show_on:
-#   #     action: stop
-#   #   P2_show_on:
-#   #     action: stop
-# #
-# shows:
-#   P_1_show_on:
-#     - time: 0
-#       lights:
-#         l_b1: red #2F4F4F
-#     - time: -1
-#   P_2_show_on:
-#     - time: 0
-#       lights:
-#         l_b2: 2F4F4F
-#     - time: -1
-
-# shot_groups:
-#   protoculture_shot_group:
-#     shots: P_1, P_2, P_3, P_4, P_5, P_6, P_7, P_8, P_9
-#     # enable_events:
-#     #   - mode_end_invid_invasion_stopped
-#     #   - mode_annie_mode_stopped
-#     #   - mode_rand_mode_stopped
-#     #   - marlene_shot_6_flashing_marlene_hit
-#     # disable_events:
-#     #   - mode_invid_invasion_started
-#     #   - mode_annie_mode_started
-#     #   - mode_rand_mode_started
-#     #   - logicblock_marlene_hit_counter_hit{device.counters.marlene_hit_counter.value==6}
-#     debug: true
-#
-#
-# shots:
-#   P_1:
-#     switch: s_top_target
-#     profile: protoculture_profile
-#     show_tokens:
-#       leds: l_b1
-#     enable_events:
-#       - mode_protoculture_started{device.counters.protoculture_hit_counter.value==0}
-#     #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=0}
-#     # disable_events:
-#     #   - P_1_unlit_hit
-#     advance_events: P_1_unlit_hit
-#     debug: true
-#   P_2:
-#     switch: s_top_target
-#     profile: protoculture_profile
-#     show_tokens:
-#       leds: l_b2
-#     enable_events:
-#       - mode_protoculture_started{device.counters.protoculture_hit_counter.value==1}
-#       - P_1_unlit_hit
-#     #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=1}
-#     # disable_events:
-#     #   - P_2_unlit_hit
-#     #   #- mode_protoculture_started{device.counters.protoculture_hit_counter.value<1 or device.counters.protoculture_hit_counter.value>1}
-#     #   - mode_invid_invasion_started
-#     #advance_events: P_2_unlit_hit
-#     debug: true
-#   P_3:
-#     switch: s_top_target
-#     profile: protoculture_profile
-#     show_tokens:
-#       leds: l_b3
-#     enable_events:
-#       - mode_protoculture_started{device.counters.protoculture_hit_counter.value==2}
-#       - P_2_unlit_hit
-#     #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=2}
-#     # disable_events:
-#     #     - P_3_unlit_hit
-#     #   #- mode_protoculture_started{device.counters.protoculture_hit_counter.value<2 or device.counters.protoculture_hit_counter.value>2}
-#     #   - mode_invid_invasion_started
-#     advance_events: P_3_unlit_hit
-#     debug: true
-#   P_4:
-#     switch: s_top_target
-#     profile: protoculture_profile
-#     show_tokens:
-#       leds: l_b4
-#     enable_events:
-#       - mode_protoculture_started{device.counters.protoculture_hit_counter.value==3}
-#       - P_3_unlit_hit
-#     #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=3}
-#     # disable_events:
-#     #   - P_4_unlit_hit
-#     #   #- mode_protoculture_started{device.counters.protoculture_hit_counter.value<3 or device.counters.protoculture_hit_counter.value>3}
-#     #   - mode_invid_invasion_started
-#     advance_events: P_4_unlit_hit
-#     debug: true
-#   P_5:
-#     switch: s_top_target
-#     profile: protoculture_profile
-#     show_tokens:
-#       leds: l_b5
-#     enable_events:
-#       - mode_protoculture_started{device.counters.protoculture_hit_counter.value==4}
-#       - P_4_unlit_hit
-#     #   - mode_end_invid_invasion_stopped{device.counters.protoculture_hit_counter.value>=4}
-#     disable_events:
-#       - logicblock_marlene_hit_counter_hit{device.counters.marlene_hit_counter.value==6}
-#     #   #- mode_protoculture_started{device.counters.protoculture_hit_counter.value<3 or device.counters.protoculture_hit_counter.value>3}
-#     #   - mode_invid_invasion_started
-#     advance_events: P_5_unlit_hit
-#     debug: true
-#   P_6:
-#     switch: s_top_target
-#     profile: protoculture_profile
-#     show_tokens:
-#       leds: l_b6
-#     enable_events:
-#       - mode_protoculture_started{device.counters.protoculture_hit_counter.value==5}
-#       - P_5_unlit_hit
-#     advance_events: P_6_unlit_hit
-#     debug: true
-#   P_7:
-#     switch: s_top_target
-#     profile: protoculture_profile
-#     show_tokens:
-#       leds: l_b7
-#     enable_events:
-#       - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=6}
-#       - P_6_unlit_hit
-#     advance_events: P_7_unlit_hit
-#     debug: true
-#   P_8:
-#     switch: s_top_target
-#     profile: protoculture_profile
-#     show_tokens:
-#       leds: l_b8
-#     enable_events:
-#       - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=7}
-#       - P_7_unlit_hit
-#     advance_events: P_8_unlit_hit
-#     debug: true
-#   P_9:
-#     switch: s_top_target
-#     profile: protoculture_profile
-#     show_tokens:
-#       leds: l_b9
-#     enable_events:
-#       - mode_protoculture_started{device.counters.protoculture_hit_counter.value>=8}
-#       - P_8_unlit_hit
-#     advance_events: P_9_unlit_hit
-#     debug: true
-#
-# shot_profiles:
-#   protoculture_profile:
-#     advance_on_hit: false
-#     states:
-#     - name: unlit
-#       show: off
-#     - name: hit
-#       show: protoculture_cell_on
-
-variable_player:
-  s_top_target_active: #protoculture_shot_group_unlit_hit:
-    protoculture_value:
-      int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.protoculture_shot_multiplier) * current_player.pf_multiplier
-      action: set
-    score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.protoculture_shot_multiplier) * current_player.pf_multiplier
+shows:
+  P_1_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        # l_b2: black
+        # l_b3: black
+        # l_b4: black
+        # l_b5: black
+        # l_b6: black
+        # l_b7: black
+        # l_b8: black
+        # l_b9: black
+        # l_b10: black
+    - time: -1
+  P_2_show_on:
+    - time: 0
+      lights:
+        # l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        # l_b3: black
+        # l_b4: black
+        # l_b5: black
+        # l_b6: black
+        # l_b7: black
+        # l_b8: black
+        # l_b9: black
+        # l_b10: black
+    - time: -1
+  P_3_show_on:
+    - time: 0
+      lights:
+        # l_b1: 2F4F4F
+        # l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        # l_b4: black
+        # l_b5: black
+        # l_b6: black
+        # l_b7: black
+        # l_b8: black
+        # l_b9: black
+        # l_b10: black
+    - time: -1
+  P_4_show_on:
+    - time: 0
+      lights:
+        # l_b1: 2F4F4F
+        # l_b2: 2F4F4F
+        # l_b3: 2F4F4F
+        l_b4: 2F4F4F
+        # l_b5: off
+        # l_b6: off
+        # l_b7: off
+        # l_b8: off
+        # l_b9: off
+        # l_b10: off
+    - time: -1
+  P_5_show_on:
+    - time: 0
+      lights:
+        # l_b1: 2F4F4F
+        # l_b2: 2F4F4F
+        # l_b3: 2F4F4F
+        # l_b4: 2F4F4F
+        l_b5: 2F4F4F
+        # l_b6: black
+        # l_b7: black
+        # l_b8: black
+        # l_b9: black
+        # l_b10: black
+    - time: -1
+  P_6_show_on:
+    - time: 0
+      lights:
+        # l_b1: 2F4F4F
+        # l_b2: 2F4F4F
+        # l_b3: 2F4F4F
+        # l_b4: 2F4F4F
+        # l_b5: 2F4F4F
+        l_b6: 2F4F4F
+        # l_b7: black
+        # l_b8: black
+        # l_b9: black
+        # l_b10: black
+    - time: -1
+  P_7_show_on:
+    - time: 0
+      lights:
+        # l_b1: 2F4F4F
+        # l_b2: 2F4F4F
+        # l_b3: 2F4F4F
+        # l_b4: 2F4F4F
+        # l_b5: 2F4F4F
+        # l_b6: 2F4F4F
+        l_b7: 2F4F4F
+        # l_b8: off
+        # l_b9: off
+        # l_b10: off
+    - time: -1
+  P_8_show_on:
+    - time: 0
+      lights:
+        # l_b1: 2F4F4F
+        # l_b2: 2F4F4F
+        # l_b3: 2F4F4F
+        # l_b4: 2F4F4F
+        # l_b5: 2F4F4F
+        # l_b6: 2F4F4F
+        # l_b7: 2F4F4F
+        l_b8: 2F4F4F
+        # l_b9: off
+        # l_b10: off
+    - time: -1
+  P_9_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        l_b4: 2F4F4F
+        l_b5: 2F4F4F
+        l_b6: 2F4F4F
+        l_b7: 2F4F4F
+        l_b8: 2F4F4F
+        l_b9: 2F4F4F
+        # l_b10: off
+    - time: -1
+  P_10_show_on:
+    - time: 0
+      lights:
+        l_b1: off
+        l_b2: off
+        l_b3: off
+        l_b4: off
+        l_b5: off
+        l_b6: off
+        l_b7: off
+        l_b8: off
+        l_b9: off
+        l_b10: 2F4F4F
+    - time: -1
+  P_11_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        # l_b2: off
+        # l_b3: off
+        # l_b4: off
+        # l_b5: off
+        # l_b6: off
+        # l_b7: off
+        # l_b8: off
+        # l_b9: off
+        l_b10: 2F4F4F
+    - time: -1
+  P_12_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        # l_b3: off
+        # l_b4: off
+        # l_b5: off
+        # l_b6: off
+        # l_b7: off
+        # l_b8: off
+        # l_b9: off
+        l_b10: 2F4F4F
+    - time: -1
+  P_13_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        # l_b4: off
+        # l_b5: off
+        # l_b6: off
+        # l_b7: off
+        # l_b8: off
+        # l_b9: off
+        l_b10: 2F4F4F
+    - time: -1
+  P_14_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        l_b4: 2F4F4F
+        # l_b5: off
+        # l_b6: off
+        # l_b7: off
+        # l_b8: off
+        # l_b9: off
+        l_b10: 2F4F4F
+    - time: -1
+  P_15_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        l_b4: 2F4F4F
+        l_b5: 2F4F4F
+        # l_b6: off
+        # l_b7: off
+        # l_b8: off
+        # l_b9: off
+        l_b10: 2F4F4F
+    - time: -1
+  P_16_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        l_b4: 2F4F4F
+        l_b5: 2F4F4F
+        l_b6: 2F4F4F
+        # l_b7: off
+        # l_b8: off
+        # l_b9: off
+        l_b10: 2F4F4F
+    - time: -1
+  P_17_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        l_b4: 2F4F4F
+        l_b5: 2F4F4F
+        l_b6: 2F4F4F
+        l_b7: 2F4F4F
+        # l_b8: off
+        # l_b9: off
+        l_b10: 2F4F4F
+    - time: -1
+  P_18_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        l_b4: 2F4F4F
+        l_b5: 2F4F4F
+        l_b6: 2F4F4F
+        l_b7: 2F4F4F
+        l_b8: 2F4F4F
+        # l_b9: off
+        l_b10: 2F4F4F
+    - time: -1
+  P_19_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        l_b4: 2F4F4F
+        l_b5: 2F4F4F
+        l_b6: 2F4F4F
+        l_b7: 2F4F4F
+        l_b8: 2F4F4F
+        l_b9: 2F4F4F
+        #l_b10: 2F4F4F
+    - time: -1

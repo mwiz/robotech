@@ -1,0 +1,49 @@
+#config_version=5
+
+mode:
+   start_events: qualify_invid_invasion
+   stop_events: mode_invid_invasion_started, game_ending
+   restart_on_next_ball: true
+   priority: 250
+
+
+show_player:
+  mode_qualify_invid_invasion_started:
+    flash_white_show:
+      speed: 5
+      show_tokens:
+        leds: l_mode_start
+      loops: -1
+
+event_player:
+  mode_skill_shot_stopped:
+    - ramp_down_active{mode.qualify_invid_invasion.active and not mode.invid_invasion.active}|1s
+  mode_qualify_invid_invasion_started:
+    - ramp_down_active
+  ramp_reflex_point_sequence_hit:
+    - start_invid_invasion
+    - ramp_up_active
+
+#shots:
+#  opening_shot:
+#    switch: s_left_lock_kickout
+#    profile: quick_flash_green
+#    show_tokens:
+#      leds: l_llock_arrow
+
+#timers:
+#   alien_attack:
+#     start_value: 1
+#     end_value: 60
+#     direction: up
+#     tick_interval: 1s
+#     start_running: true
+
+#shot_profiles:
+#  quick_flash_green:
+#    states:
+#  - name: unlit
+#      show: flash_green
+    #- name: lit
+#  - name: complete
+#      show: off

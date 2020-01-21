@@ -4,6 +4,8 @@ mode:
   start_events:
     - start_pre_qualify_mystery
   stop_events:
+    - mode_invid_invasion_stopped
+    - mode_genesis_pit_stopped
     - ball_ending
     - qualify_mystery
   restart_on_next_ball: false
@@ -33,6 +35,7 @@ shot_groups:
       # - mode_pre_qualify_mystery_started
       # - mode_annie_mode_stopped
       - mode_skill_shot_stopped
+      - mode_corg_mode_stopped
       # - mode_rook_mode_stopping
       # - mode_lunk_mode_stopped
       # - mode_rand_mode_stopped
@@ -45,6 +48,7 @@ shot_groups:
       # - mode_intro_rand_mode_starting
       # - mode_annie_mode_starting
       - mode_skill_shot_started
+      - mode_intro_corg_mode_started
       # - mode_intro_rook_mode_starting
       # - mode_lunk_mode_starting
     reset_events:

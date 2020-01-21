@@ -5,6 +5,7 @@ mode:
      - mode_invid_invasion_stopped #(testing) - ball_starting{current_player.ball==1 and not is_extra_ball} (testing)
      - mode_genesis_pit_stopped
      - mode_the_fortress_stopped
+     - mode_big_apple_stopped
    stop_events:
      - mode_qualified
    restart_on_next_ball: true
@@ -37,6 +38,9 @@ event_player:
   mode_lunk_mode_stopped:
     - drop_reset_up
     - start_check_pre_qualify_a_mode_drop_targets_up_timer
+  mode_corg_mode_stopped:
+    - drop_reset_up
+    - start_check_pre_qualify_a_mode_drop_targets_up_timer
   timer_check_pre_qualify_a_mode_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
     - drop_reset_up
     - enable_pre_qualify_a_mode_drop_targets|.5s
@@ -65,19 +69,23 @@ shot_groups:
       - pre_qualify_a_mode_right_drop
     enable_events:
       - enable_pre_qualify_a_mode_drop_targets
+      - mode_corg_mode_stopped
     disable_events:
       - mode_intro_rand_mode_started
       - mode_intro_annie_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
-    reset_events: mode_qualified
+      - mode_intro_corg_mode_started
+    reset_events:
+      - mode_qualified
+      #- mode_pre_qualify_a_mode_started
     debug: true
 
-show_player:
-  pre_qualify_a_mode_invid_target_group_hit_complete:
-    invid_targets_complete:
-      show_tokens:
-        color: red
+# show_player:
+#   pre_qualify_a_mode_invid_target_group_hit_complete:
+#     invid_targets_complete:
+#       show_tokens:
+#         color: red
 
 shot_profiles:
   pre_qualify_a_mode_invid_profile:

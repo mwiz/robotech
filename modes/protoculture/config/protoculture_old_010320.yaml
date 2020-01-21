@@ -1,0 +1,127 @@
+#config_version=5
+
+mode:
+  start_events:
+    - mode_annie_mode_stopped
+    - mode_rand_mode_stopped
+    - mode_skill_shot_stopped
+    - mode_rook_mode_stopped
+    - marlene_shot_6_flashing_marlene_hit
+    - mode_lunk_mode_stopped
+    - mode_genesis_pit_stopped
+    - mode_the_fortress_stopped
+    - mode_big_apple_stopped
+  stop_events:
+    - protoculture_collected
+    - logicblock_marlene_hit_counter_hit{device.counters.marlene_hit_counter.value==6}
+    - mode_invid_invasion_started
+    - mode_annie_mode_started
+    - mode_rand_mode_started
+    - mode_skill_shot_started
+    - mode_rook_mode_started
+    - mode_lunk_mode_started
+    - mode_intro_genesis_pit_started
+    - mode_intro_the_fortress_started
+    - mode_intro_big_apple_started
+  restart_on_next_ball: true
+  priority: 7000
+
+event_player:
+  logicblock_protoculture_hit_counter_hit{count==5}:
+    - protoculture_award_extra_ball
+
+timers:
+  disable_protoculture_timer:
+    debug: true
+    start_value: 2
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: top_target_protoculture_shot_flashing_hit
+      - action: reset
+        event: timer_disable_protoculture_timer_complete
+
+shot_profiles:
+  protoculture_profile:
+    advance_on_hit: true
+    block: true
+    states:
+    - name: flashing
+      show: protoculture_flash_show
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+
+shots:
+  top_target_protoculture_shot:
+    switch: s_top_target
+    profile: protoculture_profile
+    show_tokens:
+      leds: l_20k
+    restart_events: timer_disable_protoculture_timer_complete
+    debug: true
+
+
+counters:
+  protoculture_hit_counter:
+    count_events:
+      - top_target_protoculture_shot_flashing_hit
+      - big_apple_protoculture_shot_group_flashing_hit
+    starting_count: 0
+    direction: up
+    count_complete_value: 20
+    reset_on_complete: false
+    events_when_complete: protoculture_collected
+    persist_state: true
+
+widgets:
+  protoculture_hit_widget:
+    - type: text
+      text: Protoculture Collected
+      color: yellow
+      font_size: 60
+      y: center + 25
+    - type: text
+      text: (protoculture_value)
+      font_size: 80
+      color: red
+      y: center - 40
+      number_grouping: true
+
+widget_player:
+  top_target_protoculture_shot_flashing_hit:
+    protoculture_hit_widget:
+      action: add
+      widget_settings:
+        expire: 2s
+  big_apple_protoculture_shot_group_flashing_hit:
+    protoculture_hit_widget:
+      action: add
+      widget_settings:
+        expire: 2s
+
+show_player:
+  top_target_protoculture_shot_flashing_hit:
+    fast_flash_show:
+      key: s_top_target_flash
+      loops: 4
+      speed: 30
+      show_tokens:
+        leds: l_top_target_light
+        color: white
+
+
+variable_player:
+  top_target_protoculture_shot_flashing_hit:
+    protoculture_value:
+      int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.protoculture_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.protoculture_shot_multiplier) * current_player.pf_multiplier
+  big_apple_protoculture_shot_group_flashing_hit:
+    protoculture_value:
+      int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.protoculture_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.protoculture_shot_multiplier) * current_player.pf_multiplier

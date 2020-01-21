@@ -5,7 +5,6 @@ mode:
      - ball_starting{current_player.ball==1 and not is_extra_ball} # {not mode.qualify_invid_invasion.active} #start_pre_qualify_invid_invasion
    stop_events:
      - qualify_invid_invasion
-     #- mode_intro_invid_invasion_started
    restart_on_next_ball: true
    priority: 400
 
@@ -17,6 +16,7 @@ counters:
     count_complete_value: 1
     events_when_complete:
       - qualify_invid_invasion
+      - start_hurry_up_mode_start_ramp
       #- start_qualify_invid_invasion_ball_save #not mode.ball_save.active or not mode.ball_save_kickback.active}
     persist_state: true
     #debug: true
@@ -32,11 +32,13 @@ shot_groups:
       - right_drop
     enable_events:
       - enable_invid_targets
+      - mode_corg_mode_stopped
     disable_events:
       #- invid_target_group_hit_complete
       #- mode_bonus_will_start
       - mode_pre_qualify_invid_invasion_starting
       #lanes_invid_skill_cancel_sequence_timeout
+      - mode_intro_corg_mode_started
     debug: true
 
 # show_player:

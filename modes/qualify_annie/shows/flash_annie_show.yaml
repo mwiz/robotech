@@ -2,11 +2,11 @@
 
 # - time: 0
 #   lights:
-#     l_left_orbit_arrow: FF8000
+#     l_annie_arrow: FF8000
 #
 # - time: 500ms
 #   lights:
-#     l_left_orbit_arrow: off
+#    l_annie_arrow: off
 
 
 - duration: 500ms
