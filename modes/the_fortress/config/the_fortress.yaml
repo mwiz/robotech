@@ -5,8 +5,23 @@ mode:
     - mode_intro_the_fortress_started
   stop_events:
     - mode_end_the_fortress_started
-    - ball_will_end
+    - tilt
+    #- ball_will_end
   priority: 8200
+
+
+# ball_holds:
+#   rand_ball_hold:
+#     balls_to_hold: 1
+#     hold_devices: bd_left_lock
+#     enable_events: enable_lock_shots
+#     disable_events:
+#       - mode_the_fortress_started
+#       - ball_hold_rand_ball_hold_balls_released
+#     release_all_events:
+#       - bombs_explode_success
+#       - mode_the_fortress_stopped
+#     debug: True
 
 event_player:
   mode_the_fortress_started.1:
@@ -14,6 +29,35 @@ event_player:
       ticks_remaining: 60
   mode_the_fortress_started.2:
     - display_the_fortress_mode_widgets
+    #- orbit_gate_disable
+    - ramp_diverter_enable
+    - drop_reset_up
+    - ramp_down_active|.5s
+  the_fortress_ski_ramp_shot_flashing_hit:
+    - ramp_up_active
+    - orbit_gate_enable
+  # start_switches_countdown:
+  #   logicblock_switches_hit_counter_hit{device.counters.switches_hit_counter.value == 100}:
+  #     count: 100
+  # bombs_explode_success:
+  #   - start_the_fortress_4ball_multiball
+  timer_the_fortress_mode_timer_complete:
+    - start_end_the_fortress_mode
+  the_fortress_triple_jackpot_shot_flashing_hit:
+    - ramp_diverter_disable
+  the_fortress_super_jackpot_shot_flashing_hit:
+    - start_end_the_fortress_mode|1s
+  ball_save_fake_the_fortress_ball_save_saving_ball:
+    - start_end_the_fortress_mode
+  the_fortress_top_lanes_flashing_hit:
+    # - start_switches_countdown
+    - the_fortress_success
+    - start_the_fortress_4ball_multiball|1s
+  the_fortress_right_orbit_shot_flashing_hit:
+    - enable_lock_shots
+    - orbit_gate_disable
+  the_fortress_success:
+    - ramp_down_active
 
 timers:
   the_fortress_mode_timer:
@@ -28,37 +72,52 @@ timers:
       - action: add
         event: spinner_shot_hit
         value: current_player.spinner_time_value
+      - action: add
+        event: the_fortress_ski_ramp_shot_flashing_hit
+        value: 10
+      - action: add
+        event: the_fortress_right_orbit_shot_flashing_hit
+        value: 10
       - action: pause
         event: mystery_shot_flashing_hit{game.balls_in_play==1}
         value: 5
+      # - action: add
+      #   event: start_switches_countdown
+      #   value: 10
+  the_fortress_top_lanes_target_rotator:
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: start_top_lanes_rotator
+    debug: true
+
 
 multiballs:
   the_fortress_multiball:
-    ball_count: 4
-    ball_count_type: total
+    ball_count: 1
+    ball_count_type: add
     start_or_add_a_ball_events:
-      - stop_intro_the_fortress_mode
-    ball_locks: bd_right_lock
+      - mode_intro_the_fortress_stopped
+      - enable_lock_shots
+      - start_top_lanes_rotator
+    #ball_locks: bd_right_lock
+    disable_events:
+      - mode_end_the_fortress_starting
+      #- start_switches_countdown
+      - the_fortress_success
+    shoot_again: 0
+    debug: true
+  the_fortress_4ball_multiball:
+    ball_count: 3
+    ball_count_type: total
+    start_events:
+      - start_the_fortress_4ball_multiball
+    disable_events:
+      - mode_end_the_fortress_starting
     shoot_again: 0
     debug: true
 
 widgets:
-  the_fortress_mode_time_display_widget:
-    - type: text
-      text: TIMER
-      color: blue
-      font_size: 100
-      y: center + 220
-      x: center - 450
-      z: 1150
-  the_fortress_mode_timer_widget:
-    - type: text
-      text: (ticks_remaining)
-      color: red
-      font_size: 100
-      y: center + 150
-      x: center - 450
-      z: 1150
   the_fortress_left_rectangle:
     - type: rectangle
       anchor_x: left
@@ -73,12 +132,78 @@ widgets:
     - type: rectangle
       anchor_x: left
       anchor_y: bottom
-      x: 1137
+      x: 1130
       y: 190
       z: 1100
       width: 130
       height: 500
       color: black
+  the_fortress_mode_time_display_widget:
+    - type: text
+      text: TIMER
+      color: blue
+      font_size: 100
+      y: center + 220
+      x: center - 450
+      z: 1149
+  the_fortress_mode_timer_widget:
+    - type: text
+      text: (ticks_remaining)
+      color: red
+      font_size: 100
+      y: center + 150
+      x: center - 450
+      z: 1150
+  the_fortress_display_ski_ramp_text_widget:
+    - type: text
+      text: "SHOOT RAMP"
+      color: red
+      font_size: 100
+      y: center + 150
+      x: center # + 300
+      z: 1151
+      animations:
+        widgets_play:
+        - property: opacity
+          value: 1
+          duration: .5s
+        - property: opacity
+          value: 0
+          duration: .5s
+          repeat: true
+  the_fortress_display_orbit_shots_widget:
+    - type: text
+      text: "SHOOT RIGHT ORBIT"
+      color: red
+      font_size: 100
+      y: center + 100 # 170
+      x: center # + 300
+      z: 1152
+      animations:
+        widgets_play:
+        - property: opacity
+          value: 1
+          duration: .5s
+        - property: opacity
+          value: 0
+          duration: .5s
+          repeat: true
+  the_fortress_display_switch_hit_text_widget:
+    - type: text
+      text: "SWITCHES"
+      color: blue
+      font_size: 100
+      x: center + 300
+      y: center + 220
+      z: 1153
+  the_fortress_switch_hit_count_widget:
+    - type: text
+      text: (count)
+      color: green
+      font_size: 100
+      x: center + 300
+      y: center + 150
+      z: 1154
   the_fortress_jackpot_widget:
     - type: text
       text: JACKPOT!
@@ -142,34 +267,339 @@ widget_player:
       action: add
       slide: base_slide
       priority: 8203
-    the_fortress_mode_timer_widget:
-      action: update
+    # the_fortress_mode_timer_widget:
+    #   action: update
+    #   slide: base_slide
+    #   priority: 8204
+    the_fortress_display_ski_ramp_text_widget:
+      action: add
       slide: base_slide
-      priority: 8204
+      priority: 8205
   timer_the_fortress_mode_timer_tick:
     the_fortress_mode_timer_widget:
       action: update
       slide: base_slide
-      priority: 8205
+      priority: 8209
+  the_fortress_ski_ramp_shot_flashing_hit:
+    the_fortress_display_ski_ramp_text_widget:
+      action: remove
+      slide: base_slide
+      priority: 8210
+    the_fortress_display_orbit_shots_widget:
+      action: add
+      slide: base_slide
+      priority: 8211
+  the_fortress_right_orbit_shot_flashing_hit:
+    the_fortress_display_orbit_shots_widget:
+      action: remove
+      slide: base_slide
+      priority: 8212
+  the_fortress_jackpot_shot_flashing_hit:
+    the_fortress_jackpot_widget:
+      widget_settings:
+        expire: 2s
+  the_fortress_double_jackpot_shot_flashing_hit:
+    the_fortress_double_jackpot_widget:
+      widget_settings:
+        expire: 2s
+  the_fortress_triple_jackpot_shot_flashing_hit:
+    the_fortress_triple_jackpot_widget:
+      widget_settings:
+        expire: 2s
+  the_fortress_super_jackpot_shot_flashing_hit:
+    the_fortress_super_jackpot_widget:
+      widget_settings:
+        expire: 2s
+  # start_switches_countdown:
+  #   the_fortress_display_switch_hit_text_widget:
+  #     action: add
+  #     slide: base_slide
+  #     priority: 8213
+  #   the_fortress_switch_hit_count_widget:
+  #     action: update
+  #     slide: base_slide
+  #     priority: 8214
+  # logicblock_switches_hit_counter_hit:
+  #   the_fortress_switch_hit_count_widget:
+  #     action: update
+  #     slide: base_slide
+  #     priority: 8215
+  # bombs_explode_success:
+  # the_fortress_success:
+  #   the_fortress_display_switch_hit_text_widget:
+  #     action: remove
+  #     slide: base_slide
+  #     priority: 8216
+  #   the_fortress_switch_hit_count_widget:
+  #     action: remove
+  #     slide: base_slide
+  #     priority: 8217
 
 shot_profiles:
   the_fortress_lock_shots:
     advance_on_hit: true
     states:
       - name: flashing
-        show: flash_lock_shot_show
-        speed: 15
+        show: flash_green_show
+        loops: -1
+        speed: 20
       - name: hit
-        show: color_red_on
+        show: color_green_on
+  the_fortress_jackpot:
+    advance_on_hit: true
+    block: true
+    states:
+      - name: flashing
+        show: the_fortress_jackpot_flash_show
+        loops: -1
+        speed: 5
+      - name: hit
+        show: off
+  the_fortress_right_orbit_profile:
+    advance_on_hit: false
+    states:
+      - name: flashing
+        show: flash_orbit_shot_show
+        loops: -1
+        speed: 6
+  the_fortress_ski_ramp_profile:
+    advance_on_hit: false
+    states:
+      - name: flashing
+        show: flash_ramp_shot_show
+        loops: -1
+        speed: 6
+  the_fortress_bombs_trigger:
+    block: false
+    advance_on_hit: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing
+      show: flash_led_skill_show
+      show_tokens:
+        color: red
+      loops: -1
+      speed: 10
+    - name: hit
+      show: off
+
+shot_groups:
+  the_fortress_top_lanes:
+    shots:
+      - the_fortress_r_shot
+      - the_fortress_o1_shot
+      - the_fortress_b_shot
+      - the_fortress_o2_shot
+    rotate_right_events:
+      - timer_the_fortress_top_lanes_target_rotator_tick
+    disable_events:
+      - mode_the_fortress_started
+      #- start_switches_countdown
+      - the_fortress_success
+    enable_events: start_top_lanes_rotator
+    debug: true
 
 shots:
+  the_fortress_ski_ramp_shot:
+    switch: s_back_ramp
+    profile: the_fortress_ski_ramp_profile
+    enable_events: mode_the_fortress_started
+    disable_events: the_fortress_ski_ramp_shot_flashing_hit
+    debug: true
+  the_fortress_right_orbit_shot:
+    hit_events: the_fortress_right_orbit_shot_sequence_hit
+    profile: the_fortress_right_orbit_profile
+    enable_events: the_fortress_ski_ramp_shot_flashing_hit
+    disable_events: the_fortress_right_orbit_shot_flashing_hit
+    debug: true
   the_fortress_rand_lock_shot:
     switch: s_left_lock_kickout
     profile: the_fortress_lock_shots
+    enable_events: enable_lock_shots
+    disable_events:
+      - mode_the_fortress_started
+      #- start_switches_countdown
+      - the_fortress_success
     show_tokens:
       leds: l_llock_arrow
   the_fortress_rook_lock_shot:
     switch: s_right_lock_kickout
     profile: the_fortress_lock_shots
+    enable_events: enable_lock_shots
+    disable_events:
+      - mode_the_fortress_started
+      #- start_switches_countdown
+      - the_fortress_success
     show_tokens:
       leds: l_rlock_arrow
+  the_fortress_r_shot:
+    switch: s_r_top_lane
+    profile: the_fortress_bombs_trigger
+    show_tokens:
+      leds: l_r_light
+    debug: true
+  the_fortress_o1_shot:
+    switch: s_o1_top_lane
+    profile: the_fortress_bombs_trigger
+    show_tokens:
+      leds: l_o_light
+  the_fortress_b_shot:
+    switch: s_b_top_lane
+    profile: the_fortress_bombs_trigger
+    show_tokens:
+      leds: l_b_light
+  the_fortress_o2_shot:
+    switch: s_o2_top_lane
+    profile: the_fortress_bombs_trigger
+    show_tokens:
+      leds: l_o2_light
+    advance_events: timer_the_fortress_top_lanes_target_rotator_started
+  the_fortress_jackpot_shot:
+    hit_events: ramp_wireform_sequence_hit
+    profile: the_fortress_jackpot
+    show_tokens:
+      color: green
+    enable_events:
+      - the_fortress_success
+    disable_events:
+      - the_fortress_jackpot_shot_flashing_hit
+  the_fortress_double_jackpot_shot:
+    hit_events: ramp_wireform_sequence_hit
+    profile: the_fortress_jackpot
+    show_tokens:
+      color: yellow
+    enable_events:
+      - the_fortress_jackpot_shot_flashing_hit
+    disable_events:
+      - the_fortress_double_jackpot_shot_flashing_hit
+  the_fortress_triple_jackpot_shot:
+    hit_events: ramp_wireform_sequence_hit
+    profile: the_fortress_jackpot
+    show_tokens:
+      color: red
+    enable_events:
+      - the_fortress_double_jackpot_shot_flashing_hit
+    disable_events:
+      - the_fortress_triple_jackpot_shot_flashing_hit
+  the_fortress_super_jackpot_shot:
+    hit_events: ramp_reflex_point_sequence_hit
+    profile: the_fortress_jackpot
+    show_tokens:
+      color: purple
+    enable_events:
+      - the_fortress_triple_jackpot_shot_flashing_hit
+
+sequence_shots:
+  the_fortress_right_orbit_shot_sequence:
+    switch_sequence:
+      - s_spinner
+      - s_gate_top_right
+    sequence_timeout: 2s
+
+# counters:
+#   switches_hit_counter:
+#     count_events:
+#       - sw_playfield_active
+#       - pops_shot_hit
+#       - slings_shot_hit
+#     starting_count: current_player.the_fortress_switches_start_value
+#     enable_events: start_switches_countdown
+#     disable_events: mode_the_fortress_started
+#     count_complete_value: 0
+#     direction: down
+#     events_when_complete:
+#       #- bombs_explode_success
+#       - the_fortress_success
+#     debug: true
+
+accruals:
+  rand_rook_lock_shots:
+    events:
+      - the_fortress_rand_lock_shot_flashing_hit
+      - the_fortress_rook_lock_shot_flashing_hit
+    enable_events: enable_lock_shots
+    events_when_complete: start_top_lanes_rotator #start_switches_countdown
+    disable_on_complete: true
+    debug: true
+
+
+variable_player:
+  the_fortress_ski_ramp_shot_flashing_hit:
+    the_fortress_score_value:
+      int: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+  the_fortress_right_orbit_shot_flashing_hit:
+    the_fortress_score_value:
+      int: (20000 * current_player.lancer_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.lancer_shot_multiplier) * current_player.pf_multiplier
+  the_fortress_rand_lock_shot_flashing_hit:
+    the_fortress_score_value:
+      int: (20000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
+  the_fortress_rook_lock_shot_flashing_hit:
+    the_fortress_score_value:
+      int: (20000 * current_player.rook_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.rook_shot_multiplier) * current_player.pf_multiplier
+  the_fortress_top_lanes_flashing_hit:
+    the_fortress_score_value:
+      int: 20000 * current_player.pf_multiplier
+      action: set
+    score: 20000 * current_player.pf_multiplier
+  the_fortress_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+  the_fortress_double_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: (40000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (40000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+  the_fortress_triple_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: (60000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (60000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+  the_fortress_super_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: (100000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (100000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+    mode_end_action_flag:
+      int: 2
+      action: set
+  timer_the_fortress_mode_timer_complete:
+    mode_end_action_flag:
+      int: 1
+      action: set
+
+sound_player:
+  the_fortress_jackpot_shot_flashing_hit:
+    jackpot:
+      action: play
+  the_fortress_double_jackpot_shot_flashing_hit:
+    double_jackpot:
+      action: play
+  the_fortress_triple_jackpot_shot_flashing_hit:
+    triple_jackpot:
+      action: play
+  the_fortress_super_jackpot_shot_flashing_hit:
+    super_jackpot:
+      action: play
+
+ball_saves:
+  fake_the_fortress_ball_save:
+    enable_events:
+      - multiball_the_fortress_multiball_ended
+      - multiball_the_fortress_4ball_multiball_ended
+    disable_events:
+      - multiball_the_fortress_multiball_started
+      - multiball_the_fortress_4ball_multiball_started
+    auto_launch: no
+    balls_to_save: 1
+    debug: yes

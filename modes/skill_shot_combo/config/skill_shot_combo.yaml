@@ -2,17 +2,22 @@
 
 mode:
   start_events:
-    - mode_skill_shot_starting
+    #- mode_skill_shot_starting
+    - start_skill_shot_mode
     #- start_combo_timer
   stop_events:
     - timer_skill_shot_combo_timer_complete
     - skill_shot_combo_made
+    - skill_shot_secret_combo_made
     - skill_shot_missed
+    - ball_save_default_saving_ball
   stop_on_ball_end: true
-  priority: 2000
+  priority: 1900
 
 event_player:
-  # Super Skill Shot combos
+#-------------------------------------------------------------------------------
+# Super Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_super_skill_shot_rand_combo_hit:
     - skill_shot_combo_made
   skill_shot_super_skill_shot_annie_combo_hit:
@@ -23,7 +28,15 @@ event_player:
     - skill_shot_combo_made
   skill_shot_super_skill_shot_lunk_combo_hit:
     - skill_shot_combo_made
-  # Invid Skill Shot combos
+  skill_shot_super_skill_shot_top_lanes_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_super_skill_shot_ramp_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_super_skill_shot_secret_combo_hit:
+    - skill_shot_secret_combo_made
+#-------------------------------------------------------------------------------
+# Invid Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_invid_rook_combo_hit:
     - skill_shot_combo_made
   skill_shot_invid_rand_combo_hit:
@@ -34,7 +47,11 @@ event_player:
     - skill_shot_combo_made
   skill_shot_invid_lunk_combo_hit:
     - skill_shot_combo_made
-  # Rand Skill Shot combos
+  skill_shot_invid_ramp_combo_hit:
+    - skill_shot_combo_made
+#-------------------------------------------------------------------------------
+# Rand Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_rand_rook_combo_hit:
     - skill_shot_combo_made
   skill_shot_rand_lancer_combo_hit:
@@ -43,7 +60,11 @@ event_player:
     - skill_shot_combo_made
   skill_shot_rand_annie_combo_hit:
     - skill_shot_combo_made
-  # Rook Skill Shot combos
+  skill_shot_rand_ramp_combo_hit:
+    - skill_shot_combo_made
+#-------------------------------------------------------------------------------
+# Rook Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_rook_rand_combo_hit:
     - skill_shot_combo_made
   skill_shot_rook_annie_combo_hit:
@@ -52,7 +73,11 @@ event_player:
     - skill_shot_combo_made
   skill_shot_rook_lunk_combo_hit:
     - skill_shot_combo_made
-  # Top Lanes Skill Shot combos
+  skill_shot_rook_ramp_combo_hit:
+    - skill_shot_combo_made
+#-------------------------------------------------------------------------------
+# Top Lanes Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_top_lanes_rand_combo_hit:
     - skill_shot_combo_made
   skill_shot_top_lanes_annie_combo_hit:
@@ -63,7 +88,11 @@ event_player:
     - skill_shot_combo_made
   skill_shot_top_lanes_lunk_combo_hit:
     - skill_shot_combo_made
-  # SDF targets Skill Shot combos
+  skill_shot_top_lanes_ramp_combo_hit:
+    - skill_shot_combo_made
+#-------------------------------------------------------------------------------
+# SDF targets Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_sdf_targets_rand_combo_hit:
     - skill_shot_combo_made
   skill_shot_sdf_targets_annie_combo_hit:
@@ -72,7 +101,11 @@ event_player:
     - skill_shot_combo_made
   skill_shot_sdf_targets_lancer_combo_hit:
     - skill_shot_combo_made
-  # Secret Skill Shot combos
+  skill_shot_sdf_targets_ramp_combo_hit:
+    - skill_shot_combo_made
+#-------------------------------------------------------------------------------
+# Secret Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_secret_skill_shot_rand_combo_hit:
     - skill_shot_combo_made
   skill_shot_secret_skill_shot_annie_combo_hit:
@@ -83,7 +116,9 @@ event_player:
     - skill_shot_combo_made
   skill_shot_secret_skill_shot_lunk_combo_hit:
     - skill_shot_combo_made
-  # Top Saucer Skill Shot combos
+#-------------------------------------------------------------------------------
+# Top Saucer Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_top_saucer_rand_combo_hit:
     - skill_shot_combo_made
   skill_shot_top_saucer_annie_combo_hit:
@@ -94,116 +129,179 @@ event_player:
     - skill_shot_combo_made
   skill_shot_top_saucer_lunk_combo_hit:
     - skill_shot_combo_made
+  skill_shot_top_saucer_top_lanes_combo_hit:
+    - skill_shot_combo_made
+#-------------------------------------------------------------------------------
+# Top Target Skill Shot combos
+#-------------------------------------------------------------------------------
+  skill_shot_top_target_rand_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_top_target_annie_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_top_target_rook_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_top_target_lancer_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_top_target_lunk_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_top_target_ramp_combo_hit:
+    - skill_shot_combo_made
+#-------------------------------------------------------------------------------
+# Right SHATZ Skill Shot combos
+#-------------------------------------------------------------------------------
+  skill_shot_right_shatz_rand_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_right_shatz_annie_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_right_shatz_rook_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_right_shatz_lancer_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_right_shatz_lunk_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_right_shatz_ramp_combo_hit:
+    - skill_shot_combo_made
+#-------------------------------------------------------------------------------
+# Left SHATZ Skill Shot combos
+#-------------------------------------------------------------------------------
+  skill_shot_left_shatz_rand_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_left_shatz_annie_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_left_shatz_rook_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_left_shatz_lancer_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_left_shatz_lunk_combo_hit:
+    - skill_shot_combo_made
+  skill_shot_left_shatz_ramp_combo_hit:
+    - skill_shot_combo_made
+#_______________________________________________________________________________
 
 sequence_shots:
-  # Super Skill Shot combos
+#-------------------------------------------------------------------------------
+# Super Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_super_skill_shot_rand_combo:
     event_sequence:
-      - super_skill_sequence_hit
+      - super_skill_shot_flashing_hit
       - rand_combo_shot_hit
   skill_shot_super_skill_shot_annie_combo:
     event_sequence:
-      - super_skill_sequence_hit
+      - super_skill_shot_flashing_hit
       - annie_combo_shot_hit
   skill_shot_super_skill_shot_rook_combo:
     event_sequence:
-      - super_skill_sequence_hit
+      - super_skill_shot_flashing_hit
       - rook_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_super_skill_shot_lancer_combo:
     event_sequence:
-      - super_skill_sequence_hit
+      - super_skill_shot_flashing_hit
       - lancer_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_super_skill_shot_lunk_combo:
     event_sequence:
-      - super_skill_sequence_hit
+      - super_skill_shot_flashing_hit
       - lunk_combo_shot_hit
-    #sequence_timeout: 5s
-  # Invid Skill Shot combos
+  skill_shot_super_skill_shot_top_lanes_combo:
+    event_sequence:
+      - super_skill_shot_flashing_hit
+      - top_lanes_combo_skill_flashing_hit
+  skill_shot_super_skill_shot_ramp_combo:
+    event_sequence:
+      - super_skill_shot_flashing_hit
+      - ramp_combo_shot_flashing_combo_hit
+  skill_shot_super_skill_shot_secret_combo:
+    event_sequence:
+      - super_skill_shot_flashing_hit
+      - secret_combo_shot_flashing_combo_hit
+#-------------------------------------------------------------------------------
+# Invid Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_invid_rook_combo:
     event_sequence:
       - invid_targets_skill_flashing_hit
       - rook_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_invid_rand_combo:
     event_sequence:
       - invid_targets_skill_flashing_hit
       - rand_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_invid_annie_combo:
     event_sequence:
       - invid_targets_skill_flashing_hit
       - annie_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_invid_lancer_combo:
     event_sequence:
       - invid_targets_skill_flashing_hit
       - lancer_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_invid_lunk_combo:
     event_sequence:
       - invid_targets_skill_flashing_hit
       - lunk_combo_shot_hit
-    #sequence_timeout: 5s
-  # Rand Skill Shot combos
+  skill_shot_invid_ramp_combo:
+    event_sequence:
+      - invid_targets_skill_flashing_hit
+      - ramp_combo_shot_flashing_combo_hit
+#-------------------------------------------------------------------------------
+# Rand Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_rand_rook_combo:
     event_sequence:
       - left_saucer_skill_saucer_targets_skill_flashing_hit
       - rook_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_rand_lancer_combo:
     event_sequence:
       - left_saucer_skill_saucer_targets_skill_flashing_hit
       - lancer_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_rand_lunk_combo:
     event_sequence:
       - left_saucer_skill_saucer_targets_skill_flashing_hit
       - lunk_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_rand_annie_combo:
     event_sequence:
       - left_saucer_skill_saucer_targets_skill_flashing_hit
       - annie_combo_shot_hit
-    #sequence_timeout: 5s
-  # Rook Skill Shot combos
+  skill_shot_rand_ramp_combo:
+    event_sequence:
+      - left_saucer_skill_saucer_targets_skill_flashing_hit
+      - ramp_combo_shot_flashing_combo_hit
+#-------------------------------------------------------------------------------
+# Rook Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_rook_rand_combo:
     event_sequence:
       - right_saucer_skill_saucer_targets_skill_flashing_hit
       - rand_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_rook_annie_combo:
     event_sequence:
       - right_saucer_skill_saucer_targets_skill_flashing_hit
       - annie_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_rook_lancer_combo:
     event_sequence:
       - right_saucer_skill_saucer_targets_skill_flashing_hit
       - lancer_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_rook_lunk_combo:
     event_sequence:
       - right_saucer_skill_saucer_targets_skill_flashing_hit
       - lunk_combo_shot_hit
-    #sequence_timeout: 5s
-  # Top Lanes Skill Shot combos
+  skill_shot_rook_ramp_combo:
+    event_sequence:
+      - right_saucer_skill_saucer_targets_skill_flashing_hit
+      - ramp_combo_shot_flashing_combo_hit
+#-------------------------------------------------------------------------------
+# Top Lanes Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_top_lanes_rand_combo:
     event_sequence:
       - top_lanes_skill_flashing_hit
       - rand_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_top_lanes_annie_combo:
     event_sequence:
       - top_lanes_skill_flashing_hit
       - annie_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_top_lanes_rook_combo:
     event_sequence:
       - top_lanes_skill_flashing_hit
       - rook_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_top_lanes_lancer_combo:
     event_sequence:
       - top_lanes_skill_flashing_hit
@@ -212,29 +310,36 @@ sequence_shots:
     event_sequence:
       - top_lanes_skill_flashing_hit
       - lunk_combo_shot_hit
-    #sequence_timeout: 5s
-  # SDF targets Skill Shot combos
+  skill_shot_top_lanes_ramp_combo:
+    event_sequence:
+      - top_lanes_skill_flashing_hit
+      - ramp_combo_shot_flashing_combo_hit
+#-------------------------------------------------------------------------------
+# SDF targets Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_sdf_targets_rand_combo:
     event_sequence:
       - sdf_skill_group_flashing_hit
       - rand_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_sdf_targets_annie_combo:
     event_sequence:
       - sdf_skill_group_flashing_hit
       - annie_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_sdf_targets_rook_combo:
     event_sequence:
       - sdf_skill_group_flashing_hit
       - rook_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_sdf_targets_lancer_combo:
     event_sequence:
       - sdf_skill_group_flashing_hit
       - lancer_combo_shot_hit
-    #sequence_timeout: 5s
-  # Secret Skill Shot combos
+  skill_shot_sdf_targets_ramp_combo:
+    event_sequence:
+      - sdf_skill_group_flashing_hit
+      - ramp_combo_shot_flashing_combo_hit
+#-------------------------------------------------------------------------------
+# Secret Skill Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_secret_skill_shot_rand_combo:
     event_sequence:
       - secret_skill_shot_flashing_hit
@@ -247,17 +352,17 @@ sequence_shots:
     event_sequence:
       - secret_skill_shot_flashing_hit
       - rook_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_secret_skill_shot_lancer_combo:
     event_sequence:
       - secret_skill_shot_flashing_hit
       - lancer_combo_shot_hit
-    #sequence_timeout: 5s
   skill_shot_secret_skill_shot_lunk_combo:
     event_sequence:
       - secret_skill_shot_flashing_hit
       - lunk_combo_shot_hit
-  # Top Saucer Shot combos
+#-------------------------------------------------------------------------------
+# Top Saucer Shot combos
+#-------------------------------------------------------------------------------
   skill_shot_top_saucer_rand_combo:
     event_sequence:
       - top_saucer_skill_saucer_targets_skill_flashing_hit
@@ -278,26 +383,165 @@ sequence_shots:
     event_sequence:
       - top_saucer_skill_saucer_targets_skill_flashing_hit
       - lunk_combo_shot_hit
+  skill_shot_top_saucer_top_lanes_combo:
+    event_sequence:
+      - top_saucer_skill_saucer_targets_skill_flashing_hit
+      - top_lanes_combo_skill_flashing_hit
+#-------------------------------------------------------------------------------
+# Top Target Shot combos
+#-------------------------------------------------------------------------------
+  skill_shot_top_target_rand_combo:
+    event_sequence:
+      - top_target_skill_group_flashing_hit
+      - rand_combo_shot_hit
+  skill_shot_top_target_annie_combo:
+    event_sequence:
+      - top_target_skill_group_flashing_hit
+      - annie_combo_shot_hit
+  skill_shot_top_target_rook_combo:
+    event_sequence:
+      - top_target_skill_group_flashing_hit
+      - rook_combo_shot_hit
+  skill_shot_top_target_lancer_combo:
+    event_sequence:
+      - top_target_skill_group_flashing_hit
+      - lancer_combo_shot_hit
+  skill_shot_top_target_lunk_combo:
+    event_sequence:
+      - top_target_skill_group_flashing_hit
+      - lunk_combo_shot_hit
+  skill_shot_top_target_ramp_combo:
+    event_sequence:
+      - top_target_skill_group_flashing_hit
+      - ramp_combo_shot_flashing_combo_hit
+#-------------------------------------------------------------------------------
+# Right SHATZ SKILL Shot combos
+#-------------------------------------------------------------------------------
+  skill_shot_right_shatz_rand_combo:
+    event_sequence:
+      - shatz_skill_sequence_right_hit
+      - rand_combo_shot_hit
+  skill_shot_right_shatz_annie_combo:
+    event_sequence:
+      - shatz_skill_sequence_right_hit
+      - annie_combo_shot_hit
+  skill_shot_right_shatz_rook_combo:
+    event_sequence:
+      - shatz_skill_sequence_right_hit
+      - rook_combo_shot_hit
+  skill_shot_right_shatz_lancer_combo:
+    event_sequence:
+      - shatz_skill_sequence_right_hit
+      - lancer_combo_shot_hit
+  skill_shot_right_shatz_lunk_combo:
+    event_sequence:
+      - shatz_skill_sequence_right_hit
+      - lunk_combo_shot_hit
+  skill_shot_right_shatz_ramp_combo:
+    event_sequence:
+      - shatz_skill_sequence_right_hit
+      - ramp_combo_shot_flashing_combo_hit
+#-------------------------------------------------------------------------------
+# Left SHATZ SKILL Shot combos
+#-------------------------------------------------------------------------------
+  skill_shot_left_shatz_rand_combo:
+    event_sequence:
+      - shatz_skill_sequence_left_hit
+      - rand_combo_shot_hit
+  skill_shot_left_shatz_annie_combo:
+    event_sequence:
+      - shatz_skill_sequence_left_hit
+      - annie_combo_shot_hit
+  skill_shot_left_shatz_rook_combo:
+    event_sequence:
+      - shatz_skill_sequence_left_hit
+      - rook_combo_shot_hit
+  skill_shot_left_shatz_lancer_combo:
+    event_sequence:
+      - shatz_skill_sequence_left_hit
+      - lancer_combo_shot_hit
+  skill_shot_left_shatz_lunk_combo:
+    event_sequence:
+      - shatz_skill_sequence_left_hit
+      - lunk_combo_shot_hit
+  skill_shot_left_shatz_ramp_combo:
+    event_sequence:
+      - shatz_skill_sequence_left_hit
+      - ramp_combo_shot_flashing_combo_hit
+#-------------------------------------------------------------------------------
   lancer_shot_combo_sequence:
     switch_sequence:
       - s_spinner
       - s_gate_top_right
     sequence_timeout: 2s
 
+shot_groups:
+  top_lanes_combo_skill:
+    shots:
+      - combo_skill_r_top_lane_shot
+      - combo_skill_o1_top_lane_shot
+      - combo_skill_b_top_lane_shot
+      - combo_skill_o2_top_lane_shot
+    rotate_right_events:
+      - timer_top_lanes_combo_target_rotator_tick
+    reset_events:
+      - mode_skill_shot_starting
+    disable_events:
+      - right_saucer_skill_saucer_targets_skill_flashing_hit
+      - left_saucer_skill_saucer_targets_skill_flashing_hit
+      - secret_skill_shot_flashing_hit
+      - sdf_skill_group_flashing_hit
+      - invid_targets_skill_flashing_hit
+      - top_lanes_skill_flashing_hit
+      - top_target_skill_group_flashing_hit
+      - shatz_skill_sequence_right_hit
+      - shatz_skill_sequence_left_hit
+    enable_events:
+      - mode_skill_shot_combo_starting
+
 shots:
+  combo_skill_r_top_lane_shot:
+    switch: s_r_top_lane
+    profile: top_lanes_combo_skill
+    advance_events:
+      - advance_top_lanes_targets
+    show_tokens:
+      leds: l_r_light
+    #debug: true
+  combo_skill_o1_top_lane_shot:
+    switch: s_o1_top_lane
+    profile: top_lanes_combo_skill
+    show_tokens:
+      leds: l_o_light
+    #debug: true
+  combo_skill_b_top_lane_shot:
+    switch: s_b_top_lane
+    profile: top_lanes_combo_skill
+    show_tokens:
+      leds: l_b_light
+    #debug: true
+  combo_skill_o2_top_lane_shot:
+    switch: s_o2_top_lane
+    profile: top_lanes_combo_skill
+    show_tokens:
+      leds: l_o2_light
   rand_combo_shot:
     switch: s_left_lock_kickout
     profile: combo_profile
     enable_events:
       - top_saucer_skill_saucer_targets_skill_flashing_hit
-      - super_skill_sequence_hit
+      - super_skill_shot_flashing_hit
       - invid_targets_skill_flashing_hit
       - right_saucer_skill_saucer_targets_skill_flashing_hit
       - top_lanes_skill_flashing_hit
       - sdf_skill_group_flashing_hit
       - secret_skill_shot_flashing_hit
+      - top_target_skill_group_flashing_hit
+      - shatz_skill_sequence_right_hit
+      - shatz_skill_sequence_left_hit
     disable_events:
-      - mode_skill_shot_starting
+      #- mode_skill_shot_starting
+      - mode_skill_shot_combo_starting
       - mode_skill_shot_combo_stopping
       - skill_shot_combo_made
     show_tokens:
@@ -309,15 +553,19 @@ shots:
     profile: combo_profile
     enable_events:
       - top_saucer_skill_saucer_targets_skill_flashing_hit
-      - super_skill_sequence_hit
+      - super_skill_shot_flashing_hit
       - invid_targets_skill_flashing_hit
       - left_saucer_skill_saucer_targets_skill_flashing_hit
       - right_saucer_skill_saucer_targets_skill_flashing_hit
       - top_lanes_skill_flashing_hit
       - sdf_skill_group_flashing_hit
       - secret_skill_shot_flashing_hit
+      - top_target_skill_group_flashing_hit
+      - shatz_skill_sequence_right_hit
+      - shatz_skill_sequence_left_hit
     disable_events:
-      - mode_skill_shot_starting
+      - mode_skill_shot_combo_starting
+      #- mode_skill_shot_starting
       - mode_skill_shot_combo_stopping
       - skill_shot_combo_made
     show_tokens:
@@ -329,14 +577,18 @@ shots:
     profile: combo_profile
     enable_events:
       - top_saucer_skill_saucer_targets_skill_flashing_hit
-      - super_skill_shot_flashing_hit #super_skill_sequence_hit
+      - super_skill_shot_flashing_hit
       - left_saucer_skill_saucer_targets_skill_flashing_hit
       - invid_targets_skill_flashing_hit
       - top_lanes_skill_flashing_hit
       - sdf_skill_group_flashing_hit
       - secret_skill_shot_flashing_hit
+      - top_target_skill_group_flashing_hit
+      - shatz_skill_sequence_right_hit
+      - shatz_skill_sequence_left_hit
     disable_events:
-      - mode_skill_shot_starting
+      #- mode_skill_shot_starting
+      - mode_skill_shot_combo_starting
       - mode_skill_shot_combo_stopping
       - skill_shot_combo_made
     show_tokens:
@@ -348,15 +600,18 @@ shots:
     profile: combo_profile
     enable_events:
       - top_saucer_skill_saucer_targets_skill_flashing_hit
-      #- super_skill_sequence_hit
       - left_saucer_skill_saucer_targets_skill_flashing_hit
       - invid_targets_skill_flashing_hit
       - right_saucer_skill_saucer_targets_skill_flashing_hit
       - top_lanes_skill_flashing_hit
       - sdf_skill_group_flashing_hit
       - secret_skill_shot_flashing_hit
+      - top_target_skill_group_flashing_hit
+      - shatz_skill_sequence_right_hit
+      - shatz_skill_sequence_left_hit
     disable_events:
-      - mode_skill_shot_starting
+      #- mode_skill_shot_starting
+      - mode_skill_shot_combo_starting
       - mode_skill_shot_combo_stopping
       - skill_shot_combo_made
     show_tokens:
@@ -368,20 +623,53 @@ shots:
     profile: combo_profile
     enable_events:
       - top_saucer_skill_saucer_targets_skill_flashing_hit
-      - super_skill_sequence_hit
+      - super_skill_shot_flashing_hit
       - left_saucer_skill_saucer_targets_skill_flashing_hit
       - invid_targets_skill_flashing_hit
       - right_saucer_skill_saucer_targets_skill_flashing_hit
       - top_lanes_skill_flashing_hit
       - secret_skill_shot_flashing_hit
+      - top_target_skill_group_flashing_hit
+      - shatz_skill_sequence_right_hit
+      - shatz_skill_sequence_left_hit
     disable_events:
-      - mode_skill_shot_starting
+      #- mode_skill_shot_starting
+      - mode_skill_shot_combo_starting
       - mode_skill_shot_combo_stopping
       - skill_shot_combo_made
     show_tokens:
       leds: l_sdf_arrow_led
     debug: true
     reset_events: lunk_combo_shot_flashing_combo_hit
+  ramp_combo_shot:
+    switch: s_back_ramp
+    profile: combo_profile
+    enable_events:
+      - top_saucer_skill_saucer_targets_skill_flashing_hit
+      - super_skill_shot_flashing_hit
+      - left_saucer_skill_saucer_targets_skill_flashing_hit
+      - invid_targets_skill_flashing_hit
+      - right_saucer_skill_saucer_targets_skill_flashing_hit
+      - top_lanes_skill_flashing_hit
+      - top_target_skill_group_flashing_hit
+      - shatz_skill_sequence_right_hit
+      - shatz_skill_sequence_left_hit
+    disable_events:
+      - mode_skill_shot_combo_starting
+    reset_events:
+      - ramp_combo_shot_flashing_combo_hit
+  secret_combo_shot:
+    switch: s_top_lock_kickout
+    profile: combo_profile
+    # show_tokens:
+    #   leds: l_left_orbit_arrow
+    enable_events:
+      - super_skill_shot_flashing_hit
+    disable_events:
+      - mode_skill_shot_combo_starting
+    reset_events:
+      - secret_combo_shot_flashing_combo_hit
+
 
 shot_profiles:
   combo_profile:
@@ -390,6 +678,20 @@ shot_profiles:
     states:
     - name: flashing_combo
       show: flash_blue_show
+      loops: -1
+      speed: 10
+    - name: hit
+      show: off
+  top_lanes_combo_skill:
+    advance_on_hit: false
+    block: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing
+      show: flash_led_skill_show
+      show_tokens:
+        color: blue
       loops: -1
       speed: 10
     - name: hit
@@ -411,6 +713,12 @@ timers:
       - action: add
         event: top_lanes_skill_flashing_hit
         value: 2
+  top_lanes_combo_target_rotator:
+    start_running: true
+    tick_interval: 1s
+    control_events:
+      - action: stop
+        event: s_right_orbit_rollover_active
 
 variable_player:
   skill_shot_combo_made:
@@ -419,8 +727,17 @@ variable_player:
       action: set
     score: 10000 + (current_player.combos_made * 1250)
     combos_made: 1
+  skill_shot_secret_combo_made:
+    combo_value:
+      int: 100000 # + (current_player.combos_made * 1250)
+      action: set
+    score: 100000 # + (current_player.combos_made * 1250)
+    combos_made: 1
 
 sound_player:
   skill_shot_combo_made:
     combo:
+      action: play
+  skill_shot_secret_combo_made:
+    secret_combo:
       action: play

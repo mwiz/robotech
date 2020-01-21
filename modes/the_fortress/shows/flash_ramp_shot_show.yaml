@@ -1,0 +1,19 @@
+#show_version=5
+
+
+
+- duration: 1s
+  lights:
+    l_annie_x: red
+    l_annie_arrow: off
+    l_mode_start: off
+- duration: 1s
+  lights:
+    l_annie_x: off
+    l_annie_arrow: red
+    l_mode_start: off
+- duration: 1s
+  lights:
+    l_annie_x: off
+    l_annie_arrow: off
+    l_mode_start: red

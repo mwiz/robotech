@@ -1,87 +1,55 @@
 #config_version=5
-# Robotech
-
 tilt:
-  tilt_warning_switch_tag: tilt_warning
-  #slam_tilt_switch_tag: slam_sw
   warnings_to_tilt: 3
-  reset_warnings_events: ball_ended
-  multiple_hit_window: 200ms
+  #reset_warnings_events: ball_ended
+  multiple_hit_window: 300ms
   settle_time: 5s
   tilt_warnings_player_var: tilt_warnings
-
-
-#sound_player:
-#  tilt_warning_1: distbd1
-#  tilt_warning_2: distbd1
-#  tilt_1: ha_ha_huh_huh
-#  tilt_2: ha_ha_haha_haha
-
-
-
 
 slide_player:
   tilt_warning_1:
     s_tilt_warning_1:
+      force: true
       expire: 2s
   tilt_warning_2:
     s_tilt_warning_2:
+      force: true
       expire: 3s
-  tilt: s_tilt
-
+  tilt:
+    s_tilt:
+      force: true
   tilt_clear:
     s_tilt:
       action: remove
 
-
 slides:
-  _overwrite: True
-
   s_tilt_warning_1:
+    #expire: 3s
     widgets:
       - type: text
         font_size: 100
         text: DANGER!
         color: red
-       # y: 20
-       # z: 4301
-      #- type: image
-      #  image: scary_jack
-      #  anchor_y: top
-      #  anchor_x: left
-      #  y: top
-      #  x: 0
-      #  z: 4300
-
-
   s_tilt_warning_2:
-  - type: text
-    font_size: 100
-    text: DANGER!!
-    color: red
-    y: center+30
-  - type: text
-    font_size: 100
-    text: DANGER!!
-    color: red
-    y: center-30
-    #z: 4306
-  #- type: image
-  #  image: scary_jack
-  #  anchor_y: top
-  #  anchor_x: left
-  #  y: top
-  #  x: 0
-  #  z: 4305
-
+    #expire: 3s
+    widgets:
+      - type: text
+        font_size: 100
+        text: DANGER!!
+        color: red
+        y: center+30
+      - type: text
+        font_size: 100
+        text: DANGER!!
+        color: red
+        y: center-30
   s_tilt:
-  - type: text
-    font_size: 200
-    text: TILT
-    color: red
-    # y: 20
-    # x: 105
-    # z: 4311
-  #- type: video
-  #  video: redjack
-  #  z: 4310
+    widgets:
+      - type: text
+        font_size: 200
+        text: TILT
+        color: red
+
+sound_player:
+  tilt:
+    afm_tilt

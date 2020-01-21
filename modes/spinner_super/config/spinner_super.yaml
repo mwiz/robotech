@@ -4,6 +4,10 @@ mode:
   start_events:
     - spinner_super
   stop_events:
+    - mode_invid_invasion_stopped
+    - mode_genesis_pit_stopped
+    - mode_the_fortress_stopped
+    - mode_big_apple_stopped
     - ball_ended
   priority: 7800
 
@@ -40,15 +44,15 @@ widgets:
     - type: text
       text: "SUPER SPINNER - (count)"
       color: purple
-      font_size: 30
+      font_size: 35
       x: center + 450
-      y: center - 240
+      y: center - 230
     - type: text
       text: "Value: 2000"
       color: purple
       font_size: 30
       x: center + 450
-      y: center - 270
+      y: center - 260
 
 widget_player:
   # mode_spinner_super_started:
@@ -66,12 +70,15 @@ variable_player:
   spinner_shot_hit:
     score: 2000 * current_player.pf_multiplier
     super_spinner_total: 1
-  mode_spinner_level_4_started:
+  mode_spinner_super_started:
     spinner_time_value:
-      int: 4
+      int: 0
       action: set
 
 show_player:
+  mode_spinner_super_started:
+    pulse_spinner_purple_show:
+      loops: -1
   spinner_shot_hit:
     flash_spinner_purple:
       loops: 0
@@ -82,6 +89,7 @@ sound_player:
   mode_spinner_super_started:
     super_spinner:
       action: play
+      priority: 9999
   spinner_shot_hit:
     spinner_sound4:
       action: play

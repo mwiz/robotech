@@ -1,0 +1,11 @@
+#show_version=5
+
+- time: 0
+  lights:
+    l_annie_arrow: (color)
+    l_mode_start: 000000
+- time: +1s 
+  lights:
+    l_annie_arrow: 000000
+    l_mode_start: (color)
+

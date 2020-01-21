@@ -1,0 +1,8 @@
+#show_version=5
+
+- duration: 400ms
+  lights:
+    l_spinner_flasher: purple-f200ms
+- duration: 400ms
+  lights:
+    l_spinner_flasher: black-f200ms

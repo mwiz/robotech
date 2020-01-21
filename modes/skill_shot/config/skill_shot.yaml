@@ -2,22 +2,11 @@
 
 mode:
   start_events:
-    #- ball_starting
-    #- mode_base_started
     - start_skill_shot_mode
-    #- mode_end_invid_invasion_stopped
   stop_events:
     - end_skill_shot_mode
-    # - top_lanes_skill_hit
-    # - invid_targets_skill_hit
-    # - saucer_skill_group_hit
-    # #- timer_skillshot_invid_stop_timer_complete
-    # - timer_skillshot_saucer_stop_timer_complete
-    # - ball_save_default_saving_ball
-    # - super_skill_sequence_hit #|1s
-    # - sdf_skill_group_hit
-    # - s_top_target_active
-  priority: 1900
+    - tilt
+  priority: 2000
 
 event_player:
   mode_skill_shot_starting:
@@ -37,87 +26,69 @@ event_player:
     - advance_top_lanes_targets
     - display_skill_shot_mode_time_display_widget
     - start_check_drop_targets_up_timer
-    # - start_character_modes{device.achievement.invid_invasion_mission_1.state == "complete"}
   mode_skill_shot_will_stop{not mode.qualify_mystery.active}:
     - start_pre_qualify_mystery
   mode_skill_shot_stopping:
     #- orbit_gate_disable
     - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}
-    #- start_pre_qualify_invid_invasion
     - drop_reset_up
     - ramp_diverter_disable
-    #- start_pre_qualify_mystery{not mode.qualify_mystery.active}
-    #- start_annie_mode{device.achievements.annie_mode_collect.state=="enabled"}
-    #- ramp_down_active{mode.qualify_invid_invasion.active}
-#  sw_playfield_active:
   s_gate_top_right_active{device.switches.s_up_down_ramp_switch.state == 1}:
     - ramp_up_active
     - start_skillshot_saucer_timer
   s_right_orbit_rollover_active:
     - ramp_up_active
     - start_skillshot_saucer_timer
-  # invid_targets_skill_hit{device.switches.s_up_down_ramp_switch.state == 1}:
-  #   - ramp_up_active
-  # saucer_skill_group_hit{device.switches.s_up_down_ramp_switch.state == 1}:
-  #   - ramp_up_active
-  # shatz_skill_sequence_right_hit{device.switches.s_up_down_ramp_switch.state == 1}:
-  #   - ramp_up_active
-  # shatz_skill_sequence_right_left_hit{device.switches.s_up_down_ramp_switch.state == 1}:
-  #   - ramp_up_active
-  # sdf_skill_group_flashing_hit{device.switches.s_up_down_ramp_switch.state == 1}:
-  #   - ramp_up_active
-  lanes_invid_skill_cancel_sequence_timeout:
-    # - disable_top_lanes_skill
-    # - disable_invid_targets_skill
-    # - change_tick_interval_timer_up
-    #- ramp_up_active
+  ball_save_default_timer_start{device.switches.s_up_down_ramp_switch.state == 1}:
+    - ramp_up_active
     - start_skillshot_saucer_timer
-    #- disable_sdf_skill_group
+  spinner_shot_hit:
     - orbit_gate_disable
+#-------------------------------------------------------------------------------
+# SKILL SHOTS HIT
+#-------------------------------------------------------------------------------
   top_lanes_skill_flashing_hit:
     - start_kickback_mode
-    #- skill_shot_made
     - start_combo_timer
     - end_skill_shot_mode
-  invid_targets_skill_flashing_hit:
-    - start_kickback_mode
-    #- skill_shot_made
-    - start_combo_timer
-    - end_skill_shot_mode
+  # invid_targets_skill_flashing_hit:  testing state machine 1-7-20
+  #   - start_kickback_mode
+  #   - start_combo_timer
+  #   - end_skill_shot_mode
   saucer_skill_group_flashing_hit:
     - start_kickback_mode
-    #- skill_shot_made
     - start_combo_timer
     - end_skill_shot_mode
-  sdf_skill_group_flashing_hit:
-    - start_kickback_mode
-    #- skill_shot_made
-    - start_combo_timer
-    - end_skill_shot_mode
+  # sdf_skill_group_flashing_hit:
+  #   - start_kickback_mode
+  #   - start_combo_timer
+  #   - end_skill_shot_mode
   top_target_skill_group_flashing_hit:
     - start_kickback_mode
-    #- skill_shot_made
     - start_combo_timer
     - end_skill_shot_mode
-  #super skill shot
   super_skill_shot_flashing_hit:
     - start_kickback_mode
-    #- skill_shot_made
     - start_combo_timer
     - end_skill_shot_mode
-    #- orbit_gate_enable
-  #lanes_invid_skill_cancel_sequence_hit:
-  #s_gate_top_right_active:
-    #- ramp_up_active
-    #- start_skillshot_saucer_timer
-  # timer_skillshot_invid_stop_timer_complete:
-  #   - disable_invid_targets_skill
   secret_skill_shot_flashing_hit:
-     - start_kickback_mode
-     - ramp_up_active
-     - start_combo_timer
-     - end_skill_shot_mode
-     #- start_intro_invid_invasion{device.achievements.invid_invasion_mission_1.state=="enabled"} # or device.achievements.invid_invasion_mission_1.state!="stopped"} # {not achievement_invid_invasion_mission_1_state_completed}
+    - start_kickback_mode
+    - ramp_up_active
+    - start_combo_timer
+    - end_skill_shot_mode
+  shatz_skill_sequence_right_hit:
+    - start_kickback_mode
+    - shatz_skill_shot_made
+    - start_combo_timer
+    - end_skill_shot_mode
+  shatz_skill_sequence_left_hit:
+    - start_kickback_mode
+    - shatz_skill_shot_made
+    - start_combo_timer
+    - end_skill_shot_mode
+#-------------------------------------------------------------------------------
+# SKILL SHOTS MISSED
+#-------------------------------------------------------------------------------
   top_lanes_skill_unlit_hit:
     - skill_shot_missed
     - end_skill_shot_mode
@@ -135,14 +106,7 @@ event_player:
     - end_skill_shot_mode
   ball_save_default_saving_ball:
     - end_skill_shot_mode
-  shatz_skill_sequence_right_hit:
-    - start_kickback_mode
-    - shatz_skill_shot_made
-    - end_skill_shot_mode
-  shatz_skill_sequence_left_hit:
-    - start_kickback_mode
-    - shatz_skill_shot_made
-    - end_skill_shot_mode
+#-------------------------------------------------------------------------------
   timer_check_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
     - drop_reset_up
     - enable_invid_targets|.5s
@@ -159,14 +123,6 @@ widgets:
       font_size: 80
       y: center + 170
       x: center
-      #z: 1101
-  # skill_shot_mode_start_value_widget:
-  #   - type: text
-  #     text: current_player.skill_shot_start_value
-  #     color: red
-  #     font_size: 80
-  #     y: center + 100
-  #     x: center
   skill_shot_mode_timer_widget:
     - type: text
       text: (ticks)
@@ -174,7 +130,6 @@ widgets:
       font_size: 80
       y: center + 100
       x: center
-      #z: 1101
 
 widget_player:
   #mode_skill_shot_started:
@@ -193,6 +148,15 @@ widget_player:
         priority: 1902
 
 timers:
+  skillshot_saucer_stop_timer:
+    start_value: current_player.skill_shot_start_value
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: no
+    control_events:
+      - action: start
+        event: start_skillshot_saucer_timer
   top_lanes_target_rotator:
     start_running: true
     tick_interval: 1s
@@ -214,29 +178,10 @@ timers:
       #   action: change_tick_interval #set_tick_interval
       #   value: 1
     #debug: true
-  # skillshot_invid_stop_timer:
-  #   start_value: 0
-  #   end_value: 5
-  #   direction: up
-  #   tick_interval: 1s
-  #   start_running: no
-  #   control_events:
-  #     - action: start
-  #       event: s_left_orbit_active
-  #   #debug: true
-  skillshot_saucer_stop_timer:
-    start_value: current_player.skill_shot_start_value
-    end_value: 0
-    direction: down
-    tick_interval: 1s
-    start_running: no
-    control_events:
-      - action: start
-        event: start_skillshot_saucer_timer
   check_drop_targets_up_timer:
     debug: True
     start_value: 0
-    end_value: 2
+    end_value: 1
     direction: up
     tick_interval: 1s
     control_events:
@@ -244,12 +189,6 @@ timers:
         event: start_check_drop_targets_up_timer
 
 sequence_shots:
-  lanes_invid_skill_cancel_sequence:
-    switch_sequence:
-      - s_right_orbit_rollover
-      - s_gate_top_right
-    sequence_timeout: 2s
-    #debug: true
   super_skill_sequence:
     switch_sequence:
       - s_spinner
@@ -268,7 +207,7 @@ sequence_shots:
     switch_sequence:
       - s_right_flipper
       - s_left_inlane_e
-    sequence_timeout: 3s
+    sequence_timeout: 2s
 
 
 shows:
@@ -321,29 +260,9 @@ shows:
     - time: -1
 
 
-# show_player:
-#   mode_skill_shot_started:
-    # pulse_super_skill_show:
-    #   action: play
-    #   speed: 1
-    #   loops: -1
-    # flash_top_target_show:
-    #   action: play
-    #   speed: 3
-    #   loops: -1
-    # color_blue_on:
-    #   action: play
-    #   show_tokens:
-    #     leds: l_sdf_arrow_led
-  # lanes_invid_skill_cancel_sequence_timeout:
-  #   pulse_super_skill_show:
-  #     action: stop
-
 shot_profiles:
   white_flash_profile:
     states:
-    # - name: unlit
-    #   show: off
     - name: flashing
       show: pulse_super_skill_show
       loops: -1
@@ -395,7 +314,7 @@ shot_profiles:
         color: yellow
   sdf_targets_skill:
     advance_on_hit: false
-    block: false #true
+    block: false
     states:
     - name: unlit
       show: off
@@ -427,9 +346,15 @@ shot_profiles:
 
 shot_groups:
   top_lanes_skill:
-    shots: skill_r_top_lane_shot, skill_o1_top_lane_shot, skill_b_top_lane_shot, skill_o2_top_lane_shot
-    rotate_right_events: timer_top_lanes_target_rotator_tick
-    reset_events: mode_skill_shot_starting
+    shots:
+      - skill_r_top_lane_shot
+      - skill_o1_top_lane_shot
+      - skill_b_top_lane_shot
+      - skill_o2_top_lane_shot
+    rotate_right_events:
+      - timer_top_lanes_target_rotator_tick
+    reset_events:
+      - mode_skill_shot_stopping #mode_skill_shot_starting is this needed?
   invid_targets_skill:
     shots:
       - skill_invid1_shot
@@ -438,11 +363,16 @@ shot_groups:
       - skill_invid4_shot
       - skill_invid5_shot
       - skill_invid6_shot
-    rotate_right_events: timer_invid_targets_target_rotator_tick
-    reset_events: mode_skill_shot_starting
-    enable_events: enable_invid_targets
-    disable_events: mode_skill_shot_started
-    #debug: true
+    rotate_right_events:
+      - timer_invid_targets_target_rotator_tick
+    restart_events:
+      - mode_skill_shot_starting
+    enable_events:
+      - enable_invid_targets
+    disable_events:
+      - mode_skill_shot_started
+      - end_skill_shot_mode
+    debug: true
   saucer_skill_group:
     shots:
       - left_saucer_skill
@@ -453,11 +383,17 @@ shot_groups:
       - s_skill
       - d_skill
       - f_skill
+    enable_events:
+      - mode_skill_shot_starting
+    disable_events:
+      - skill_shot_missed
+    debug: true
   top_target_skill_group:
     shots:
       - top_target_10k_skill
       - top_target_20k_skill
       - top_target_50k_skill
+    debug: true
 
 shots:
   skill_r_top_lane_shot:
@@ -539,33 +475,28 @@ shots:
       leds: l_s_led
     advance_events:
       - advance_sdf_targets
-      - s_skill_sdf_targets_skill_flashing_hit
-    enable_events:
-      - mode_skill_shot_started{device.counters.sdf_skillshot_made.value==0}
-    disable_events:
-      - s_skill_sdf_targets_skill_flashing_hit
+      - s_skill_sdf_targets_skill_flashing_hit|1
+    # disable_events:
+    #   - mode_skill_shot_started{device.shots.s_skill.state_name != 'flashing'}
   d_skill:
     switch: s_d_target
     profile: sdf_targets_skill
     show_tokens:
       leds: l_d_led
     advance_events:
-      - s_skill_sdf_targets_skill_flashing_hit
-      - d_skill_sdf_targets_skill_flashing_hit
-    enable_events:
-      - s_skill_sdf_targets_skill_flashing_hit
-    disable_events:
-      - d_skill_sdf_targets_skill_flashing_hit
+      - s_skill_sdf_targets_skill_flashing_hit|1
+      - d_skill_sdf_targets_skill_flashing_hit|1
+    # disable_events:
+    #   - mode_skill_shot_started{device.shots.d_skill.state_name != 'flashing'}
   f_skill:
     switch: s_f_target
     profile: sdf_targets_skill
     show_tokens:
       leds: l_f_led
     advance_events:
-      - d_skill_sdf_targets_skill_flashing_hit
-      #- f_skill_sdf_targets_skill_flashing_hit
-    enable_events:
-      - d_skill_sdf_targets_skill_flashing_hit
+      - d_skill_sdf_targets_skill_flashing_hit|1
+    # disable_events:
+    #   - mode_skill_shot_started{device.shots.f_skill.state_name != 'flashing'}
   top_target_10k_skill:
     switch: s_top_target
     profile: top_target_skill
@@ -614,8 +545,8 @@ shots:
     profile: white_flash_profile
     show_tokens:
       leds: l_right_orbit_arrow
-    enable_events: mode_skill_shot_starting
-    disable_events: lanes_invid_skill_cancel_sequence_timeout
+    enable_events: diverter_orbit_gate_activating #s_gate_top_right_active #mode_skill_shot_starting
+    disable_events: mode_skill_shot_starting # lanes_invid_skill_cancel_sequence_timeout
     reset_events: end_skill_shot_mode
     # advance_events:
     #   - mode_skill_shot_started
@@ -654,6 +585,10 @@ counters:
     reset_on_complete: true
     events_when_complete: three_skillshots_award_extra_ball
     disable_on_complete: false
+    # control_events:
+    #   - event: top_target_skill_group_flashing_hit
+    #     action: add
+    #     value: 2
   top_lanes_skillshot_made:
     count_events: top_lanes_skill_flashing_hit
     starting_count: 0
@@ -760,36 +695,42 @@ variable_player:
       action: set
     score: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.saucer_skillshot_made.value
     kickback_counter: 1
+    skill_shots_made: 1
   top_lanes_skill_flashing_hit:
     skill_shot_value:
       int: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.top_lanes_skillshot_made.value
       action: set
     score: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.top_lanes_skillshot_made.value
     kickback_counter: 1
+    skill_shots_made: 1
   invid_targets_skill_flashing_hit:
     skill_shot_value:
       int: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.invid_targets_skillshot_made.value
       action: set
     score: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.invid_targets_skillshot_made.value
     kickback_counter: 1
+    skill_shots_made: 1
   sdf_skill_group_flashing_hit:
     skill_shot_value:
       int: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.sdf_skillshot_made.value
       action: set
     score: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.sdf_skillshot_made.value
     kickback_counter: 1
+    skill_shots_made: 1
   super_skill_shot_flashing_hit:
     skill_shot_value:
       int: (20000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.super_skill_shot_made.value
       action: set
     score: (20000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.super_skill_shot_made.value
     kickback_counter: 1
+    skill_shots_made: 1
   top_target_skill_group_flashing_hit:
     skill_shot_value:
       int: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.top_target_shot_made.value
       action: set
     score: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.top_target_shot_made.value
     kickback_counter: 1
+    skill_shots_made: 1
   #secret skill shot - when ramp is down
   secret_skill_shot_flashing_hit:
     skill_shot_value:
@@ -797,23 +738,17 @@ variable_player:
       action: set
     score: (50000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.secret_skill_shot_made.value
     kickback_counter: 1
+    skill_shots_made: 1
   #shatz skill shot
   shatz_skill_shot_made:
-  #shatz_skill_sequence_right_hit:
     skill_shot_value:
       int: (25000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.shatz_skillshot_made.value
       action: set
     score: (25000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250))* device.counters.shatz_skillshot_made.value
     kickback_counter: 1
+    skill_shots_made: 1
 
-# slides:
-#   skill_shot_invid_hit_video:
-#     - type: video
-#       video: skill_shot_saucer.mp4
-#
-# slide_player:
-#    saucer_skill_group_lit_hit:
-#      skill_shot_invid_hit_video
+
 state_machines:
   skill_shot_success:
     debug: True
@@ -822,7 +757,10 @@ state_machines:
         label: Skill shot ready
       success:
         label: Skill made
-        #events_when_started: skill_shot_made
+        events_when_started:
+          - start_kickback_mode
+          - start_combo_timer
+          - end_skill_shot_mode
       failed:
         label: Skill missed
         events_when_started:
@@ -837,6 +775,8 @@ state_machines:
       - source: start
         target: failed
         events:
-          - sdf_bank_shots_unlit_hit
           - invid_targets_skill_unlit_hit
           - top_lanes_skill_unlit_hit
+          #- sdf_bank_shots_off_hit
+          - sdf_skill_group_unlit_hit
+          - sdf_skill_group_hit_hit

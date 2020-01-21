@@ -1,0 +1,29 @@
+#show_version=5
+
+
+
+- duration: 1s
+#- time: 0
+  lights:
+    l_lancer_x: red
+    l_right_orbit_arrow: off
+    l_spinner_flasher: off
+#- time: +1s
+- duration: 1s
+  lights:
+    l_lancer_x: off
+    l_right_orbit_arrow: red
+    l_spinner_flasher: off
+#- time: +1s
+- duration: 1s
+  lights:
+    l_lancer_x: off
+    l_right_orbit_arrow: off
+    l_spinner_flasher: red
+# #- time: +1s
+# - duration: 1s
+#   lights:
+#     l_lancer_x: off
+#     l_right_orbit_arrow: off
+#     l_spinner_flasher: off
+#     rorbit_rollover: red
