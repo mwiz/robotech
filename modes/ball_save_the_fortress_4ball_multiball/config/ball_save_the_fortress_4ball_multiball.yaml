@@ -1,0 +1,45 @@
+#config_version=5
+#Robotech
+
+mode:
+    start_events:
+      - start_the_fortress_4ball_multiball
+    stop_events:
+      - ball_save_the_fortress_4ball_multiball_ball_save_disabled
+      - mode_the_fortress_stopped
+    priority: 9750
+
+
+ball_saves:
+  the_fortress_4ball_multiball_ball_save:
+    active_time: 5s
+    hurry_up_time: 5s
+    grace_period: 2s
+    timer_start_events:
+      - mode_ball_save_the_fortress_4ball_multiball_started
+    auto_launch: true
+    balls_to_save: -1
+    debug: true
+
+show_player:
+  ball_save_the_fortress_4ball_multiball_ball_save_timer_start:
+    fast_flash_show:
+      key: the_fortress_4ball_multiball_ball_save_flash
+      speed: 3
+      action: play
+      show_tokens:
+        leds: l_shoot_again
+        color: red
+  ball_save_the_fortress_4ball_multiball_ball_save_hurry_up:
+    the_fortress_4ball_multiball_ball_save_flash:
+      action: stop
+    fast_flash_show:
+      key: the_fortress_4ball_multiball_ball_save_hurry_up_flash
+      action: play
+      speed: 20
+      show_tokens:
+        leds: l_shoot_again
+        color: red
+  ball_save_the_fortress_4ball_multiball_ball_save_grace_period:
+    the_fortress_4ball_multiball_ball_save_hurry_up_flash:
+      action: stop
