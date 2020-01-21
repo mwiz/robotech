@@ -1,0 +1,18 @@
+#show_version=5
+
+- time: 0
+  lights:
+    l_rand_x: green
+    l_annie_x: green
+    l_10k: green
+    l_rook_x: green
+    l_lancer_x: green
+    l_lunk_x: green
+- time: '+1'
+  lights:
+    l_rand_x: off
+    l_annie_x: off
+    l_10k: off
+    l_rook_x: off
+    l_lancer_x: off
+    l_lunk_x: off

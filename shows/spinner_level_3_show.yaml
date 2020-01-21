@@ -2,7 +2,7 @@
 
 - time: 0
   lights:
-    l_spinner_flasher: orange
+    l_spinner_flasher: red
 - time: '+1'
   lights:
     l_spinner_flasher: off
