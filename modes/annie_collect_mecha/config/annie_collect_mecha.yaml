@@ -56,15 +56,21 @@ shots:
     show_tokens:
       leds: l_annie_arrow
       enable_events:
+        - mode_skill_shot_stopped
         - mode_annie_collect_mecha_started
         - mode_rand_mode_stopped
         - mode_rook_mode_stopped
         - mode_lunk_mode_stopped
+        - mode_genesis_pit_stopped
+        - mode_the_fortress_stopped
       disable_events:
+        - mode_skill_shot_started
         - annie_collect_mecha_shot_flashing_hit
         - mode_rand_mode_started
         - mode_rook_mode_started
         - mode_lunk_mode_started
+        - mode_genesis_pit_started
+        - mode_the_fortress_started
 
 slides:
   annie_collect_mecha_slide:
