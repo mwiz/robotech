@@ -7,6 +7,7 @@ mode:
     - timer_rand_mode_timer_complete
     - ball_will_end
     - rand_mode_success
+    - tilt
   stop_on_ball_end: true
   priority: 2200
 
@@ -60,6 +61,8 @@ ball_saves:
       - rand_mode_invid_shot_group_4_flashing_hit{not mode.ball_save_rand_mode.active}
     disable_events:
       - mode_rand_mode_started
+      - ball_save_kickback_save_saving_ball
+      - kickback_kickback_main_fired
       #- ball_save_rand_mode_invid_hit_ball_save_disabled
     timer_start_events:
       - rand_mode_invid_shot_group_1_flashing_hit
@@ -69,7 +72,7 @@ ball_saves:
       - s_right_outlane_h_active
       - s_kickback_t_active{not mode.kickback.active}
     auto_launch: yes
-    balls_to_save: 1
+    balls_to_save: -1
     #restart_on_complete: yes
     debug: yes
 
@@ -117,7 +120,7 @@ widgets:
     - type: rectangle
       anchor_x: left
       anchor_y: bottom
-      x: 1137
+      x: 1130
       y: 190
       z: 1100
       width: 130
@@ -211,7 +214,7 @@ slides:
       - type: video
         video: rand_mode_1st_kill
       - type: text
-        text: (invid_kill_value)
+        text: (rand_mode_score_value)
         font_size: 80
         color: red
         x: center
@@ -230,7 +233,7 @@ slides:
       - type: video
         video: rand_mode_2nd_kill
       - type: text
-        text: (invid_kill_value)
+        text: (rand_mode_score_value)
         font_size: 80
         color: red
         x: center
@@ -254,6 +257,9 @@ timers:
       - action: add
         event: spinner_shot_hit
         value: current_player.spinner_time_value
+      - action: pause
+        event: mystery_shot_flashing_hit{game.balls_in_play==1}
+        value: 5
   target_rotator_1:
     start_running: false #true
     tick_interval: 2s
@@ -296,7 +302,9 @@ shot_groups:
     reset_events: rand_mode_invid_shot_group_1_flashing_hit
     debug: True
   rand_mode_orbits_shot_group_2:
-    shots: rand_mode_g2_left_orbit_shot1, rand_mode_g2_right_orbit_shot2
+    shots:
+      - rand_mode_g2_left_orbit_shot1
+      - rand_mode_g2_right_orbit_shot2
     enable_events:
       - rand_mode_invid_shot_group_1_flashing_hit
       - rand_mode_invid_shot_group_3_flashing_hit
@@ -305,7 +313,10 @@ shot_groups:
       - rand_mode_orbits_shot_group_2_flashing_hit
     debug: True
   rand_mode_invid_shot_group_3:
-    shots: rand_mode_g3_invid4_shot1, rand_mode_g3_invid5_shot2, rand_mode_g3_invid6_shot3
+    shots:
+      - rand_mode_g3_invid4_shot1
+      - rand_mode_g3_invid5_shot2
+      - rand_mode_g3_invid6_shot3
     rotate_left_events: timer_target_rotator_3_tick
     enable_events:
       - rand_mode_orbits_shot_group_2_flashing_hit{device.counters.orbit_shots_made_counter.value<=0} # {shot_group.rand_mode_orbits_shot_group.state != "hit"}
@@ -315,7 +326,13 @@ shot_groups:
       # - rand_mode_orbits_shot_group_2_hit_complete
     debug: True
   rand_mode_invid_shot_group_4:
-    shots: rand_mode_g4_invid1_shot1, rand_mode_g4_invid2_shot2, rand_mode_g4_invid3_shot3, rand_mode_g4_invid4_shot4, rand_mode_g4_invid5_shot5, rand_mode_g4_invid6_shot6
+    shots:
+      - rand_mode_g4_invid1_shot1
+      - rand_mode_g4_invid2_shot2
+      - rand_mode_g4_invid3_shot3
+      - rand_mode_g4_invid4_shot4
+      - rand_mode_g4_invid5_shot5
+      - rand_mode_g4_invid6_shot6
     rotate_right_events: timer_target_rotator_4_tick
     enable_events: orbits_complete
     disable_events:
@@ -465,19 +482,19 @@ counters:
 
 variable_player:
   rand_mode_invid_shot_group_1_flashing_hit:
-    invid_kill_value:
+    rand_mode_score_value:
       int: 20000 * current_player.pf_multiplier
       action: set
     score: 20000 * current_player.pf_multiplier
   rand_mode_invid_shot_group_3_flashing_hit:
-    invid_kill_value:
+    rand_mode_score_value:
       int: 30000 * current_player.pf_multiplier
       action: set
     score: 30000 * current_player.pf_multiplier
   rand_mode_orbits_shot_group_2_flashing_hit:
     score: 5000 * current_player.pf_multiplier
   rand_mode_invid_shot_group_4_flashing_hit:
-    invid_kill_value:
+    rand_mode_score_value:
       int: 50000 * current_player.pf_multiplier
       action: set
     score: 50000 * current_player.pf_multiplier

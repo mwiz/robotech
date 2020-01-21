@@ -28,6 +28,8 @@ event_player:
     - post_rook_oo
   rook_shot_flashing_rook_hit:
     - post_rook_k
+  s_back_ramp_active{mode.qualify_a_mode.active}:
+    - disable_rook_counter
 
 widget_player:
   post_rook_image:
@@ -86,7 +88,7 @@ widgets:
       y: center - 150
   rook_k_widget:
     - type: text
-      text: D
+      text: K
       color: yellow
       font_size: 35
       x: center - 535
@@ -110,12 +112,21 @@ shots:
       - mode_rand_mode_stopped{device.counters.rook_hit_counter.value==0}
       - mode_lunk_mode_stopped{device.counters.rook_hit_counter.value==0}
       - mode_skill_shot_stopped{device.counters.rook_hit_counter.value==0}
+      - mode_corg_mode_stopped{device.counters.rook_hit_counter.value==0}
+      # - mode_genesis_pit_stopped{device.counters.rook_hit_counter.value==0}
+      # - mode_the_fortress_stopped{device.counters.rook_hit_counter.value==0}
+      # - mode_big_apple_stopped{device.counters.rook_hit_counter.value==0}
     disable_events:
+      - disable_rook_counter
       - rr_shot_flashing_rook_hit
       - mode_intro_annie_mode_started
       - mode_intro_rand_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     debug: true
   ro_shot:
     switch: s_right_lock_kickout
@@ -126,12 +137,21 @@ shots:
       - mode_rand_mode_stopped{device.counters.rook_hit_counter.value==1}
       - mode_lunk_mode_stopped{device.counters.rook_hit_counter.value==1}
       - mode_skill_shot_stopped{device.counters.rook_hit_counter.value==1}
+      - mode_corg_mode_stopped{device.counters.rook_hit_counter.value==1}
+      # - mode_genesis_pit_stopped{device.counters.rook_hit_counter.value==1}
+      # - mode_the_fortress_stopped{device.counters.rook_hit_counter.value==1}
+      # - mode_big_apple_stopped{device.counters.rook_hit_counter.value==1}
     disable_events:
+      - disable_rook_counter
       - ro_shot_flashing_rook_hit
       - mode_intro_annie_mode_started
       - mode_intro_rand_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     debug: true
   roo_shot:
     switch: s_right_lock_kickout
@@ -142,12 +162,21 @@ shots:
       - mode_rand_mode_stopped{device.counters.rook_hit_counter.value==2}
       - mode_lunk_mode_stopped{device.counters.rook_hit_counter.value==2}
       - mode_skill_shot_stopped{device.counters.rook_hit_counter.value==2}
+      - mode_corg_mode_stopped{device.counters.rook_hit_counter.value==2}
+      # - mode_genesis_pit_stopped{device.counters.rook_hit_counter.value==2}
+      # - mode_the_fortress_stopped{device.counters.rook_hit_counter.value==2}
+      # - mode_big_apple_stopped{device.counters.rook_hit_counter.value==2}
     disable_events:
+      - disable_rook_counter
       - roo_shot_flashing_rook_hit
       - mode_intro_annie_mode_started
       - mode_intro_rand_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     debug: true
   rook_shot:
     switch: s_right_lock_kickout
@@ -158,12 +187,21 @@ shots:
       - mode_rand_mode_stopped{device.counters.rook_hit_counter.value==3}
       - mode_lunk_mode_stopped{device.counters.rook_hit_counter.value==3}
       - mode_skill_shot_stopped{device.counters.rook_hit_counter.value==3}
+      - mode_corg_mode_stopped{device.counters.rook_hit_counter.value==3}
+      # - mode_genesis_pit_stopped{device.counters.rook_hit_counter.value==3}
+      # - mode_the_fortress_stopped{device.counters.rook_hit_counter.value==3}
+      # - mode_big_apple_stopped{device.counters.rook_hit_counter.value==3}
     disable_events:
+      - disable_rook_counter
       - rook_shot_flashing_rook_hit
       - mode_intro_annie_mode_started
       - mode_intro_rand_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     debug: true
 
 shot_profiles:
@@ -189,6 +227,13 @@ counters:
     count_complete_value: 4
     reset_on_complete: false
     events_when_complete: rook_collected
+    disable_events:
+      - disable_rook_counter
+    enable_events:
+      - mode_qualify_rook_started
+      - mode_genesis_pit_stopped
+      - mode_the_fortress_stopped
+      - mode_big_apple_stopped
     persist_state: true
 
 variable_player:

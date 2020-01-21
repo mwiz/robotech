@@ -30,14 +30,9 @@ event_player:
     - post_lunk_k
   lunk_shot_group_lit_complete:
     - play_lunk_sounds|1s
+    - restart_lunk_shot_group|1
 
 show_player:
-  lunk_shot_group_lit_complete:
-    sdf_bank_complete:
-      loops: 3
-      speed: 10
-      show_tokens:
-        color: 654321
   lunk_shot1_hit:
     fast_flash_show:
       key: lunk_shot1_flash
@@ -82,6 +77,21 @@ show_player:
       loops: -1
       speed: 5
       sync_ms: 1500
+  mode_corg_mode_stopped:
+    flash_lunk_show:
+      loops: -1
+      speed: 5
+      sync_ms: 1500
+  # mode_genesis_pit_mode_stopped:
+  #   flash_lunk_show:
+  #     loops: -1
+  #     speed: 5
+  #     sync_ms: 1500
+  # mode_the_fortress_mode_stopped:
+  #   flash_lunk_show:
+  #     loops: -1
+  #     speed: 5
+  #     sync_ms: 1500
   mode_intro_rand_mode_started:
     flash_lunk_show:
       action: stop
@@ -91,9 +101,21 @@ show_player:
   mode_intro_rook_mode_started:
     flash_lunk_show:
       action: stop
-  mode_bonus_will_start:
+  mode_intro_genesis_pit_started:
     flash_lunk_show:
       action: stop
+  mode_intro_the_fortress_started:
+    flash_lunk_show:
+      action: stop
+  mode_intro_big_apple_started:
+    flash_lunk_show:
+      action: stop
+  mode_intro_corg_mode_started:
+    flash_lunk_show:
+      action: stop
+  # mode_bonus_will_start:
+  #   flash_lunk_show:
+  #     action: stop
 
 widget_player:
   post_lunk_image:
@@ -164,17 +186,28 @@ shot_groups:
       - lunk_shot2
       - lunk_shot3
     enable_events:
+      - mode_skill_shot_stopped
       - mode_rand_mode_stopped
       - mode_annie_mode_stopped
-      - mode_skill_shot_stopped
       - mode_rook_mode_stopped
+      - mode_corg_mode_stopped
+      # - mode_genesis_pit_stopped
+      # - mode_the_fortress_stopped
+      # - mode_big_apple_stopped
     disable_events:
+      - mode_skill_shot_started
       - mode_intro_rand_mode_started
       - mode_annie_mode_started
-      - mode_skill_shot_started
       - mode_intro_rook_mode_started
-    reset_events:
-      - lunk_shot_group_lit_complete|1
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - lunk_shot_group_lit_complete # added 1-13 to test
+      - mode_intro_corg_mode_started
+    # reset_events:
+    #   - lunk_shot_group_lit_complete|1
+    restart_events:
+      - restart_lunk_shot_group  # added 1-13 to test
     debug: true
 
 shots:

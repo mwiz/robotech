@@ -22,7 +22,7 @@ queue_relay_player:
   my_queue_rand_collect_mecha_mode:
     post: start_rand_collect_mecha_mode_display
     wait_for: rand_collect_mecha_mode_show_ended
-  balldevice_bd_left_lock_ball_eject_attempt{not mode.rook_mode.active and not mode.annie_mode.active and not mode.lunk_mode.active and device.shots.rand_collect_mecha_shot.state_name=="hit"}:
+  balldevice_bd_left_lock_ball_eject_attempt{not mode.rook_mode.active and not mode.annie_mode.active and not mode.lunk_mode.active and device.shots.rand_collect_mecha_shot.state_name=='hit'}:
     post: wait_for_rand_collect_mecha_mode_display
     wait_for: rand_collect_mecha_mode_show_ended
 
@@ -59,15 +59,21 @@ shots:
     show_tokens:
       leds: l_llock_arrow
     enable_events:
+      - mode_skill_shot_stopped
       - mode_rand_collect_mecha_started
       - mode_annie_mode_stopped
       - mode_rook_mode_stopped
       - mode_lunk_mode_stopped
+      - mode_genesis_pit_stopped
+      - mode_the_fortress_stopped
     disable_events:
       #- rand_collect_mecha_shot_flashing_hit
+      - mode_skill_shot_started
       - mode_annie_mode_started
       - mode_rook_mode_started
       - mode_lunk_mode_started
+      - mode_genesis_pit_started
+      - mode_the_fortress_started
     debug: true
 
 shows:

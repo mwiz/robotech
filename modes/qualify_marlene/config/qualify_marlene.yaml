@@ -216,6 +216,10 @@ shots:
       - mode_rook_mode_stopped{device.shots.marlene_shot_1.state == 0}
       - mode_lunk_mode_stopped{device.shots.marlene_shot_1.state == 0}
       - mode_skill_shot_stopped{device.shots.marlene_shot_1.state == 0}
+      - mode_corg_mode_stopped{device.shots.marlene_shot_1.state == 0}
+      # - mode_genesis_pit_stopped{device.shots.marlene_shot_1.state == 0}
+      # - mode_the_fortress_stopped{device.shots.marlene_shot_1.state == 0}
+      # - mode_big_apple_stopped{device.shots.marlene_shot_1.state == 0}
     disable_events:
       - marlene_shot_1_flashing_marlene_hit
       - mode_intro_annie_mode_started
@@ -223,6 +227,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     show_tokens:
       leds: l_rand_x
     debug: true
@@ -235,6 +243,10 @@ shots:
       - mode_rook_mode_stopped{device.shots.marlene_shot_2.state == 0}
       - mode_lunk_mode_stopped{device.shots.marlene_shot_2.state == 0}
       - mode_skill_shot_stopped{device.shots.marlene_shot_2.state == 0}
+      - mode_corg_mode_stopped{device.shots.marlene_shot_2.state == 0}
+      # - mode_genesis_pit_stopped{device.shots.marlene_shot_2.state == 0}
+      # - mode_the_fortress_stopped{device.shots.marlene_shot_2.state == 0}
+      # - mode_big_apple_stopped{device.shots.marlene_shot_2.state == 0}
     disable_events:
       - marlene_shot_2_flashing_marlene_hit
       - mode_intro_annie_mode_started
@@ -242,6 +254,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     show_tokens:
       leds: l_annie_x
     debug: true
@@ -254,13 +270,22 @@ shots:
       - mode_rook_mode_stopped{device.shots.marlene_shot_3.state == 0}
       - mode_lunk_mode_stopped{device.shots.marlene_shot_3.state == 0}
       - mode_skill_shot_stopped{device.shots.marlene_shot_3.state == 0}
+      - mode_corg_mode_stopped{device.shots.marlene_shot_3.state == 0}
+      # - mode_genesis_pit_stopped{device.shots.marlene_shot_3.state == 0}
+      # - mode_the_fortress_stopped{device.shots.marlene_shot_3.state == 0}
+      # - mode_big_apple_stopped{device.shots.marlene_shot_3.state == 0}
     disable_events:
+      - disable_rook_counter
       - marlene_shot_3_flashing_marlene_hit
       - mode_intro_annie_mode_started
       - mode_intro_rand_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     show_tokens:
       leds: l_rook_x
     debug: true
@@ -273,6 +298,10 @@ shots:
       - mode_rook_mode_stopped{device.shots.marlene_shot_4.state == 0}
       - mode_lunk_mode_stopped{device.shots.marlene_shot_4.state == 0}
       - mode_skill_shot_stopped{device.shots.marlene_shot_4.state == 0}
+      - mode_corg_mode_stopped{device.shots.marlene_shot_4.state == 0}
+      # - mode_genesis_pit_stopped{device.shots.marlene_shot_4.state == 0}
+      # - mode_the_fortress_stopped{device.shots.marlene_shot_4.state == 0}
+      # - mode_big_apple_stopped{device.shots.marlene_shot_4.state == 0}
     disable_events:
       - marlene_shot_4_flashing_marlene_hit
       - mode_intro_annie_mode_started
@@ -280,6 +309,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     show_tokens:
       leds: l_lancer_x
     debug: true
@@ -292,6 +325,10 @@ shots:
       - mode_rook_mode_stopped{device.shots.marlene_shot_5.state == 0}
       - mode_lunk_mode_stopped{device.shots.marlene_shot_5.state == 0}
       - mode_skill_shot_stopped{device.shots.marlene_shot_5.state == 0}
+      - mode_corg_mode_stopped{device.shots.marlene_shot_5.state == 0}
+      # - mode_genesis_pit_stopped{device.shots.marlene_shot_5.state == 0}
+      # - mode_the_fortress_stopped{device.shots.marlene_shot_5.state == 0}
+      # - mode_big_apple_stopped{device.shots.marlene_shot_5.state == 0}
     disable_events:
       - marlene_shot_5_flashing_marlene_hit
       - mode_intro_annie_mode_started
@@ -299,6 +336,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     show_tokens:
       leds: l_lunk_x
     debug: true
@@ -312,6 +353,10 @@ shots:
       - mode_rook_mode_stopped{device.counters.marlene_hit_counter.value == 6}
       - mode_lunk_mode_stopped{device.counters.marlene_hit_counter.value == 6}
       - mode_skill_shot_stopped{device.counters.marlene_hit_counter.value == 6}
+      - mode_corg_mode_stopped{device.counters.marlene_hit_counter.value == 6}
+      #- mode_genesis_pit_stopped{device.counters.marlene_hit_counter.value == 6}
+      #- mode_the_fortress_stopped{device.counters.marlene_hit_counter.value == 6}
+      #- mode_big_apple_stopped{device.counters.marlene_hit_counter.value == 6}
     disable_events:
       - mode_qualify_marlene_started
       - mode_intro_annie_mode_started
@@ -319,6 +364,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     show_tokens:
       leds: l_50k
     debug: true
@@ -347,7 +396,6 @@ counters:
     reset_on_complete: false
     events_when_complete:
       - marlene_collected
-      - start_marlene_mode
     persist_state: true
 
 variable_player:

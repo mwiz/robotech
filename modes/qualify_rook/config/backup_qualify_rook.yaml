@@ -1,0 +1,153 @@
+#config_version=5
+
+mode:
+  start_events:
+    - start_qualify_rook
+  stop_events:
+    - rook_collected
+    - game_ending
+  stop_on_ball_end: false
+  priority: 450
+
+
+widget_player:
+  rr_shot_flashing_rr_hit:
+    rook_r_widget:
+      slide: default
+  ro_shot_flashing_ro_hit:
+    rook_o_widget:
+      slide: default
+  roo_shot_flashing_roo_hit:
+    rook_oo_widget:
+      slide: default
+  rook_shot_flashing_rook_hit:
+    rook_k_widget:
+      slide: default
+  mode_qualify_rook_started:
+    rook_qualify_image:
+      action: add
+      slide: default
+
+widgets:
+  rook_qualify_image:
+    - type: image
+      image: rook_qualify
+      x: center - 580
+      y: center - 75
+  rook_r_widget:
+    - type: text
+      text: R
+      color: yellow
+      font_size: 40
+      x: center - 620
+      y: center - 150
+  rook_o_widget:
+    - type: text
+      text: O
+      color: yellow
+      font_size: 40
+      x: center - 595
+      y: center - 150
+  rook_oo_widget:
+    - type: text
+      text: O
+      color: yellow
+      font_size: 40
+      x: center - 570
+      y: center - 150
+  rook_k_widget:
+    - type: text
+      text: D
+      color: yellow
+      font_size: 40
+      x: center - 545
+      y: center - 150
+
+shots:
+  rr_shot:
+    switch: s_right_lock_kickout
+    profile: rr_profile
+    advance_events: mode_qualify_rook_started, rr_shot_flashing_rr_hit
+  ro_shot:
+    switch: s_right_lock_kickout
+    profile: ro_profile
+    advance_events: rr_shot_flashing_rr_hit, ro_shot_flashing_ro_hit
+  roo_shot:
+    switch: s_right_lock_kickout
+    profile: roo_profile
+    advance_events: ro_shot_flashing_ro_hit, roo_shot_flashing_roo_hit
+  rook_shot:
+    switch: s_right_lock_kickout
+    profile: rook_profile
+    advance_events: roo_shot_flashing_roo_hit, rook_shot_flashing_rook_hit
+
+shot_profiles:
+  rr_profile:
+    advance_on_hit: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing_rr
+      show: flash_rr_show
+      loops: -1
+      speed: 2
+    - name: hit
+      show: off
+  ro_profile:
+    advance_on_hit: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing_ro
+      show: flash_ro_show
+      loops: -1
+      speed: 2
+    - name: hit
+      show: off
+  roo_profile:
+    advance_on_hit: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing_roo
+      show: flash_roo_show
+      loops: -1
+      speed: 2
+    - name: hit
+      show: off
+  rook_profile:
+    advance_on_hit: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing_rook
+      show: flash_rook_show
+      loops: -1
+      speed: 2
+    - name: hit
+      show: off
+
+
+shot_groups:
+  rook_shot_group:
+    shots: rr_shot, ro_shot, roo_shot, rook_shot
+    enable_events: mode_qualify_rook_started, mode_rand_mode_stopped
+    disable_events: mode_intro_rand_mode_started
+
+counters:
+  rook_hit_counter:
+    count_events:
+      - rr_shot_flashing_rr_hit
+      - ro_shot_flashing_ro_hit
+      - roo_shot_flashing_roo_hit
+      - rook_shot_flashing_rook_hit
+    starting_count: 4
+    direction: down
+    count_complete_value: 0
+    reset_on_complete: false
+    events_when_complete: rook_collected
+    persist_state: true
+
+variable_player:
+  rook_collected:
+    team_members_collected: 1

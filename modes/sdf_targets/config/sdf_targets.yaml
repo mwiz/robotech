@@ -3,17 +3,36 @@
 mode:
   start_events:
     - ball_starting{ball==1}
-    # - mode_lunk_mode_stopped
   stop_events:
-    # - mode_qualify_lunk_started
     - game_ending
   restart_on_next_ball: true
   priority: 300
 
+event_player:
+  sdf_bank_shots_hit_complete:
+    - restart_sdf_bank_shots|1
+  invid_invasion_add_a_ball_group_hit_complete:
+    - restart_sdf_bank_shots|1
+  crocodile_killed_success:
+    - restart_sdf_bank_shots
+  mode_intro_rand_mode_started:
+    - restart_sdf_bank_shots
+  mode_intro_annie_mode_started:
+    - restart_sdf_bank_shots
+  mode_intro_rook_mode_started:
+    - restart_sdf_bank_shots
+  mode_lunk_mode_stopped:
+    - restart_sdf_bank_shots
+  mode_intro_the_fortress_started:
+    - restart_sdf_bank_shots
+  mode_intro_corg_mode_started:
+    - restart_sdf_bank_shots
+
+
 counters:
   light_shot_multipliers_count:
     count_events:
-      - sdf_bank_shots_lit_complete
+      - sdf_bank_shots_hit_complete
       - lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value < 4}
     starting_count: 0
     count_complete_value: 1
@@ -28,17 +47,21 @@ counters:
       - mode_annie_mode_stopped
       - mode_rook_mode_stopped
       - mode_lunk_mode_stopped
+      - mode_genesis_pit_stopped
+      - mode_the_fortress_stopped
+      - mode_big_apple_stopped
+      - mode_corg_mode_stopped
     disable_events:
       - mode_skill_shot_starting
       - invid_invasion_add_ball
       - mode_rand_mode_starting
       - mode_annie_mode_starting
       - mode_rook_mode_starting
-      #- lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==4}
-    # reset_events:
-    #   - mode_invid_invasion_starting
-    #   #- ball_ending
-    #   - mode_skill_shot_starting
+      - mode_genesis_pit_starting
+      - mode_the_fortress_starting
+      - mode_big_apple_starting
+      - lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==4}
+      - mode_corg_mode_starting
     debug: true
 
 shot_groups:
@@ -47,112 +70,93 @@ shot_groups:
       - s_target_shot
       - d_target_shot
       - f_target_shot
-    enable_events:
-      - mode_lunk_mode_stopped
     disable_events:
-      #- mode_lunk_mode_started
+      - mode_intro_invid_invasion_started
       - mode_qualify_lunk_started
+      - mode_intro_big_apple_started
+      - mode_rand_mode_stopped{mode.qualify_lunk.active}
+      - mode_annie_mode_stopped{mode.qualify_lunk.active}
+      - mode_rook_mode_stopped{mode.qualify_lunk.active}
     reset_events:
-     - sdf_bank_shots_lit_complete|1
-     - mode_skill_shot_started
-     - mode_rand_mode_started
-     - mode_annie_mode_started
-     - mode_rook_mode_started
-     - mode_lunk_mode_stopped
-     - mode_intro_invid_invasion_started
+      - mode_skill_shot_started
+    restart_events:
+      - restart_sdf_bank_shots
+
+
+shot_profiles:
+  sdf_targets_shot_profile:
+    advance_on_hit: true
+    block: false
+    states:
+      - name: off
+        show: off
+      - name: hit
+        show: color_blue_on
+
+shots:
+  s_target_shot:
+    switch: s_s_target
+    profile: sdf_targets_shot_profile
+    show_tokens:
+      leds: l_s_led
+  d_target_shot:
+    switch: s_d_target
+    profile: sdf_targets_shot_profile
+    show_tokens:
+      leds: l_d_led
+  f_target_shot:
+    switch: s_f_target
+    profile: sdf_targets_shot_profile
+    show_tokens:
+      leds: l_f_led
 
 show_player:
-  sdf_bank_shots_lit_complete: # {not mode.qualify_lunk.active}:
+  invid_invasion_add_a_ball_group_hit_complete:
     sdf_bank_complete:
+      key: invid_invasion_add_a_ball_complete_show
       loops: 3
       speed: 10
       show_tokens:
         color: blue
       priority: 10
-  #s_target_shot_unlit_hit:
-  s_target_shot_hit: # {not mode.qualify_lunk.active}:
-    fast_flash_show:
-      key: s_target_flash
+  sdf_bank_shots_hit_complete:
+    sdf_bank_complete:
+      #key: sdf_bank_complete_show
       loops: 3
+      speed: 10
+      show_tokens:
+        color: blue
+      priority: 10
+  s_target_shot_hit:
+    flash_blue_show:
+      key: s_target_blue_flash
+      loops: 4
       speed: 30
       show_tokens:
         leds: l_s_led
-        color: white
-  # s_target_shot_lit_hit:
-  #   fast_flash_show:
-  #     key: s_target_lit_flash
-  #     loops: 3
-  #     speed: 30
-  #     show_tokens:
-  #       leds: l_s_led
-  #       color: white
-  d_target_shot_hit: # {not mode.qualify_lunk.active}:
-  #d_target_shot_unlit_hit:
-    fast_flash_show:
-      key: d_target_flash
-      loops: 3
+  d_target_shot_hit:
+    flash_blue_show:
+      key: d_target_blue_flash
+      loops: 4
       speed: 30
       show_tokens:
         leds: l_d_led
-        color: white
-  # d_target_shot_lit_hit:
-  #   fast_flash_show:
-  #     key: d_target_lit_flash
-  #     loops: 3
-  #     speed: 30
-  #     show_tokens:
-  #       leds: l_d_led
-  #       color: white
-  f_target_shot_hit: # {not mode.qualify_lunk.active}:
-  #f_target_shot_unlit_hit:
-    fast_flash_show:
-      key: f_target_flash
-      loops: 3
+  f_target_shot_hit:
+    flash_blue_show:
+      key: f_target_blue_flash
+      loops: 4
       speed: 30
       show_tokens:
         leds: l_f_led
-        color: white
-  # f_target_shot_lit_hit:
-  #   fast_flash_show:
-  #     loops: 3
-  #     speed: 30
-  #     show_tokens:
-  #       leds: l_f_led
-  #       color: white
 
 variable_player:
-  sdf_bank_shots_unlit_hit:
+  sdf_bank_shots_off_hit:
     score: 1000 * current_player.pf_multiplier
-  sdf_bank_shots_lit_hit:
+  sdf_bank_shots_hit_hit:
     score: 500 * current_player.pf_multiplier
-  # s_target_shot_unlit_hit:
-  #   score: 1000
-  # d_target_shot_unlit_hit:
-  #   score: 1000
-  # f_target_shot_unlit_hit:
-  #   score: 1000
-  # s_target_shot_lit_hit:
-  #   score: 500
-  # d_target_shot_lit_hit:
-  #   score: 500
-  # f_target_shot_lit_hit:
-  #   score: 500
-  sdf_bank_shots_lit_complete:
+  sdf_bank_shots_hit_complete:
     score: 5000 * current_player.pf_multiplier
 
-shots:
-  s_target_shot:
-    switch: s_s_target
-    show_tokens:
-      leds: l_s_led
-  d_target_shot:
-    switch: s_d_target
-    show_tokens:
-      leds: l_d_led
-  f_target_shot:
-    switch: s_f_target
-    show_tokens:
-      leds: l_f_led
 
 # sound_player:
 #   sw_sdf_active: sdf_target_sound

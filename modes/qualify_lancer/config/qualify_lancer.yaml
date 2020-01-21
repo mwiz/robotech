@@ -172,6 +172,10 @@ shots:
       - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==0}
       - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==0}
       - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==0}
+      # - mode_genesis_pit_stopped{device.counters.lancer_hit_counter.value==0}
+      # - mode_the_fortress_stopped{device.counters.lancer_hit_counter.value==0}
+      # - mode_big_apple_stopped{device.counters.lancer_hit_counter.value==0}
+      - mode_corg_mode_stopped{device.counters.lancer_hit_counter.value==0}
     disable_events:
       - l_shot_flashing_lancer_hit
       - mode_intro_annie_mode_started
@@ -179,6 +183,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     #advance_events: l_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==0}
     debug: true
   la_shot:
@@ -192,6 +200,10 @@ shots:
       - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==1}
       - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==1}
       - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==1}
+      - mode_corg_mode_stopped{device.counters.lancer_hit_counter.value==1}
+      # - mode_genesis_pit_stopped{device.counters.lancer_hit_counter.value==1}
+      # - mode_the_fortress_stopped{device.counters.lancer_hit_counter.value==1}
+      # - mode_big_apple_stopped{device.counters.lancer_hit_counter.value==1}
     disable_events:
       - la_shot_flashing_lancer_hit
       - mode_intro_annie_mode_started
@@ -199,6 +211,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     #advance_events: l_shot_flashing_lancer_hit, la_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==1}
     debug: true
   lan_shot:
@@ -212,6 +228,10 @@ shots:
       - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==2}
       - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==2}
       - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==2}
+      - mode_corg_mode_stopped{device.counters.lancer_hit_counter.value==2}
+      # - mode_genesis_pit_stopped{device.counters.lancer_hit_counter.value==2}
+      # - mode_the_fortress_stopped{device.counters.lancer_hit_counter.value==2}
+      # - mode_big_apple_stopped{device.counters.lancer_hit_counter.value==2}
     disable_events:
       - lan_shot_flashing_lancer_hit
       - mode_intro_annie_mode_started
@@ -219,6 +239,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     #advance_events: la_shot_flashing_lancer_hit, lan_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==2}
     debug: true
   lanc_shot:
@@ -232,6 +256,10 @@ shots:
       - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==3}
       - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==3}
       - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==3}
+      - mode_corg_mode_stopped{device.counters.lancer_hit_counter.value==3}
+      # - mode_genesis_pit_stopped{device.counters.lancer_hit_counter.value==3}
+      # - mode_the_fortress_stopped{device.counters.lancer_hit_counter.value==3}
+      # - mode_big_apple_stopped{device.counters.lancer_hit_counter.value==3}
     disable_events:
       - lanc_shot_flashing_lancer_hit
       - mode_intro_annie_mode_started
@@ -239,6 +267,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     #advance_events: lan_shot_flashing_lancer_hit, lanc_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==3}
     debug: true
   lance_shot:
@@ -252,6 +284,10 @@ shots:
       - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==4}
       - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==4}
       - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==4}
+      - mode_corg_mode_stopped{device.counters.lancer_hit_counter.value==4}
+      # - mode_genesis_pit_stopped{device.counters.lancer_hit_counter.value==4}
+      # - mode_the_fortress_stopped{device.counters.lancer_hit_counter.value==4}
+      # - mode_big_apple_stopped{device.counters.lancer_hit_counter.value==4}
     disable_events:
       - lance_shot_flashing_lancer_hit
       - mode_intro_annie_mode_started
@@ -259,6 +295,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     #advance_events: lanc_shot_flashing_lancer_hit, lance_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==4}
     debug: true
   lancer_shot:
@@ -272,6 +312,10 @@ shots:
       - mode_rook_mode_stopped{device.counters.lancer_hit_counter.value==5}
       - mode_lunk_mode_stopped{device.counters.lancer_hit_counter.value==5}
       - mode_skill_shot_stopped{device.counters.lancer_hit_counter.value==5}
+      - mode_corg_mode_stopped{device.counters.lancer_hit_counter.value==5}
+      # - mode_genesis_pit_stopped{device.counters.lancer_hit_counter.value==5}
+      # - mode_the_fortress_stopped{device.counters.lancer_hit_counter.value==5}
+      # - mode_big_apple_stopped{device.counters.lancer_hit_counter.value==5}
     disable_events:
       - lancer_shot_flashing_lancer_hit
       - mode_into_annie_mode_started
@@ -279,6 +323,10 @@ shots:
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     #advance_events: lance_shot_flashing_lancer_hit, lancer_shot_flashing_lancer_hit, qualify_lancer_1st_time{device.counters.lancer_hit_counter.value==5}
     debug: true
 
@@ -321,7 +369,7 @@ counters:
     reset_on_complete: false
     events_when_complete:
       - lancer_collected
-      - start_lancer_mode
+      #- start_lancer_mode
     persist_state: true
   # lancer_first_time_hit_counter:
   #   count_events:
@@ -343,6 +391,7 @@ sound_player:
     #rand_yellow_dancer
     qualify_lancer_sounds:
       action: play
+      priority: 9999
 
 sound_pools:
   qualify_lancer_sounds:

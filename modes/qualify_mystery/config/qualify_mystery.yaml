@@ -6,53 +6,139 @@ mode:
    stop_events:
      - stop_qualify_mystery
    restart_on_next_ball: true
-   priority: 8000
+   priority: 9800
 
 event_player:
   mystery_award_increase_bonus_multiplier:
     - display_mystery_increase_bonus_multiplier|2.5s
     - robotech_lanes_shots_lit_complete|3s
+    - mystery_lanes_show|3.5s
   mystery_award_light_kickback.1{not mode.kickback.active}:
     - display_mystery_light_kickback|2.5s
     - add_to_kickback_counter
     - start_kickback_mode|3s
+    - mystery_light_kickback_show|3.5s
   mystery_award_light_kickback.2{mode.kickback.active}:
     - display_mystery_light_kickback|2.5s
     - add_to_kickback_counter
+    - mystery_light_kickback_show|3.5s
   mystery_award_extra_ball:
     - display_award_extra_ball|2.5s
+    - play_extra_ball_sound|3s
+    - mystery_extra_ball_show|3s
   mystery_award_big_points:
     - display_award_big_points|2.5s
   advance_pops_level.1{mode.pops_level_1.active}:
     - display_advance_pops_level|2.5s
     - pops_level_2|3s
+    - mystery_pops_level_2_show|3.5s
   advance_pops_level.2{mode.pops_level_2.active}:
     - display_advance_pops_level|2.5s
     - pops_level_3|3s
+    - mystery_pops_level_3_show|3.5s
   advance_pops_level.3{mode.pops_level_3.active}:
     - display_advance_pops_level|2.5s
     - pops_super|3s
+    - mystery_pops_super_show|3.5s
   advance_pops_level.4{mode.pops_super.active}:
     - start_mystery_award
   advance_spinner_level.1{mode.spinner_level_1.active}:
     - display_advance_spinner_level|2.5s
     - spinner_level_2|3s
+    - mystery_spinner_level_2_show|3.5s
   advance_spinner_level.2{mode.spinner_level_2.active}:
     - display_advance_spinner_level|2.5s
     - spinner_level_3|3s
+    - mystery_spinner_level_3_show|3.5s
   advance_spinner_level.3{mode.spinner_level_3.active}:
     - display_advance_spinner_level|2.5s
     - spinner_super|3s
+    - mystery_spinner_super_show|3.5s
   advance_spinner_level.4{mode.spinner_super.active}:
     - start_mystery_award
+  mystery_award_add_1x_playfield_multiplier: #.1{mode.invid_invasion.active or mode.genesis_pit.active or mode.the_fortress.active or mode.big_apple.active and (not mode.marlene_mode.active or not mode.lancer_mode.active)}:
+    - display_add_1x_playfield_multiplier|2.5s
+    - start_add_1x_playfield_multiplier_mystery_award_mode
+  # mystery_award_add_1x_playfield_multiplier.2:
+  #   - start_mystery_award
+  mystery_award_light_shot_multipliers:
+    - display_light_shot_multipliers|2.5s
+    - shot_multipliers|5s
+    - mystery_light_shot_multipliers_show|3.5s
   mystery_show_ended:
-    - start_pre_qualify_mystery|1s
+    - release_locked_ball
+    - start_pre_qualify_mystery|.5s
+  top_saucer_skill_flashing_hit:
+    - release_locked_ball|1s
+  top_saucer_skill_hit_hit:
+    - release_locked_ball|1s
+  timer_eject_mystery_ball_end_invid_invation_timer_complete:
+    - release_locked_ball
+  timer_eject_mystery_ball_end_genesis_pit_timer_complete:
+    - release_locked_ball
+  timer_eject_mystery_ball_end_the_fortress_timer_complete:
+    - release_locked_ball
+  mode_skill_shot_stopped:
+    - enable_mystery_shot #|1s
 
 show_player:
   start_mystery_award:
     play_mystery_intro_video:
       loops: 0
       events_when_stopped: mystery_show_ended
+  mystery_lanes_show: # {game.balls_in_play==1}:
+    robotech_lanes_complete:
+      loops: 3
+      speed: 10
+      show_tokens:
+        color: red
+  mystery_light_kickback_show: # {game.balls_in_play==1}:
+    light_kickback_show:
+      loops: 3
+      speed: 10
+  mystery_extra_ball_show: # {game.balls_in_play==1}:
+    extra_ball_show:
+      loops: 3
+      speed: 10
+  mystery_pops_level_2_show: # {game.balls_in_play==1}:
+    pops_level_2_show:
+      loops: 3
+      speed: 10
+  mystery_pops_level_3_show: # {game.balls_in_play==1}:
+    pops_level_3_show:
+      loops: 3
+      speed: 10
+  mystery_pops_super_show: # {game.balls_in_play==1}:
+    pops_super_show:
+      loops: 3
+      speed: 10
+  mystery_spinner_level_2_show: # {game.balls_in_play==1}:
+    spinner_level_2_show:
+      loops: 3
+      speed: 10
+  mystery_spinner_level_3_show: # {game.balls_in_play==1}:
+    spinner_level_3_show:
+      loops: 3
+      speed: 10
+  mystery_spinner_super_show: # {game.balls_in_play==1}:
+    spinner_super_show:
+      loops: 3
+      speed: 10
+  mystery_light_shot_multipliers_show:
+    light_shot_multipliers_show:
+      loops: 3
+      speed: 10
+      #priority: 9999
+    # tech_hotdog:
+    #   loops: 0
+    #   show_tokens:
+    #     color: red
+    #   priority: 9999
+    # robo_hotdog:
+    #   loops: 0
+    #   show_tokens:
+    #     color: red
+    #   priority: 9999
 
 queue_event_player:
   mystery_shot_flashing_hit:
@@ -64,8 +150,8 @@ queue_relay_player:
     post: start_mystery_award
     wait_for: mystery_show_ended
   balldevice_bd_top_lock_ball_eject_attempt:
-    post: wait_for_instructions
-    wait_for: mystery_show_ended
+    post: check_if_okay_to_hold
+    wait_for: release_locked_ball
 
 random_event_player:
   start_mystery_award:
@@ -76,10 +162,11 @@ random_event_player:
       - mystery_award_light_kickback
       - mystery_award_increase_bonus_multiplier
       - mystery_award_extra_ball
+      - mystery_award_add_1x_playfield_multiplier
+      - mystery_award_light_shot_multipliers
       # - ball_save?
       # - 3 protoculture cells?
       # - add_time_to_mode?
-      # - light shot multipliers?
 
 shot_profiles:
   mystery_shot_profile:
@@ -101,11 +188,28 @@ shots:
     #   leds: l_left_orbit_arrow
     disable_events:
       - mode_skill_shot_started
+      - start_end_invid_invasion_mode
+      - start_end_genesis_pit_mode
+      - start_end_the_fortress_pit_mode
+      - start_end_big_apple_mode
     enable_events:
       - mode_qualify_mystery_started
-      - mode_skill_shot_stopped
+      - enable_mystery_shot
     reset_events: mode_qualify_mystery_started
     debug: true
+
+light_player:
+  start_mystery_award{game.balls_in_play==1}:
+    gi_string:
+      color: off
+    playfield:
+      color: off
+  # stop_qualify_mystery{game.balls_in_play==1}:
+  #   gi_string:
+  #     color: on
+  #   playfield:
+  #     color: off
+  #     priority: 8000
 
 shows:
   play_mystery_intro_video:
@@ -171,6 +275,22 @@ widgets:
       x: center
       y: center-300
       z: 8100
+  mystery_add_1x_playfield_multiplier_widget:
+    - type: text
+      text: "INCREASE PLAYFIELD MULTIPLIER BY 1X FOR 20 SECONDS"
+      color: white
+      font_size: 50
+      x: center
+      y: center-300
+      z: 8100
+  mystery_light_shot_multipliers_widget:
+    - type: text
+      text: "LIGHT SHOT MULTIPLIERS"
+      color: white
+      font_size: 50
+      x: center
+      y: center-300
+      z: 8100
 
 
 widget_player:
@@ -198,10 +318,22 @@ widget_player:
     mystery_light_kickback_widget:
       action: add
       slide: mystery_collected_slide
-
+  display_add_1x_playfield_multiplier:
+    mystery_add_1x_playfield_multiplier_widget:
+      action: add
+      slide: mystery_collected_slide
+  display_light_shot_multipliers:
+    mystery_light_shot_multipliers_widget:
+      action: add
+      slide: mystery_collected_slide
 
 variable_player:
   award_big_points:
     score: 50000
   add_to_kickback_counter:
     kickback_counter: 1
+
+sound_player:
+  play_extra_ball_sound:
+    afm_extra_ball:
+      action: play

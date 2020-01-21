@@ -7,6 +7,9 @@ mode:
   stop_events:
     - ball_ending
     - mode_end_invid_invasion_started
+    - mode_end_genesis_pit_started
+    - mode_end_the_fortress_started
+    - mode_end_big_apple_started
     #- stop_qualify_shot_multipliers_mode
   restart_on_next_ball: false
   priority: 6800
@@ -14,7 +17,7 @@ mode:
 event_player:
   qualify_shot_multipliers{not mode.invid_invasion.active}:
   #mode_qualify_shot_multipliers_started:
-    shot_multipliers|1s
+    - shot_multipliers|1s
 
 
 shot_profiles:
@@ -47,6 +50,7 @@ shots:
       - lancer_shot_multiplier_flashing_shot_multiplier_hit
       - lunk_shot_multiplier_flashing_shot_multiplier_hit
       - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    restart_events: mode_qualify_shot_multipliers_stopping
     debug: true
   annie_shot_multiplier:
     switch: s_left_orbit
@@ -63,6 +67,7 @@ shots:
       - lancer_shot_multiplier_flashing_shot_multiplier_hit
       - lunk_shot_multiplier_flashing_shot_multiplier_hit
       - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    restart_events: mode_qualify_shot_multipliers_stopping
     debug: true
   ramp_shot_multiplier:
     switch: s_back_ramp
@@ -79,6 +84,7 @@ shots:
       - lancer_shot_multiplier_flashing_shot_multiplier_hit
       - lunk_shot_multiplier_flashing_shot_multiplier_hit
       - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    restart_events: mode_qualify_shot_multipliers_stopping
     debug: true
   rook_shot_multiplier:
     switch: s_right_lock_kickout
@@ -95,6 +101,7 @@ shots:
       - lancer_shot_multiplier_flashing_shot_multiplier_hit
       - lunk_shot_multiplier_flashing_shot_multiplier_hit
       - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    restart_events: mode_qualify_shot_multipliers_stopping
     debug: true
   lancer_shot_multiplier:
     hit_events: lancer_shot_sequence_hit
@@ -111,6 +118,7 @@ shots:
       - lancer_shot_multiplier_flashing_shot_multiplier_hit
       - lunk_shot_multiplier_flashing_shot_multiplier_hit
       - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    restart_events: mode_qualify_shot_multipliers_stopping
     debug: true
   lunk_shot_multiplier:
     switch: s_d_target
@@ -127,6 +135,7 @@ shots:
       - lancer_shot_multiplier_flashing_shot_multiplier_hit
       - lunk_shot_multiplier_flashing_shot_multiplier_hit
       - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    restart_events: mode_qualify_shot_multipliers_stopping
     debug: true
   protoculture_shot_multiplier:
     switch: s_top_target
@@ -143,6 +152,7 @@ shots:
       - lancer_shot_multiplier_flashing_shot_multiplier_hit
       - lunk_shot_multiplier_flashing_shot_multiplier_hit
       - protoculture_shot_multiplier_flashing_shot_multiplier_hit
+    restart_events: mode_qualify_shot_multipliers_stopping
     debug: true
 
 variable_player:

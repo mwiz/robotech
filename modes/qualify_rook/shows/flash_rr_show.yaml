@@ -1,0 +1,33 @@
+#show_version=5
+
+- time: 0
+  lights:
+    l_rlock_arrow: yellow
+
+- time: +500ms
+  lights:
+    l_rlock_arrow: off
+
+- time: +500ms
+  lights:
+    l_rlock_arrow: yellow
+
+- time: +500ms
+  lights:
+    l_rlock_arrow: off
+
+- time: +500ms
+  lights:
+    l_rlock_arrow: yellow
+
+- time: +500ms
+  lights:
+    l_rlock_arrow: off
+
+- time: +500ms
+  lights:
+    l_rlock_arrow: yellow
+
+- time: +500ms
+  lights:
+    l_rlock_arrow: off

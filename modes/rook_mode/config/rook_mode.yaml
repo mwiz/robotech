@@ -120,7 +120,7 @@ widgets:
     - type: rectangle
       anchor_x: left
       anchor_y: bottom
-      x: 1137
+      x: 1130
       y: 190
       z: 1100
       width: 130
@@ -217,68 +217,69 @@ widget_player:
     rook_right_rectangle:
       action: add
       slide: base_slide
+      priority: 4702
     rook_mode_time_display_widget:
       action: add
       slide: base_slide
-      priority: 4702
+      priority: 4703
     rook_mode_timer_widget:
       action: update
       slide: base_slide
-      priority: 4703
+      priority: 4704
     rook_mode_gang_display_widget:
       action: add
       slide: base_slide
-      priority: 4704
+      priority: 4705
     rook_mode_gang_count_widget:
       action: update
       slide: base_slide
-      priority: 4705
+      priority: 4706
     biker_1_circle:
       action: add
       slide: base_slide
-      priority: 4706
+      priority: 4707
     biker_2_circle:
       action: add
       slide: base_slide
-      priority: 4707
+      priority: 4708
     biker_3_circle:
       action: add
       slide: base_slide
-      priority: 4708
+      priority: 4709
     biker_4_circle:
       action: add
       slide: base_slide
-      priority: 4709
+      priority: 4710
   timer_rook_mode_timer_tick:
     rook_mode_timer_widget:
       action: update
       slide: base_slide
-      priority: 4710
+      priority: 4711
   logicblock_biker_gang_defeated_counter_hit:
     rook_mode_gang_count_widget:
       action: update
       slide: base_slide
-      priority: 4711
+      priority: 4712
   logicblock_biker_1_shots_made_counter_hit:
     rook_mode_biker_1_count_widget:
       action: update
       slide: base_slide
-      priority: 4712
+      priority: 4713
   logicblock_biker_2_shots_made_counter_hit:
     rook_mode_biker_2_count_widget:
       action: update
       slide: base_slide
-      priority: 4713
+      priority: 4714
   logicblock_biker_3_shots_made_counter_hit:
     rook_mode_biker_3_count_widget:
       action: update
       slide: base_slide
-      priority: 4714
+      priority: 4715
   logicblock_biker_4_shots_made_counter_hit:
     rook_mode_biker_4_count_widget:
       action: update
       slide: base_slide
-      priority: 4715
+      priority: 4716
   # mode_rook_mode_stopped:
   #   rook_left_rectangle:
   #     action: remove
@@ -376,6 +377,9 @@ timers:
       - action: add
         event: add_10s
         value: 10
+      - action: pause
+        event: mystery_shot_flashing_hit{game.balls_in_play==1}
+        value: 5
 
 shot_profiles:
   rook_mode_rand_add_ball_flash:

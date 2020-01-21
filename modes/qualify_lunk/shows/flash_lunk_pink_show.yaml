@@ -1,0 +1,16 @@
+#show_version=5
+
+# - time: 0
+#   lights:
+#     l_sdf_arrow_led: 654321 #392613
+#
+# - time: +500ms
+#   lights:
+#     l_sdf_arrow_led: off
+
+- duration: 500ms
+  lights:
+    l_sdf_arrow_led: 654321
+- duration: 1000ms
+  lights:
+    l_sdf_arrow_led: off

@@ -1,0 +1,41 @@
+#show_version=5
+
+- time: 0
+  lights:
+    l_right_orbit_arrow: purple
+
+- time: +500ms
+  lights:
+    l_right_orbit_arrow: off
+
+- time: +500ms
+  lights:
+    l_right_orbit_arrow: purple
+
+- time: +500ms
+  lights:
+    l_right_orbit_arrow: off
+
+- time: +500ms
+  lights:
+    l_right_orbit_arrow: purple
+
+- time: +500ms
+  lights:
+    l_right_orbit_arrow: off
+
+- time: +500ms
+  lights:
+    l_right_orbit_arrow: purple
+
+- time: +500ms
+  lights:
+    l_right_orbit_arrow: off
+
+- time: +500ms
+  lights:
+    l_right_orbit_arrow: purple
+
+- time: +500ms
+  lights:
+    l_right_orbit_arrow: off

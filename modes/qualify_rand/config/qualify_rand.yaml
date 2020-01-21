@@ -109,12 +109,20 @@ shots:
       - mode_rook_mode_stopped{device.counters.rand_hit_counter.value==0}
       - mode_lunk_mode_stopped{device.counters.rand_hit_counter.value==0}
       - mode_skill_shot_stopped{device.counters.rand_hit_counter.value==0}
+      - mode_corg_mode_stopped{device.counters.rand_hit_counter.value==0}
+      # - mode_genesis_pit_stopped{device.counters.rand_hit_counter.value==0}
+      # - mode_the_fortress_stopped{device.counters.rand_hit_counter.value==0}
+      # - mode_big_apple_stopped{device.counters.rand_hit_counter.value==0}
     disable_events:
       - r_shot_flashing_rand_hit
       - mode_intro_annie_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     debug: true
   ra_shot:
     switch: s_left_lock_kickout
@@ -125,12 +133,20 @@ shots:
       - mode_rook_mode_stopped{device.counters.rand_hit_counter.value==1}
       - mode_lunk_mode_stopped{device.counters.rand_hit_counter.value==1}
       - mode_skill_shot_stopped{device.counters.rand_hit_counter.value==1}
+      - mode_corg_mode_stopped{device.counters.rand_hit_counter.value==1}
+      # - mode_genesis_pit_stopped{device.counters.rand_hit_counter.value==1}
+      # - mode_the_fortress_stopped{device.counters.rand_hit_counter.value==1}
+      # - mode_big_apple_stopped{device.counters.rand_hit_counter.value==1}
     disable_events:
       - ra_shot_flashing_rand_hit
       - mode_intro_annie_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     debug: true
   ran_shot:
     switch: s_left_lock_kickout
@@ -141,12 +157,20 @@ shots:
       - mode_rook_mode_stopped{device.counters.rand_hit_counter.value==2}
       - mode_lunk_mode_stopped{device.counters.rand_hit_counter.value==2}
       - mode_skill_shot_stopped{device.counters.rand_hit_counter.value==2}
+      - mode_corg_mode_stopped{device.counters.rand_hit_counter.value==2}
+      # - mode_genesis_pit_stopped{device.counters.rand_hit_counter.value==2}
+      # - mode_the_fortress_stopped{device.counters.rand_hit_counter.value==2}
+      # - mode_big_apple_stopped{device.counters.rand_hit_counter.value==2}
     disable_events:
       - ran_shot_flashing_rand_hit
       - mode_intro_annie_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     debug: true
   rand_shot:
     switch: s_left_lock_kickout
@@ -157,12 +181,20 @@ shots:
       - mode_rook_mode_stopped{device.counters.rand_hit_counter.value==3}
       - mode_lunk_mode_stopped{device.counters.rand_hit_counter.value==3}
       - mode_skill_shot_stopped{device.counters.rand_hit_counter.value==3}
+      - mode_corg_mode_stopped{device.counters.rand_hit_counter.value==3}
+      # - mode_genesis_pit_stopped{device.counters.rand_hit_counter.value==3}
+      # - mode_the_fortress_stopped{device.counters.rand_hit_counter.value==3}
+      # - mode_big_apple_stopped{device.counters.rand_hit_counter.value==3}
     disable_events:
       - rand_shot_flashing_rand_hit
       - mode_intro_annie_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
       - mode_skill_shot_started
+      - mode_intro_genesis_pit_started
+      - mode_intro_the_fortress_started
+      - mode_intro_big_apple_started
+      - mode_intro_corg_mode_started
     debug: true
 
 
