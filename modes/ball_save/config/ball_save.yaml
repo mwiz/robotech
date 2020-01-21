@@ -3,9 +3,11 @@
 
 mode:
     start_events:
-      - ball_starting
-      - mode_end_invid_invasion_stopped
-      - mode_end_genesis_pit_stopped
+      #- ball_starting
+      - mode_skill_shot_started
+      # - mode_end_invid_invasion_stopped
+      # - mode_end_genesis_pit_stopped
+      # - mode_the_fortress_stopped
     stop_events:
       - qualify_invid_invasion
       - ball_save_default_disabled #mode_ball_save_done
@@ -15,6 +17,7 @@ mode:
       - mode_lunk_mode_started
       - mode_annie_mode_started
       - kickback_kickback_main_fired
+      - ball_save_qualify_mode_ball_save_timer_start
     priority: 8400
 
 # event_player:
