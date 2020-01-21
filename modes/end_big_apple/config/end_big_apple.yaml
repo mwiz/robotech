@@ -2,13 +2,13 @@
 
 mode:
   start_events:
-    - start_end_genesis_pit_mode
+    - start_end_big_apple_mode
   stop_events:
-    - end_genesis_pit_player_continue_show_ended
-  priority: 8150
+    - end_big_apple_player_continue_show_ended
+  priority: 8355
 
 event_player:
-  mode_end_genesis_pit_started:
+  mode_end_big_apple_started:
     - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}
     - flipper_off
     - disable_Upper_Left_pop_bumper
@@ -18,7 +18,7 @@ event_player:
     - disable_sling
     - kickback_disable{mode.kickback.active}
     - ramp_diverter_disable
-  end_genesis_pit_player_continue_show_ended:
+  end_big_apple_player_continue_show_ended:
     - flipper_on
     - enable_Upper_Left_pop_bumper
     - enable_Upper_Right_pop_bumper
@@ -30,7 +30,7 @@ event_player:
     - restart_main_title
 
 timers:
-  eject_mystery_ball_end_genesis_pit_timer:
+  eject_mystery_ball_end_big_apple_timer:
     debug: true
     start_value: 2
     end_value: 0
@@ -41,23 +41,23 @@ timers:
         event: check_if_okay_to_hold
 
 queue_event_player:
-  mode_end_genesis_pit_started:
-    queue_event: my_queue_end_genesis_pit
-    events_when_finished: end_end_genesis_pit
+  mode_end_big_apple_started:
+    queue_event: my_queue_end_big_apple
+    events_when_finished: end_end_big_apple
 
 queue_relay_player:
-  my_queue_end_genesis_pit:
-    post: start_end_genesis_pit_intro
-    wait_for: end_genesis_pit_show_ended
+  my_queue_end_big_apple:
+    post: start_end_big_apple_intro
+    wait_for: end_big_apple_show_ended
   balldevice_bd_trough_ball_eject_attempt:
-    post: wait_for_instructions_genesis_pit
-    wait_for: end_genesis_pit_player_continue_show_ended
+    post: wait_for_instructions_big_apple
+    wait_for: end_big_apple_player_continue_show_ended
 
 shows:
-  end_genesis_pit_ball_over:
-    - duration: 11
+  end_big_apple_ball_over:
+    - duration: 13
       slides:
-        end_genesis_pit_ball_over_slide:
+        end_big_apple_ball_over_slide:
           widgets:
             - type: text
               text: "BALL LOST"
@@ -65,7 +65,7 @@ shows:
               font_size: 80
               y: center + 300
             - type: video
-              video: end_genesis_pit_mode_video
+              video: end_big_apple_mode_video
             - type: text
               text: "DON'T MOVE"
               font_size: 80
@@ -81,18 +81,18 @@ shows:
                   value: 0
                   duration: .5s
                   repeat: true
-  end_genesis_pit_timer_expired:
-    - duration: 11
+  end_big_apple_timer_expired:
+    - duration: 13
       slides:
-        end_genesis_pit_timer_expired_slide:
+        end_big_apple_timer_expired_slide:
           widgets:
             - type: text
-              text: "MODE TIMER EXPIRED!"
+              text: "TIMER EXPIRED!"
               color: blue
               font_size: 80
               y: center + 300
             - type: video
-              video: end_genesis_pit_mode_video
+              video: end_big_apple_mode_video
             - type: text
               text: "DON'T MOVE"
               font_size: 80
@@ -108,10 +108,10 @@ shows:
                   value: 0
                   duration: .5s
                   repeat: true
-  end_genesis_pit_super_jackpot_collected:
-    - duration: 19
+  end_big_apple_super_jackpot_collected:
+    - duration: 13
       slides:
-        end_genesis_pit_super_jackpot_collected_slide:
+        end_big_apple_super_jackpot_collected_slide:
           widgets:
             - type: text
               text: "SUPER JACKPOT COLLECTED!"
@@ -119,7 +119,7 @@ shows:
               font_size: 80
               y: center + 300
             - type: video
-              video: end_genesis_pit_mode_jackpot_video
+              video: end_big_apple_mode_video
             - type: text
               text: "DON'T MOVE"
               font_size: 80
@@ -135,10 +135,10 @@ shows:
                   value: 0
                   duration: .5s
                   repeat: true
-  end_genesis_pit_player_continue_show:
+  end_big_apple_player_continue_show:
     - duration: 3
       slides:
-        end_genesis_pit_player_continue_slide:
+        end_big_apple_player_continue_slide:
           widgets:
             - type: text
               text: PLAYER (number)
@@ -152,48 +152,47 @@ shows:
               font_size: 90
 
 light_player:
-  mode_end_genesis_pit_started:
+  mode_end_big_apple_started:
     gi_string:
       color: off
     playfield:
       color: off
       priority: 8000
-  mode_end_genesis_pit_stopped:
+  mode_end_big_apple_stopped:
     gi_string:
       color: on
     playfield:
       color: on
-      # priority: 1801
 
 show_player:
-  start_end_genesis_pit_intro.1{current_player.mode_end_action_flag == 0}:
-    end_genesis_pit_ball_over:
+  start_end_big_apple_intro.1{current_player.mode_end_action_flag == 0}:
+    end_big_apple_ball_over:
       loops: 0
-      events_when_stopped: end_genesis_pit_show_ended
-  start_end_genesis_pit_intro.2{current_player.mode_end_action_flag == 1}:
-    end_genesis_pit_timer_expired:
+      events_when_stopped: end_big_apple_show_ended
+  start_end_big_apple_intro.2{current_player.mode_end_action_flag == 1}:
+    end_big_apple_timer_expired:
       loops: 0
-      events_when_stopped: end_genesis_pit_show_ended
-  start_end_genesis_pit_intro.3{current_player.mode_end_action_flag == 2}:
-    end_genesis_pit_super_jackpot_collected:
+      events_when_stopped: end_big_apple_show_ended
+  start_end_big_apple_intro.3{current_player.mode_end_action_flag == 2}:
+    end_big_apple_super_jackpot_collected:
       loops: 0
-      events_when_stopped: end_genesis_pit_show_ended
+      events_when_stopped: end_big_apple_show_ended
   flipper_cancel.1{device.ball_devices.bd_trough.balls==4}:
-    end_genesis_pit_timer_expired:
+    end_big_apple_timer_expired:
       action: stop
   flipper_cancel.2{device.ball_devices.bd_trough.balls==4}:
-    end_genesis_pit_ball_over:
+    end_big_apple_ball_over:
       action: stop
   flipper_cancel.3{device.ball_devices.bd_trough.balls==4}:
-    end_genesis_pit_super_jackpot_collected:
+    end_big_apple_super_jackpot_collected:
       action: stop
-  end_genesis_pit_show_ended:
-    end_genesis_pit_player_continue_show:
+  end_big_apple_show_ended:
+    end_big_apple_player_continue_show:
       loops: 0
-      events_when_stopped: end_genesis_pit_player_continue_show_ended
+      events_when_stopped: end_big_apple_player_continue_show_ended
 
 variable_player:
-  end_genesis_pit_player_continue_show_ended:
+  end_big_apple_player_continue_show_ended:
     mode_end_action_flag:
       int: 0
       action: set

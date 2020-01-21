@@ -30,6 +30,8 @@ high_score:
       - Super Spinner Champ
   - combos_made:
       - Combos Champ
+  - skill_shots_made:
+      - Skill Shot Champ
 
 slide_player:
   _overwrite: True

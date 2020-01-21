@@ -226,20 +226,6 @@ achievements:
     complete_events: big_apple_success
     select_events: pre_qualify_a_mode_invid_target_group_hit_complete{(device.achievements.genesis_pit.state == "completed" or device.achievements.genesis_pit.state == "stopped") and (device.achievements.the_fortress.state == "completed" or device.achievements.the_fortress.state == "stopped")}
     debug: true
-  corg:
-    show_tokens:
-      leds: l_b20
-    show_when_disabled: off #on
-    show_when_enabled: color_blue_on
-    show_when_started: flash_blue_show
-    show_when_completed: color_green_on
-    show_when_stopped: color_red_on
-    enable_events: enable_corg_mode
-    start_events: mode_corg_mode_started
-    stop_events: mode_corg_mode_stopped
-    restart_after_stop_possible: false
-    complete_events: corg_mode_success
-    debug: true
 
 achievement_groups:
   robotech_main_modes:
@@ -1040,9 +1026,6 @@ light_player:
   mode_base_stopped:
     gi_string:
       color: off
-    # playfield:
-    #   color: off
-    #   priority: 9900
 
 
 show_player:
@@ -1076,6 +1059,32 @@ show_player:
       key: extraball_awarded_show
       show_tokens:
         leds: l_shoot_again
+  mode_protoculture_started.1{device.counters.protoculture_hit_counter.value>=1}: P_1_show_on
+  mode_protoculture_started.2{device.counters.protoculture_hit_counter.value>=2}: P_2_show_on
+  mode_protoculture_started.3{device.counters.protoculture_hit_counter.value>=3}: P_3_show_on
+  mode_protoculture_started.4{device.counters.protoculture_hit_counter.value>=4}: P_4_show_on
+  mode_protoculture_started.5{device.counters.protoculture_hit_counter.value>=5}: P_5_show_on
+  mode_protoculture_started.6{device.counters.protoculture_hit_counter.value>=6}: P_6_show_on
+  mode_protoculture_started.7{device.counters.protoculture_hit_counter.value>=7}: P_7_show_on
+  mode_protoculture_started.8{device.counters.protoculture_hit_counter.value>=8}: P_8_show_on
+  mode_protoculture_started.9{device.counters.protoculture_hit_counter.value>=9}: P_9_show_on
+  mode_protoculture_started.10{device.counters.protoculture_hit_counter.value==10}: P_10_show_on
+  mode_protoculture_started.11{device.counters.protoculture_hit_counter.value==11}: P_11_show_on
+  mode_protoculture_started.12{device.counters.protoculture_hit_counter.value==12}: P_12_show_on
+  mode_protoculture_started.13{device.counters.protoculture_hit_counter.value==13}: P_13_show_on
+  logicblock_protoculture_hit_counter_hit.1{count==1}: P_1_show_on
+  logicblock_protoculture_hit_counter_hit.2{count==2}: P_2_show_on
+  logicblock_protoculture_hit_counter_hit.3{count==3}: P_3_show_on
+  logicblock_protoculture_hit_counter_hit.4{count==4}: P_4_show_on
+  logicblock_protoculture_hit_counter_hit.5{count==5}: P_5_show_on
+  logicblock_protoculture_hit_counter_hit.6{count==6}: P_6_show_on
+  logicblock_protoculture_hit_counter_hit.7{count==7}: P_7_show_on
+  logicblock_protoculture_hit_counter_hit.8{count==8}: P_8_show_on
+  logicblock_protoculture_hit_counter_hit.9{count==9}: P_9_show_on
+  logicblock_protoculture_hit_counter_hit.10{count==10}: P_10_show_on
+  logicblock_protoculture_hit_counter_hit.11{count==11}: P_1_show_on
+  logicblock_protoculture_hit_counter_hit.12{count==12}: P_2_show_on
+  logicblock_protoculture_hit_counter_hit.13{count==13}: P_3_show_on
   mystery_targets_rollover_group_hit_complete:
     mystery_shots_complete:
       loops: 4
@@ -1088,13 +1097,14 @@ show_player:
     invid_targets_complete:
       show_tokens:
         color: red
-  lunk_shot_group_lit_complete:
-    sdf_bank_complete:
-      loops: 3
-      speed: 10
-      show_tokens:
-        color: 654321
-      priority: 1610
+  # genesis_pit_invid_target_group_hit_complete:
+  #   invid_targets_complete:
+  #     show_tokens:
+  #       color: red
+  # the_fortress_invid_target_group_hit_complete:
+  #   invid_targets_complete:
+  #     show_tokens:
+  #       color: red
 
 variable_player:
   mode_base_stopping:
@@ -1181,10 +1191,134 @@ variable_player:
     modes_completed: 1
   achievement_lunk_mode_collect_state_completed:
     modes_completed: 1
-  achievement_corg_state_completed:
-    modes_completed: 1
 
+
+#shows:
+#  flash_green:
+#  - duration: +75ms
+#    lights:
+#      (leds): green
+#  - duration: +75ms
+#    lights:
+#      (leds): off
+
+# shot_profiles:
+#   invid_profile:
+#     show_when_disabled: false
+#     states:
+#       # - name: unlit
+#       #   show: off
+#       - name: flashing
+#         show: flash_red_show #invid_flash_red_show
+#         speed: 15
+#       - name: hit
+#         show: color_red_on
+#               # - name: unlit
+#               #   show: off
+#         # show_tokens:
+#         #   color: red
 shows:
+  P_1_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+    - time: -1
+  P_2_show_on:
+    - time: 0
+      lights:
+        l_b2: 2F4F4F
+    - time: -1
+  P_3_show_on:
+    - time: 0
+      lights:
+        l_b3: 2F4F4F
+    - time: -1
+  P_4_show_on:
+    - time: 0
+      lights:
+        l_b4: 2F4F4F
+    - time: -1
+  P_5_show_on:
+    - time: 0
+      lights:
+        l_b5: 2F4F4F
+    - time: -1
+  P_6_show_on:
+    - time: 0
+      lights:
+        l_b6: 2F4F4F
+    - time: -1
+  P_7_show_on:
+    - time: 0
+      lights:
+        l_b7: 2F4F4F
+    - time: -1
+  P_8_show_on:
+    - time: 0
+      lights:
+        l_b8: 2F4F4F
+    - time: -1
+  P_9_show_on:
+    - time: 0
+      lights:
+        l_b9: 2F4F4F
+    - time: -1
+  P_10_show_on:
+    - time: 0
+      lights:
+        l_b10: 2F4F4F
+        l_b1: off
+        l_b2: off
+        l_b3: off
+        l_b4: off
+        l_b5: off
+        l_b6: off
+        l_b7: off
+        l_b8: off
+        l_b9: off
+    - time: -1
+  P_11_show_on:
+    - time: 0
+      lights:
+        l_b10: 2F4F4F
+        l_b1: 2F4F4F
+        l_b2: off
+        l_b3: off
+        l_b4: off
+        l_b5: off
+        l_b6: off
+        l_b7: off
+        l_b8: off
+        l_b9: off
+    - time: -1
+  P_12_show_on:
+    - time: 0
+      lights:
+        l_b10: 2F4F4F
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: off
+        l_b4: off
+        l_b5: off
+        l_b6: off
+        l_b7: off
+        l_b8: off
+        l_b9: off
+    - time: -1
+  P_13_show_on:
+    - time: 0
+      lights:
+        l_b10: 2F4F4F
+        l_b1: 2F4F4F
+        l_b2: 2F4F4F
+        l_b3: 2F4F4F
+        l_b4: off
+        l_b5: off
+        l_b6: off
+        l_b7: off
+        l_b8: off
+        l_b9: off
+    - time: -1
   shoot_again_show:
     - duration: 2
       slides:
@@ -1200,6 +1334,24 @@ shows:
               color: red
               y: center - 10
               font_size: 90
+# shows:
+  # invid_flash_red_show:
+  #   - time: 0
+  #     lights:
+  #       (leds): red
+  #   - time: +1
+  #     lights:
+  #       (leds): black
+  # color_red_on:
+  #   - time: 0
+  #     lights:
+  #       (leds): red
+  #   - time: -1
+  # color_green_on:
+  #   - time: 0
+  #     lights:
+  #       (leds): green
+  #   - time: -1
 
 shots:
   spinner_shot:
@@ -1278,9 +1430,6 @@ sound_player:
     rook_mode_confrontation:
       action: stop
   mode_intro_annie_mode_started:
-    main_title:
-      action: stop
-  mode_intro_corg_mode_started:
     main_title:
       action: stop
   mode_annie_mode_stopping:

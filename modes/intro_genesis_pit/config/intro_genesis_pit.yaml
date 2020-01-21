@@ -9,13 +9,19 @@ mode:
   priority: 8125
 
 queue_event_player:
-  mode_intro_genesis_pit_started:
+  mode_intro_genesis_pit_started.1{game.balls_in_play == 1}:
     queue_event: my_queue_genesis_pit
+    events_when_finished: stop_intro_genesis_pit_mode
+  mode_intro_genesis_pit_started.2{game.balls_in_play > 1}:
+    queue_event: my_queue_genesis_pit_more_than_1_ball
     events_when_finished: stop_intro_genesis_pit_mode
 
 queue_relay_player:
   my_queue_genesis_pit:
     post: start_genesis_pit_intro
+    wait_for: intro_genesis_pit_show_ended
+  my_queue_genesis_pit_more_than_1_ball:
+    post: start_genesis_pit_intro_more_than_1_ball
     wait_for: intro_genesis_pit_show_ended
   balldevice_bd_trough_ball_eject_attempt:
     post: wait_for_instructions
@@ -31,7 +37,7 @@ shows:
         intro_genesis_pit_slide:
           widgets:
             - type: text
-              text: GENESIS PIT !!!
+              text: THE GENESIS PIT !!!
               color: white
               font_size: 80
               x: center
@@ -44,6 +50,25 @@ shows:
               font_size: 50
             - type: video
               video: intro_genesis_pit_video
+  genesis_pit_intro_more_than_1_ball:
+    - duration: 3s
+      slides:
+        intro_genesis_pit_more_than_1_ball_slide:
+          widgets:
+            - type: text
+              text: GENESIS PIT !!!
+              color: red
+              font_size: 80
+              x: center
+              y: center+300
+            - type: image
+              image: three_invid
+            - type: text
+              text: Defeat Prehistoric Creatures and Invid, lits Jackpot
+              color: white
+              font_size: 60
+              x: center
+              y: center-300
 
 light_player:
   mode_intro_genesis_pit_started{game.balls_in_play == 1}:
@@ -65,9 +90,10 @@ show_player:
     genesis_pit_intro:
       loops: 0
       events_when_stopped: intro_genesis_pit_show_ended
-    # alert_show:
-    #   loops: -1
-    #   priority: 9500
+  start_genesis_pit_intro_more_than_1_ball:
+    genesis_pit_intro_more_than_1_ball:
+      loops: 0
+      events_when_stopped: intro_genesis_pit_show_ended
   flipper_cancel:
     genesis_pit_intro:
       action: stop

@@ -9,8 +9,8 @@ mode:
 
 event_player:
   mode_end_invid_invasion_started:
-    - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}
-    - flipper_off|.5s
+    #- ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}
+    - flipper_off
     - disable_Upper_Left_pop_bumper
     - disable_Upper_Right_pop_bumper
     - disable_Lower_Left_pop_bumper
@@ -28,6 +28,17 @@ event_player:
     - kickback_enable{mode.kickback.active}
     #- start_pre_qualify_mystery
     - start_skill_shot_mode
+
+timers:
+  eject_mystery_ball_end_invid_invation_timer:
+    debug: true
+    start_value: 2
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: check_if_okay_to_hold
 
 # widgets:
 #   player_num_keep_shooting_widget:
@@ -77,8 +88,8 @@ shows:
         end_invid_invasion_timer_expired_slide:
           widgets:
             - type: text
-              text: "TIMER EXPIRED!"
-              color: red
+              text: "MODE TIMER EXPIRED!"
+              color: blue
               font_size: 80
               y: center + 300
             - type: video
@@ -86,17 +97,26 @@ shows:
             - type: text
               text: "DON'T MOVE"
               font_size: 80
-              color: blue
+              color: red
               x: center
               y: center - 300
+              animations:
+                show_slide:
+                - property: opacity
+                  value: 1
+                  duration: .5s
+                - property: opacity
+                  value: 0
+                  duration: .5s
+                  repeat: true
   end_invid_invasion_ball_over:
     - duration: 9
       slides:
         end_invid_invasion_ball_over_slide:
           widgets:
             - type: text
-              text: "BALL ENDED!"
-              color: red
+              text: "BALL LOST"
+              color: white
               font_size: 80
               y: center + 300
             - type: video
@@ -104,9 +124,18 @@ shows:
             - type: text
               text: "DON'T MOVE"
               font_size: 80
-              color: blue
+              color: red
               x: center
               y: center - 300
+              animations:
+                show_slide:
+                - property: opacity
+                  value: 1
+                  duration: .5s
+                - property: opacity
+                  value: 0
+                  duration: .5s
+                  repeat: true
   end_invid_invasion_super_jackpot_collected:
     - duration: 9
       slides:
@@ -114,7 +143,7 @@ shows:
           widgets:
             - type: text
               text: "SUPER JACKPOT COLLECTED!"
-              color: red
+              color: purple
               font_size: 80
               y: center + 300
             - type: video
@@ -122,9 +151,18 @@ shows:
             - type: text
               text: "DON'T MOVE"
               font_size: 80
-              color: blue
+              color: red
               x: center
               y: center - 300
+              animations:
+                show_slide:
+                - property: opacity
+                  value: 1
+                  duration: .5s
+                - property: opacity
+                  value: 0
+                  duration: .5s
+                  repeat: true
   collect_team_members:
     - duration: 5
       slides:
@@ -213,7 +251,7 @@ show_player:
   flipper_cancel.3{device.ball_devices.bd_trough.balls==4}:
     end_invid_invasion_super_jackpot_collected:
       action: stop
-  flipper_cancel:
+  flipper_cancel.4{device.ball_devices.bd_trough.balls==4}:
     collect_team_members:
       action: stop
   end_invid_invasion_show_ended:
@@ -233,4 +271,6 @@ show_player:
 
 variable_player:
   player_continue_show_ended:
-    mode_end_action_flag: 0
+    mode_end_action_flag:
+      int: 0
+      action: set

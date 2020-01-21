@@ -91,10 +91,6 @@ event_player:
     - restart_main_title
   # timer_genesis_pit_mode_timer_complete:
   #   - restart_main_title
-  hurry_up_mode_start_ramp_completed{current_player.hurry_up_mode_hit_ramp_value > 0}:
-    - display_hurry_up_value|.5s
-  skill_shot_secret_combo_made:
-    - display_skill_shot_secret_combo|.5s
 
 achievements:
   rand_mode_collect:
@@ -172,100 +168,35 @@ achievements:
   genesis_pit:
     show_tokens:
       leds: l_mission_2
-    show_when_disabled: off #on
-    show_when_enabled: off #on
-    show_when_selected: on
+    show_when_enabled: on
     show_when_started: flash
     show_when_completed: color_green_on
     show_when_stopped: color_red_on
-    enable_events: pre_qualify_a_mode_invid_target_group_hit_complete #mode_qualify_genesis_pit_started
-    events_when_started: start_intro_genesis_pit
+    enable_events: mode_qualify_genesis_pit_started
+    #events_when_started:
     #events_when_completed:
     #events_when_enabled:
-    #start_events:
+    start_events: mode_genesis_pit_started
     stop_events: mode_genesis_pit_stopped #timer_invid_invasion_complete
     restart_after_stop_possible: false
     complete_events: genesis_pit_success #,increase_modes_completed_count
-    select_events: pre_qualify_a_mode_invid_target_group_hit_complete{device.achievements.invid_invasion_mission_1.state == "completed" or device.achievements.invid_invasion_mission_1.state == "stopped"} # {device.counters.pre_qualify_a_mode_invid_target_group_made.value < 4} #mode_invid_invasion_stopped
     debug: true
   the_fortress:
     show_tokens:
       leds: l_mission_3
-    show_when_disabled: off #on
-    show_when_enabled: off #on
-    show_when_selected: on
+    show_when_enabled: on
     show_when_started: flash
     show_when_completed: color_green_on
     show_when_stopped: color_red_on
-    enable_events: pre_qualify_a_mode_invid_target_group_hit_complete #pre_qualify_a_mode_invid_target_group_hit_complete # {device.achievements.invid_invasion_mission_1.state != "completed"}
-    events_when_started: start_intro_the_fortress
+    enable_events: mode_qualify_the_fortress_started
+    #events_when_started:
     #events_when_completed:
     #events_when_enabled:
-    #start_events:
+    start_events: mode_the_fortress_started
     stop_events: mode_the_fortress_stopped
     restart_after_stop_possible: false
     complete_events: the_fortress_success
-    select_events: pre_qualify_a_mode_invid_target_group_hit_complete{device.achievements.genesis_pit.state == "completed" or device.achievements.genesis_pit.state == "stopped"}
     debug: true
-  big_apple:
-    show_tokens:
-      leds: l_mission_4
-    show_when_disabled: off #on
-    show_when_enabled: off #on
-    show_when_selected: on
-    show_when_started: flash
-    show_when_completed: color_green_on
-    show_when_stopped: color_red_on
-    enable_events: pre_qualify_a_mode_invid_target_group_hit_complete #pre_qualify_a_mode_invid_target_group_hit_complete # {device.achievements.invid_invasion_mission_1.state != "completed"}
-    events_when_started: start_intro_big_apple
-    #events_when_completed:
-    #events_when_enabled:
-    #start_events:
-    stop_events: mode_big_apple_stopped
-    restart_after_stop_possible: false
-    complete_events: big_apple_success
-    select_events: pre_qualify_a_mode_invid_target_group_hit_complete{(device.achievements.genesis_pit.state == "completed" or device.achievements.genesis_pit.state == "stopped") and (device.achievements.the_fortress.state == "completed" or device.achievements.the_fortress.state == "stopped")}
-    debug: true
-  corg:
-    show_tokens:
-      leds: l_b20
-    show_when_disabled: off #on
-    show_when_enabled: color_blue_on
-    show_when_started: flash_blue_show
-    show_when_completed: color_green_on
-    show_when_stopped: color_red_on
-    enable_events: enable_corg_mode
-    start_events: mode_corg_mode_started
-    stop_events: mode_corg_mode_stopped
-    restart_after_stop_possible: false
-    complete_events: corg_mode_success
-    debug: true
-
-achievement_groups:
-  robotech_main_modes:
-    achievements:
-      - genesis_pit
-      - the_fortress
-      - big_apple
-    auto_select: no
-    rotate_right_events: pops_shot_hit
-    #select_random_achievement_events: pops_shot_hit
-    allow_selection_change_while_disabled: no
-    enable_while_no_achievement_started: no
-    events_when_all_completed: select_reflex_point
-    # show_when_enabled: on
-    start_selected_events:
-      - start_mode_shot_flashing_hit
-    enable_events:
-      - mode_qualify_a_mode_started
-      #- pre_qualify_a_mode_invid_target_group_hit_complete
-    disable_events:
-      #- mode_qualify_a_mode_stopped
-      - mode_genesis_pit_started
-      - mode_the_fortress_started
-      - mode_big_apple_started
-    debug: true
-
 
 extra_balls:
   skillshot_extraball:
@@ -339,8 +270,47 @@ sequence_shots:
       - annie_shot_group_flashing_annie_hit
     sequence_timeout: 3s
 
-#-------------------------------------------------------------------------------
+
+# slides:
+#   base_slide: []
+
 slides:
+  # base_slide:
+  #   widgets:
+  # #    base_screen_outline_widget:
+  #     - type: line
+  #       points: 10, 20, 10, 700, 1270, 700, 1270, 20, 10, 20
+  #       thickness: 3
+  #       color: red
+  # #    base_score_widget:
+  #     - type: text
+  #       text: (score)
+  #       style: score_style_singleplayer
+  #       x: center
+  #       y: center-225
+  #   widgets:
+      # - type: text
+      #   text: (score)
+      #   number_grouping: true
+      #   min_digits: 2
+      #   font_size: 100
+      #   color: white
+      # - type: text
+      #   text: PLAYER (number)
+      #   y: 10
+      #   x: 10
+      #   font_size: 50
+      #   anchor_x: left
+      #   anchor_y: bottom
+      #   color: white
+      # - type: text
+      #   text: BALL (ball)
+      #   y: 10
+      #   x: right-10
+      #   anchor_x: right
+      #   anchor_y: bottom
+      #   font_size: 50
+      #   color: white
   ball_save_kickback_save_slide:
     widgets:
       - type: text
@@ -370,6 +340,142 @@ slides:
       #   color: red
       #   y: center-50
       #   font_size: 100
+  skill_shot_lanes_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: skill_shot_lanes
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  #skill_shot_saucer_slide:
+  # skill_shot_rand_slide:
+  #   widgets:
+  #     - type: text
+  #       text: SKILL SHOT SUCCESS!
+  #       font_size: 80
+  #       color: blue
+  #       x: center
+  #       y: center+300
+  #       # z: 120
+  #     - type: video
+  #       # video: skill_shot_saucer
+  #       video: skill_shot_rand
+  #     - type: text
+  #       text: (skill_shot_value)
+  #       font_size: 80
+  #       color: red
+  #       x: center
+  #       y: center-300
+  #       number_grouping: true
+  #       # z: 120
+  skill_shot_rook_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        # video: skill_shot_saucer
+        video: skill_shot_rook
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  skill_shot_sdf_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: skill_shot_sdf
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  skill_shot_invid_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: skill_shot_invid
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  skill_shot_super_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: skill_shot_sdf
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  skill_shot_secret_slide:
+    widgets:
+      - type: text
+        text: SKILL SHOT SUCCESS!
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      # - type: video
+      #   video: skill_shot_saucer
+      - type: text
+        text: (skill_shot_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
   rand_mode_3rd_kill_slide:
     widgets:
       - type: text
@@ -382,7 +488,7 @@ slides:
       - type: video
         video: rand_mode_3rd_kill
       - type: text
-        text: (rand_mode_score_value)
+        text: (invid_kill_value)
         font_size: 80
         color: red
         x: center
@@ -439,16 +545,6 @@ widgets:
       width: 1280
       height: 720
       color: black
-  # black_rectangle:
-  #   - type: rectangle
-  #     anchor_x: left
-  #     anchor_y: bottom
-  #     x: 15
-  #     y: 27
-  #     z: 1000
-  #     width: 1250
-  #     height: 670
-  #     color: black
   base_screen_outline_widget:
     - type: line
       points: 10, 20, 10, 700, 1270, 700, 1270, 20, 10, 20
@@ -471,24 +567,6 @@ widgets:
       x: center
       font_size: 30
       color: white
-#-------------------------------------------------------------------------------
-# HURRY UP WIDGET
-#-------------------------------------------------------------------------------
-  hurry_up_mode_hit_ramp_value_widget:
-    - type: text
-      text: HURRY UP AWARDED
-      color: yellow
-      font_size: 100
-      y: center + 50
-    - type: text
-      text: (hurry_up_value)
-      font_size: 100
-      color: red
-      y: center - 50
-      number_grouping: true
-#-------------------------------------------------------------------------------
-# COMBO WIDGETS
-#-------------------------------------------------------------------------------
   skill_shot_combo_widget:
     - type: text
       text: SKILL SHOT COMBO
@@ -501,7 +579,6 @@ widgets:
       color: red
       y: center - 50
       number_grouping: true
-# SECRET COMBO
   skill_shot_secret_combo_widget:
     - type: text
       text: SECRET SKILL SHOT COMBO
@@ -514,7 +591,78 @@ widgets:
       color: red
       y: center - 50
       number_grouping: true
-# TEAM COMBO
+  # player_num_keep_shooting_widget:
+  #   - type: text
+  #     text: PLAYER (number)
+  #     color: blue
+  #     font_size: 100
+  #     y: center + 80
+  #   - type: text
+  #     text: Keep Shooting
+  #     color: red
+  #     y: center #- 90
+  #     font_size: 70
+  ball_saved_widget:
+    - type: text
+      text: BALL SAVED!!
+      color: blue
+      font_size: 100
+      y: center + 80
+    - type: text
+      text: Keep Shooting
+      color: red
+      y: center #- 90
+      font_size: 70
+  # skill_shot_saucer_hit_video:
+  #   - type: video
+  #     video: skill_shot_saucer
+  # skill_shot_invid_hit_video:
+  #   - type: video
+  #     video: skill_shot_invid
+  # skill_shot_lanes_hit_video:
+  #   - type: video
+  #     video: skill_shot_lanes
+  skill_shot_failure:
+    - type: text
+      text: SKILL SHOT MISSED!
+      font_size: 100
+      color: red
+      y: center + 150
+  skill_shot_success:
+    - type: text
+      text: SKILL SHOT SUCCESS!
+      font_size: 100
+      color: blue
+      y: center + 150
+      # z: 120
+    - type: text
+      text: (skill_shot_value)
+      font_size: 100
+      color: red
+      y: center-150
+      # z: 120
+  shatz_skill_shot_success:
+    - type: text
+      text: (SHATZ)
+      font_size: 100
+      color: blue
+      y: center + 250
+      # z: 120
+    - type: text
+      text: SKILL SHOT SUCCESS
+      font_size: 100
+      color: blue
+      y: center + 150
+      # z: 120
+    - type: text
+      text: (skill_shot_value)
+      font_size: 100
+      color: red
+      y: center-150
+      # z: 120
+  # ball_save_kickback_save_video:
+  #   - type: video
+  #     video: kickback_save
   team_combo_widget:
     - type: text
       text: TEAM COMBO
@@ -527,30 +675,6 @@ widgets:
       color: red
       y: center-50
       number_grouping: true
-#-------------------------------------------------------------------------------
-  ball_saved_widget:
-    - type: text
-      text: BALL SAVED!!
-      color: blue
-      font_size: 100
-      y: center + 80
-    - type: text
-      text: Keep Shooting
-      color: red
-      y: center #- 90
-      font_size: 70
-  skill_shot_failure:
-    - type: text
-      text: SKILL SHOT MISSED!
-      font_size: 100
-      color: red
-      y: center + 150
-  # ball_save_kickback_save_video:
-  #   - type: video
-  #     video: kickback_save
-  #-----------------------------------------------------------------------------
-  # BONUS TEAM MEMBERS WIDGETS
-  #-----------------------------------------------------------------------------
   rand_mode_bonus_time_score_widget:
     - type: text
       text: RAND MODE COMPLETE
@@ -587,199 +711,65 @@ widgets:
       color: yellow
       y: center
       number_grouping: true
-  lunk_mode_bonus_time_score_widget:
-    - type: text
-      text: LUNK MODE COMPLETE
-      color: green
-      font_size: 80
-      y: center + 100
-    - type: text
-      text: "BONUS: (lunk_mode_bonus_time_score)"
-      font_size: 70
-      color: yellow
-      y: center
-      number_grouping: true
-#-------------------------------------------------------------------------------
-# SKILL SHOT SUCCESS DISPLAY WIDGETS
-#-------------------------------------------------------------------------------
-# RAND SKILL SHOT
-  skill_shot_rand_display_widgets:
+  rand_skill_shot_disply_widgets:
     - type: text
       text: SKILL SHOT SUCCESS!
       font_size: 80
       color: blue
       x: center
       y: center+300
+      # z: 120
     - type: video
+      # video: skill_shot_saucer
       video: skill_shot_rand
     - type: text
       text: (skill_shot_value)
       font_size: 80
       color: red
       x: center
-      y: center-290
+      y: center-300
       number_grouping: true
-# ROOK SKILL SHOT
-  skill_shot_rook_display_widgets:
-    - type: text
-      text: SKILL SHOT SUCCESS!
-      font_size: 80
-      color: blue
-      x: center
-      y: center+300
-    - type: video
-      video: skill_shot_rook
-    - type: text
-      text: (skill_shot_value)
-      font_size: 80
-      color: red
-      x: center
-      y: center-290
-      number_grouping: true
-# TOP SAUCER SKILL SHOT
-  skill_shot_top_saucer_display_widgets:
-    - type: text
-      text: SKILL SHOT SUCCESS!
-      font_size: 80
-      color: blue
-      x: center
-      y: center+300
-    # - type: video
-    #   video:
-    - type: text
-      text: (skill_shot_value)
-      font_size: 80
-      color: red
-      x: center
-      y: center-290
-      number_grouping: true
-# TOP LANES SKILL SHOT
-  skill_shot_lanes_display_widgets:
-    - type: text
-      text: SKILL SHOT SUCCESS!
-      font_size: 80
-      color: blue
-      x: center
-      y: center+300
-    - type: video
-      video: skill_shot_lanes
-    - type: text
-      text: (skill_shot_value)
-      font_size: 80
-      color: red
-      x: center
-      y: center-290
-      number_grouping: true
-# SDF SKILL SHOT
-  skill_shot_sdf_display_widgets:
-    - type: text
-      text: SKILL SHOT SUCCESS!
-      font_size: 80
-      color: blue
-      x: center
-      y: center+300
-    - type: video
-      video: skill_shot_sdf
-    - type: text
-      text: (skill_shot_value)
-      font_size: 80
-      color: red
-      x: center
-      y: center-290
-      number_grouping: true
-# INVID SKILL SHOT
-  skill_shot_invid_display_widgets:
-    - type: text
-      text: SKILL SHOT SUCCESS!
-      font_size: 80
-      color: blue
-      x: center
-      y: center+300
-    - type: video
-      video: skill_shot_invid
-    - type: text
-      text: (skill_shot_value)
-      font_size: 80
-      color: red
-      x: center
-      y: center-290
-      number_grouping: true
-# SUPER SKILL SHOT
-  skill_shot_super_display_widgets:
-    - type: text
-      text: SKILL SHOT SUCCESS!
-      font_size: 80
-      color: blue
-      x: center
-      y: center+300
-    - type: video
-      video: skill_shot_sdf
-    - type: text
-      text: (skill_shot_value)
-      font_size: 80
-      color: red
-      x: center
-      y: center-290
-      number_grouping: true
-# SECRET (RAMP) SKILL SHOT
-  skill_shot_secret_display_widgets:
-    - type: text
-      text: SKILL SHOT SUCCESS!
-      font_size: 80
-      color: blue
-      x: center
-      y: center+300
-      # - type: video
-      #   video:
-    - type: text
-      text: (skill_shot_value)
-      font_size: 80
-      color: red
-      x: center
-      y: center-290
-      number_grouping: true
-# TOP TARGET SKILL SHOT
-  skill_shot_top_target_display_widgets:
-    - type: text
-      text: SKILL SHOT SUCCESS!
-      font_size: 80
-      color: blue
-      x: center
-      y: center+300
-      # - type: video
-      #   video:
-    - type: text
-      text: (skill_shot_value)
-      font_size: 80
-      color: red
-      x: center
-      y: center-290
-      number_grouping: true
-# SHATZ SKILL SHOT
-  shatz_skill_shot_success:
-    # - type: text
-    #   text: (SHATZ)
-    #   font_size: 80
-    #   color: blue
-    #   y: center + 250
-    - type: text
-      text: (SHATZ) SKILL SHOT SUCCESS
-      font_size: 80
-      color: blue
-      x: center
-      y: center+300
-      # - type: video
-      #   video:
-    - type: text
-      text: (skill_shot_value)
-      font_size: 80
-      color: red
-      x: center
-      y: center-290
-      number_grouping: true
+      # z: 120
+  # skill_shot_combo_widget:
+  #   - type: text
+  #     text: SKILL SHOT COMBO
+  #     color: blue
+  #     font_size: 100
+  #     y: center + 150
+  #   - type: text
+  #     text: 10000
+  #     font_size: 100
+  #     color: red
+  #     y: center-150
+  # rand_qualify_image:
+  #   - type: image
+  #     image: rand_qualify
+  #     x: center - 580
+  #     y: center + 275
+  # annie_qualify_image:
+  #   - type: image
+  #     image: annie_qualify
+  #     x: center - 580
+  #     y: center + 100
+  # rook_qualify_image:
+  #   - type: image
+  #     image: rook_qualify
+  #     x: center - 580
+  #     y: center - 75
 
-#_______________________________________________________________________________
-#_______________________________________________________________________________
+  # widget_ballsave:
+  #   - type: text
+  #     font_size: 100
+  #     color: blue
+  #     text: BALL SAVED!
+  #     # y: 41
+  #     # x: 105
+  #     # z: 1302
+
+
+  # ball_save_left_video:
+  #   - type: video
+  #     video: ball_save_left
 
 widget_player:
   mode_base_started:
@@ -792,6 +782,28 @@ widget_player:
     base_ball_widget:
       slide: base_slide
       priority: 103
+  skill_shot_combo_made:
+    skill_shot_combo_widget:
+      action: add
+      #slide: base_slide
+      widget_settings:
+        expire: 2s
+        #z: 9999
+        z: 115
+  skill_shot_secret_combo_made:
+    skill_shot_secret_combo_widget:
+      action: add
+      #slide: base_slide
+      widget_settings:
+        expire: 2s
+        z: 9999
+  # qualify_rand_1st_time:
+  #   player_num_keep_shooting_widget:
+  #     action: add
+  #     slide: base_slide
+  #     widget_settings:
+  #       expire: 4s
+  #       z: 115
   ball_save_default_saving_ball:
     ball_saved_widget:
       action: add
@@ -806,54 +818,55 @@ widget_player:
         z: 115
       # expire: 2s
       # priority: 1200
+  # saucer_skill_group_flashing_hit:
+  #   skill_shot_saucer_hit_video:
+  #     action: add
+  #     widget_settings:
+  #       expire: 2.5s
+  #       z: 110
+  # invid_targets_skill_flashing_hit:
+  #   skill_shot_invid_hit_video:
+  #     action: add
+  #     widget_settings:
+  #       expire: 1.5s
+  #       z: 110
+  # top_lanes_skill_flashing_hit:
+  #   skill_shot_lanes_hit_video:
+  #     action: add
+  #     widget_settings:
+  #       expire: 2.5s
+  #       z: 110
   skill_shot_missed:
     skill_shot_failure:
-      action: add
+      action: update
       widget_settings:
         expire: 1.5s
         z: 110
+  skill_shot_made:
+    skill_shot_success:
+      action: add
+      widget_settings:
+        expire: 3s
+        z: 120
+  shatz_skill_shot_made:
+    shatz_skill_shot_success:
+      action: add
+      widget_settings:
+        expire: 3s
+        z: 120
   # ball_save_kickback_save_saving_ball:
   #   ball_save_kickback_save_video:
   #     action: add
   #     widget_settings:
   #       expire: 3s
   #       z: 120
-#-------------------------------------------------------------------------------
-# HURRY UP DISPLAY VALUE
-#-------------------------------------------------------------------------------
-# START MODE HURRY UP
-  display_hurry_up_value:
-    hurry_up_mode_hit_ramp_value_widget:
-      action: add
-      widget_settings:
-        expire: 2s
-        z: 9999
-#-------------------------------------------------------------------------------
-# COMBOS
-#-------------------------------------------------------------------------------
-# SKILL SHOT COMBO
-  skill_shot_combo_made:
-    skill_shot_combo_widget:
-      action: add
-      widget_settings:
-        expire: 2s
-        z: 9999
-# SECRET COMBO
-  display_skill_shot_secret_combo:
-    skill_shot_secret_combo_widget:
-      action: add
-      widget_settings:
-        expire: 2s
-        z: 9999
-# TEAM COMBO
+# Team Combo
   team_combo_made:
     team_combo_widget:
       action: add
       widget_settings:
         expire: 2s
-        #z: 110
-        z: 9999
-#-------------------------------------------------------------------------------
+        z: 110
   slide_rand_mode_3rd_kill_slide_removed:
     rand_mode_bonus_time_score_widget:
       action: add
@@ -872,141 +885,43 @@ widget_player:
       widget_settings:
         expire: 5s
         z: 110
-#-------------------------------------------------------------------------------
-# SKILL SHOT SUCCESS DISPLAY WIDGETS ON SCREEN
-#-------------------------------------------------------------------------------
-# RAND SKILL SHOT
   left_saucer_skill_flashing_hit:
     black_rectangle:
       action: add
       priority: 110
       widget_settings:
         expire: 4s
-    skill_shot_rand_display_widgets:
+    rand_skill_shot_disply_widgets:
       action: add
-      priority: 111
+      priority: 101
       widget_settings:
         expire: 4s
         z: 1100
-# ROOK SKILL SHOT
-  right_saucer_skill_flashing_hit:
-    black_rectangle:
-      action: add
-      priority: 112
-      widget_settings:
-        expire: 4s
-    skill_shot_rook_display_widgets:
-      action: add
-      priority: 113
-      widget_settings:
-        expire: 4s
-        z: 1100
-# TOP SAUCER SKILL SHOT
-  top_saucer_skill_flashing_hit:
-    black_rectangle:
-      action: add
-      priority: 114
-      widget_settings:
-        expire: 4s
-    skill_shot_top_saucer_display_widgets:
-      action: add
-      priority: 115
-      widget_settings:
-        expire: 4s
-        z: 1100
-# TOP LANES SKILL SHOT
-  top_lanes_skill_flashing_hit:
-    black_rectangle:
-      action: add
-      priority: 116
-      widget_settings:
-        expire: 4s
-    skill_shot_lanes_display_widgets:
-      action: add
-      priority: 117
-      widget_settings:
-        expire: 4s
-        z: 1100
-# SDF SKILL SHOT
-  sdf_skill_group_flashing_hit:
-    black_rectangle:
-      action: add
-      priority: 118
-      widget_settings:
-        expire: 4s
-    skill_shot_sdf_display_widgets:
-      action: add
-      priority: 119
-      widget_settings:
-        expire: 4s
-        z: 1100
-# INVID SKILL SHOT
-  invid_targets_skill_flashing_hit:
-    black_rectangle:
-      action: add
-      priority: 120
-      widget_settings:
-        expire: 4s
-    skill_shot_invid_display_widgets:
-      action: add
-      priority: 121
-      widget_settings:
-        expire: 4s
-        z: 1100
-# SUPER SKILL SHOT
-  super_skill_shot_flashing_hit:
-    black_rectangle:
-      action: add
-      priority: 122
-      widget_settings:
-        expire: 4s
-    skill_shot_super_display_widgets:
-      action: add
-      priority: 123
-      widget_settings:
-        expire: 4s
-        z: 1100
-# SECRET (RAMP) SKILL SHOT
-  secret_skill_shot_flashing_hit:
-    black_rectangle:
-      action: add
-      priority: 124
-      widget_settings:
-        expire: 4s
-    skill_shot_secret_display_widgets:
-      action: add
-      priority: 125
-      widget_settings:
-        expire: 4s
-        z: 1100
-# TOP TARGET SKILL SHOT
-  top_target_skill_group_flashing_hit:
-    black_rectangle:
-      action: add
-      priority: 126
-      widget_settings:
-        expire: 4s
-    skill_shot_top_target_display_widgets:
-      action: add
-      priority: 127
-      widget_settings:
-        expire: 4s
-        z: 1100
-# SHATZ SKILL SHOT
-  shatz_skill_shot_made:
-    black_rectangle:
-      action: add
-      priority: 128
-      widget_settings:
-        expire: 4s
-    shatz_skill_shot_success:
-      action: add
-      priority: 129
-      widget_settings:
-        expire: 4s
-        z: 1100
-#_______________________________________________________________________________
-#_______________________________________________________________________________
+
+  # mode_qualify_rand_started:
+  #   rand_qualify_image:
+  #     action: add
+  # mode_qualify_annie_started:
+  #   annie_qualify_image:
+  #     action: add
+  # mode_qualify_rook_started:
+  #   rook_qualify_image:
+  #     action: add
+  # ball_save_default_saving_ball:
+  #   widget_ballsave:
+  #     action: update
+  #     widget_settings:
+  #       expire: 3s
+  #       z: 110
+  #       y: center-120
+
+  # s_kickback_t_active{mode.ball_save.active}:
+  #   ball_save_left_video:
+  #     action: update
+  #     widget_settings:
+  #       expire: 5.5s
+  #       z: 120
+
 
 slide_player:
   ball_save_kickback_save_saving_ball:
@@ -1015,10 +930,42 @@ slide_player:
       priority: 9999
   mode_base_started:
     base_slide
+  # mode_base_started:
+  #   default:
+  #     target: window
   # ball_starting{is_extra_ball}:
   #   extra_ball_slide:
   #     expire: 3s
   #     priority: 1199
+  top_lanes_skill_flashing_hit:
+    skill_shot_lanes_slide:
+      expire: 3s
+      priority: 1199
+  #     video: skill_shot_lanes
+  # left_saucer_skill_flashing_hit:
+  #   skill_shot_rand_slide:
+  #     expire: 4s
+  #     #priority: 1199
+  right_saucer_skill_flashing_hit:
+    skill_shot_rook_slide:
+      expire: 4s
+      priority: 1199
+  # saucer_skill_group_flashing_hit:
+  #   skill_shot_saucer_slide:
+  #     expire: 3s
+  #     priority: 1199
+  sdf_skill_group_flashing_hit:
+    skill_shot_sdf_slide:
+      expire: 4s
+      priority: 1199
+  invid_targets_skill_flashing_hit:
+    skill_shot_invid_slide:
+      expire: 4s
+      priority: 1199
+  super_skill_shot_flashing_hit:
+    skill_shot_super_slide:
+      expire: 4s
+      priority: 1199
   rand_mode_success:
     rand_mode_3rd_kill_slide:
       expire: 4s
@@ -1033,6 +980,21 @@ slide_player:
       #priority: 2201
 
 
+# counters:
+#   invid_target_group_made_qualify_invid_invasion:
+#     count_events: invid_target_group_hit_complete
+#     starting_count: 0
+#     direction: up
+#     count_complete_value: 1
+#     events_when_complete: qualify_invid_invasion,  invid_invasion_mission_ready
+#     persist_state: true
+#     #debug: true
+
+
+# shot_groups:
+#   invid_target_group:
+#     shots: left_target, middle_target, right_target, left_drop, middle_drop, right_drop
+#     reset_events: ball_started, invid_target_group_hit_complete
 light_player:
   mode_base_started:
     gi_string:
@@ -1040,9 +1002,6 @@ light_player:
   mode_base_stopped:
     gi_string:
       color: off
-    # playfield:
-    #   color: off
-    #   priority: 9900
 
 
 show_player:
@@ -1050,6 +1009,10 @@ show_player:
     shoot_again_show:
       loops: 0
       events_when_stopped: shoot_again_show_ended
+  # invid_target_group_hit_complete:
+  #   invid_targets_complete:
+  #     show_tokens:
+  #       color: red
   s_right_orbit_rollover_active:
     fast_flash_show:
       loops: 3
@@ -1076,6 +1039,24 @@ show_player:
       key: extraball_awarded_show
       show_tokens:
         leds: l_shoot_again
+  mode_protoculture_started.1{device.counters.protoculture_hit_counter.value>=1}: P_1_show_on
+  mode_protoculture_started.2{device.counters.protoculture_hit_counter.value>=2}: P_2_show_on
+  mode_protoculture_started.3{device.counters.protoculture_hit_counter.value>=3}: P_3_show_on
+  mode_protoculture_started.4{device.counters.protoculture_hit_counter.value>=4}: P_4_show_on
+  mode_protoculture_started.5{device.counters.protoculture_hit_counter.value>=5}: P_5_show_on
+  mode_protoculture_started.6{device.counters.protoculture_hit_counter.value>=6}: P_6_show_on
+  mode_protoculture_started.7{device.counters.protoculture_hit_counter.value>=7}: P_7_show_on
+  mode_protoculture_started.8{device.counters.protoculture_hit_counter.value>=8}: P_8_show_on
+  mode_protoculture_started.9{device.counters.protoculture_hit_counter.value>=9}: P_9_show_on
+  logicblock_protoculture_hit_counter_hit.1{count==1}: P_1_show_on
+  logicblock_protoculture_hit_counter_hit.2{count==2}: P_2_show_on
+  logicblock_protoculture_hit_counter_hit.3{count==3}: P_3_show_on
+  logicblock_protoculture_hit_counter_hit.4{count==4}: P_4_show_on
+  logicblock_protoculture_hit_counter_hit.5{count==5}: P_5_show_on
+  logicblock_protoculture_hit_counter_hit.6{count==6}: P_6_show_on
+  logicblock_protoculture_hit_counter_hit.7{count==7}: P_7_show_on
+  logicblock_protoculture_hit_counter_hit.8{count==8}: P_8_show_on
+  logicblock_protoculture_hit_counter_hit.9{count==9}: P_9_show_on
   mystery_targets_rollover_group_hit_complete:
     mystery_shots_complete:
       loops: 4
@@ -1084,17 +1065,14 @@ show_player:
     invid_targets_complete:
       show_tokens:
         color: red
-  pre_qualify_a_mode_invid_target_group_hit_complete:
+  genesis_pit_invid_target_group_hit_complete:
     invid_targets_complete:
       show_tokens:
         color: red
-  lunk_shot_group_lit_complete:
-    sdf_bank_complete:
-      loops: 3
-      speed: 10
+  the_fortress_invid_target_group_hit_complete:
+    invid_targets_complete:
       show_tokens:
-        color: 654321
-      priority: 1610
+        color: red
 
 variable_player:
   mode_base_stopping:
@@ -1171,8 +1149,6 @@ variable_player:
     modes_completed: 1
   achievement_the_fortress_state_completed:
     modes_completed: 1
-  achievement_big_apple_state_completed:
-    modes_completed: 1
   achievement_rand_mode_collect_state_completed:
     modes_completed: 1
   achievement_annie_mode_collect_state_completed:
@@ -1181,10 +1157,78 @@ variable_player:
     modes_completed: 1
   achievement_lunk_mode_collect_state_completed:
     modes_completed: 1
-  achievement_corg_state_completed:
-    modes_completed: 1
 
+
+#shows:
+#  flash_green:
+#  - duration: +75ms
+#    lights:
+#      (leds): green
+#  - duration: +75ms
+#    lights:
+#      (leds): off
+
+# shot_profiles:
+#   invid_profile:
+#     show_when_disabled: false
+#     states:
+#       # - name: unlit
+#       #   show: off
+#       - name: flashing
+#         show: flash_red_show #invid_flash_red_show
+#         speed: 15
+#       - name: hit
+#         show: color_red_on
+#               # - name: unlit
+#               #   show: off
+#         # show_tokens:
+#         #   color: red
 shows:
+  P_1_show_on:
+    - time: 0
+      lights:
+        l_b1: 2F4F4F
+    - time: -1
+  P_2_show_on:
+    - time: 0
+      lights:
+        l_b2: 2F4F4F
+    - time: -1
+  P_3_show_on:
+    - time: 0
+      lights:
+        l_b3: 2F4F4F
+    - time: -1
+  P_4_show_on:
+    - time: 0
+      lights:
+        l_b4: 2F4F4F
+    - time: -1
+  P_5_show_on:
+    - time: 0
+      lights:
+        l_b5: 2F4F4F
+    - time: -1
+  P_6_show_on:
+    - time: 0
+      lights:
+        l_b6: 2F4F4F
+    - time: -1
+  P_7_show_on:
+    - time: 0
+      lights:
+        l_b7: 2F4F4F
+    - time: -1
+  P_8_show_on:
+    - time: 0
+      lights:
+        l_b8: 2F4F4F
+    - time: -1
+  P_9_show_on:
+    - time: 0
+      lights:
+        l_b9: 2F4F4F
+    - time: -1
   shoot_again_show:
     - duration: 2
       slides:
@@ -1200,6 +1244,24 @@ shows:
               color: red
               y: center - 10
               font_size: 90
+# shows:
+  # invid_flash_red_show:
+  #   - time: 0
+  #     lights:
+  #       (leds): red
+  #   - time: +1
+  #     lights:
+  #       (leds): black
+  # color_red_on:
+  #   - time: 0
+  #     lights:
+  #       (leds): red
+  #   - time: -1
+  # color_green_on:
+  #   - time: 0
+  #     lights:
+  #       (leds): green
+  #   - time: -1
 
 shots:
   spinner_shot:
@@ -1259,9 +1321,6 @@ sound_player:
   mode_intro_the_fortress_starting:
     main_title:
       action: stop
-  mode_intro_big_apple_starting:
-    main_title:
-      action: stop
   mode_invid_invasion_stopping:
     alien_attack:
       action: stop
@@ -1278,9 +1337,6 @@ sound_player:
     rook_mode_confrontation:
       action: stop
   mode_intro_annie_mode_started:
-    main_title:
-      action: stop
-  mode_intro_corg_mode_started:
     main_title:
       action: stop
   mode_annie_mode_stopping:

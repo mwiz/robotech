@@ -26,12 +26,12 @@ queue_relay_player:
 
 shows:
   the_fortress_intro:
-    - duration: 30
+    - duration: 24
       slides:
         intro_the_fortress_slide:
           widgets:
             - type: text
-              text: The Fortress!!!
+              text: THE FORTRESS !!!
               color: white
               font_size: 80
               x: center

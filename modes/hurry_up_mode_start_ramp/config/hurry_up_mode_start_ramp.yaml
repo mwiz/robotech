@@ -7,6 +7,10 @@ mode:
     - timer_hurry_up_mode_start_ramp_timer_complete
     - hurry_up_mode_start_ramp_completed
     - mode_intro_invid_invasion_started
+    - mode_intro_rand_mode_started
+    - mode_intro_annie_mode_started
+    - mode_intro_rook_mode_started
+    - mode_lunk_mode_started
   priority: 320
 
 event_player:
@@ -50,9 +54,9 @@ variable_player:
       action: set
   hurry_up_mode_start_ramp_completed:
     hurry_up_value:
-      int: current_player.hurry_up_mode_hit_ramp_value * current_player.pf_multiplier
+      int: current_player.hurry_up_mode_hit_ramp_value * current_player.pf_multiplier * current_player.ramp_shot_multiplier
       action: set
-    score: current_player.hurry_up_mode_hit_ramp_value * current_player.pf_multiplier
+    score: current_player.hurry_up_mode_hit_ramp_value * current_player.pf_multiplier * current_player.ramp_shot_multiplier
 
 
 widgets:

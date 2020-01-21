@@ -5,7 +5,8 @@ mode:
     - mode_intro_genesis_pit_started
   stop_events:
     - mode_end_genesis_pit_started
-    - ball_will_end
+    - tilt
+    #- ball_will_end
   priority: 8100
 
 event_player:
@@ -13,9 +14,19 @@ event_player:
     timer_genesis_pit_mode_timer_tick:
       ticks_remaining: 60
   mode_genesis_pit_started.2:
+    logicblock_crocodile_hit_counter_hit:
+      count: 0
+  mode_genesis_pit_started.3:
+    logicblock_pterodactyl_hit_counter_hit:
+      count: 0
+  mode_genesis_pit_started.4:
+    logicblock_dinosaur_hit_counter_hit:
+      count: 0
+  mode_genesis_pit_started.5:
     - display_genesis_pit_mode_widgets
     - advance_genesis_pit_croc_targets
     - drop_reset_up
+    - ramp_up_active
     - start_check_genesis_pit_drop_targets_up_timer
   timer_check_genesis_pit_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
     - drop_reset_up
@@ -28,12 +39,8 @@ event_player:
   timer_check_genesis_pit_invid_right_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
     - drop_reset_up
     - enable_invid_right_targets_genesis_pit|.5s
-  timer_check_genesis_pit_invid_right_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 0 and device.switches.s_middle_drop_target.state == 0 and device.switches.s_right_drop_target.state == 0}:
+  timer_check_genesis_pit_invid_right_drop_targets_up_timer_complete.2{device.switches.s_left_drop_target.state == 0 and device.switches.s_middle_drop_target.state == 0 and device.switches.s_right_drop_target.state == 0}:
     - enable_invid_right_targets_genesis_pit|.5s
-  timer_genesis_pit_mode_timer_complete:
-    - start_end_genesis_pit_mode
-  ball_save_fake_genesis_pit_ball_save_saving_ball:
-    - start_end_genesis_pit_mode
   enable_ramp_escape:
     - ramp_down_active
     - ramp_diverter_enable
@@ -41,12 +48,16 @@ event_player:
     - drop_reset_up|1s
   genesis_pit_triple_jackpot_shot_flashing_hit:
     - ramp_diverter_disable
-  genesis_pit_super_jackpot_shot_flashing_hit:
-    - start_end_genesis_pit_mode|1s
   # ball_will_end{device.achievements.genesis_pit.state == "completed"}:
   #   - start_end_genesis_pit_mode
   mode_genesis_pit_stopped:
     - ramp_up_active
+  timer_genesis_pit_mode_timer_complete:
+    - start_end_genesis_pit_mode
+  genesis_pit_super_jackpot_shot_flashing_hit:
+    - start_end_genesis_pit_mode|1s
+  ball_save_fake_genesis_pit_ball_save_saving_ball:
+    - start_end_genesis_pit_mode
 
 
 multiballs:
@@ -55,7 +66,7 @@ multiballs:
     ball_count_type: total
     start_or_add_a_ball_events:
       - stop_intro_genesis_pit_mode
-    ball_locks: bd_right_lock
+    #ball_locks: bd_right_lock
     shoot_again: 0
     debug: true
 
@@ -98,18 +109,18 @@ timers:
         event: genesis_pit_croc_group_flashing_hit
   check_genesis_pit_drop_targets_up_timer:
     debug: True
-    start_value: 0
-    end_value: 2
-    direction: up
+    start_value: 2
+    end_value: 0
+    direction: down
     tick_interval: 1s
     control_events:
       - action: start
         event: start_check_genesis_pit_drop_targets_up_timer
   check_genesis_pit_invid_right_drop_targets_up_timer:
     debug: True
-    start_value: 0
-    end_value: 2
-    direction: up
+    start_value: 2
+    end_value: 0
+    direction: down
     tick_interval: 1s
     control_events:
       - action: start
@@ -163,12 +174,60 @@ widgets:
     - type: rectangle
       anchor_x: left
       anchor_y: bottom
-      x: 1137
+      x: 1130
       y: 190
       z: 1100
       width: 130
       height: 500
       color: black
+  genesis_pit_display_crocodile_widget:
+    - type: text
+      text: "SHOOT CROCODILE"
+      color: green
+      font_size: 60
+      y: center + 220
+      x: center + 320
+      z: 1151
+  genesis_pit_crocodile_count_widget:
+    - type: text
+      text: "(count)/1"
+      color: blue
+      font_size: 60
+      y: center + 170
+      x: center + 320
+      z: 1152
+  genesis_pit_display_dinosaur_widget:
+    - type: text
+      text: "SHOOT DINOSAUR"
+      color: red
+      font_size: 60
+      y: center + 120
+      x: center + 320
+      z: 1151
+  genesis_pit_dinosaur_count_widget:
+    - type: text
+      text: "(count)/4"
+      color: blue
+      font_size: 60
+      y: center + 70
+      x: center + 320
+      z: 1152
+  genesis_pit_display_pterodactyl_widget:
+    - type: text
+      text: "SHOOT PTERODACTLYS"
+      color: brown
+      font_size: 60
+      y: center + 20
+      x: center + 320
+      z: 1153
+  genesis_pit_pterodactyl_count_widget:
+    - type: text
+      text: "(count)/6"
+      color: blue
+      font_size: 60
+      y: center - 30
+      x: center + 320
+      z: 1154
   jackpot_genesis_pit_widget:
     - type: text
       text: JACKPOT!
@@ -256,15 +315,54 @@ widget_player:
       action: add
       slide: base_slide
       priority: 8103
-    genesis_pit_mode_timer_widget:
+    # genesis_pit_mode_timer_widget:
+    #   action: update
+    #   slide: base_slide
+    #   priority: 8104
+    genesis_pit_display_crocodile_widget:
+      action: add
+      slide: base_slide
+      priority: 8105
+    genesis_pit_crocodile_count_widget:
       action: update
       slide: base_slide
-      priority: 8104
+      priority: 8106
+    genesis_pit_display_dinosaur_widget:
+      action: add
+      slide: base_slide
+      priority: 8107
+    genesis_pit_dinosaur_count_widget:
+      action: update
+      slide: base_slide
+      priority: 8108
+    genesis_pit_display_pterodactyl_widget:
+      action: add
+      slide: base_slide
+      priority: 8109
+    genesis_pit_pterodactyl_count_widget:
+      action: update
+      slide: base_slide
+      priority: 8110
   timer_genesis_pit_mode_timer_tick:
     genesis_pit_mode_timer_widget:
       action: update
       slide: base_slide
-      priority: 8105
+      priority: 8111
+  logicblock_crocodile_hit_counter_hit:
+    genesis_pit_crocodile_count_widget:
+      action: update
+      slide: base_slide
+      priority: 8112
+  logicblock_dinosaur_hit_counter_hit:
+    genesis_pit_dinosaur_count_widget:
+      action: update
+      slide: base_slide
+      priority: 8113
+  logicblock_pterodactyl_hit_counter_hit:
+    genesis_pit_pterodactyl_count_widget:
+      action: update
+      slide: base_slide
+      priority: 8114
   genesis_pit_jackpot_shot_flashing_hit:
     jackpot_genesis_pit_widget:
       widget_settings:
@@ -281,6 +379,28 @@ widget_player:
     super_jackpot_genesis_pit_widget:
       widget_settings:
         expire: 2s
+  crocodile_killed_success:
+    genesis_pit_display_crocodile_widget:
+      action: remove
+      slide: base_slide
+    genesis_pit_crocodile_count_widget:
+      action: remove
+      slide: base_slide
+  pterodactyl_killed_success:
+    genesis_pit_display_pterodactyl_widget:
+      action: remove
+      slide: base_slide
+    genesis_pit_pterodactyl_count_widget:
+      action: remove
+      slide: base_slide
+  dinosaur_killed_success:
+    genesis_pit_display_dinosaur_widget:
+      action: remove
+      slide: base_slide
+    genesis_pit_dinosaur_count_widget:
+      action: remove
+      slide: base_slide
+
 
 shot_profiles:
   genesis_pit_pterodactyl:
@@ -547,53 +667,57 @@ shots:
 
 variable_player:
   genesis_pit_croc_group_flashing_hit:
-    invid_kill_value:
+    genesis_pit_score_value:
       int: 20000 * current_player.pf_multiplier
       action: set
     score: 20000 * current_player.pf_multiplier
   genesis_pit_pterodactyl_group_hit_complete:
-    invid_kill_value:
+    genesis_pit_score_value:
       int: 20000 * current_player.pf_multiplier
       action: set
     score: 20000 * current_player.pf_multiplier
   genesis_pit_dinosaur_group_hit_complete:
-    invid_kill_value:
+    genesis_pit_score_value:
       int: 20000 * current_player.pf_multiplier
       action: set
     score: 20000 * current_player.pf_multiplier
   left_invid_targets_genesis_pit_flashing_hit:
-    invid_kill_value:
+    genesis_pit_score_value:
       int: 20000 * current_player.pf_multiplier
       action: set
     score: 20000 * current_player.pf_multiplier
   right_invid_drops_genesis_pit_flashing_hit:
-    invid_kill_value:
+    genesis_pit_score_value:
       int: 20000 * current_player.pf_multiplier
       action: set
     score: 20000 * current_player.pf_multiplier
   genesis_pit_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: 20000 * current_player.ramp_shot_multiplier
+      int: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
       action: set
-    score: 20000 * current_player.ramp_shot_multiplier
+    score: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
   genesis_pit_double_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: 40000 * current_player.ramp_shot_multiplier
+      int: (40000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
       action: set
-    score: 40000 * current_player.ramp_shot_multiplier
+    score: (40000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
   genesis_pit_triple_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: 60000 * current_player.ramp_shot_multiplier
+      int: (60000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
       action: set
-    score: 60000 * current_player.ramp_shot_multiplier
+    score: (60000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
   genesis_pit_super_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: 100000 * current_player.ramp_shot_multiplier
+      int: (100000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
       action: set
-    score: 100000 * current_player.ramp_shot_multiplier
-    mode_end_action_flag: 2
+    score: (100000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+    mode_end_action_flag:
+      int: 2
+      action: set
   timer_genesis_pit_mode_timer_complete:
-    mode_end_action_flag: 1
+    mode_end_action_flag:
+      int: 1
+      action: set
 
 slides:
   genesis_pit_crock_killed_slide:
@@ -608,7 +732,7 @@ slides:
       - type: video
         video: genesis_pit_croc_killed_video
       - type: text
-        text: (invid_kill_value)
+        text: (genesis_pit_score_value)
         font_size: 80
         color: red
         x: center
@@ -627,7 +751,7 @@ slides:
       - type: video
         video: genesis_pit_pterodactyl_killed_video
       - type: text
-        text: (invid_kill_value)
+        text: (genesis_pit_score_value)
         font_size: 80
         color: red
         x: center
@@ -646,13 +770,13 @@ slides:
       - type: video
         video: genesis_pit_dinosaur_killed_video
       - type: text
-        text: (invid_kill_value)
+        text: (genesis_pit_score_value)
         font_size: 80
         color: red
         x: center
         y: center-300
         number_grouping: true
-        z: 120
+        #z: 120
   genesis_pit_invid_1_kill_slide:
     widgets:
       - type: text
@@ -665,13 +789,13 @@ slides:
       - type: video
         video: genesis_pit_invid_1_kill_video
       - type: text
-        text: (invid_kill_value)
+        text: (genesis_pit_score_value)
         font_size: 80
         color: red
         x: center
         y: center-300
         number_grouping: true
-        z: 120
+        #z: 120
   genesis_pit_invid_2_kill_slide:
     widgets:
       - type: text
@@ -684,13 +808,13 @@ slides:
       - type: video
         video: genesis_pit_invid_2_kill_video
       - type: text
-        text: (invid_kill_value)
+        text: (genesis_pit_score_value)
         font_size: 80
         color: red
         x: center
         y: center-300
         number_grouping: true
-        z: 120
+        #z: 120
 
 slide_player:
   genesis_pit_croc_group_flashing_hit:
@@ -728,6 +852,33 @@ accruals:
       - genesis_pit_success
     debug: true
 
+
+counters:
+  crocodile_hit_counter:
+    count_events:
+      - genesis_pit_croc_group_flashing_hit
+    starting_count: 0
+    count_complete_value: 1
+    events_when_complete:
+      - crocodile_killed_success
+    debug: true
+  pterodactyl_hit_counter:
+    count_events:
+      - genesis_pit_pterodactyl_group_flashing_hit
+    starting_count: 0
+    count_complete_value: 6
+    events_when_complete:
+      - pterodactyl_killed_success
+    debug: true
+  dinosaur_hit_counter:
+    count_events:
+      - genesis_pit_dinosaur_group_flashing_hit
+    starting_count: 0
+    count_complete_value: 4
+    events_when_complete:
+      - dinosaur_killed_success
+    debug: true
+
 sound_player:
   genesis_pit_jackpot_shot_flashing_hit:
     jackpot:
@@ -745,8 +896,7 @@ sound_player:
 ball_saves:
   fake_genesis_pit_ball_save:
     enable_events:
-      - timer_genesis_pit_mode_timer_complete
-      - genesis_pit_success
+      - multiball_genesis_pit_multiball_ended
     auto_launch: no
     balls_to_save: 1
     debug: yes

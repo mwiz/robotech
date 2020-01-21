@@ -1,7 +1,7 @@
 #config_version=5
 
 mode_settings:
-  display_delay_ms: 1s
+  display_delay_ms: .8s
   hurry_up_delay_ms: 0
   hurry_up_event: flipper_cancel
   keep_multiplier: false

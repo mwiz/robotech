@@ -56,7 +56,7 @@ shows:
   rand_mode_multiball_intro_more_than_1_ball:
     - duration: 3s
       slides:
-        rand_collected_slide:
+        rand_collected_more_than_1_ball_slide:
           widgets:
             - type: text
               text: RAND Collected

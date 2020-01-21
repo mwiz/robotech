@@ -1,0 +1,792 @@
+#config_version=5
+
+mode:
+  start_events:
+    - mode_intro_big_apple_started
+  stop_events:
+    - mode_end_big_apple_started
+    - tilt
+  priority: 8325
+
+event_player:
+  mode_big_apple_started.1:
+    timer_big_apple_mode_collect_protoculture_timer_tick:
+      ticks_remaining: 30
+  mode_big_apple_started.2:
+    - display_big_apple_mode_widgets
+    - ramp_diverter_enable
+    - drop_reset_up
+  timer_big_apple_mode_collect_protoculture_timer_complete:
+    timer_big_apple_mode_timer_tick:
+      ticks_remaining: 30
+  timer_big_apple_mode_timer_complete:
+    - start_end_big_apple_mode
+  big_apple_super_jackpot_shot_flashing_hit:
+    - start_end_big_apple_mode|1s
+  ball_save_fake_big_apple_ball_save_saving_ball:
+    - start_end_big_apple_mode
+  big_apple_protoculture_shot_group_hit_complete:
+    - restart_protoculture_shot_group|2s
+  enforcer_shot_group_flashing_hit{device.timers.big_apple_mode_collect_protoculture_timer.running==True}:
+    - start_big_apple_disable_protoculture_timer
+  enforcer_shot_group_flashing_hit{device.timers.big_apple_mode_timer.running==True}:
+    - stop_enforcer_shot_rotator
+    - first_enforcer_killed
+  rand_enforcer_shot_flashing_hit{device.timers.big_apple_mode_timer.running==True}:
+    - first_enforcer_rand_shot_killed
+  annie_enforcer_shot_flashing_hit{device.timers.big_apple_mode_timer.running==True}:
+    - first_enforcer_annie_shot_killed
+  rook_enforcer_shot_flashing_hit{device.timers.big_apple_mode_timer.running==True}:
+    - first_enforcer_rook_shot_killed
+  lancer_enforcer_shot_flashing_hit{device.timers.big_apple_mode_timer.running==True}:
+    - first_enforcer_lancer_shot_killed
+  lunk_enforcer_shot_flashing_hit{device.timers.big_apple_mode_timer.running==True}:
+    - first_enforcer_lunk_shot_killed
+  enable_ramp_big_apple:
+    - ramp_down_active
+    - ramp_diverter_enable
+  big_apple_triple_jackpot_shot_flashing_hit:
+    - ramp_diverter_disable
+  mode_big_apple_stopped:
+    - ramp_up_active
+  timer_big_apple_mode_collect_protoculture_timer_stopped:
+    - drop_reset_up
+    - start_check_big_apple_invid_right_drop_targets_up_timer
+  timer_check_big_apple_invid_right_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
+    - drop_reset_up
+    - enable_big_apple_invid_targets_shot_group|.5s
+  timer_check_big_apple_invid_right_drop_targets_up_timer_complete.2{device.switches.s_left_drop_target.state == 0 and device.switches.s_middle_drop_target.state == 0 and device.switches.s_right_drop_target.state == 0}:
+    - enable_big_apple_invid_targets_shot_group|.5s
+  rand_protoculture_shot_flashing_hit{device.shots.rand_enforcer_shot.state_name != 'flashing'}:
+    - collect_rand_protoculture_big_apple
+  annie_protoculture_shot_flashing_hit{device.shots.annie_enforcer_shot.state_name != 'flashing'}:
+    - collect_annie_protoculture_big_apple
+  rook_protoculture_shot_flashing_hit{device.shots.rook_enforcer_shot.state_name != 'flashing'}:
+    - collect_rook_protoculture_big_apple
+  lancer_protoculture_shot_flashing_hit{device.shots.lancer_enforcer_shot.state_name != 'flashing'}:
+    - collect__lancer_protoculture_big_apple
+  lunk_protoculture_shot_flashing_hit{device.shots.lunk_enforcer_shot.state_name != 'flashing'}:
+    - collect_lunk_protoculture_big_apple
+
+
+random_event_player:
+  #timer_big_apple_mode_collect_protoculture_timer_complete:
+  enable_big_apple_invid_targets_shot_group:
+    events:
+      - enable_big_apple_invid1_shot
+      - enable_big_apple_invid2_shot
+      - enable_big_apple_invid3_shot
+      - enable_big_apple_invid4_shot
+      - enable_big_apple_invid5_shot
+      - enable_big_apple_invid6_shot
+  timer_big_apple_mode_collect_protoculture_timer_stopped:
+    events:
+      - enable_big_apple_r_top_lane_shot
+      - enable_big_apple_o1_top_lane_shot
+      - enable_big_apple_b_top_lane_shot
+      - enable_big_apple_o2_top_lane_shot
+
+timers:
+  big_apple_mode_collect_protoculture_timer:
+    debug: true
+    start_running: false
+    start_value: 30
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    max_value: 30
+    control_events:
+      - action: start
+        event: multiball_big_apple_multiball_started
+      - action: add
+        event: big_apple_protoculture_shot_group_flashing_hit
+        value: 3
+  enforcer_shot_rotator:
+    start_running: true
+    tick_interval: 2s
+    control_events:
+      - action: stop
+        event: stop_enforcer_shot_rotator
+    debug: true
+  big_apple_disable_protoculture_timer:
+    debug: true
+    start_value: 3
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: start_big_apple_disable_protoculture_timer
+      - action: reset
+        event: timer_big_apple_disable_protoculture_timer_complete
+  big_apple_mode_timer:
+    start_running: false
+    debug: true
+    start_value: 30
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    max_value: 30
+    control_events:
+      - action: restart
+        event: timer_big_apple_mode_collect_protoculture_timer_complete
+      - action: add
+        event: spinner_shot_hit
+        value: current_player.spinner_time_value
+      - action: add
+        event: s_back_ramp_active
+        value: 2
+      - action: pause
+        event: mystery_shot_flashing_hit{game.balls_in_play==1}
+        value: 5
+  check_big_apple_invid_right_drop_targets_up_timer:
+    start_value: 0
+    end_value: 2
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: start_check_big_apple_invid_right_drop_targets_up_timer
+    debug: True
+
+
+multiballs:
+  big_apple_multiball:
+    ball_count: 3
+    ball_count_type: total
+    start_events:
+      - mode_intro_big_apple_stopped
+    disable_events:
+      - mode_end_big_apple_starting
+      - big_apple_success
+    shoot_again: 0
+    debug: true
+
+widgets:
+  big_apple_mode_time_display_widget:
+    - type: text
+      text: TIMER
+      color: blue
+      font_size: 100
+      y: center + 220
+      x: center - 450
+      z: 1150
+  big_apple_mode_timer_widget:
+    - type: text
+      text: (ticks_remaining)
+      color: red
+      font_size: 100
+      y: center + 150
+      x: center - 450
+      z: 1150
+  big_apple_left_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 13
+      y: 190
+      z: 1100
+      width: 125
+      height: 500
+      color: black
+  big_apple_right_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 1130
+      y: 190
+      z: 1100
+      width: 130
+      height: 500
+      color: black
+  jackpot_big_apple_widget:
+    - type: text
+      text: JACKPOT!
+      color: green
+      font_size: 100
+      y: center + 120
+      z: 8326
+    - type: text
+      text: (jackpot_value)
+      color: red
+      font_size: 100
+      y: center
+      number_grouping: true
+      z: 8327
+  double_jackpot_big_apple_widget:
+    - type: text
+      text: DOUBLE JACKPOT!!
+      color: yellow
+      font_size: 100
+      y: center + 120
+      z: 8328
+    - type: text
+      text: (jackpot_value)
+      color: red
+      font_size: 100
+      y: center
+      number_grouping: true
+      z: 8329
+  triple_jackpot_big_apple_widget:
+    - type: text
+      text: TRIPLE JACKPOT!!
+      color: red
+      font_size: 100
+      y: center + 120
+      z: 8330
+    - type: text
+      text: (jackpot_value)
+      color: red
+      font_size: 100
+      y: center
+      number_grouping: true
+      z: 8331
+  super_jackpot_big_apple_widget:
+    - type: text
+      text: SUPER JACKPOT!!!
+      color: purple
+      font_size: 100
+      y: center + 120
+      z: 8332
+    - type: text
+      text: (jackpot_value)
+      color: red
+      font_size: 100
+      y: center
+      number_grouping: true
+      z: 8333
+
+
+widget_player:
+  display_big_apple_mode_widgets:
+    big_apple_left_rectangle:
+      action: add
+      slide: base_slide
+      priority: 8326
+    big_apple_right_rectangle:
+      action: add
+      slide: base_slide
+      priority: 8327
+    big_apple_mode_time_display_widget:
+      action: add
+      slide: base_slide
+      priority: 8328
+    # big_apple_mode_timer_widget:
+    #   action: update
+    #   slide: base_slide
+    #   priority: 8329
+  timer_big_apple_mode_collect_protoculture_timer_tick:
+    big_apple_mode_timer_widget:
+      action: update
+      slide: base_slide
+      priority: 8330
+  timer_big_apple_mode_timer_tick:
+    big_apple_mode_timer_widget:
+      action: update
+      slide: base_slide
+      priority: 8330
+  big_apple_jackpot_shot_flashing_hit:
+    jackpot_big_apple_widget:
+      widget_settings:
+        expire: 2s
+  big_apple_double_jackpot_shot_flashing_hit:
+    double_jackpot_big_apple_widget:
+      widget_settings:
+        expire: 2s
+  big_apple_triple_jackpot_shot_flashing_hit:
+    triple_jackpot_big_apple_widget:
+      widget_settings:
+        expire: 2s
+  big_apple_super_jackpot_shot_flashing_hit:
+    super_jackpot_big_apple_widget:
+      widget_settings:
+        expire: 2s
+
+slides:
+  first_enforcer_killed_slide:
+    widgets:
+      - type: text
+        text: ENFORCERS DEFEATED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: big_apple_enforcers_killed_video
+      - type: text
+        text: (big_apple_score_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  big_apple_troopers_killed_slide:
+    widgets:
+      - type: text
+        text: TROOPERS DEFEATED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: big_apple_troopers_killed_video
+      - type: text
+        text: (big_apple_score_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        # z: 120
+  big_apple_scouts_killed_slide:
+    widgets:
+      - type: text
+        text: SCOUTS DEFEATED
+        font_size: 80
+        color: blue
+        x: center
+        y: center+300
+        # z: 120
+      - type: video
+        video: big_apple_scouts_killed_video
+      - type: text
+        text: (big_apple_score_value)
+        font_size: 80
+        color: red
+        x: center
+        y: center-300
+        number_grouping: true
+        #z: 120
+
+
+slide_player:
+  first_enforcer_killed:
+    first_enforcer_killed_slide:
+      expire: 4s
+  big_apple_invid_targets_shot_group_flashing_hit:
+    big_apple_troopers_killed_slide:
+      expire: 4s
+  big_apple_top_lanes_shot_group_flashing_hit:
+    big_apple_scouts_killed_slide:
+      expire: 4s
+
+
+shot_profiles:
+  big_apple_jackpot:
+    advance_on_hit: true
+    block: true
+    states:
+    - name: flashing
+      show: big_apple_jackpot_flash_show
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+  big_apple_protoculture_profile:
+    advance_on_hit: true
+    block: true
+    states:
+    - name: flashing
+      show: big_apple_protoculture_flash_show
+      #sync_ms: 1500
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+  big_apple_enforcer_profile:
+    advance_on_hit: false
+    block: true
+    show_when_disabled: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing
+      show: flash_led_show
+      show_tokens:
+        color: 0A1172 #navy #purple #2E0854
+      loops: -1
+      speed: 10
+    - name: hit
+      show: off
+  big_apple_invid_targets:
+    advance_on_hit: false
+    block: true
+    show_when_disabled: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing
+      show: flash_led_show
+      show_tokens:
+        color: purple #2E0854
+      loops: -1
+      speed: 10
+    - name: hit
+      show: off
+  big_apple_top_lanes:
+    advance_on_hit: false
+    block: true
+    show_when_disabled: false
+    states:
+    - name: unlit
+      show: off
+    - name: flashing
+      show: flash_led_show
+      show_tokens:
+        color: red #2E0854
+      loops: -1
+      speed: 10
+    - name: hit
+      show: off
+
+shot_groups:
+  big_apple_protoculture_shot_group:
+    shots:
+      - rand_protoculture_shot
+      - annie_protoculture_shot
+      - rook_protoculture_shot
+      - lancer_protoculture_shot
+      - lunk_protoculture_shot
+    enable_events:
+      - multiball_big_apple_multiball_started
+      #- timer_big_apple_disable_protoculture_timer_complete
+    disable_events:
+      # - enforcer_shot_group_flashing_hit
+      - timer_big_apple_mode_collect_protoculture_timer_complete
+    restart_events:
+      - restart_protoculture_shot_group
+    debug: true
+  enforcer_shot_group:
+    shots:
+      - rand_enforcer_shot
+      - annie_enforcer_shot
+      - rook_enforcer_shot
+      - lancer_enforcer_shot
+      - lunk_enforcer_shot
+    rotate_right_events:
+      - timer_enforcer_shot_rotator_tick
+    # enable_events:
+    #   - multiball_big_apple_multiball_started
+    disable_events:
+      - first_enforcer_rand_shot_killed
+      - first_enforcer_annie_shot_killed
+      - first_enforcer_rook_shot_killed
+      - first_enforcer_lancer_shot_killed
+      - first_enforcer_lunk_shot_killed
+    debug: true
+  big_apple_invid_targets_shot_group:
+    shots:
+      - big_apple_invid1_shot
+      - big_apple_invid2_shot
+      - big_apple_invid3_shot
+      - big_apple_invid4_shot
+      - big_apple_invid5_shot
+      - big_apple_invid6_shot
+    enable_events:
+      - enable_big_apple_invid_targets_shot_group
+    disable_events:
+      - mode_big_apple_started
+      - big_apple_invid_targets_shot_group_flashing_hit
+    debug: true
+  big_apple_top_lanes_shot_group:
+    shots:
+      - big_apple_r_top_lane_shot
+      - big_apple_o1_top_lane_shot
+      - big_apple_b_top_lane_shot
+      - big_apple_o2_top_lane_shot
+    enable_events:
+      - timer_big_apple_mode_collect_protoculture_timer_complete
+    disable_events:
+      - big_apple_top_lanes_shot_group_flashing_hit
+    debug: true
+
+counters:
+  big_apple_enable_ramp:
+    count_events:
+      - first_enforcer_rand_shot_killed
+      - first_enforcer_annie_shot_killed
+      - first_enforcer_rook_shot_killed
+      - first_enforcer_lancer_shot_killed
+      - first_enforcer_lunk_shot_killed
+      - big_apple_invid_targets_shot_group_flashing_hit
+      - big_apple_top_lanes_shot_group_flashing_hit
+    starting_count: 0
+    count_complete_value: 3
+    direction: up
+    events_when_complete:
+      - enable_ramp_big_apple
+      - big_apple_success
+    disable_on_complete: true
+    debug: true
+
+shots:
+  rand_protoculture_shot:
+    switch: s_left_lock_kickout
+    profile: big_apple_protoculture_profile
+    show_tokens:
+      leds: l_rand_x
+    enable_events:
+      - timer_big_apple_disable_protoculture_timer_complete{device.shots.rand_protoculture_shot.state_name == 'flashing'}
+    disable_events:
+      - enforcer_shot_group_flashing_hit{device.shots.rand_protoculture_shot.state_name == 'flashing'}
+      - collect_rand_protoculture_big_apple
+    debug: true
+  annie_protoculture_shot:
+    switch: s_left_orbit
+    profile: big_apple_protoculture_profile
+    show_tokens:
+      leds: l_annie_x
+    enable_events:
+      - timer_big_apple_disable_protoculture_timer_complete{device.shots.annie_protoculture_shot.state_name == 'flashing'}
+    disable_events:
+      - enforcer_shot_group_flashing_hit{device.shots.annie_protoculture_shot.state_name == 'flashing'}
+      - collect_annie_protoculture_big_apple
+    debug: true
+  rook_protoculture_shot:
+    switch: s_right_lock_kickout
+    profile: big_apple_protoculture_profile
+    show_tokens:
+      leds: l_rook_x
+    enable_events:
+      - timer_big_apple_disable_protoculture_timer_complete{device.shots.rook_protoculture_shot.state_name == 'flashing'}
+    disable_events:
+      - enforcer_shot_group_flashing_hit{device.shots.rook_protoculture_shot.state_name == 'flashing'}
+      - collect_rook_protoculture_big_apple
+    debug: true
+  lancer_protoculture_shot:
+    hit_events: lancer_shot_sequence_hit
+    profile: big_apple_protoculture_profile
+    show_tokens:
+      leds: l_lancer_x
+    enable_events:
+      - timer_big_apple_disable_protoculture_timer_complete{device.shots.lancer_protoculture_shot.state_name == 'flashing'}
+    disable_events:
+      - enforcer_shot_group_flashing_hit{device.shots.lancer_protoculture_shot.state_name == 'flashing'}
+      - collect_lancer_protoculture_big_apple
+    debug: true
+  lunk_protoculture_shot:
+    switch: s_d_target
+    profile: big_apple_protoculture_profile
+    show_tokens:
+      leds: l_lunk_x
+    enable_events:
+      - timer_big_apple_disable_protoculture_timer_complete{device.shots.lunk_protoculture_shot.state_name == 'flashing'}
+    disable_events:
+      - enforcer_shot_group_flashing_hit{device.shots.lunk_protoculture_shot.state_name == 'flashing'}
+      - collect_lunk_protoculture_big_apple
+    debug: true
+  rand_enforcer_shot:
+    switch: s_left_lock_kickout
+    profile: big_apple_enforcer_profile
+    show_tokens:
+      leds: l_llock_arrow
+    debug: true
+  annie_enforcer_shot:
+    switch: s_left_orbit
+    profile: big_apple_enforcer_profile
+    show_tokens:
+      leds: l_annie_arrow
+    debug: true
+  rook_enforcer_shot:
+    switch: s_right_lock_kickout
+    profile: big_apple_enforcer_profile
+    show_tokens:
+      leds: l_rlock_arrow
+    debug: true
+  lancer_enforcer_shot:
+    hit_events: lancer_shot_sequence_hit
+    profile: big_apple_enforcer_profile
+    show_tokens:
+      leds: l_right_orbit_arrow
+    debug: true
+  lunk_enforcer_shot:
+    switch: s_d_target
+    profile: big_apple_enforcer_profile
+    show_tokens:
+      leds: l_sdf_arrow_led
+    advance_events:
+      - multiball_big_apple_multiball_started|1
+    debug: true
+  big_apple_invid1_shot:
+    switch: s_left_target
+    profile: big_apple_invid_targets
+    show_tokens:
+      leds: l_t1
+    advance_events: enable_big_apple_invid1_shot
+  big_apple_invid2_shot:
+    switch: s_middle_target
+    profile: big_apple_invid_targets
+    show_tokens:
+      leds: l_t2
+    advance_events: enable_big_apple_invid2_shot
+  big_apple_invid3_shot:
+    switch: s_right_target
+    profile: big_apple_invid_targets
+    show_tokens:
+      leds: l_t3
+    advance_events: enable_big_apple_invid3_shot
+  big_apple_invid4_shot:
+    switch: s_left_drop_target
+    profile: big_apple_invid_targets
+    show_tokens:
+      leds: l_t4
+    advance_events: enable_big_apple_invid4_shot
+  big_apple_invid5_shot:
+    switch: s_middle_drop_target
+    profile: big_apple_invid_targets
+    show_tokens:
+      leds: l_t5
+    advance_events: enable_big_apple_invid5_shot
+  big_apple_invid6_shot:
+    switch: s_right_drop_target
+    profile: big_apple_invid_targets
+    show_tokens:
+      leds: l_t6
+    advance_events: enable_big_apple_invid6_shot
+  big_apple_r_top_lane_shot:
+    switch: s_r_top_lane
+    profile: big_apple_top_lanes
+    show_tokens:
+      leds: l_r_light
+    advance_events: enable_big_apple_r_top_lane_shot
+  big_apple_o1_top_lane_shot:
+    switch: s_o1_top_lane
+    profile: big_apple_top_lanes
+    show_tokens:
+      leds: l_o_light
+    advance_events: enable_big_apple_o1_top_lane_shot
+  big_apple_b_top_lane_shot:
+    switch: s_b_top_lane
+    profile: big_apple_top_lanes
+    show_tokens:
+      leds: l_b_light
+    advance_events: enable_big_apple_b_top_lane_shot
+  big_apple_o2_top_lane_shot:
+    switch: s_o2_top_lane
+    profile: big_apple_top_lanes
+    show_tokens:
+      leds: l_o2_light
+    advance_events: enable_big_apple_o2_top_lane_shot
+  big_apple_jackpot_shot:
+    hit_events: ramp_wireform_sequence_hit
+    profile: big_apple_jackpot
+    show_tokens:
+      color: green
+    enable_events:
+      - enable_ramp_big_apple
+    disable_events:
+      - big_apple_jackpot_shot_flashing_hit
+  big_apple_double_jackpot_shot:
+    hit_events: ramp_wireform_sequence_hit
+    profile: big_apple_jackpot
+    show_tokens:
+      color: yellow
+    enable_events:
+      - big_apple_jackpot_shot_flashing_hit
+    disable_events:
+      - big_apple_double_jackpot_shot_flashing_hit
+  big_apple_triple_jackpot_shot:
+    hit_events: ramp_wireform_sequence_hit
+    profile: big_apple_jackpot
+    show_tokens:
+      color: red
+    enable_events:
+      - big_apple_double_jackpot_shot_flashing_hit
+    disable_events:
+      - big_apple_triple_jackpot_shot_flashing_hit
+  big_apple_super_jackpot_shot:
+    hit_events: ramp_reflex_point_sequence_hit
+    profile: big_apple_jackpot
+    show_tokens:
+      color: purple
+    enable_events:
+      - big_apple_triple_jackpot_shot_flashing_hit
+
+variable_player:
+  first_enforcer_rand_shot_killed:
+    big_apple_score_value:
+      int: (20000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
+  first_enforcer_annie_shot_killed:
+    big_apple_score_value:
+      int: (20000 * current_player.annie_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.annie_shot_multiplier) * current_player.pf_multiplier
+  first_enforcer_rook_shot_killed:
+    big_apple_score_value:
+      int: (20000 * current_player.rook_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.rook_shot_multiplier) * current_player.pf_multiplier
+  first_enforcer_lancer_shot_killed:
+    big_apple_score_value:
+      int: (20000 * current_player.lancer_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.lancer_shot_multiplier) * current_player.pf_multiplier
+  first_enforcer_lunk_shot_killed:
+    big_apple_score_value:
+      int: (20000 * current_player.lunk_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.lunk_shot_multiplier) * current_player.pf_multiplier
+  big_apple_invid_targets_shot_group_flashing_hit:
+    big_apple_score_value:
+      int: 20000 * current_player.pf_multiplier
+      action: set
+    score: 20000 * current_player.pf_multiplier
+  big_apple_top_lanes_shot_group_flashing_hit:
+    big_apple_score_value:
+      int: 20000 * current_player.pf_multiplier
+      action: set
+    score: 20000 * current_player.pf_multiplier
+  big_apple_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+  big_apple_double_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: (40000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (40000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+  big_apple_triple_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: (60000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (60000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+  big_apple_super_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: (100000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (100000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+    mode_end_action_flag:
+      int: 2
+      action: set
+  timer_big_apple_mode_timer_complete:
+    mode_end_action_flag:
+      int: 1
+      action: set
+
+sound_player:
+  big_apple_jackpot_shot_flashing_hit:
+    jackpot:
+      action: play
+  big_apple_double_jackpot_shot_flashing_hit:
+    double_jackpot:
+      action: play
+  big_apple_triple_jackpot_shot_flashing_hit:
+    triple_jackpot:
+      action: play
+  big_apple_super_jackpot_shot_flashing_hit:
+    super_jackpot:
+      action: play
+
+ball_saves:
+  fake_big_apple_ball_save:
+    enable_events:
+      - multiball_big_apple_multiball_ended
+    auto_launch: no
+    balls_to_save: 1
+    debug: yes

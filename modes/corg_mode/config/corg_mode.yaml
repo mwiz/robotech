@@ -1,0 +1,275 @@
+#config_version=5
+
+mode:
+  start_events:
+    - mode_intro_corg_mode_started
+  stop_events:
+    - stop_corg_mode
+    - tilt
+  priority: 8000
+
+
+event_player:
+  mode_corg_mode_started.1:
+    timer_corg_mode_timer_tick:
+      ticks_remaining: 60
+  mode_corg_mode_started.2:
+    - display_corg_mode_widgets
+    - drop_reset_up
+    - start_check_corg_mode_drop_targets_up_timer
+  corg_mode_invid_target_group_hit_complete{device.counters.corg_mode_invid_target_group_made.value < 3}:
+    - drop_reset_up
+    - start_check_corg_mode_drop_targets_up_timer
+  timer_check_corg_mode_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
+    - drop_reset_up
+    - enable_corg_mode_drop_targets|.5s
+  timer_check_corg_mode_drop_targets_up_timer_complete.2{device.switches.s_left_drop_target.state == 0 and device.switches.s_middle_drop_target.state == 0 and device.switches.s_right_drop_target.state == 0}:
+    - enable_corg_mode_drop_targets
+  corg_mode_ramp_down:
+    - ramp_down_active
+  timer_corg_mode_timer_complete:
+    - stop_corg_mode
+  corg_mode_success:
+    - stop_corg_mode
+  mode_corg_mode_stopping{device.switches.s_up_down_ramp_switch.state == 1 and not mode.qualify_invid_invasion.active}:
+    - ramp_up_active
+  corg_mode_jackpot_shot_flashing_hit:
+    - corg_mode_success
+
+multiballs:
+  corg_mode_multiball:
+    ball_count: 1
+    ball_count_type: add
+    start_or_add_a_ball_events:
+      # - stop_intro_corg_mode
+      - corg_mode_rand_add_a_ball_flashing_hit
+      - corg_mode_rook_add_a_ball_flashing_hit
+    shoot_again: 0
+    debug: true
+
+timers:
+  corg_mode_timer:
+    debug: true
+    start_value: 60
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: mode_intro_corg_mode_stopped
+      - action: add
+        event: spinner_shot_hit
+        value: current_player.spinner_time_value
+  check_corg_mode_drop_targets_up_timer:
+    debug: True
+    start_value: 1
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: start_check_corg_mode_drop_targets_up_timer
+      - action: reset
+        event: timer_check_corg_mode_drop_targets_up_timer_complete
+
+widgets:
+  corg_mode_time_display_widget:
+    - type: text
+      text: TIMER
+      color: blue
+      font_size: 100
+      y: center + 220
+      x: center - 450
+      z: 1150
+  corg_mode_timer_widget:
+    - type: text
+      text: (ticks_remaining)
+      color: red
+      font_size: 100
+      y: center + 150
+      x: center - 450
+      z: 1150
+  corg_left_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 13
+      y: 190
+      z: 1100
+      width: 125
+      height: 500
+      color: black
+  corg_right_rectangle:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 1130
+      y: 190
+      z: 1100
+      width: 130
+      height: 500
+      color: black
+
+widget_player:
+  display_corg_mode_widgets:
+    corg_left_rectangle:
+      action: add
+      slide: base_slide
+      priority: 8001
+    corg_right_rectangle:
+      action: add
+      slide: base_slide
+      priority: 8002
+    corg_mode_time_display_widget:
+      action: add
+      slide: base_slide
+      priority: 8003
+  timer_corg_mode_timer_tick:
+    corg_mode_timer_widget:
+      action: update
+      slide: base_slide
+      priority: 8010
+
+shot_profiles:
+  corg_mode_invid_profile:
+    show_when_disabled: false
+    block: true
+    states:
+      - name: flashing
+        show: flash_corg_show
+        speed: 5
+        sync_ms: 1500
+      - name: hit
+        show: off
+  corg_mode_rook_add_ball_flash:
+    advance_on_hit: true
+    block: false
+    states:
+      - name: flashing
+        show: flash_yellow_show
+        loops: -1
+        speed: 15
+      - name: hit
+        show: off
+  corg_mode_rand_add_ball_flash:
+    advance_on_hit: true
+    block: false
+    states:
+      - name: flashing
+        show: flash_red_show
+        loops: -1
+        speed: 15
+      - name: hit
+        show: off
+  corg_mode_jackpot:
+    advance_on_hit: true
+    block: true
+    states:
+      - name: flashing
+        show: corg_mode_jackpot_flash_show
+        loops: -1
+        speed: 5
+      - name: hit
+        show: off
+
+shot_groups:
+  corg_mode_invid_target_group:
+    shots:
+      - corg_mode_left_target
+      - corg_mode_middle_target
+      - corg_mode_right_target
+      - corg_mode_left_drop
+      - corg_mode_middle_drop
+      - corg_mode_right_drop
+    enable_events:
+      - enable_corg_mode_drop_targets
+    disable_events:
+      - mode_corg_mode_started
+      - mode_intro_rand_mode_started
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+      - corg_mode_invid_target_group_hit_complete
+      - disable_corg_invid_targets
+    restart_events:
+      - enable_corg_mode_drop_targets
+      #- corg_mode_invid_target_group_hit_complete|1
+    debug: true
+
+
+shots:
+  corg_mode_left_target:
+    switch: s_left_target
+    profile: corg_mode_invid_profile
+    show_tokens:
+      leds: l_t1
+    debug: true
+  corg_mode_middle_target:
+    switch: s_middle_target
+    profile: corg_mode_invid_profile
+    show_tokens:
+      leds: l_t2
+    debug: true
+  corg_mode_right_target:
+    switch: s_right_target
+    profile: corg_mode_invid_profile
+    show_tokens:
+      leds: l_t3
+    debug: true
+  corg_mode_left_drop:
+    switch: s_left_drop_target
+    profile: corg_mode_invid_profile
+    show_tokens:
+      leds: l_t4
+    debug: true
+  corg_mode_middle_drop:
+    switch: s_middle_drop_target
+    profile: corg_mode_invid_profile
+    show_tokens:
+      leds: l_t5
+    debug: True
+  corg_mode_right_drop:
+    switch: s_right_drop_target
+    profile: corg_mode_invid_profile
+    show_tokens:
+      leds: l_t6
+    debug: true
+  corg_mode_rook_add_a_ball:
+    switch: s_right_lock_kickout
+    profile: corg_mode_rook_add_ball_flash
+    disable_events:  corg_mode_rook_add_a_ball_flashing_hit
+    show_tokens:
+      leds: l_rlock_arrow
+  corg_mode_rand_add_a_ball:
+    switch: s_left_lock_kickout
+    profile: corg_mode_rand_add_ball_flash
+    show_tokens:
+      leds: l_llock_arrow
+    disable_events: corg_mode_rand_add_a_ball_flashing_hit
+  corg_mode_corg_jackpot_shot:
+    hit_events: ramp_reflex_point_sequence_hit
+    profile: corg_mode_jackpot
+    show_tokens:
+      color: red
+    enable_events: corg_mode_ramp_down
+
+counters:
+  corg_mode_invid_target_group_made:
+    count_events: corg_mode_invid_target_group_hit_complete
+    starting_count: 0
+    count_complete_value: 3
+    direction: up
+    events_when_complete:
+      - corg_mode_ramp_down
+      - disable_corg_invid_targets
+    disable_on_complete: true
+    persist_state: true
+    reset_on_complete: false
+    debug: true
+
+variable_player:
+  corg_mode_jackpot_shot_flashing_hit:
+    jackpot_value:
+      int: (200000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (200000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier

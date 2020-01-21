@@ -1,0 +1,112 @@
+#config_version=5
+
+mode:
+  start_events:
+   - start_intro_corg_mode
+  stop_events:
+    - stop_intro_corg_mode
+  restart_on_next_ball: false
+  priority: 8050
+
+event_player:
+  mode_intro_corg_mode_started{device.switches.s_up_down_ramp_switch.state == 1}:
+    - ramp_up_active
+
+queue_event_player:
+  mode_intro_corg_mode_started{not mode.qualify_mystery.active}: #.1{game.balls_in_play == 1}:
+    queue_event: my_queue_corg_mode
+    events_when_finished: stop_intro_corg_mode
+  stop_qualify_mystery:
+    queue_event: my_queue_corg_mode
+    events_when_finished: stop_intro_corg_mode
+  # mode_intro_corg_mode_started.2{game.balls_in_play > 1}:
+  #   queue_event: my_queue_corg_mode_more_than_1_ball
+  #   events_when_finished: stop_intro_corg_mode
+
+queue_relay_player:
+  my_queue_corg_mode:
+    post: start_corg_mode_intro
+    wait_for: intro_corg_mode_show_ended
+  # my_queue_corg_mode_more_than_1_ball:
+  #   post: start_corg_mode_intro_more_than_1_ball
+  #   wait_for: intro_corg_mode_show_ended
+  # balldevice_bd_trough_ball_eject_attempt:
+  #   post: wait_for_instructions
+  #   wait_for: intro_corg_mode_ended
+  balldevice_bd_top_lock_ball_eject_attempt:
+    post: wait_for_instructions
+    wait_for: intro_corg_mode_ended
+
+shows:
+  corg_mode_intro:
+    - duration: 9
+      slides:
+        intro_corg_mode_slide:
+          widgets:
+            - type: text
+              text: DEFEAT CORG !!!
+              color: white
+              font_size: 80
+              x: center
+              y: center+300
+            - type: text
+              text: Complete Invid Bank 3 Times, Shoot Ramp
+              color: white
+              x: center
+              y: center-300
+              font_size: 50
+            - type: video
+              video: intro_corg_mode_video
+  # corg_mode_intro_more_than_1_ball:
+  #   - duration: 3s
+  #     slides:
+  #       intro_corg_mode_more_than_1_ball_slide:
+  #         widgets:
+  #           - type: text
+  #             text: DEFEAT CORG !!!
+  #             color: red
+  #             font_size: 80
+  #             x: center
+  #             y: center+300
+  #           - type: image
+  #             image: three_invid
+  #           - type: text
+  #             text: Complete Invid Bank 3 Times
+  #             color: white
+  #             font_size: 60
+  #             x: center
+  #             y: center-300
+
+light_player:
+  mode_intro_corg_mode_started{game.balls_in_play == 1 and not mode.qualify_mystery.active}:
+    gi_string:
+      color: off
+    playfield:
+      color: off
+      priority: 9900
+  mode_qualify_mystery_stopping{game.balls_in_play == 1}:
+    gi_string:
+      color: off
+    playfield:
+      color: off
+      priority: 9900
+  # mode_intro_genesis_pit_stopped{game.balls_in_play == 1}:
+  #   gi_string:
+  #     color: off
+  #   playfield:
+  #     color: off
+  #     #priority: 8000
+
+
+show_player:
+  start_corg_mode_intro:
+    corg_mode_intro:
+      loops: 0
+      events_when_stopped: intro_corg_mode_show_ended
+  # start_corg_mode_intro_more_than_1_ball:
+  #   corg_mode_intro_more_than_1_ball:
+  #     loops: 0
+  #     events_when_stopped: intro_corg_mode_show_ended
+  flipper_cancel:
+    corg_mode_intro:
+      action: stop
