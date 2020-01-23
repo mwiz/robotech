@@ -170,3 +170,51 @@ player_vars:
   the_fortress_switches_start_value:
     value_type: int
     initial_value: 100
+  invid_invasion_start_mode_score:
+    value_type: int
+    initial_value: 0
+  invid_invasion_mode_total_points:
+    value_type: int
+    initial_value: 0
+  genesis_pit_start_mode_score:
+    value_type: int
+    initial_value: 0
+  genesis_pit_mode_total_points:
+    value_type: int
+    initial_value: 0
+  the_fortress_start_mode_score:
+    value_type: int
+    initial_value: 0
+  the_fortress_mode_total_points:
+    value_type: int
+    initial_value: 0
+  big_apple_start_mode_score:
+    value_type: int
+    initial_value: 0
+  big_apple_mode_total_points:
+    value_type: int
+    initial_value: 0
+  rand_mode_start_score:
+    value_type: int
+    initial_value: 0
+  rand_mode_total_points:
+    value_type: int
+    initial_value: 0
+  annie_mode_start_score:
+    value_type: int
+    initial_value: 0
+  annie_mode_total_points:
+    value_type: int
+    initial_value: 0
+  rook_mode_start_score:
+    value_type: int
+    initial_value: 0
+  rook_mode_total_points:
+    value_type: int
+    initial_value: 0
+  lunk_mode_start_score:
+    value_type: int
+    initial_value: 0
+  lunk_mode_total_points:
+    value_type: int
+    initial_value: 0
