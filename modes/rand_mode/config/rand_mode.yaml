@@ -481,6 +481,14 @@ counters:
     debug: true
 
 variable_player:
+  mode_rand_mode_started:
+    rand_mode_start_score:
+      int: current_player.score
+      action: set
+  mode_rand_mode_stopping:
+    rand_mode_total_points:
+      int: current_player.score - current_player.rand_mode_start_score
+      action: set
   rand_mode_invid_shot_group_1_flashing_hit:
     rand_mode_score_value:
       int: 20000 * current_player.pf_multiplier
