@@ -40,6 +40,10 @@ event_player:
     - start_slide_cycle_timer
   play_attract_slide_10:
     - start_slide_cycle_timer
+  play_attract_slide_11:
+    - start_slide_cycle_timer
+  play_attract_slide_12:
+    - start_slide_cycle_timer
   play_next_attract_slide_right.1{machine.current_attract_slide==1}:
     - play_attract_slide_5
   play_next_attract_slide_right.2{machine.current_attract_slide==2}:
@@ -52,13 +56,17 @@ event_player:
     - play_attract_slide_9
   play_next_attract_slide_right.6{machine.current_attract_slide==6}:
     - play_attract_slide_10
-  play_next_attract_slide_right.7{machine.current_attract_slide==7 and machine.last_game_num_players==1}:
+  play_next_attract_slide_right.7{machine.current_attract_slide==7}:
+    - play_attract_slide_11
+  play_next_attract_slide_right.8{machine.current_attract_slide==8}:
+    - play_attract_slide_12
+  play_next_attract_slide_right.9{machine.current_attract_slide==9 and machine.last_game_num_players==1}:
     - play_attract_slide_1
-  play_next_attract_slide_right.8{machine.current_attract_slide==7 and machine.last_game_num_players==2}:
+  play_next_attract_slide_right.10{machine.current_attract_slide==9 and machine.last_game_num_players==2}:
     - play_attract_slide_2
-  play_next_attract_slide_right.9{machine.current_attract_slide==7 and machine.last_game_num_players==3}:
+  play_next_attract_slide_right.11{machine.current_attract_slide==9 and machine.last_game_num_players==3}:
     - play_attract_slide_3
-  play_next_attract_slide_right.10{machine.current_attract_slide==7 and machine.last_game_num_players==4}:
+  play_next_attract_slide_right.12{machine.current_attract_slide==9 and machine.last_game_num_players==4}:
     - play_attract_slide_4
   play_next_attract_slide_left.1{machine.current_attract_slide==2 and machine.last_game_num_players==1}:
     - play_attract_slide_1
@@ -78,8 +86,12 @@ event_player:
     - play_attract_slide_8
   play_next_attract_slide_left.9{machine.current_attract_slide==7}:
     - play_attract_slide_9
-  play_next_attract_slide_left.10{machine.current_attract_slide==1}:
+  play_next_attract_slide_left.10{machine.current_attract_slide==8}:
     - play_attract_slide_10
+  play_next_attract_slide_left.11{machine.current_attract_slide==9}:
+    - play_attract_slide_11
+  play_next_attract_slide_left.12{machine.current_attract_slide==1}:
+    - play_attract_slide_12
   s_right_flipper_active:
     - play_next_attract_slide_right
   s_left_flipper_active:
@@ -96,7 +108,7 @@ event_player:
 
 timers:
   attract_slide_cycle_timer:
-    start_value: 4
+    start_value: 5
     end_value: 0
     direction: down
     tick_interval: 1s
@@ -385,6 +397,108 @@ slides:
         y: center - 120
         font_size: 70
         color: red
+  attract_main_modes_high_scores:
+    widgets:
+      - type: text
+        text: Main Modes Champs
+        y: center + 300
+        font_size: 70
+        color: white
+      - type: text
+        text: (machine|invid_invasion_mode_total_points1_label)
+        y: center + 190
+        font_size: 60
+        color: red
+      - type: text
+        text: (machine|invid_invasion_mode_total_points1_name) - (machine|invid_invasion_mode_total_points1_value)
+        number_grouping: true
+        y: center + 150
+        font_size: 60
+        color: white
+      - type: text
+        text: (machine|genesis_pit_mode_total_points1_label)
+        y: center + 70
+        font_size: 60
+        color: green
+      - type: text
+        text: (machine|genesis_pit_mode_total_points1_name) - (machine|genesis_pit_mode_total_points1_value)
+        number_grouping: true
+        y: center + 30
+        font_size: 60
+        color: white
+      - type: text
+        text: (machine|the_fortress_mode_total_points1_label)
+        y: center - 50
+        font_size: 60
+        color: blue
+      - type: text
+        text: (machine|the_fortress_mode_total_points1_name) - (machine|the_fortress_mode_total_points1_value)
+        number_grouping: true
+        y: center - 90
+        font_size: 60
+        color: white
+      - type: text
+        text: (machine|big_apple_mode_total_points1_label)
+        y: center - 170
+        font_size: 60
+        color: yellow
+      - type: text
+        text: (machine|big_apple_mode_total_points1_name) - (machine|big_apple_mode_total_points1_value)
+        number_grouping: true
+        y: center - 210
+        font_size: 60
+        color: white
+  attract_team_modes_high_scores:
+    widgets:
+      - type: text
+        text: Team Modes Champs
+        y: center + 300
+        font_size: 70
+        color: white
+      - type: text
+        text: (machine|rand_mode_total_points1_label)
+        y: center + 190
+        font_size: 60
+        color: red
+      - type: text
+        text: (machine|rand_mode_total_points1_name) - (machine|rand_mode_total_points1_value)
+        number_grouping: true
+        y: center + 150
+        font_size: 60
+        color: white
+      - type: text
+        text: (machine|annie_mode_total_points1_label)
+        y: center + 70
+        font_size: 60
+        color: FF8000
+      - type: text
+        text: (machine|annie_mode_total_points1_name) - (machine|annie_mode_total_points1_value)
+        number_grouping: true
+        y: center + 30
+        font_size: 60
+        color: white
+      - type: text
+        text: (machine|rook_mode_total_points1_label)
+        y: center - 50
+        font_size: 60
+        color: yellow
+      - type: text
+        text: (machine|rook_mode_total_points1_name) - (machine|rook_mode_total_points1_value)
+        number_grouping: true
+        y: center - 90
+        font_size: 60
+        color: white
+      - type: text
+        text: (machine|lunk_mode_total_points1_label)
+        y: center - 170
+        font_size: 60
+        color: 654321
+      - type: text
+        text: (machine|lunk_mode_total_points1_name) - (machine|lunk_mode_total_points1_value)
+        number_grouping: true
+        y: center - 210
+        font_size: 60
+        color: white
   title_screen:
     widgets:
       - type: image
@@ -395,26 +509,18 @@ slides:
         image: mpf-logo-full
 
 slide_player:
-  play_attract_slide_1:
-    attract_slide_1_player
-  play_attract_slide_2:
-    attract_slide_2_players
-  play_attract_slide_3:
-    attract_slide_3_players
-  play_attract_slide_4:
-    attract_slide_4_players
-  play_attract_slide_5:
-    attract_all_high_scores
-  play_attract_slide_6:
-    attract_invid_scores
-  play_attract_slide_7:
-    attract_pops_spinner_scores
-  play_attract_slide_8:
-    attract_combo_skillshot_champ_scores
-  play_attract_slide_9:
-    title_screen
-  play_attract_slide_10:
-    mpf_logo
+  play_attract_slide_1: attract_slide_1_player
+  play_attract_slide_2: attract_slide_2_players
+  play_attract_slide_3: attract_slide_3_players
+  play_attract_slide_4: attract_slide_4_players
+  play_attract_slide_5: attract_all_high_scores
+  play_attract_slide_6: attract_invid_scores
+  play_attract_slide_7: attract_pops_spinner_scores
+  play_attract_slide_8: attract_combo_skillshot_champ_scores
+  play_attract_slide_9: attract_main_modes_high_scores
+  play_attract_slide_10: attract_team_modes_high_scores
+  play_attract_slide_11: title_screen
+  play_attract_slide_12: mpf_logo
 
 variable_player:
   play_attract_slide_1:
@@ -457,6 +563,14 @@ variable_player:
     current_attract_slide:
       action: set_machine
       int: 7
+  play_attract_slide_11:
+    current_attract_slide:
+      action: set_machine
+      int: 8
+  play_attract_slide_12:
+    current_attract_slide:
+      action: set_machine
+      int: 9
 
 show_player:
   mode_attract_started:
