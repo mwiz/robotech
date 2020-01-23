@@ -196,3 +196,7 @@ variable_player:
     mode_end_action_flag:
       int: 0
       action: set
+  mode_end_the_fortress_started:
+    genesis_pit_mode_total_points:
+      int: current_player.score - current_player.the_fortress_start_mode_score
+      action: set
