@@ -274,3 +274,7 @@ variable_player:
     mode_end_action_flag:
       int: 0
       action: set
+  mode_end_invid_invasion_started:
+    invid_invasion_mode_total_points:
+      int: current_player.score - current_player.invid_invasion_start_mode_score
+      action: set
