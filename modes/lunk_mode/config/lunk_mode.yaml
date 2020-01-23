@@ -192,6 +192,14 @@ shots:
     debug: true
 
 variable_player:
+  mode_lunk_mode_started:
+    lunk_mode_start_score:
+      int: current_player.score
+      action: set
+  mode_lunk_mode_stopping:
+    lunk_mode_total_points:
+      int: current_player.score - current_player.lunk_mode_start_score
+      action: set
   lunk_mode_success:
     lunk_mode_bonus_time_score:
       int: (device.timers.lunk_mode_timer.ticks * 500  * game.balls_in_play) * current_player.pf_multiplier
