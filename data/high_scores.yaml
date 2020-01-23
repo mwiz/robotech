@@ -1,36 +1,68 @@
+annie_mode_total_points:
+- !!python/tuple
+  - WIZ
+  - 100000
+big_apple_mode_total_points:
+- !!python/tuple
+  - WIZ
+  - 200000
 combos_made:
 - !!python/tuple
-  - ELI
-  - 3
+  - AAA
+  - 5
+genesis_pit_mode_total_points:
+- !!python/tuple
+  - WIZ
+  - 200000
+invid_invasion_mode_total_points:
+- !!python/tuple
+  - WIZ
+  - 362170
 invid_invasion_total:
 - !!python/tuple
   - BMW
   - 51
 - !!python/tuple
-  - BBB
-  - 37
+  - AAA
+  - 50
+lunk_mode_total_points:
+- !!python/tuple
+  - WIZ
+  - 100000
+rand_mode_total_points:
+- !!python/tuple
+  - WIZ
+  - 333880
+rook_mode_total_points:
+- !!python/tuple
+  - WIZ
+  - 100000
 score:
 - !!python/tuple
   - A
   - 1989200
 - !!python/tuple
-  - JES
-  - 1046230
+  - WIZ
+  - 1957750
+- !!python/tuple
+  - WIZ
+  - 1938120
 - !!python/tuple
   - AAA
-  - 749870
+  - 1905710
+- !!python/tuple
+  - WIZ
+  - 1612050
 - !!python/tuple
   - AAA
-  - 641780
+  - 1597410
 - !!python/tuple
-  - D F
-  - 626900
+  - AAA
+  - 1571950
+skill_shots_made:
 - !!python/tuple
-  - XXX
-  - 545310
-- !!python/tuple
-  - BMW
-  - 522810
+  - WIZ
+  - 4
 super_pops_total:
 - !!python/tuple
   - A
@@ -38,4 +70,8 @@ super_pops_total:
 super_spinner_total:
 - !!python/tuple
   - WIZ
-  - 5
+  - 25
+the_fortress_mode_total_points:
+- !!python/tuple
+  - WIZ
+  - 200000
