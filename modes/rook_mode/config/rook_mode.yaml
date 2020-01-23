@@ -549,6 +549,14 @@ show_player:
         leds: l_lower_r_pop_bumper
 
 variable_player:
+  mode_rook_mode_started:
+    rook_mode_start_score:
+      int: current_player.score
+      action: set
+  mode_rook_mode_stopping:
+    rook_mode_total_points:
+      int: current_player.score - current_player.rook_mode_start_score
+      action: set
   biker_1st_done:
     biker_kill_value:
       int: 25000 * current_player.pf_multiplier
