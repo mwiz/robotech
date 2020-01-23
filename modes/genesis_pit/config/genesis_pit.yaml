@@ -666,6 +666,10 @@ shots:
 
 
 variable_player:
+  mode_genesis_pit_started:
+    genesis_pit_start_mode_score:
+      int: current_player.score
+      action: set
   genesis_pit_croc_group_flashing_hit:
     genesis_pit_score_value:
       int: 20000 * current_player.pf_multiplier
