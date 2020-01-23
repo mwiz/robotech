@@ -706,6 +706,10 @@ shots:
       - big_apple_triple_jackpot_shot_flashing_hit
 
 variable_player:
+  mode_big_apple_started:
+    big_apple_start_mode_score:
+      int: current_player.score
+      action: set
   first_enforcer_rand_shot_killed:
     big_apple_score_value:
       int: (20000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
