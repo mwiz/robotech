@@ -381,6 +381,10 @@ shots:
       - invid_invasion_triple_jackpot_shot_flashing_hit
 
 variable_player:
+  mode_invid_invasion_started:
+    invid_invasion_start_mode_score:
+      int: current_player.score
+      action: set
   invid_invasion_jackpot_shot_flashing_hit:
     jackpot_value:
       int: (current_player.invid_invasion_total * 1000) * current_player.ramp_shot_multiplier #(current_player.invid_invasion_total * 1000)  * game.balls_in_play
