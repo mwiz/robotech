@@ -525,6 +525,10 @@ accruals:
 
 
 variable_player:
+  mode_the_fortress_started:
+    the_fortress_start_mode_score:
+      int: current_player.score
+      action: set
   the_fortress_ski_ramp_shot_flashing_hit:
     the_fortress_score_value:
       int: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
