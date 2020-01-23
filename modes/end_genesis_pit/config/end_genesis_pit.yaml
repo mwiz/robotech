@@ -197,3 +197,7 @@ variable_player:
     mode_end_action_flag:
       int: 0
       action: set
+  mode_end_genesis_pit_started:
+    genesis_pit_mode_total_points:
+      int: current_player.score - current_player.genesis_pit_start_mode_score
+      action: set
