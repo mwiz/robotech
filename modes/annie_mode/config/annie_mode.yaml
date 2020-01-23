@@ -383,6 +383,14 @@ shot_profiles:
 
 
 variable_player:
+  mode_annie_mode_started:
+    annie_mode_start_score:
+      int: current_player.score
+      action: set
+  mode_annie_mode_stopping:
+    annie_mode_total_points:
+      int: current_player.score - current_player.annie_mode_start_score
+      action: set
   annie_1st_kill:
     invid_kill_value:
       int: 20000 * current_player.pf_multiplier
