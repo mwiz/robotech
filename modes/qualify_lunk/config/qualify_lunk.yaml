@@ -20,17 +20,26 @@ event_player:
     - post_lunk_l
     - post_lunk_u
     - post_lunk_n
-  lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==1}:
-    - post_lunk_l
-  lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==2}:
-    - post_lunk_u
-  lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==3}:
-    - post_lunk_n
-  lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==4}:
-    - post_lunk_k
   lunk_shot_group_lit_complete:
     - play_lunk_sounds|1s
     - restart_lunk_shot_group|1
+  counter_lunk_hit_counter_hit.1{device.counters.lunk_hit_counter.value==1}:
+    - post_lunk_l
+  counter_lunk_hit_counter_hit.2{device.counters.lunk_hit_counter.value==2}:
+    - post_lunk_u
+  counter_lunk_hit_counter_hit.3{device.counters.lunk_hit_counter.value==3}:
+    - post_lunk_n
+  counter_lunk_hit_counter_hit.4{device.counters.lunk_hit_counter.value==4}:
+    - post_lunk_k
+  # lunk_shot_group_lit_complete.2{device.counters.lunk_hit_counter.value==1}:
+  #   - post_lunk_l
+  # lunk_shot_group_lit_complete.3{device.counters.lunk_hit_counter.value==2}:
+  #   - post_lunk_u
+  # lunk_shot_group_lit_complete.4{device.counters.lunk_hit_counter.value==3}:
+  #   - post_lunk_n
+  # lunk_shot_group_lit_complete.5{device.counters.lunk_hit_counter.value==4}:
+  #   - post_lunk_k
+
 
 show_player:
   lunk_shot1_hit:

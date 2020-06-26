@@ -162,8 +162,8 @@ random_event_player:
       - mystery_award_light_kickback
       - mystery_award_increase_bonus_multiplier
       - mystery_award_extra_ball
-      - mystery_award_add_1x_playfield_multiplier
       - mystery_award_light_shot_multipliers
+      - mystery_award_add_1x_playfield_multiplier
       # - ball_save?
       # - 3 protoculture cells?
       # - add_time_to_mode?
@@ -229,12 +229,20 @@ shows:
 widgets:
   award_big_points_widget:
     - type: text
-      text: "BIG POINTS: 50,000"
+      text: "BIG POINTS:"
       color: white
       font_size: 60
-      x: center
+      x: center-60
       y: center-300
       z: 8100
+    - type: text
+      text: (big_points_award_value)
+      color: white
+      font_size: 60
+      x: center + 210
+      y: center-300
+      z: 8100
+      number_grouping: true
   advance_pops_level_widget:
     - type: text
       text: "POPS LEVEL ADVANCE"
@@ -328,8 +336,11 @@ widget_player:
       slide: mystery_collected_slide
 
 variable_player:
-  award_big_points:
-    score: 50000
+  mystery_award_big_points:
+    big_points_award_value:
+      int: 50000 + (device.counters.sdf_banks_complete_count.value * 10000)
+      action: set
+    score: 50000 + (device.counters.sdf_banks_complete_count.value * 10000)
   add_to_kickback_counter:
     kickback_counter: 1
 

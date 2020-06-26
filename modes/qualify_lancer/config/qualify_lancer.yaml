@@ -318,7 +318,7 @@ shots:
       # - mode_big_apple_stopped{device.counters.lancer_hit_counter.value==5}
     disable_events:
       - lancer_shot_flashing_lancer_hit
-      - mode_into_annie_mode_started
+      - mode_intro_annie_mode_started
       - mode_intro_rand_mode_started
       - mode_intro_rook_mode_started
       - mode_lunk_mode_started
@@ -385,13 +385,16 @@ variable_player:
   lancer_collected:
     team_members_collected: 1
 
-sound_player:
-  lancer_shot_group_flashing_lancer_hit:
-  #play_yellow_dancer_sound:
-    #rand_yellow_dancer
-    qualify_lancer_sounds:
-      action: play
-      priority: 9999
+# sound_player:
+#   #lancer_shot_group_flashing_lancer_hit{device.counters.lancer_hit_counter.value <= 4}:
+#   counter_lancer_hit_counter_hit{count <= 4}:
+#     qualify_lancer_sounds:
+#       action: play
+#       priority: 9999
+#   counter_lancer_hit_counter_hit{count == 5}:
+#     scott_yellow_dancer:
+#       action: play
+#       priority: 9999
 
 sound_pools:
   qualify_lancer_sounds:

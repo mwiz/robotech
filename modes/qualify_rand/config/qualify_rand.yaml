@@ -100,6 +100,20 @@ shot_groups:
       - rand_shot
     debug: true
 
+shot_profiles:
+  rand_profile:
+    advance_on_hit: true #false
+    states:
+    # - name: unlit
+    #   show: off
+    - name: flashing_rand
+      show: flash_rand_show
+      sync_ms: 1500
+      loops: -1
+      speed: 5
+    - name: hit
+      show: off
+
 shots:
   r_shot:
     switch: s_left_lock_kickout
@@ -198,22 +212,7 @@ shots:
     debug: true
 
 
-shot_profiles:
-  rand_profile:
-    advance_on_hit: true #false
-    states:
-    # - name: unlit
-    #   show: off
-    - name: flashing_rand
-      show: flash_rand_show
-      sync_ms: 1500
-      loops: -1
-      speed: 5
-    - name: hit
-      show: off
-
 counters:
-
   rand_hit_counter:
     count_events:
       - rand_shot_group_flashing_rand_hit
@@ -228,3 +227,30 @@ counters:
 variable_player:
   rand_collected:
     team_members_collected: 1
+
+sound_player:
+  counter_rand_hit_counter_hit{count==2}:
+    rand_shot_1:
+      action: play
+      priority: 9999
+  counter_rand_hit_counter_hit{count==3}:
+    rand_shot_2:
+      action: play
+      priority: 9999
+  rand_collected:
+    rand_shot_3:
+      action: play
+      priority: 9999
+  # rand_shot_group_flashing_rand_hit:
+  #   qualify_rand_sounds:
+  #     action: play
+  #     priority: 9999
+
+# sound_pools:
+#   qualify_rand_sounds:
+#     type: sequence
+#     track: voice
+#     sounds:
+#       - rand_shot_1
+#       - rand_shot_2
+#       - rand_shot_3
