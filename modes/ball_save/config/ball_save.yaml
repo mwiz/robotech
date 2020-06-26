@@ -4,7 +4,7 @@
 mode:
     start_events:
       #- ball_starting
-      - mode_skill_shot_started
+      - mode_skill_shot_started{current_player.start_default_ball_save_flag == 1}
       # - mode_end_invid_invasion_stopped
       # - mode_end_genesis_pit_stopped
       # - mode_the_fortress_stopped
@@ -36,7 +36,8 @@ ball_saves:
     # enable_events:
     #   - mode_ball_save_started
     timer_start_events:
-      - sw_playfield_active
+      - sw_start_ball_save_timer
+      #- sw_playfield_active
       - invid_targets_skill_hit
     early_ball_save_events:
       - s_right_outlane_h_active
