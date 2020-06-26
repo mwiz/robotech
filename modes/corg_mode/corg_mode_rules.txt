@@ -1,0 +1,22 @@
+Corg mini wizard mode
+----------------------
+
+Corg mode is qualified after all 4 main modes have been played.
+
+When qualified mystery shot blinks blue and Corg insert is lit solid blue.
+
+Corg mode starts when mystery shot is hit.
+
+RULES
+-----
+Timed mode - 60 seconds with ball save.  
+
+Time is added at spinner determined by spinner level.
+
+Complete Invid bank of targets 3 times, ramp comes down.
+
+Shoot ramp and ball enters Reflex Point to defeat Corg
+
+Shoot either Rand or Rook shot to add a play into play.
+
+Defeat Corg Value = (200000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier

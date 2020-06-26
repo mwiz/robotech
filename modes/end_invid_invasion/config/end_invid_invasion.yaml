@@ -8,8 +8,7 @@ mode:
   priority: 1100
 
 event_player:
-  mode_end_invid_invasion_started:
-    #- ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}
+  mode_end_invid_invasion_started.1:
     - flipper_off
     - disable_Upper_Left_pop_bumper
     - disable_Upper_Right_pop_bumper
@@ -18,6 +17,9 @@ event_player:
     - disable_sling
     - kickback_disable{mode.kickback.active}
     - ramp_diverter_disable
+    - drop_reset_up  #|1
+  mode_end_invid_invasion_started.2{device.switches.s_up_down_ramp_switch.state == 1}:
+    - ramp_up_active
   player_continue_show_ended:
     - flipper_on
     - enable_Upper_Left_pop_bumper
@@ -28,6 +30,7 @@ event_player:
     - kickback_enable{mode.kickback.active}
     #- start_pre_qualify_mystery
     - start_skill_shot_mode
+    - start_pre_qualify_a_mode
 
 timers:
   eject_mystery_ball_end_invid_invation_timer:
@@ -278,3 +281,8 @@ variable_player:
     invid_invasion_mode_total_points:
       int: current_player.score - current_player.invid_invasion_start_mode_score
       action: set
+
+sound_player:
+  end_invid_invasion_show_ended:
+    end_invid_invasion:
+      action: play

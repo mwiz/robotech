@@ -8,6 +8,17 @@ mode:
     - tilt
   priority: 8000
 
+ball_holds:
+  corg_killed_ball_hold:
+    balls_to_hold: 1
+    hold_devices: bd_right_lock
+    enable_events:
+      - corg_mode_corg_jackpot_shot_flashing_hit
+    disable_events:
+      - mode_corg_mode_started
+    release_all_events:
+      - eject_corg_ball_hold
+    debug: True
 
 event_player:
   mode_corg_mode_started.1:
@@ -22,19 +33,22 @@ event_player:
     - start_check_corg_mode_drop_targets_up_timer
   timer_check_corg_mode_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
     - drop_reset_up
-    - enable_corg_mode_drop_targets|.5s
+    - enable_corg_mode_drop_targets #|.5s
   timer_check_corg_mode_drop_targets_up_timer_complete.2{device.switches.s_left_drop_target.state == 0 and device.switches.s_middle_drop_target.state == 0 and device.switches.s_right_drop_target.state == 0}:
     - enable_corg_mode_drop_targets
   corg_mode_ramp_down:
     - ramp_down_active
   timer_corg_mode_timer_complete:
     - stop_corg_mode
-  corg_mode_success:
-    - stop_corg_mode
   mode_corg_mode_stopping{device.switches.s_up_down_ramp_switch.state == 1 and not mode.qualify_invid_invasion.active}:
     - ramp_up_active
-  corg_mode_jackpot_shot_flashing_hit:
+  end_corg_mode:
     - corg_mode_success
+    - eject_corg_ball_hold|1
+    - stop_corg_mode|2
+  corg_mode_corg_jackpot_shot_flashing_hit:
+    - ramp_up_active
+
 
 multiballs:
   corg_mode_multiball:
@@ -181,14 +195,14 @@ shot_groups:
       - corg_mode_left_drop
       - corg_mode_middle_drop
       - corg_mode_right_drop
-    enable_events:
-      - enable_corg_mode_drop_targets
+    # enable_events:
+    #   - enable_corg_mode_drop_targets
     disable_events:
       - mode_corg_mode_started
-      - mode_intro_rand_mode_started
-      - mode_intro_annie_mode_started
-      - mode_intro_rook_mode_started
-      - mode_lunk_mode_started
+      # - mode_intro_rand_mode_started
+      # - mode_intro_annie_mode_started
+      # - mode_intro_rook_mode_started
+      # - mode_lunk_mode_started
       - corg_mode_invid_target_group_hit_complete
       - disable_corg_invid_targets
     restart_events:
@@ -237,7 +251,9 @@ shots:
   corg_mode_rook_add_a_ball:
     switch: s_right_lock_kickout
     profile: corg_mode_rook_add_ball_flash
-    disable_events:  corg_mode_rook_add_a_ball_flashing_hit
+    disable_events:
+      - corg_mode_rook_add_a_ball_flashing_hit
+      - s_back_ramp_active
     show_tokens:
       leds: l_rlock_arrow
   corg_mode_rand_add_a_ball:
@@ -245,7 +261,9 @@ shots:
     profile: corg_mode_rand_add_ball_flash
     show_tokens:
       leds: l_llock_arrow
-    disable_events: corg_mode_rand_add_a_ball_flashing_hit
+    disable_events:
+      - corg_mode_rand_add_a_ball_flashing_hit
+      - corg_mode_corg_jackpot_shot_flashing_hit
   corg_mode_corg_jackpot_shot:
     hit_events: ramp_reflex_point_sequence_hit
     profile: corg_mode_jackpot
@@ -267,8 +285,34 @@ counters:
     reset_on_complete: false
     debug: true
 
+shows:
+  end_corg_mode_jackpot_collected:
+    - duration: 21
+      slides:
+        end_corg_mode_jackpot_collected_slide:
+          widgets:
+            - type: text
+              text: "CORG DEFEATED !!!"
+              color: blue
+              font_size: 80
+              y: center + 300
+            - type: video
+              video: corg_killed_video
+            - type: text
+              text: (jackpot_value)
+              font_size: 80
+              color: red
+              x: center
+              y: center - 300
+
+show_player:
+  corg_mode_corg_jackpot_shot_flashing_hit:
+    end_corg_mode_jackpot_collected:
+      loops: 0
+      events_when_stopped: end_corg_mode
+
 variable_player:
-  corg_mode_jackpot_shot_flashing_hit:
+  corg_mode_corg_jackpot_shot_flashing_hit:
     jackpot_value:
       int: (200000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
       action: set
