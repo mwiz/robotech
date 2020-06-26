@@ -4,21 +4,13 @@ mode:
    start_events:
      - start_intro_invid_invasion
    stop_events:
-     - balldevice_bd_right_lock_ejecting_ball
-    # - mode_invid_invasion_started
+     - mode_invid_invasion_started
    restart_on_next_ball: false
    priority: 800
 
 event_player:
-  mode_intro_invid_invasion_started.1:
-    - drop_reset_up
-  mode_intro_invid_invasion_started.2{device.switches.s_up_down_ramp_switch.state == 1}:
-    - ramp_up_active
-  flipper_cancel:
-    - start_invid_invasion
-  timer_intro_invid_invasion_timer_complete{not mode.invid_invasion.active}:
-    - start_invid_invasion
-  mode_invid_invasion_started: eject_bd_right_locked_ball:1s
+  flipper_cancel: start_invid_invasion
+  timer_intro_invid_invasion_timer_complete: start_invid_invasion
 
 queue_event_player:
   mode_intro_invid_invasion_started:
@@ -29,12 +21,12 @@ queue_relay_player:
   my_queue:
     post: start_mode_multiball_intro
     wait_for: mode_multiball_show_ended
-  # balldevice_bd_trough_ball_eject_attempt:
-  #   post: wait_for_instructions
-  #   wait_for: mode_multiball_show_ended
+  balldevice_bd_trough_ball_eject_attempt:
+    post: wait_for_instructions
+    wait_for: mode_multiball_show_ended
   balldevice_bd_right_lock_ball_eject_attempt:
     post: wait_for_instructions
-    wait_for: eject_bd_right_locked_ball #mode_multiball_show_ended
+    wait_for: mode_multiball_show_ended
 
 timers:
   intro_invid_invasion_timer:
@@ -88,28 +80,14 @@ widget_player:
       action: add
     intro_ii_text2_widget:
       action: add
-  start_invid_invasion:
-    black_screen_rectangle_widget:
-      action: remove
-    intro_ii_text1_widget:
-      action: remove
-    intro_ii_video_widget:
-      action: remove
-    intro_ii_text2_widget:
-      action: remove
 
 light_player:
   mode_intro_invid_invasion_started:
     gi_string:
       color: off
-    # playfield:
-    #   color: off
-    #   priority: 9900
-  start_invid_invasion:
-    gi_string:
-      color: on
-    # playfield:
-    #   color: on
+    playfield:
+      color: off
+      priority: 9900
 
 show_player:
   start_mode_multiball_intro:
@@ -120,16 +98,7 @@ show_player:
       events_when_stopped:
         - play_multiball_intro
         - play_alert_show
-    turn_off_playfield_lights:
-      key: invid_invasion_turn_off_playfield_lights
-      action: play
-      priority: 9900
   play_alert_show:
     alert_show:
       loops: -1
       priority: 9920
-  start_invid_invasion:
-    alert_show:
-      action: stop
-    invid_invasion_turn_off_playfield_lights:
-      action: stop

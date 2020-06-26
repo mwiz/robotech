@@ -2,19 +2,31 @@
 
 mode:
   start_events:
-   - start_intro_genesis_pit
+    - start_intro_genesis_pit
   stop_events:
-    - stop_intro_genesis_pit_mode #start_genesis_pit_mode #mode_genesis_pit_started
+    - balldevice_bd_right_lock_ejecting_ball
+    #- mode_genesis_pit_started
   restart_on_next_ball: false
   priority: 8125
+
+event_player:
+  mode_intro_genesis_pit_started:
+    - drop_reset_up
+  flipper_cancel:
+    - start_genesis_pit
+  timer_intro_genesis_pit_timer_1_ball_complete{not mode.genesis_pit.active}:
+    - start_genesis_pit
+  timer_intro_genesis_pit_timer_more_than_1_ball_complete{not mode.genesis_pit.active}:
+    - start_genesis_pit
+  mode_genesis_pit_started: eject_bd_right_locked_ball:1s
 
 queue_event_player:
   mode_intro_genesis_pit_started.1{game.balls_in_play == 1}:
     queue_event: my_queue_genesis_pit
-    events_when_finished: stop_intro_genesis_pit_mode
+    events_when_finished: start_genesis_pit
   mode_intro_genesis_pit_started.2{game.balls_in_play > 1}:
     queue_event: my_queue_genesis_pit_more_than_1_ball
-    events_when_finished: stop_intro_genesis_pit_mode
+    events_when_finished: start_genesis_pit
 
 queue_relay_player:
   my_queue_genesis_pit:
@@ -23,84 +35,142 @@ queue_relay_player:
   my_queue_genesis_pit_more_than_1_ball:
     post: start_genesis_pit_intro_more_than_1_ball
     wait_for: intro_genesis_pit_show_ended
-  balldevice_bd_trough_ball_eject_attempt:
-    post: wait_for_instructions
-    wait_for: intro_genesis_pit_show_ended
+  # balldevice_bd_trough_ball_eject_attempt:
+  #   post: wait_for_instructions
+  #   wait_for: intro_genesis_pit_show_ended
   balldevice_bd_right_lock_ball_eject_attempt:
     post: wait_for_instructions
-    wait_for: intro_genesis_pit_show_ended
+    wait_for: eject_bd_right_locked_ball #intro_genesis_pit_show_ended
 
-shows:
-  genesis_pit_intro:
-    - duration: 30
-      slides:
-        intro_genesis_pit_slide:
-          widgets:
-            - type: text
-              text: THE GENESIS PIT !!!
-              color: white
-              font_size: 80
-              x: center
-              y: center+300
-            - type: text
-              text: Defeat Prehistoric Creatures and Invid, lits Jackpot
-              color: white
-              x: center
-              y: center-300
-              font_size: 50
-            - type: video
-              video: intro_genesis_pit_video
-  genesis_pit_intro_more_than_1_ball:
-    - duration: 3s
-      slides:
-        intro_genesis_pit_more_than_1_ball_slide:
-          widgets:
-            - type: text
-              text: GENESIS PIT !!!
-              color: red
-              font_size: 80
-              x: center
-              y: center+300
-            - type: image
-              image: three_invid
-            - type: text
-              text: Defeat Prehistoric Creatures and Invid, lits Jackpot
-              color: white
-              font_size: 60
-              x: center
-              y: center-300
+timers:
+  intro_genesis_pit_timer_1_ball:
+    debug: true
+    start_value: 30
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - action: start
+        event: start_genesis_pit_intro
+  intro_genesis_pit_timer_more_than_1_ball:
+    debug: true
+    start_value: 3
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - action: start
+        event: start_genesis_pit_intro_more_than_1_ball
+
+widgets:
+  black_screen_rectangle_widget:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 0
+      y: 0
+      z: 109
+      width: 1280
+      height: 720
+      color: black
+  intro_genesis_pit_text1_widget:
+    - type: text
+      text: THE GENESIS PIT !!!
+      color: white
+      font_size: 80
+      x: center
+      y: center+300
+      z: 110
+  intro_genesis_pit_video_widget:
+    - type: video
+      video: intro_genesis_pit_video
+      z: 110
+  intro_genesis_pit_text2_widget:
+    - type: text
+      text: Defeat Prehistoric Creatures and Invid, lits Jackpot
+      color: white
+      x: center
+      y: center-300
+      font_size: 50
+      z: 110
+  intro_genesis_pit_more_than_1_ball_widget:
+    - type: image
+      image: three_invid
+      z: 110
+
+widget_player:
+  play_genesis_pit_intro:
+    black_screen_rectangle_widget:
+      action: add
+    intro_genesis_pit_text1_widget:
+      action: add
+    intro_genesis_pit_video_widget:
+      action: add
+    intro_genesis_pit_text2_widget:
+      action: add
+  play_genesis_pit_intro_more_than_1_ball:
+    black_screen_rectangle_widget:
+      action: add
+    intro_genesis_pit_text1_widget:
+      action: add
+    intro_genesis_pit_more_than_1_ball_widget:
+      action: add
+    intro_genesis_pit_text2_widget:
+      action: add
+  start_genesis_pit.1{game.balls_in_play == 1}:
+    black_screen_rectangle_widget:
+      action: remove
+    intro_genesis_pit_text1_widget:
+      action: remove
+    intro_genesis_pit_video_widget:
+      action: remove
+    intro_genesis_pit_text2_widget:
+      action: remove
+  start_genesis_pit.2{game.balls_in_play == 2}:
+    black_screen_rectangle_widget:
+      action: remove
+    intro_genesis_pit_text1_widget:
+      action: remove
+    intro_genesis_pit_more_than_1_ball_widget:
+      action: remove
+    intro_genesis_pit_text2_widget:
+      action: remove
+
 
 light_player:
   mode_intro_genesis_pit_started{game.balls_in_play == 1}:
     gi_string:
       color: off
-    playfield:
-      color: off
-      priority: 9900
-  # mode_intro_genesis_pit_stopped{game.balls_in_play == 1}:
-  #   gi_string:
-  #     color: off
-  #   playfield:
-  #     color: off
-  #     #priority: 8000
-
+    # playfield:
+    #   color: off
+    #   priority: 9900
+  mode_genesis_pit_started{game.balls_in_play == 1}:
+    gi_string:
+      color: on
+    # playfield:
+    #   color: on
 
 show_player:
-  start_genesis_pit_intro:
-    genesis_pit_intro:
+  mode_intro_genesis_pit_started.1{game.balls_in_play == 1}:
+    intro_mode_start_show:
       loops: 0
-      events_when_stopped: intro_genesis_pit_show_ended
-  start_genesis_pit_intro_more_than_1_ball:
-    genesis_pit_intro_more_than_1_ball:
+      speed: 30
+      priority: 9910
+      events_when_stopped:
+        - play_genesis_pit_intro
+    turn_off_playfield_lights:
+      key: genesis_pit_turn_off_playfield_lights
+      action: play
+      priority: 9900
+  mode_intro_genesis_pit_started.2{game.balls_in_play > 1}:
+    intro_mode_start_show:
       loops: 0
-      events_when_stopped: intro_genesis_pit_show_ended
-  flipper_cancel:
-    genesis_pit_intro:
+      speed: 30
+      priority: 9910
+      events_when_stopped:
+        - play_genesis_pit_intro_more_than_1_ball
+  mode_genesis_pit_started:
+    genesis_pit_turn_off_playfield_lights:
       action: stop
-
-   #
-   # multiball_locks:
-   #   invid_invasion_multiball:
-   #     balls_to_lock: 1
-   #     lock_devices: bd_right_lock
-   #     disable_events: invid_invasion_quick_2_ball_started
