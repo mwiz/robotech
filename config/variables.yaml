@@ -5,6 +5,70 @@ machine_vars:
   last_game_num_players:
     value_type: int
     persist: true
+  last_game_player1_combos_made:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player2_combos_made:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player3_combos_made:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player4_combos_made:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player1_skill_shots_made:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player2_skill_shots_made:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player3_skill_shots_made:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player4_skill_shots_made:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player1_protoculture:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player2_protoculture:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player3_protoculture:
+    value_type: int
+    initial_value: 0
+    persist: true
+  last_game_player4_protoculture:
+    value_type: int
+    initial_value: 0
+    persist: true
+  first_player_place:
+    value_type: int
+    initial_value: 0
+    persist: true
+  second_player_place:
+    value_type: int
+    initial_value: 0
+    persist: true
+  third_player_place:
+    value_type: int
+    initial_value: 0
+    persist: true
+  forth_player_place:
+    value_type: int
+    initial_value: 0
+    persist: true
 
 player_vars:
   #multiplier:
@@ -45,6 +109,9 @@ player_vars:
     value_type: int
     initial_value: 0
   rand_mode_score_value:
+    value_type: int
+    initial_value: 0
+  lunk_mode_score_value:
     value_type: int
     initial_value: 0
   the_fortress_score_value:
@@ -218,3 +285,12 @@ player_vars:
   lunk_mode_total_points:
     value_type: int
     initial_value: 0
+  big_points_award_value:
+    value_type: int
+    initial_value: 0
+  protoculture_count:
+    value_type: int
+    initial_value: 0
+  start_default_ball_save_flag:
+    value_type: int
+    initial_value: 1

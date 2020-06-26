@@ -29,6 +29,33 @@ sounds:
       attack: 100ms
       release: 300ms
       release_point: 500ms
+  rand_yellow_dancer:
+    file: rand_yellow_dancer.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  annie_yellow_dancer:
+    file: annie_yellow_dancer.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  scott_yellow_dancer:
+    file: scott_yellow_dancer.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
   combo:
     file: combo.wav
     track: voice
@@ -119,6 +146,34 @@ sounds:
       attack: 100ms
       release: 300ms
       release_point: 500ms
+  mystery_is_lit_voice:
+    file: mystery_is_lit.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  rand_mode_start:
+    file: rand_mode_start.wav
+    track: voice
+    events_when_stopped: play_rand_mode_music
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
+  T2_dont_move:
+    file: T2_dont_move.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms
   main_title:
     target: music
   alien_attack:
@@ -136,3 +191,15 @@ sounds:
   sdf_target_sound:
     simultaneous_limit: 1
     stealing_method: skip
+  pterodactyl_scream:
+    simultaneous_limit: 1
+    stealing_method: skip
+  afm_super_jackpot:
+    file: afm_super_jackpot.wav
+    track: voice
+    ducking:
+      target: music
+      attenuation: 0.5
+      attack: 100ms
+      release: 300ms
+      release_point: 500ms

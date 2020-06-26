@@ -4,20 +4,25 @@
 hardware:
   platform: fast
   driverboards: fast
-  #lights: fadecandy
+  lights: fadecandy
   #platform: smart_virtual
 
 mpf:
   default_light_hw_update_hz: 40
   #default_pulse_ms: 10
 
+# psus:
+#   default:
+#     release_wait_ms: 50    # defaults to 10ms
+
 fast:
   #ports: /dev/ttyUSB1, /dev/ttyUSB2  #for RPi3
-  ports: com6, com7 #com4, com5
-  hardware_led_fade_time: 20
+  ports: com6 #, com7 #com4, com5
+  #hardware_led_fade_time: 20
   #debug: true
   #config_number_format: int
-  rgb_buffer: 11
+  #rgb_buffer: 1000
+  #ignore_rgb_crash: True
 
 config:
   - lights.yaml
@@ -81,7 +86,7 @@ modes:
   - marlene_mode                            #priority: 5000
   - lancer_mode                             #priority: 6000
   - protoculture                            #priority: 6700
-  - qualify_shot_multipliers                #priority: 6800
+  # - qualify_shot_multipliers                #priority: 6800
   - light_shot_multipliers                  #priority: 6900
   - pops_level_1                            #priority: 7100
   - pops_level_2                            #priority: 7200
@@ -92,7 +97,8 @@ modes:
   - spinner_level_3                         #priority: 7700
   - spinner_super                           #priority: 7800
   - pre_qualify_mystery                     #priority: 7900
-  - qualify_corg_mode                       #priority: 7950
+  - pre_qualify_corg_mode                   #priority: 7950
+  #- qualify_corg_mode                       #priority: 7975
   - corg_mode                               #priority: 8000
   - intro_corg_mode                         #priority: 8050
   - genesis_pit                             #priority: 8100
@@ -105,6 +111,7 @@ modes:
   - intro_big_apple                         #priority: 8350
   - end_big_apple                           #priority: 8355
   - add_1x_playfield_multiplier_mystery_award #priority: 8360
+  - qualify_shot_multipliers                #priority: 8380 # testing
   - ball_save                               #priority: 8400
   - ball_save_invid_invasion                #priority: 8500
   - ball_save_invid_invasion_add_a_ball     #priority: 9000
@@ -115,6 +122,7 @@ modes:
   - ball_save_rook_mode                     #priority 9550
   - ball_save_rook_mode_rand_add_a_ball     #priority: 9600
   - ball_save_lunk_mode                     #priority: 9650
+  - ball_save_corg_mode                     #priority: 9675
   - ball_save_genesis_pit                   #priority: 9700
   - ball_save_the_fortress                  #priority: 9710
   - ball_save_the_fortress_4ball_multiball  #priority: 9750
@@ -149,7 +157,7 @@ flippers:
     activation_switch: s_right_flipper
     label: Right Main Flipper
     enable_events: flipper_on, right_flipper_normal_enable #ball_started
-    disable_events: flipper_off, right_flipper_stronger_enable, ball_will_end, #right_flipper_weak_2_ball_enable
+    disable_events: flipper_off, right_flipper_stronger_enable, ball_will_end #, #right_flipper_weak_2_ball_enable
     debug: true
   right_flipper_stronger:
     main_coil: c_flipper_right_main
@@ -365,7 +373,7 @@ coils:
     label: FP-DN-09
   c_auto_launch:
     number: 1-6
-    default_pulse_ms: 21
+    default_pulse_ms: 22
     default_pulse_power: 1
     label: FP-DN-0A
   c_trough_eject:
@@ -395,18 +403,18 @@ coils:
     label: FP-DN-0F
   c_middle_drop_target:
     number: 2-4
-    default_pulse_ms: 13
-    default_pulse_power: .95
+    default_pulse_ms: 14
+    default_pulse_power: .90
     label: FP-DN-10
   c_left_drop_target:
     number: 2-5
-    default_pulse_ms: 12
-    default_pulse_power: .95
+    default_pulse_ms: 14
+    default_pulse_power: .90
     label: FP-DN-11
   c_right_drop_target:
     number: 2-6
     default_pulse_ms: 13
-    default_pulse_power: .95
+    default_pulse_power: .94
     label: FP-DN-12
   c_right_lock_kickout:
     number: 2-7
@@ -454,7 +462,7 @@ ball_devices:
   bd_trough:
     ball_switches: s_trough1, s_trough2, s_trough3, s_trough4
     jam_switch: s_trough_jam
-    entrance_count_delay: 1s #1.5s
+    entrance_count_delay: 1.1s #1.5s
     eject_coil: c_trough_eject
     tags: trough, home, drain
     #confirm_eject_type: target
@@ -467,7 +475,7 @@ ball_devices:
   #  player_controlled_eject_event: tilt
   bd_plunger:
     ball_switches: s_plunger_lane
-    entrance_count_delay: .5s
+    entrance_count_delay: .4s
     eject_timeouts: 4s
     #tags: ball_add_live
     mechanical_eject: true

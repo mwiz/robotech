@@ -18,6 +18,10 @@ switches:
     label: FP-SWX-02
   s_tilt:
     number: 0-3
+    #ignore_window_ms: 1s
+    platform_settings:
+      debounce_open: 6
+      debounce_close: 6
     tags: tilt_warning
     label: FP-SWX-03
   s_hv_enabled:
@@ -28,11 +32,11 @@ switches:
 #BEGIN 3208 (1 0-31)
   s_left_orbit:
     number: 1-0
-    tags: playfield_active
+    tags: start_ball_save_timer # playfield_active
     label: FP-SWX-08
   s_right_orbit_rollover:
     number: 1-1
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-09
     ignore_window_ms: 200
   s_left_target:
@@ -61,55 +65,55 @@ switches:
     label: FP-SWX-12
   s_left_top_rubber:
     number: 1-5
-    tags: playfield_active
+    tags: #playfield_active
     label: FP-SWX-13
   s_left_middle_rubber:
     number: 1-6
-    tags: playfield_active
+    tags: #playfield_active
     label: FP-SWX-14
   s_left_bottom_rubber:
     number: 1-7
-    tags: playfield_active
+    tags: #playfield_active
     label: FP-SWX-15
   s_spinner:
     number: 1-8
     # platform_settings:
     #   debounce_close: 50
     #   debounce_open: 50
-    tags: playfield_active
+    tags: #playfield_active
     label: FP-SWX-16
   s_gate_top_right:
     number: 1-9
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-17
   s_left_top_rubber2:
     number: 1-10
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-18
   s_r_top_lane:
     number: 1-11
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-19
   s_o1_top_lane:
     number: 1-12
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-20
   s_top_target:
     number: 1-13
     ignore_window_ms: 300
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-21
   s_b_top_lane:
     number: 1-14
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-22
   s_o2_top_lane:
     number: 1-15
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-23
   s_back_ramp:
     number: 1-16
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-24
   s_right_top2_rubber:
     number: 1-17
@@ -117,7 +121,7 @@ switches:
     label: FP-SWX-25
   s_right_rollover:
     number: 1-18
-    tags: playfield_active
+    tags: #playfield_active
     label: FP-SWX-26
   s_wireform_ramp:
     number: 1-19
@@ -129,7 +133,7 @@ switches:
     # platform_settings:
     #   debounce_open: 15
     #   debounce_close: 15
-    tags: sdf, playfield_active
+    tags: sdf #, playfield_active
     label: FP-SWX-28
   s_d_target:
     number: 1-21
@@ -137,7 +141,7 @@ switches:
     # platform_settings:
     #   debounce_open: 10
     #   debounce_close: 10
-    tags: sdf, playfield_active
+    tags: sdf #, playfield_active
     label: FP-SWX-29
   s_f_target:
     number: 1-22
@@ -145,11 +149,11 @@ switches:
     # platform_settings:
     #   debounce_open: 15
     #   debounce_close: 15
-    tags: sdf, playfield_active
+    tags: sdf #, playfield_active
     label: FP-SWX-30
   s_lower_right_rubber:
     number: 1-23
-    tags: playfield_active
+    tags: start_ball_save_timer # playfield_active
     label: FP-SWX-31
   s_trough1:
     number: 1-24
@@ -175,11 +179,11 @@ switches:
     label: FP-SWX-37
   s_right_inlane_c:
     number: 1-30
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-38
   s_right_outlane_h:
     number: 1-31
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-39
 #BEGIN 16-16 (2 0-15)
   s_kickback_t:
@@ -195,11 +199,11 @@ switches:
     label: FP-SWX-41
   s_left_inlane_e:
     number: 2-2
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-42
   s_left_rollover:
     number: 2-3
-    tags: playfield_active
+    tags: start_ball_save_timer #playfield_active
     label: FP-SWX-43
   s_left_lock_kickout:
     number: 2-4
@@ -233,18 +237,22 @@ switches:
     label: FP-SWX-47
   s_bottom_l_pop_bumper:
     number: 2-8
+    ignore_window_ms: 50
     tags: pop_bumper
     label: FP-SWX-48
   s_top_l_pop_bumper:
     number: 2-9
+    ignore_window_ms: 50
     tags: pop_bumper
     label: FP-SWX-49
   s_bottom_r_pop_bumper:
     number: 2-10
+    ignore_window_ms: 50
     tags: pop_bumper
     label: FP-SWX-50
   s_top_r_pop_bumper:
     number: 2-11
+    ignore_window_ms: 50
     tags: pop_bumper
     label: FP-SWX-51
   s_up_down_ramp_switch:

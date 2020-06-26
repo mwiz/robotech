@@ -1,404 +1,398 @@
 #config_version=5
 # Robotech pinball machine
 
-
 lights:
   gi_string:
     number: gi_string_1
     platform: drivers
     label: "GI String"
   l_rorbit_rollover_1:
-    number: 0
+    number: 0-0
     type: grb
     label: led0
     tags: rorbit_rollover, playfield
   l_rorbit_roller_2:
-    number: 1
+    number: 0-1
     type: grb
     label: led1
     tags: rorbit_rollover, playfield
   l_rorbit_roller_3:
-    number: 2
+    number: 0-2
     type: grb
     label: led2
     tags: rorbit_rollover, playfield
   l_rorbit_roller_4:
-    number: 3
+    number: 0-3
     type: grb
     label: led3
     tags: rorbit_rollover, playfield
   l_rlock_roller_1:
-    number: 4
+    number: 0-4
     type: grb
     label: led4
     tags: rlock_rollover, playfield
   l_rlock_roller_2:
-    number: 5
+    number: 0-5
     type: grb
     label: led5
     tags: rlock_rollover, playfield
   l_rlock_roller_3:
-    number: 6
+    number: 0-6
     type: grb
     label: led6
     tags: rlock_rollover, playfield
   l_rlock_roller_4:
-    number: 7
+    number: 0-7
     type: grb
     label: led7
     tags: rlock_rollover, playfield
   l_rlock_arrow:
-    number: 8
+    number: 0-8
     type: grb
     label: led8
     tags: playfield
   l_rook_x:
-    number: 9
+    number: 0-9
     type: grb
     label: led9
     tags: playfield
   l_right_orbit_arrow:
-    number: 10
+    number: 0-10
     type: grb
     label: led10
     tags: playfield
   l_lancer_x:
-    number: 11
+    number: 0-11
     type: grb
     label: led11
     tags: playfield
   l_s_led:
-    number: 12
+    number: 0-12
     type: grb
     label: led12
     tags: sdf, playfield
   l_d_led:
-    number: 13
+    number: 0-13
     type: grb
     label: led13
     tags: sdf, playfield
   l_f_led:
-    number: 14
+    number: 0-14
     type: grb
     label: led14
     tags: sdf, playfield
   l_sdf_arrow_led:
-    number: 15
+    number: 0-15
     type: grb
     label: led15
     tags: playfield
   l_lunk_x:
-    number: 16
+    number: 0-16
     type: grb
     label: led16
     tags: playfield
   l_right_inlane_c:
-    number: 17
+    number: 0-17
     type: grb
     label: led17
     tags: lanes, playfield
   l_right_outlane_h:
-    number: 18
+    number: 0-18
     type: grb
     label: led18
     tags: lanes, playfield
   l_shoot_again:
-    number: 19
+    number: 0-19
     type: grb
     label: led19
     tags: playfield
   l_b1:
-    number: 20
+    number: 0-20
     type: grb
     label: led20
     tags: playfield
   l_annie:
-    number: 21
+    number: 0-21
     type: grb
     label: led21
     tags: playfield
   l_rand:
-    number: 22
+    number: 0-22
     type: grb
     label: led22
     tags: playfield
   l_b2:
-    number: 23
+    number: 0-23
     type: grb
     label: led23
     tags: playfield
   l_rook:
-    number: 24
+    number: 0-24
     type: grb
     label: led24
     tags: playfield
   l_lunk:
-    number: 25
+    number: 0-25
     type: grb
     label: led25
     tags: playfield
   l_3x:
-    number: 26
+    number: 0-26
     type: grb
     label: led26
     tags: playfield
   l_b3:
-    number: 27
+    number: 0-27
     type: grb
     label: led27
     tags: playfield
   l_b4:
-    number: 28
+    number: 0-28
     type: grb
     label: led28
     tags: playfield
   l_2x:
-    number: 29
+    number: 0-29
     type: grb
     label: led29
     tags: playfield
   l_b5:
-    number: 30
+    number: 0-30
     type: grb
     label: led30
     tags: playfield
   l_b6:
-    number: 31
+    number: 0-31
     type: grb
     label: led31
     tags: playfield
   l_b7:
-    number: 32
+    number: 0-32
     type: grb
     label: led32
     tags: playfield
   l_b8:
-    number: 33
+    number: 0-33
     type: grb
     label: led33
     tags: playfield
   l_b9:
-    number: 34
+    number: 0-34
     type: grb
     label: led34
     tags: playfield
   l_tech_1:
-    number: 35
+    number: 0-35
     type: grb
     label: led35
     tags: tech_hotdog, playfield
   l_tech_2:
-    number: 36
+    number: 0-36
     type: grb
     label: led36
     tags: tech_hotdog, playfield
   l_tech_3:
-    number: 37
+    number: 0-37
     type: grb
     label: led37
     tags: tech_hotdog, playfield
   l_tech_4:
-    number: 38
+    number: 0-38
     type: grb
     label: led38
     tags: tech_hotdog, playfield
   l_tech_5:
-    number: 39
+    number: 0-39
     type: grb
     label: led39
     tags: tech_hotdog, playfield
   l_mission_3:
-    number: 40
+    number: 0-40
     type: grb
     label: led40
     tags: playfield
   l_mission_4:
-    number: 41
+    number: 0-41
     type: grb
     label: led41
     tags: playfield
   l_b10:
-    number: 64
+    number: 1-0
     type: grb
-    label: led64
+    label: led42
     tags: playfield
   l_b20:
-    number: 65
+    number: 1-1
     type: grb
-    label: led65
+    label: led43
     tags: playfield
   l_t6:
-    number: 66
+    number: 1-2
     type: grb
-    label: led66
+    label: led44
     tags: invid_target, playfield
   l_t5:
-    number: 67
+    number: 1-3
     type: grb
-    label: led67
+    label: led45
     tags: invid_target, playfield
   l_t4:
-    number: 68
+    number: 1-4
     type: grb
-    label: led68
+    label: led46
     tags: invid_target, playfield
   l_t3:
-    number: 69
+    number: 1-5
     type: grb
-    label: led69
+    label: led47
     tags: invid_target, playfield
   l_t2:
-    number: 70
+    number: 1-6
     type: grb
-    label: led70
+    label: led48
     tags: invid_target, playfield
   l_t1:
-    number: 71
+    number: 1-7
     type: grb
-    label: led71
+    label: led49
     tags: invid_target, playfield
   l_robo_5:
-    number: 72
+    number: 1-8
     type: grb
     label: led50
     tags: robo_hotdog, playfield
   l_robo_4:
-    number: 73
+    number: 1-9
     type: grb
     label: led51
     tags: robo_hotdog, playfield
   l_robo_3:
-    number: 74
+    number: 1-10
     type: grb
     label: led52
     tags: robo_hotdog, playfield
   l_robo_2:
-    number: 75
+    number: 1-11
     type: grb
     label: led53
     tags: robo_hotdog, playfield
   l_robo_1:
-    number: 76
+    number: 1-12
     type: grb
     label: led54
     tags: robo_hotdog, playfield
   l_mission_1:
-    number: 77
+    number: 1-13
     type: grb
     label: led55
     tags: playfield
   l_mission_2:
-    number: 78
+    number: 1-14
     type: grb
     label: led56
     tags: playfield
   l_kickback:
-    number: 79
+    number: 1-15
     type: grb
     label: led57
     tags: playfield
   l_left_outlane_t:
-    number: 80
+    number: 1-16
     type: grb
     label: led58
     tags: lanes, playfield
   l_left_inlane_e:
-    number: 81
+    number: 1-17
     type: grb
     label: led59
     tags: lanes, playfield
   l_rand_x:
-    number: 82
+    number: 1-18
     type: grb
     label: led60
     tags: playfield
   l_llock_arrow:
-    number: 83
+    number: 1-19
     type: grb
     label: led61
     tags: playfield
   l_llock_rollover_1:
-    number: 84
+    number: 1-20
     type: grb
     label: led62
     tags: llock_rollover, playfield
   l_llock_rollover_2:
-    number: 85
+    number: 1-21
     type: grb
     label: led63
     tags: llock_rollover, playfield
   l_llock_rollover_3:
-    number: 86
+    number: 1-22
     type: grb
     label: led64
     tags: llock_rollover, playfield
   l_llock_rollover_4:
-    number: 87
+    number: 1-23
     type: grb
     label: led65
     tags: llock_rollover, playfield
   l_annie_x:
-    number: 88
+    number: 1-24
     type: grb
     label: led66
     tags: playfield
   l_annie_arrow:
-    number: 89
+    number: 1-25
     type: grb
     label: led67
     tags: playfield
   l_mode_start:
-    number: 90
+    number: 1-26
     type: grb
     label: led68
     tags: playfield
-  l_corg_arrow:
-    number: 91
-    type: grb
-    label: led691
-    tags: playfield
   l_left_orbit_arrow:
-    number: 92
+    number: 1-27
     type: grb
     label: led69
     tags: playfield
   l_r_light:
-    number: 93
+    number: 1-28
     type: grb
     label: led70
     tags: lanes, playfield
   l_o_light:
-    number: 94
+    number: 1-29
     type: grb
     label: led71
     tags: lanes, playfield
   l_b_light:
-    number: 95
+    number: 1-30
     type: grb
     label: led72
     tags: lanes, playfield
   l_top_target_light:
-    number: 96
+    number: 1-31
     type: rgb
     label: led73
     tags: playfield
   l_o2_light:
-    number: 97
+    number: 1-32
     type: grb
     label: led74
     tags: lanes, playfield
   l_50k:
-    number: 98
+    number: 1-33
     type: grb
     label: led75
     tags: playfield
   l_20k:
-    number: 99
+    number: 1-34
     type: grb
     label: led76
     tags: playfield
   l_10k:
-    number: 100
+    number: 1-35
     type: grb
     label: led77
     tags: playfield
@@ -413,32 +407,32 @@ lights:
   #   label: led2
   #   tags: flasher, playfield
   l_sdf_bank_flasher:
-    number: 128
+    number: 2-0
     type: rgb
     label: led3
     tags: flasher, sdf, playfield
   l_spinner_flasher:
-    number: 129
+    number: 2-1
     type: rgb
     label: led3
     tags: playfield
   l_lower_r_pop_bumper:
-    number: 130
+    number: 2-2
     type: rgb
     label: led4
     tags: flasher, playfield, pops
   l_upper_r_pop_bumper:
-    number: 131
+    number: 2-3
     type: rgb
     label: led5
     tags: flasher, playfield, pops
   l_upper_l_pop_bumper:
-    number: 132
+    number: 2-4
     type: rgb
     label: led6
     tags: flasher, playfield, pops
   l_lower_l_pop_bumper:
-    number: 133
+    number: 2-5
     type: rgb
     label: led7
     tags: flasher, playfield, pops
@@ -453,12 +447,12 @@ lights:
   #   label: led9
   #   tags: flasher, playfield
   l_kickback_flasher:
-    number: 134
+    number: 2-6
     type: rgb
     label: led8
     tags: flasher, playfield
   l_ramp_flasher:
-    number: 135
+    number: 2-7
     type: rgb
     label: led9
     tags: flasher, playfield

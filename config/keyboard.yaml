@@ -34,8 +34,8 @@ keyboard:
     event: invid_targets_skill_flashing_hit
   l:
     event: skill_shot_top_saucer_lunk_combo_hit
-  t:
-    event: start_skillshot_saucer_timer
+  # t:
+  #   event: start_skillshot_saucer_timer
   d:
     event: debug_dump_stats
   e:
@@ -66,3 +66,7 @@ keyboard:
     event: start_mode_shot_flashing_hit
   r:
     event: start_intro_corg_mode
+  t:
+    event: top_target_protoculture_shot_flashing_hit
+  k:
+    event: sdf_skill_group_flashing_hit
