@@ -3,7 +3,7 @@
 
 mode:
   start_events:
-    - stop_intro_big_apple_mode
+    - mode_big_apple_started
   stop_events:
     - ball_save_big_apple_multiball_disabled
   priority: 9760
