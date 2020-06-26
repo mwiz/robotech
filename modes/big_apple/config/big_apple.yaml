@@ -2,7 +2,7 @@
 
 mode:
   start_events:
-    - mode_intro_big_apple_started
+    - start_big_apple
   stop_events:
     - mode_end_big_apple_started
     - tilt
@@ -64,7 +64,7 @@ event_player:
   rook_protoculture_shot_flashing_hit{device.shots.rook_enforcer_shot.state_name != 'flashing'}:
     - collect_rook_protoculture_big_apple
   lancer_protoculture_shot_flashing_hit{device.shots.lancer_enforcer_shot.state_name != 'flashing'}:
-    - collect__lancer_protoculture_big_apple
+    - collect_lancer_protoculture_big_apple
   lunk_protoculture_shot_flashing_hit{device.shots.lunk_enforcer_shot.state_name != 'flashing'}:
     - collect_lunk_protoculture_big_apple
 
@@ -608,7 +608,7 @@ shots:
     show_tokens:
       leds: l_sdf_arrow_led
     advance_events:
-      - multiball_big_apple_multiball_started|1
+      - multiball_big_apple_multiball_started
     debug: true
   big_apple_invid1_shot:
     switch: s_left_target
@@ -710,6 +710,9 @@ variable_player:
     big_apple_start_mode_score:
       int: current_player.score
       action: set
+    start_default_ball_save_flag:
+      int: 0
+      action: set
   first_enforcer_rand_shot_killed:
     big_apple_score_value:
       int: (20000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
@@ -750,6 +753,9 @@ variable_player:
       int: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
       action: set
     score: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+    start_default_ball_save_flag:
+      int: 1
+      action: set
   big_apple_double_jackpot_shot_flashing_hit:
     jackpot_value:
       int: (40000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
@@ -773,7 +779,50 @@ variable_player:
       int: 1
       action: set
 
+show_player:
+  mode_big_apple_started:
+    flash_sdf_flasher_show:
+      key: start_big_apple_sdf_flasher_show
+      loops: 5
+      speed: 10
+  big_apple_jackpot_shot_flashing_hit:
+    mode_jackpot_show:
+      priority: 9996
+      loops: 0
+      speed: 15
+  big_apple_double_jackpot_shot_flashing_hit:
+    mode_double_jackpot_show:
+      priority: 9997
+      loops: 0
+      speed: 15
+  big_apple_triple_jackpot_shot_flashing_hit:
+    mode_triple_jackpot_show:
+      priority: 9998
+      loops: 0
+      speed: 15
+  big_apple_super_jackpot_shot_flashing_hit:
+    mode_super_jackpot_show:
+      priority: 9999
+      loops: 0
+      speed: 15
+
+
 sound_player:
+  collect_rand_protoculture_big_apple:
+    collect_protoculture:
+      action: play
+  collect_annie_protoculture_big_apple:
+    collect_protoculture:
+      action: play
+  collect_rook_protoculture_big_apple:
+    collect_protoculture:
+      action: play
+  collect_lancer_protoculture_big_apple:
+    collect_protoculture:
+      action: play
+  collect_lunk_protoculture_big_apple:
+    collect_protoculture:
+      action: play
   big_apple_jackpot_shot_flashing_hit:
     jackpot:
       action: play
