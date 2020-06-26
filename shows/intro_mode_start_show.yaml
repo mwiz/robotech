@@ -1,0 +1,295 @@
+#show_version=5
+- time: 0
+  lights:
+    l_shoot_again: 'FFFDFD'
+
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+
+- time: '+1'
+  lights:
+    l_b1: 'FFFDFD'
+
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+
+- time: '+1'
+  lights:
+    l_annie: 'FFFDFD'
+    l_b2: 'FFFDFD'
+    l_rook: 'FFFDFD'
+    l_shoot_again: '000000'
+
+- time: '+1'
+  lights:
+    l_b3: '050505'
+    l_left_outlane_t: 'FFFDFD'
+    l_lunk: 'FFFDFD'
+    l_rand: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_b1: '000000'
+    l_b3: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_2x: 'F7F5F5'
+    l_3x: '585858'
+    l_annie: '000000'
+    l_b2: '000000'
+    l_b4: 'FFFDFD'
+    l_kickback: '525151'
+    l_left_inlane_e: 'FFFDFD'
+    l_rook: 'F5F3F3'
+
+- time: '+1'
+  lights:
+    l_2x: 'FFFDFD'
+    l_3x: 'FFFDFD'
+    l_b3: 'F5F3F3'
+    l_kickback: 'FFFDFD'
+    l_left_outlane_t: '000000'
+    l_lunk: '000000'
+    l_rand: '000000'
+    l_right_outlane_h: 'FFFDFD'
+    l_rook: '000000'
+
+- time: '+1'
+  lights:
+    l_b3: '000000'
+    l_b5: 'FFFDFD'
+    l_kickback_flasher: 'FFFDFD'
+    l_mission_2: '696868'
+    #l_ramp_flasher: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_2x: '000000'
+    l_3x: '000000'
+    l_b4: '000000'
+    l_b6: 'FFFDFD'
+    l_kickback: '000000'
+    l_left_inlane_e: '000000'
+    l_llock_arrow: '020202'
+    l_llock_rollover_3: '8F8E8E'
+    l_llock_rollover_4: 'FFFDFD'
+    l_mission_2: 'FFFDFD'
+    l_mission_4: 'FFFDFD'
+    l_rand_x: 'FFFDFD'
+    l_right_inlane_c: 'FFFDFD'
+    l_robo_1: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_b5: '000000'
+    l_b7: '302F2F'
+    l_kickback_flasher: '292929'
+    l_llock_arrow: 'FFFDFD'
+    l_llock_rollover_1: 'FFFDFD'
+    l_llock_rollover_2: 'FFFDFD'
+    l_llock_rollover_3: 'FFFDFD'
+    l_mission_1: 'FFFDFD'
+    l_mission_3: '3E3D3D'
+    l_right_outlane_h: '000000'
+    l_robo_2: 'FFFDFD'
+    l_robo_3: 'CBCACA'
+
+- time: '+1'
+  lights:
+    l_b6: 'E4E2E2'
+    l_b7: 'FFFDFD'
+    l_kickback_flasher: '000000'
+    l_mission_2: '000000'
+    l_mission_3: 'FFFDFD'
+    l_mission_4: 'F0EEEE'
+    # l_ramp_flasher: '000000'
+    l_robo_1: '000000'
+    l_robo_3: 'FFFDFD'
+    l_robo_4: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_b6: '000000'
+    l_b8: 'FFFDFD'
+    l_left_orbit_arrow: '343333'
+    l_llock_arrow: '000000'
+    l_llock_rollover_1: '363535'
+    l_llock_rollover_3: '000000'
+    l_llock_rollover_4: '000000'
+    l_mission_1: '000000'
+    l_mission_4: '000000'
+    l_rand_x: '000000'
+    l_right_inlane_c: '000000'
+    l_robo_2: '000000'
+    l_robo_5: 'FFFDFD'
+    l_tech_4: 'FFFDFD'
+    l_tech_5: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_annie_arrow: 'FFFDFD'
+    l_annie_x: 'FFFDFD'
+    l_b7: '000000'
+    l_b9: 'FFFDFD'
+    l_left_orbit_arrow: 'FFFDFD'
+    l_llock_rollover_1: '000000'
+    l_llock_rollover_2: '000000'
+    l_lunk_x: 'FFFDFD'
+    l_mission_3: '000000'
+    l_mode_start: 'FFFDFD'
+    l_robo_3: '000000'
+    l_robo_4: '000000'
+    l_t1: 'A9A7A7'
+    l_tech_2: 'FFFDFD'
+    l_tech_3: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_b10: 'FFFDFD'
+    l_b8: '000000'
+    l_f_led: 'FFFDFD'
+    l_robo_5: '000000'
+    l_sdf_arrow_led: 'FFFDFD'
+    l_t1: 'FFFDFD'
+    l_tech_1: 'FFFDFD'
+    l_tech_4: '000000'
+    l_tech_5: '000000'
+
+- time: '+1'
+  lights:
+    l_annie_arrow: '000000'
+    l_annie_x: '000000'
+    l_b20: 'FFFDFD'
+    l_b9: '000000'
+    l_left_orbit_arrow: '000000'
+    l_lunk_x: '000000'
+    l_mode_start: '000000'
+    l_t1: '000000'
+    l_t2: 'FFFDFD'
+    l_t6: 'FFFDFD'
+    l_tech_2: '000000'
+    l_tech_3: '000000'
+
+- time: '+1'
+  lights:
+    l_b10: '000000'
+    l_d_led: 'FFFDFD'
+    l_f_led: '000000'
+    l_r_light: 'FFFDFD'
+    l_sdf_arrow_led: '000000'
+    l_t5: 'FFFDFD'
+    l_t6: '000000'
+    l_tech_1: '000000'
+
+- time: '+1'
+  lights:
+    l_b20: '000000'
+    l_lancer_x: 'FFFDFD'
+    l_s_led: 'FFFDFD'
+    l_t2: '000000'
+    l_t3: 'FFFDFD'
+    l_t4: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_d_led: '000000'
+    l_lower_l_pop_bumper: 'FFFDFD'
+    l_o_light: 'FFFDFD'
+    l_r_light: '000000'
+    l_right_orbit_arrow: 'D1D0D0'
+    l_sdf_bank_flasher: 'FFFDFD'
+    l_t3: '000000'
+    l_t5: '000000'
+    l_upper_l_pop_bumper: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_lancer_x: '000000'
+    l_lower_l_pop_bumper: '2E2E2E'
+    l_right_orbit_arrow: 'FFFDFD'
+    l_ramp_flasher: 'FFFDFD'
+    l_s_led: '000000'
+    l_t4: '000000'
+    l_upper_l_pop_bumper: '000000'
+
+- time: '+1'
+  lights:
+    l_10k: 'FFFDFD'
+    l_20k: 'FDFBFB'
+    l_50k: 'FAF8F8'
+    l_lower_l_pop_bumper: '000000'
+    l_o_light: '000000'
+    l_right_orbit_arrow: '000000'
+    l_sdf_bank_flasher: '000000'
+    l_spinner_flasher: 'FFFDFD'
+    l_top_target_light: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_10k: '111010'
+    l_20k: 'FFFDFD'
+    l_50k: 'FFFDFD'
+    l_spinner_flasher: '000000'
+    l_top_target_light: '6B6B6B'
+    l_ramp_flasher: '000000'
+
+- time: '+1'
+  lights:
+    l_10k: '000000'
+    l_20k: '000000'
+    l_50k: '000000'
+    l_b_light: 'FFFDFD'
+    l_lower_r_pop_bumper: 'FFFDFD'
+    l_rook_x: 'F5F3F3'
+    l_top_target_light: '000000'
+
+- time: '+1'
+  lights:
+    l_b_light: '000000'
+    l_lower_r_pop_bumper: '000000'
+    l_rlock_arrow: '828181'
+    l_rook_x: '000000'
+    l_rorbit_roller_2: '0E0E0E'
+    l_upper_r_pop_bumper: 'FFFDFD'
+
+- time: '+1'
+  lights:
+    l_o2_light: 'FFFDFD'
+    l_rlock_arrow: '000000'
+    l_rlock_roller_3: '313131'
+    l_rorbit_roller_2: '5D5C5C'
+    l_rorbit_roller_3: 'C0BEBE'
+    l_rorbit_roller_4: 'FFFDFD'
+    l_rorbit_rollover_1: 'FFFDFD'
+    l_upper_r_pop_bumper: '000000'
+
+- time: '+1'
+  lights:
+    l_o2_light: '000000'
+    l_rlock_roller_1: 'FFFDFD'
+    l_rlock_roller_3: '000000'
+    l_rlock_roller_4: 'FFFDFD'
+    l_rorbit_roller_2: '000000'
+    l_rorbit_roller_3: '000000'
+    l_rorbit_roller_4: '000000'
+    l_rorbit_rollover_1: '000000'
+
+- time: '+1'
+  lights:
+    l_rlock_roller_1: '000000'
+    l_rlock_roller_4: '000000'
+
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+
+#No change this frame - take another step
+#  lights:
+- time: '+1'
+
+#No change this frame - take another step
+#  lights:
+- time: '+1'

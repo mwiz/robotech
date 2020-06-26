@@ -11,7 +11,7 @@
 
 - duration: 125ms
   lights:
-    (leds): 2E0854 # (indigo) #9B30FF (purple1)
+    (leds): purple # FAST - 2E0854 # (indigo) #9B30FF (purple1)
 
 - duration: 125ms
   lights:
