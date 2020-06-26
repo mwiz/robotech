@@ -63,6 +63,33 @@ counters:
       - lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==4}
       - mode_corg_mode_starting
     debug: true
+  sdf_banks_complete_count:
+    count_events:
+      - sdf_bank_shots_hit_complete
+    starting_count: 0
+    direction: up
+    enable_events:
+      - mode_skill_shot_stopped
+      - mode_rand_mode_stopped
+      - mode_annie_mode_stopped
+      - mode_rook_mode_stopped
+      - mode_lunk_mode_stopped
+      - mode_genesis_pit_stopped
+      - mode_the_fortress_stopped
+      - mode_big_apple_stopped
+      - mode_corg_mode_stopped
+    disable_events:
+      - mode_skill_shot_starting
+      - invid_invasion_add_ball
+      - mode_rand_mode_starting
+      - mode_annie_mode_starting
+      - mode_rook_mode_starting
+      - mode_genesis_pit_starting
+      - mode_the_fortress_starting
+      - mode_big_apple_starting
+      - lunk_shot_group_lit_complete{device.counters.lunk_hit_counter.value==4}
+      - mode_corg_mode_starting
+    debug: true
 
 shot_groups:
   sdf_bank_shots:
@@ -77,6 +104,7 @@ shot_groups:
       - mode_rand_mode_stopped{mode.qualify_lunk.active}
       - mode_annie_mode_stopped{mode.qualify_lunk.active}
       - mode_rook_mode_stopped{mode.qualify_lunk.active}
+      - mode_lunk_mode_started
     reset_events:
       - mode_skill_shot_started
     restart_events:

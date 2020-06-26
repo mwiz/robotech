@@ -149,10 +149,10 @@ show_player:
         leds: l_spinner_flasher
 
 sound_player:
-  mode_spinner_level_3_started:
-    spinner_level_3:
-      action: play
-      priority: 9999
+  # mode_spinner_level_3_started:
+  #   spinner_level_3:
+  #     action: play
+  #     priority: 9999
   spinner_shot_hit:
     spinner_sound3:
       action: play

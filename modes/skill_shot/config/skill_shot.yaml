@@ -25,7 +25,7 @@ event_player:
   mode_skill_shot_started.2:
     - advance_top_lanes_targets
     - display_skill_shot_mode_time_display_widget
-    - start_check_drop_targets_up_timer
+    #- start_check_drop_targets_up_timer
   mode_skill_shot_will_stop{not mode.qualify_mystery.active}:
     - start_pre_qualify_mystery
   mode_skill_shot_stopping:
@@ -109,7 +109,7 @@ event_player:
 #-------------------------------------------------------------------------------
   timer_check_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
     - drop_reset_up
-    - enable_invid_targets|.5s
+    - enable_invid_targets
   timer_check_drop_targets_up_timer_complete.2{device.switches.s_left_drop_target.state == 0 and device.switches.s_middle_drop_target.state == 0 and device.switches.s_right_drop_target.state == 0}:
     - enable_invid_targets
   diverter_orbit_gate_deactivating:
@@ -184,9 +184,10 @@ timers:
     end_value: 1
     direction: up
     tick_interval: 1s
-    control_events:
-      - action: start
-        event: start_check_drop_targets_up_timer
+    start_running: true
+    # control_events:
+    #   - action: start
+    #     event: start_check_drop_targets_up_timer
 
 sequence_shots:
   super_skill_sequence:
@@ -452,7 +453,7 @@ shots:
     show_tokens:
       leds: l_t6
     advance_events:
-      - mode_skill_shot_started|1
+      - mode_skill_shot_started
   left_saucer_skill:
     switch: s_left_lock_kickout
     profile: saucer_targets_skill
@@ -475,17 +476,20 @@ shots:
       leds: l_s_led
     advance_events:
       - advance_sdf_targets
-      - s_skill_sdf_targets_skill_flashing_hit|1
+      - s_skill_sdf_targets_skill_flashing_hit
+      #- mode_skill_shot_stopped{device.shots.s_skill.state==2}
     # disable_events:
     #   - mode_skill_shot_started{device.shots.s_skill.state_name != 'flashing'}
+    debug: true
   d_skill:
     switch: s_d_target
     profile: sdf_targets_skill
     show_tokens:
       leds: l_d_led
     advance_events:
-      - s_skill_sdf_targets_skill_flashing_hit|1
-      - d_skill_sdf_targets_skill_flashing_hit|1
+      #- s_skill_sdf_targets_skill_flashing_hit
+      - mode_skill_shot_stopped{device.shots.s_skill.state_name=='hit'}
+      - d_skill_sdf_targets_skill_flashing_hit
     # disable_events:
     #   - mode_skill_shot_started{device.shots.d_skill.state_name != 'flashing'}
   f_skill:
@@ -494,7 +498,8 @@ shots:
     show_tokens:
       leds: l_f_led
     advance_events:
-      - d_skill_sdf_targets_skill_flashing_hit|1
+      - mode_skill_shot_stopped{device.shots.d_skill.state_name=='hit'}
+      #- d_skill_sdf_targets_skill_flashing_hit
     # disable_events:
     #   - mode_skill_shot_started{device.shots.f_skill.state_name != 'flashing'}
   top_target_10k_skill:
@@ -582,15 +587,15 @@ counters:
     count_complete_value: 3
     direction: up
     persist_state: true
-    reset_on_complete: true
+    reset_on_complete: false
     events_when_complete: three_skillshots_award_extra_ball
-    disable_on_complete: false
+    disable_on_complete: true #false
     # control_events:
     #   - event: top_target_skill_group_flashing_hit
     #     action: add
     #     value: 2
   top_lanes_skillshot_made:
-    count_events: top_lanes_skill_flashing_hit
+    count_events: top_lanes_skill_flashing_hit.10
     starting_count: 0
     #count_complete_value: 3
     direction: up
@@ -599,7 +604,7 @@ counters:
     #events_when_complete: award_extra_ball, award_50k_bonus
     debug: true
   invid_targets_skillshot_made:
-    count_events: invid_targets_skill_flashing_hit
+    count_events: invid_targets_skill_flashing_hit.10
     starting_count: 0
     #count_complete_value: 3
     direction: up
@@ -608,7 +613,7 @@ counters:
     #events_when_complete: award_extra_ball, award_50k_bonus
     debug: true
   saucer_skillshot_made:
-    count_events: saucer_skill_group_flashing_hit
+    count_events: saucer_skill_group_flashing_hit.10
     starting_count: 0
     #count_complete_value: 3
     direction: up
@@ -617,7 +622,7 @@ counters:
     #events_when_complete: award_extra_ball, award_50k_bonus
     debug: true
   sdf_skillshot_made:
-    count_events: sdf_skill_group_flashing_hit
+    count_events: sdf_skill_group_flashing_hit.10
     starting_count: 0
     #count_complete_value: 3
     direction: up
@@ -626,7 +631,7 @@ counters:
     #events_when_complete: award_extra_ball, award_50k_bonus
     debug: true
   top_target_shot_made:
-    count_events: top_target_skill_group_flashing_hit
+    count_events: top_target_skill_group_flashing_hit.10
     starting_count: 0
     #count_complete_value: 3
     direction: up
@@ -635,7 +640,7 @@ counters:
     #events_when_complete: award_extra_ball, award_50k_bonus
     debug: true
   super_skill_shot_made:
-    count_events: super_skill_shot_flashing_hit
+    count_events: super_skill_shot_flashing_hit.10
     starting_count: 0
     #count_complete_value: 3
     direction: up
@@ -703,6 +708,7 @@ variable_player:
     score: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.top_lanes_skillshot_made.value
     kickback_counter: 1
     skill_shots_made: 1
+    debug: true
   invid_targets_skill_flashing_hit:
     skill_shot_value:
       int: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.invid_targets_skillshot_made.value
@@ -710,6 +716,7 @@ variable_player:
     score: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.invid_targets_skillshot_made.value
     kickback_counter: 1
     skill_shots_made: 1
+    debug: true
   sdf_skill_group_flashing_hit:
     skill_shot_value:
       int: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.sdf_skillshot_made.value
@@ -717,6 +724,7 @@ variable_player:
     score: (5000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.sdf_skillshot_made.value
     kickback_counter: 1
     skill_shots_made: 1
+    debug: true
   super_skill_shot_flashing_hit:
     skill_shot_value:
       int: (20000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250)) * device.counters.super_skill_shot_made.value
@@ -747,6 +755,10 @@ variable_player:
     score: (25000 + (device.timers.skillshot_saucer_stop_timer.ticks * 250))* device.counters.shatz_skillshot_made.value
     kickback_counter: 1
     skill_shots_made: 1
+  mode_skill_shot_will_stop:
+    start_default_ball_save_flag:
+      int: 1
+      action: set
 
 
 state_machines:

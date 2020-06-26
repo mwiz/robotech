@@ -652,12 +652,14 @@ shots:
       - right_saucer_skill_saucer_targets_skill_flashing_hit
       - top_lanes_skill_flashing_hit
       - top_target_skill_group_flashing_hit
+      - sdf_skill_group_flashing_hit
       - shatz_skill_sequence_right_hit
       - shatz_skill_sequence_left_hit
     disable_events:
       - mode_skill_shot_combo_starting
     reset_events:
       - ramp_combo_shot_flashing_combo_hit
+    debug: true
   secret_combo_shot:
     switch: s_top_lock_kickout
     profile: combo_profile
