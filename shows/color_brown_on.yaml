@@ -2,5 +2,5 @@
 
 - time: 0
   lights:
-    (leds): 654321
+    (leds):  654321 #FAST RGB color - 654321
 - time: -1
