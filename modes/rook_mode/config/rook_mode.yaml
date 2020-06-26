@@ -8,6 +8,7 @@ mode:
     - timer_rook_mode_timer_complete
     - ball_will_end
     - rook_mode_success
+    - tilt
   stop_on_ball_end: true
   priority: 4700
 
@@ -584,3 +585,15 @@ sound_player:
     rook_mode_confrontation:
       action: play
       loops: -1
+  biker_1_hit:
+    SST_explosion:
+      action: play
+  biker_2_hit:
+    SST_explosion:
+      action: play
+  biker_3_hit:
+    SST_explosion:
+      action: play
+  biker_4_hit:
+    SST_explosion:
+      action: play

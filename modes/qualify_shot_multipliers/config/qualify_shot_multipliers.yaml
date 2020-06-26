@@ -12,7 +12,7 @@ mode:
     - mode_end_big_apple_started
     #- stop_qualify_shot_multipliers_mode
   restart_on_next_ball: false
-  priority: 6800
+  priority: 8380 # 6800
 
 event_player:
   qualify_shot_multipliers{not mode.invid_invasion.active}:

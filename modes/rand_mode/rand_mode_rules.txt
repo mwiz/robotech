@@ -1,4 +1,5 @@
 RULES
+-----
 
 This is a timed mode (60 seconds) and 2 ball multiball with ball saver.
 
@@ -22,6 +23,7 @@ Spinner hits adds seconds to timer (determined by spinner level)
 
 
 SCORING
+--------
 
 1st Invid destroyed - 20,000 * playfield_multiplier
 2nd Invid destroyed - 30,000 * playfield_multiplier

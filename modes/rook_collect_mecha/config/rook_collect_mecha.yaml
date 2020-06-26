@@ -56,6 +56,7 @@ shots:
       - mode_genesis_pit_stopped
       - mode_the_fortress_stopped
     disable_events:
+      - s_back_ramp_active
       - mode_skill_shot_started
       - mode_rand_mode_started
       - mode_annie_mode_started

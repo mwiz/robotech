@@ -25,13 +25,21 @@ event_player:
     - advance_rand_mode_invid_targets
   multiball_rand_mode_2_ball_started:
     - drop_reset_up
-    - play_rand_mode_music
+    #- play_rand_mode_music
   drop_target_left_drop_down:
     - drop_reset_up|1s
   drop_target_middle_drop_down:
     - drop_reset_up|1s
   drop_target_right_drop_down:
     - drop_reset_up|1s
+  rand_mode_orbits_shot_group_2_flashing_hit:
+    - drop_reset_up
+  rand_mode_invid_shot_group_1_flashing_hit{not mode.ball_save_rand_mode.active}:
+    - enable_rand_mode_invid_hit_ball_save
+  rand_mode_invid_shot_group_3_flashing_hit{not mode.ball_save_rand_mode.active}:
+    - enable_rand_mode_invid_hit_ball_save
+  enable_rand_mode_invid_hit_ball_save:
+    - start_rand_mode_invid_hit_ball_save_timer
   # timer_rand_mode_timer_started:
   #   logicblock_rand_mode_invid_shots_made_hit:
   #     count: 0
@@ -54,20 +62,22 @@ multiballs:
 ball_saves:
   rand_mode_invid_hit_ball_save:
     active_time: 3s
-    grace_period: 2s
+    grace_period: 3s
     enable_events:
-      - rand_mode_invid_shot_group_1_flashing_hit{not mode.ball_save_rand_mode.active}
-      - rand_mode_invid_shot_group_3_flashing_hit{not mode.ball_save_rand_mode.active}
-      - rand_mode_invid_shot_group_4_flashing_hit{not mode.ball_save_rand_mode.active}
+      - enable_rand_mode_invid_hit_ball_save
+      # - rand_mode_invid_shot_group_1_flashing_hit{not mode.ball_save_rand_mode.active}
+      # - rand_mode_invid_shot_group_3_flashing_hit{not mode.ball_save_rand_mode.active}
+      #- rand_mode_invid_shot_group_4_flashing_hit{not mode.ball_save_rand_mode.active}
     disable_events:
       - mode_rand_mode_started
       - ball_save_kickback_save_saving_ball
       - kickback_kickback_main_fired
       #- ball_save_rand_mode_invid_hit_ball_save_disabled
     timer_start_events:
-      - rand_mode_invid_shot_group_1_flashing_hit
-      - rand_mode_invid_shot_group_3_flashing_hit
-      - rand_mode_invid_shot_group_4_flashing_hit
+      - start_rand_mode_invid_hit_ball_save_timer
+      # - rand_mode_invid_shot_group_1_flashing_hit
+      # - rand_mode_invid_shot_group_3_flashing_hit
+      #- rand_mode_invid_shot_group_4_flashing_hit
     early_ball_save_events:
       - s_right_outlane_h_active
       - s_kickback_t_active{not mode.kickback.active}
@@ -75,6 +85,18 @@ ball_saves:
     balls_to_save: -1
     #restart_on_complete: yes
     debug: yes
+
+#light_player:
+  # rand_mode_invid_shot_group_1_flashing_hit:
+  #   gi_string:
+  #     color: off
+  # rand_mode_invid_shot_group_3_flashing_hit:
+  #   gi_string:
+  #     color: off
+  # turn_gi_on:
+  #   gi_string:
+  #     color: on
+
 
 show_player:
   ball_save_rand_mode_invid_hit_ball_save_timer_start:
@@ -84,10 +106,43 @@ show_player:
       speed: 20
       show_tokens:
         leds: l_shoot_again
-        color: 2E0854 #red
+        color: purple # 2E0854 #red
   ball_save_rand_mode_invid_hit_ball_save_disabled:
     rand_mode_invid_hit_ball_save_flash:
       action: stop
+  rand_mode_invid_shot_group_1_flashing_hit:
+    rand_mode_invid_shot_group_hit_show:
+      key: rand_mode_invid_shot_group_1_show
+      priority: 9995
+      loops: 0
+      speed: 30
+      #events_when_stopped: turn_gi_on
+    gi_flicker:
+      loops: 0
+      events_when_stopped: turn_gi_on
+  rand_mode_orbits_shot_group_2_flashing_hit{device.counters.orbit_shots_made_counter.value==0}:
+    red_swipe_down_show:
+      key: rand_mode_orbit_group_1_show
+      priority: 9996
+      loops: 0
+      speed: 10
+  rand_mode_invid_shot_group_3_flashing_hit:
+    rand_mode_invid_shot_group_hit_show:
+      key: rand_mode_invid_shot_group_3_show
+      priority: 9997
+      loops: 0
+      speed: 30
+      #events_when_stopped: turn_gi_on
+    gi_flicker:
+      loops: 0
+      events_when_stopped: turn_gi_on
+  orbits_complete:
+    red_swipe_down_show:
+      key: rand_mode_orbits_complete_show
+      priority: 9998
+      loops: 0
+      speed: 10
+
 
 widgets:
   rand_mode_time_display_widget:
@@ -389,7 +444,7 @@ shots:
   rand_mode_g1_invid3_shot3:
     switch: s_right_target
     profile: invid_targets_rand_mode
-    advance_events: advance_rand_mode_invid_targets|1
+    advance_events: advance_rand_mode_invid_targets
     show_tokens:
       leds: l_t3
   rand_mode_g2_left_orbit_shot1:
@@ -405,7 +460,7 @@ shots:
   rand_mode_g3_invid4_shot1:
     switch: s_left_drop_target
     profile: invid_targets_rand_mode
-    advance_events: timer_target_rotator_3_started|1
+    advance_events: timer_target_rotator_3_started
     show_tokens:
       leds: l_t4
   rand_mode_g3_invid5_shot2:
@@ -446,7 +501,7 @@ shots:
   rand_mode_g4_invid6_shot6:
     switch: s_right_drop_target
     profile: invid_targets_rand_mode
-    advance_events: timer_target_rotator_4_started|1
+    advance_events: timer_target_rotator_4_started
     show_tokens:
       leds: l_t6
 
@@ -499,8 +554,12 @@ variable_player:
       int: 30000 * current_player.pf_multiplier
       action: set
     score: 30000 * current_player.pf_multiplier
-  rand_mode_orbits_shot_group_2_flashing_hit:
-    score: 5000 * current_player.pf_multiplier
+  # rand_mode_orbits_shot_group_2_flashing_hit:
+  #   score: 5000 * current_player.pf_multiplier
+  rand_mode_g2_left_orbit_shot1_flashing_hit:
+    score: (5000 * current_player.annie_shot_multiplier) * current_player.pf_multiplier
+  rand_mode_g2_right_orbit_shot2_flashing_hit:
+    score: (5000 * current_player.lancer_shot_multiplier) * current_player.pf_multiplier
   rand_mode_invid_shot_group_4_flashing_hit:
     rand_mode_score_value:
       int: 50000 * current_player.pf_multiplier
@@ -517,3 +576,9 @@ sound_player:
     rand_mode_cyclone_theme:
       action: play
       loops: -1
+  ball_save_rand_mode_invid_hit_ball_save_saving_ball:
+    SST_keep_fighting:
+      action: play
+  multiball_rand_mode_2_ball_started:
+    rand_mode_start:
+      action: play

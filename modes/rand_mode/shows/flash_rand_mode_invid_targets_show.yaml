@@ -3,7 +3,7 @@
 
 - time: 0
   lights:
-    (leds): 2E0854
+    (leds): purple # FAST color - 2E0854
 
 - time: '+1'
   lights:
