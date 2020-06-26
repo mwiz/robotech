@@ -3,7 +3,8 @@
 
 mode:
   start_events:
-    - mode_end_invid_invasion_started
+    - mode_end_invid_invasion_started # {not mode.ball_save_invid_invasion_add_a_ball.active}
+    #- mode_ball_save_invid_invasion_add_a_ball_stopped
     - mode_end_genesis_pit_started
     - mode_end_the_fortress_started
     - mode_end_big_apple_started

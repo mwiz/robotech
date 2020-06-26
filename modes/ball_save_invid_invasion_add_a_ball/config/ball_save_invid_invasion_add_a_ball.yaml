@@ -7,8 +7,10 @@ mode:
       - invid_invasion_add_ball
     stop_events:
       - ball_save_invid_invasion_add_a_ball_disabled
-      - multiball_invid_invasion_quick_2_ball_ended
-      - mode_end_invid_invasion_started
+      #- multiball_invid_invasion_quick_2_ball_ended
+      #- mode_end_invid_invasion_started
+      #- mode_ball_save_end_modes_started
+      #- start_end_invid_invasion_mode
     priority: 9000
 
 #event_player:
@@ -18,13 +20,14 @@ mode:
 ball_saves:
   invid_invasion_add_a_ball:
     active_time: 10s
-    hurry_up_time: 5s
-    grace_period: 2s
+    # hurry_up_time: 5s
+    # grace_period: 2s
     enable_events: mode_ball_save_invid_invasion_add_a_ball_started #add_ball
-    #disable_events: multiball_invid_invasion_quick_2_ball_ended
+    #disable_events: mode_ball_save_end_modes_started #multiball_invid_invasion_quick_2_ball_ended
     timer_start_events:
       - mode_ball_save_invid_invasion_add_a_ball_started{not mode.ball_save_invid_invasion.active} # add_ball{not mode.ball_save_invid_invasion.active}
       - mode_ball_save_invid_invasion_stopped
+    #disable_events: start_end_invid_invasion_mode
     auto_launch: true
     balls_to_save: -1
     debug: true
@@ -38,19 +41,19 @@ show_player:
         leds: l_shoot_again
         color: blue
       action: play
-  ball_save_invid_invasion_add_a_ball_hurry_up:
-    invid_invasion_add_a_ball_save_flash:
-      action: stop
-    fast_flash_show:
-      key: invid_invasion_add_a_ball_hurry_up_flash
-      action: play
-      speed: 20
-      show_tokens:
-        leds: l_shoot_again
-        color: blue
-  ball_save_invid_invasion_add_a_ball_grace_period:
-    invid_invasion_add_a_ball_hurry_up_flash:
-      action: stop
+  # ball_save_invid_invasion_add_a_ball_hurry_up:
+  #   invid_invasion_add_a_ball_save_flash:
+  #     action: stop
+  #   fast_flash_show:
+  #     key: invid_invasion_add_a_ball_hurry_up_flash
+  #     action: play
+  #     speed: 20
+  #     show_tokens:
+  #       leds: l_shoot_again
+  #       color: blue
+  # ball_save_invid_invasion_add_a_ball_grace_period:
+  #   invid_invasion_add_a_ball_hurry_up_flash:
+  #     action: stop
 
 slides:
   add_a_ball_slide:
