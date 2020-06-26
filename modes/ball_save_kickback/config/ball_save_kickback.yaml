@@ -1,10 +1,14 @@
 #config_version=5
 
 mode:
-    start_events: kickback_kickback_main_fired
+    start_events: kickback_kickback_main_fired{not mode.ball_save_rand_mode.active}
     stop_events:
       - timer_kickback_grace_period_stopped
       - ball_save_kickback_save_saving_ball
+      - start_end_invid_invasion_mode
+      - start_end_genesis_pit_mode
+      - start_end_the_fortress_mode
+      - start_end_big_apple_mode
     restart_on_next_ball: false
     priority: 1850
 

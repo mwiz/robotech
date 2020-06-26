@@ -3,14 +3,14 @@
 
 mode:
     start_events:
-      - mode_lunk_mode_will_start
+      - mode_lunk_mode_started
     stop_events:
       - ball_save_lunk_mode_disabled
     priority: 9650
 
 ball_saves:
   lunk_mode:
-    active_time: 5s
+    active_time: 10s
     hurry_up_time: 5s
     grace_period: 3s
     enable_events: mode_ball_save_lunk_mode_started

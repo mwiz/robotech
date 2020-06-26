@@ -5,8 +5,8 @@ mode:
      # - qualify_invid_invasion{not mode.ball_save.active}
      # - qualify_genesis_pit{not mode.ball_save.active}
      # - qualify_the_fortress{not mode.ball_save.active}
-     - qualify_invid_invasion
-     - mode_qualified
+     - qualify_invid_invasion{not mode.ball_save_kickback.active}
+     - mode_qualified{not mode.ball_save_kickback.active}
    stop_events:
      - ball_save_qualify_mode_ball_save_disabled
      - mode_intro_invid_invasion_starting
@@ -14,6 +14,7 @@ mode:
      - mode_intro_the_fortress_starting
      - mode_intro_big_apple_starting
      - ball_save_kickback_save_saving_ball
+     - ball_save_default_saving_ball
      - kickback_kickback_main_fired
      #- ball_ending
    priority: 750
@@ -40,7 +41,8 @@ ball_saves:
     early_ball_save_events:
       - s_right_outlane_h_active
       - early_ball_save_left_outlane_qualify_mode
-    disable_events: stop_ball_save_qualify_mode
+    disable_events:
+      - ball_save_default_saving_ball #stop_ball_save_qualify_mode
     auto_launch: yes
     balls_to_save: 1
     debug: yes
