@@ -147,7 +147,7 @@ variable_player:
     score: 1000 * current_player.pf_multiplier
     super_pops_total: 1
 
-sound_player:
-  mode_pops_super_started:
-    super_pops:
-      action: play
+# sound_player:
+#   mode_pops_super_started:
+#     super_pops:
+#       action: play

@@ -19,11 +19,11 @@ event_player:
   player_pf_multiplier.2{current_player.pf_multiplier==3 and not mode.lancer_mode.active}:
     - stop_2x_show_marlene
     - play_3x_show_marlene
-  player_pf_multiplier.3{current_player.pf_multiplier==4 and mode.lancer_mode.active}:
-    - stop_3x_show_marlene
+  player_pf_multiplier.3{current_player.pf_multiplier==3 and mode.lancer_mode.active}:
+    - stop_2x_show_lancer
+    - play_3x_show_marlene
+  player_pf_multiplier.4{current_player.pf_multiplier==4 and mode.lancer_mode.active}:
     - play_2x_show_marlene
-  player_pf_multiplier.4{current_player.pf_multiplier==3 and mode.lancer_mode.active}:
-    - stop_2x_show_marlene
 
 
 variable_player:

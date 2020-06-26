@@ -159,7 +159,7 @@ variable_player:
   pops_shot_hit:
     score: 750 * current_player.pf_multiplier
 
-sound_player:
-  mode_pops_level_3_started:
-    pops_level_3:
-      action: play
+# sound_player:
+#   mode_pops_level_3_started:
+#     pops_level_3:
+#       action: play

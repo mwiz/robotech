@@ -136,3 +136,17 @@ show_player:
 variable_player:
   pops_shot_hit:
     score: 250 * current_player.pf_multiplier
+
+# sound_player:
+#   s_bottom_l_pop_bumper_active:
+#     SST_explosion:
+#       action: play
+#   s_bottom_r_pop_bumper_active:
+#     SST_explosion:
+#       action: play
+#   s_top_r_pop_bumper_active:
+#     SST_explosion:
+#       action: play
+#   s_top_l_pop_bumper_active:
+#     SST_explosion:
+#       action: play

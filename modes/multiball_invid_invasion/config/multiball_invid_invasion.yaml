@@ -1,13 +1,15 @@
 #config_version=5
 
 mode:
-  start_events: mode_invid_invasion_started
+  start_events:
+    - mode_invid_invasion_started
   stop_events:
-    - invid_invasion_add_ball
+    #- invid_invasion_add_ball #connented out 5.17
     #- timer_add_a_ball_grace_period_stopped
     #- ball_will_end
-    - mode_invid_invasion_stopping
-  stop_on_ball_end: true
+    #- mode_invid_invasion_stopping #connented out 5.17
+    - mode_end_invid_invasion_started
+  #stop_on_ball_end: false #true
   priority: 1000
 
 # event_player:
@@ -26,7 +28,8 @@ multiballs:
       - invid_invasion_add_ball
     ball_locks: bd_right_lock
     shoot_again: 0
-    disable_events: mode_end_invid_invasion_starting
+    #disable_events: mode_end_invid_invasion_starting #connented out 6.19
+    stop_events: start_end_invid_invasion_mode
     #add_a_ball_events: add_ball
     debug: true
 
@@ -50,7 +53,7 @@ counters:
     count_complete_value: 1
     events_when_complete:
       - invid_invasion_add_ball
-      - add_5s
+      #- add_5s
     enable_events: multiball_invid_invasion_quick_2_ball_started
     disable_on_complete: true
     debug: true
