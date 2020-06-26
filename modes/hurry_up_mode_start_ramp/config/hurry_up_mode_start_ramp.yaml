@@ -94,9 +94,9 @@ widget_player:
   mode_hurry_up_mode_start_ramp_stopping:
     hurry_up_mode_start_ramp_text_widget:
       action: remove
-      slide: base_slide
+      #slide: base_slide
       priority: 324
     hurry_up_mode_start_ramp_value_widget:
       action: remove
-      slide: base_slide
+      #slide: base_slide
       priority: 325

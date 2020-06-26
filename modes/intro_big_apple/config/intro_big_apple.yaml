@@ -4,60 +4,172 @@ mode:
   start_events:
     - start_intro_big_apple
   stop_events:
-    - stop_intro_big_apple_mode
+    - balldevice_bd_right_lock_ejecting_ball
+    #- mode_big_apple_started
   restart_on_next_ball: false
   priority: 8350
 
+event_player:
+  mode_intro_big_apple_started.1:
+    - drop_reset_up
+  mode_intro_big_apple_started.2{device.switches.s_up_down_ramp_switch.state == 1}:  
+    - ramp_up_active
+  flipper_cancel:
+    - start_big_apple
+  timer_intro_big_apple_timer_1_ball_complete{not mode.big_apple.active}:
+    - start_big_apple
+  timer_intro_big_apple_timer_more_than_1_ball_complete{not mode.big_apple.active}:
+    - start_big_apple
+  mode_big_apple_started: eject_bd_right_locked_ball:1s
+
 queue_event_player:
-  mode_intro_big_apple_started:
+  mode_intro_big_apple_started.1{game.balls_in_play == 1}:
     queue_event: my_queue_big_apple
-    events_when_finished: stop_intro_big_apple_mode
+    events_when_finished: start_big_apple
+  mode_intro_big_apple_started.2{game.balls_in_play > 1}:
+    queue_event: my_queue_big_apple_more_than_1_ball
+    events_when_finished: start_big_apple
 
 queue_relay_player:
   my_queue_big_apple:
     post: start_big_apple_intro
     wait_for: intro_big_apple_show_ended
-  balldevice_bd_trough_ball_eject_attempt:
-    post: wait_for_instructions
+  my_queue_big_apple_more_than_1_ball:
+    post: start_big_apple_intro_more_than_1_ball
     wait_for: intro_big_apple_show_ended
+  # balldevice_bd_trough_ball_eject_attempt:
+  #   post: wait_for_instructions
+  #   wait_for: intro_big_apple_show_ended
   balldevice_bd_right_lock_ball_eject_attempt:
     post: wait_for_instructions
-    wait_for: intro_big_apple_show_ended
+    wait_for: eject_bd_right_locked_ball #intro_big_apple_show_ended
 
-shows:
-  big_apple_intro:
-    - duration: 15
-      slides:
-        intro_big_apple_slide:
-          widgets:
-            - type: text
-              text: THE BIG APPLE !!!
-              color: white
-              font_size: 80
-              x: center
-              y: center+300
-            - type: video
-              video: intro_big_apple_video
-            - type: text
-              text: Collect Protoculture, Destroy The Hive, lits Jackpot
-              color: white
-              x: center
-              y: center-300
-              font_size: 50
+timers:
+  intro_big_apple_timer_1_ball:
+    debug: true
+    start_value: 15
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - action: start
+        event: start_big_apple_intro
+  intro_big_apple_timer_more_than_1_ball:
+    debug: true
+    start_value: 3
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - action: start
+        event: start_big_apple_intro_more_than_1_ball
+
+widgets:
+  black_screen_rectangle_widget:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 0
+      y: 0
+      z: 109
+      width: 1280
+      height: 720
+      color: black
+  intro_big_apple_text1_widget:
+    - type: text
+      text: THE BIG APPLE !!!
+      color: white
+      font_size: 80
+      x: center
+      y: center+300
+      z: 110
+  intro_big_apple_video_widget:
+    - type: video
+      video: intro_big_apple_video
+      z: 110
+  intro_big_apple_text2_widget:
+    - type: text
+      text: Collect Protoculture, Destroy The Hive, lits Jackpot
+      color: white
+      x: center
+      y: center-300
+      font_size: 50
+      z: 110
+  intro_big_apple_more_than_1_ball_widget:
+    - type: image
+      image: three_invid
+      z: 110
+
+widget_player:
+  play_big_apple_intro:
+    black_screen_rectangle_widget:
+      action: add
+    intro_big_apple_text1_widget:
+      action: add
+    intro_big_apple_video_widget:
+      action: add
+    intro_big_apple_text2_widget:
+      action: add
+  play_big_apple_intro_more_than_1_ball:
+    black_screen_rectangle_widget:
+      action: add
+    intro_big_apple_text1_widget:
+      action: add
+    intro_big_apple_more_than_1_ball_widget:
+      action: add
+    intro_big_apple_text2_widget:
+      action: add
+  start_big_apple.1{game.balls_in_play == 1}:
+    black_screen_rectangle_widget:
+      action: remove
+    intro_big_apple_text1_widget:
+      action: remove
+    intro_big_apple_video_widget:
+      action: remove
+    intro_big_apple_text2_widget:
+      action: remove
+  start_big_apple.2{game.balls_in_play == 2}:
+    black_screen_rectangle_widget:
+      action: remove
+    intro_big_apple_text1_widget:
+      action: remove
+    intro_big_apple_more_than_1_ball_widget:
+      action: remove
+    intro_big_apple_text2_widget:
+      action: remove
 
 light_player:
   mode_intro_big_apple_started{game.balls_in_play == 1}:
     gi_string:
       color: off
-    playfield:
-      color: off
-      priority: 9900
+  mode_big_apple_started{game.balls_in_play == 1}:
+    gi_string:
+      color: on
+    # playfield:
+    #   color: off
+    #   priority: 9900
 
 show_player:
-  start_big_apple_intro:
-    big_apple_intro:
+  mode_intro_big_apple_started.1{game.balls_in_play == 1}:
+    intro_mode_start_show:
       loops: 0
-      events_when_stopped: intro_big_apple_show_ended
-  flipper_cancel:
-    big_apple_intro:
+      speed: 30
+      priority: 9910
+      events_when_stopped:
+        - play_big_apple_intro
+    turn_off_playfield_lights:
+      key: big_apple_turn_off_playfield_lights
+      action: play
+      priority: 9900
+  mode_intro_big_apple_started.2{game.balls_in_play > 1}:
+    intro_mode_start_show:
+      loops: 0
+      speed: 30
+      priority: 9910
+      events_when_stopped:
+        - play_big_apple_intro_more_than_1_ball
+  mode_big_apple_started:
+    big_apple_turn_off_playfield_lights:
       action: stop
