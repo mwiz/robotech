@@ -2,7 +2,7 @@
 
 mode:
   start_events:
-    - mode_intro_the_fortress_started
+    - start_the_fortress
   stop_events:
     - mode_end_the_fortress_started
     - tilt
@@ -85,7 +85,7 @@ timers:
       #   event: start_switches_countdown
       #   value: 10
   the_fortress_top_lanes_target_rotator:
-    tick_interval: 1s
+    tick_interval: 2s
     control_events:
       - action: start
         event: start_top_lanes_rotator
@@ -529,6 +529,9 @@ variable_player:
     the_fortress_start_mode_score:
       int: current_player.score
       action: set
+    start_default_ball_save_flag:
+      int: 0
+      action: set
   the_fortress_ski_ramp_shot_flashing_hit:
     the_fortress_score_value:
       int: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
@@ -559,6 +562,9 @@ variable_player:
       int: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
       action: set
     score: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+    start_default_ball_save_flag:
+      int: 1
+      action: set
   the_fortress_double_jackpot_shot_flashing_hit:
     jackpot_value:
       int: (40000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
@@ -581,6 +587,46 @@ variable_player:
     mode_end_action_flag:
       int: 1
       action: set
+
+show_player:
+  mode_the_fortress_started:
+    flash_sdf_flasher_show:
+      key: start_the_fortress_sdf_flasher_show
+      loops: 5
+      speed: 10
+  the_fortress_ski_ramp_shot_flashing_hit:
+    red_swipe_down_show:
+      key: the_fortress_ski_ramp_shot_hit_show
+      priority: 9995
+      loops: 0
+      speed: 10
+  the_fortress_right_orbit_shot_flashing_hit:
+    red_swipe_down_show:
+      key: the_fortress_right_orbit_shot_hit_show
+      priority: 9996
+      loops: 0
+      speed: 10
+  the_fortress_jackpot_shot_flashing_hit:
+    mode_jackpot_show:
+      priority: 9996
+      loops: 0
+      speed: 15
+  the_fortress_double_jackpot_shot_flashing_hit:
+    mode_double_jackpot_show:
+      priority: 9997
+      loops: 0
+      speed: 15
+  the_fortress_triple_jackpot_shot_flashing_hit:
+    mode_triple_jackpot_show:
+      priority: 9998
+      loops: 0
+      speed: 15
+  the_fortress_super_jackpot_shot_flashing_hit:
+    mode_super_jackpot_show:
+      priority: 9999
+      loops: 0
+      speed: 15
+
 
 sound_player:
   the_fortress_jackpot_shot_flashing_hit:

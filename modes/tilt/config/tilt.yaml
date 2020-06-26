@@ -2,8 +2,8 @@
 tilt:
   warnings_to_tilt: 3
   #reset_warnings_events: ball_ended
-  multiple_hit_window: 300ms
-  settle_time: 5s
+  multiple_hit_window: 700ms
+  settle_time: 6s
   tilt_warnings_player_var: tilt_warnings
 
 slide_player:
@@ -28,7 +28,7 @@ slides:
     widgets:
       - type: text
         font_size: 100
-        text: DANGER!
+        text: WARNING!!
         color: red
   s_tilt_warning_2:
     #expire: 3s
@@ -37,12 +37,12 @@ slides:
         font_size: 100
         text: DANGER!!
         color: red
-        y: center+30
-      - type: text
-        font_size: 100
-        text: DANGER!!
-        color: red
-        y: center-30
+        # y: center+30
+      # - type: text
+      #   font_size: 100
+      #   text: DANGER!!
+      #   color: red
+      #   y: center-30
   s_tilt:
     widgets:
       - type: text
@@ -51,5 +51,9 @@ slides:
         color: red
 
 sound_player:
+  tilt_warning_1:
+    SST_warning
+  tilt_warning_2:
+    SST_danger
   tilt:
     afm_tilt

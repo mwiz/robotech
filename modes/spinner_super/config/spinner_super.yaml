@@ -86,10 +86,10 @@ show_player:
         leds: l_spinner_flasher
 
 sound_player:
-  mode_spinner_super_started:
-    super_spinner:
-      action: play
-      priority: 9999
+  # mode_spinner_super_started:
+  #   super_spinner:
+  #     action: play
+  #     priority: 9999
   spinner_shot_hit:
     spinner_sound4:
       action: play
