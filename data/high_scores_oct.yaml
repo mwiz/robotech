@@ -1,0 +1,41 @@
+combos_made:
+- !!python/tuple
+  - AAA
+  - 4
+invid_invasion_total:
+- !!python/tuple
+  - AAA
+  - 47
+- !!python/tuple
+  - AAA
+  - 42
+score:
+- !!python/tuple
+  - WIZ
+  - 2341780
+- !!python/tuple
+  - AAA
+  - 1996070
+- !!python/tuple
+  - AAA
+  - 1951240
+- !!python/tuple
+  - AAA
+  - 1885370
+- !!python/tuple
+  - AAA
+  - 1809000
+- !!python/tuple
+  - AAA
+  - 1640470
+- !!python/tuple
+  - AAA
+  - 1507960
+super_pops_total:
+- !!python/tuple
+  - WIZ
+  - 103
+super_spinner_total:
+- !!python/tuple
+  - WIZ
+  - 5

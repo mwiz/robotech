@@ -1,6 +1,57 @@
-last_game_num_players:
-  expire: !!null 'null'
+first_player_place:
+  expire: null
   value: 1
+forth_player_place:
+  expire: null
+  value: 1
+last_game_num_players:
+  expire: null
+  value: 2
+last_game_player1_combos_made:
+  expire: null
+  value: 0
+last_game_player1_protoculture:
+  expire: null
+  value: 0
+last_game_player1_skill_shots_made:
+  expire: null
+  value: 1
+last_game_player2_combos_made:
+  expire: null
+  value: 0
+last_game_player2_protoculture:
+  expire: null
+  value: 2
+last_game_player2_skill_shots_made:
+  expire: null
+  value: 0
+last_game_player3_combos_made:
+  expire: null
+  value: 0
+last_game_player3_protoculture:
+  expire: null
+  value: 0
+last_game_player3_skill_shots_made:
+  expire: null
+  value: 0
+last_game_player4_combos_made:
+  expire: null
+  value: 0
+last_game_player4_protoculture:
+  expire: null
+  value: 0
+last_game_player4_skill_shots_made:
+  expire: null
+  value: 0
 player1_score:
-  expire: !!null 'null'
-  value: 389790
+  expire: null
+  value: 271540
+player2_score:
+  expire: null
+  value: 21580
+second_player_place:
+  expire: null
+  value: 2
+third_player_place:
+  expire: null
+  value: 2

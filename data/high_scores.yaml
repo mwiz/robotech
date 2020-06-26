@@ -1,68 +1,72 @@
 annie_mode_total_points:
 - !!python/tuple
   - WIZ
-  - 100000
+  - 387660
 big_apple_mode_total_points:
 - !!python/tuple
   - WIZ
-  - 200000
+  - 399100
 combos_made:
 - !!python/tuple
-  - AAA
-  - 5
+  - WIZ
+  - 6
 genesis_pit_mode_total_points:
 - !!python/tuple
   - WIZ
-  - 200000
+  - 634290
 invid_invasion_mode_total_points:
 - !!python/tuple
   - WIZ
-  - 362170
+  - 867390
 invid_invasion_total:
 - !!python/tuple
-  - BMW
-  - 51
+  - WIZ
+  - 61
 - !!python/tuple
-  - AAA
-  - 50
+  - WIZ
+  - 60
 lunk_mode_total_points:
 - !!python/tuple
   - WIZ
-  - 100000
+  - 183820
+protoculture_count:
+- !!python/tuple
+  - WIZ
+  - 13
 rand_mode_total_points:
 - !!python/tuple
   - WIZ
-  - 333880
+  - 384720
 rook_mode_total_points:
 - !!python/tuple
   - WIZ
-  - 100000
+  - 511560
 score:
 - !!python/tuple
-  - A
-  - 1989200
+  - WIZ
+  - 3712110
 - !!python/tuple
   - WIZ
-  - 1957750
+  - 2669670
 - !!python/tuple
   - WIZ
-  - 1938120
-- !!python/tuple
-  - AAA
-  - 1905710
+  - 2614630
 - !!python/tuple
   - WIZ
-  - 1612050
+  - 2479350
 - !!python/tuple
-  - AAA
-  - 1597410
+  - WIZ
+  - 2452630
 - !!python/tuple
-  - AAA
-  - 1571950
+  - WIZ
+  - 2312940
+- !!python/tuple
+  - WIZ
+  - 2271170
 skill_shots_made:
 - !!python/tuple
   - WIZ
-  - 4
+  - 8
 super_pops_total:
 - !!python/tuple
   - A
@@ -70,8 +74,8 @@ super_pops_total:
 super_spinner_total:
 - !!python/tuple
   - WIZ
-  - 25
+  - 30
 the_fortress_mode_total_points:
 - !!python/tuple
   - WIZ
-  - 200000
+  - 246430
