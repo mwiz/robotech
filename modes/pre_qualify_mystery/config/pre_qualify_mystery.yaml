@@ -86,3 +86,9 @@ shots:
     show_tokens:
       leds: rorbit_rollover
     debug: true
+
+
+sound_player:
+  mystery_targets_rollover_group_flashing_hit:
+    collect2:
+      action: play

@@ -1,0 +1,130 @@
+#config_version=5
+
+mode:
+   start_events:
+     - enable_pre_corg_mode
+   stop_events:
+     - corg_mode_qualified
+   restart_on_next_ball: true
+   priority: 7950
+
+timers:
+  check_pre_qualify_corg_mode_drop_targets_up_timer:
+    debug: True
+    start_value: 0
+    end_value: 1
+    direction: up
+    tick_interval: 1s
+    control_events:
+      - action: start
+        event: start_check_pre_qualify_corg_mode_drop_targets_up_timer
+
+event_player:
+  mode_skill_shot_stopped:
+    - drop_reset_up
+    - start_check_pre_qualify_corg_mode_drop_targets_up_timer
+  mode_rand_mode_stopped:
+    - drop_reset_up
+    - start_check_pre_qualify_corg_mode_drop_targets_up_timer
+  mode_annie_mode_stopped:
+    - drop_reset_up
+    - start_check_pre_qualify_corg_mode_drop_targets_up_timer
+  mode_rook_mode_stopped:
+    - drop_reset_up
+    - start_check_pre_qualify_corg_mode_drop_targets_up_timer
+  mode_lunk_mode_stopped:
+    - drop_reset_up
+    - start_check_pre_qualify_corg_mode_drop_targets_up_timer
+  timer_check_pre_qualify_corg_mode_drop_targets_up_timer_complete.1{device.switches.s_left_drop_target.state == 1 or device.switches.s_middle_drop_target.state == 1 or device.switches.s_right_drop_target.state == 1}:
+    - drop_reset_up
+    - enable_pre_qualify_corg_mode_drop_targets|.5s
+  timer_check_pre_qualify_corg_mode_drop_targets_up_timer_complete.2{device.switches.s_left_drop_target.state == 0 and device.switches.s_middle_drop_target.state == 0 and device.switches.s_right_drop_target.state == 0}:
+    - enable_pre_qualify_corg_mode_drop_targets
+  pre_qualify_corg_mode_invid_target_group_hit_complete:
+    - start_hurry_up_mode_start_ramp
+    - corg_mode_qualified
+
+shot_groups:
+  pre_qualify_corg_mode_invid_target_group:
+    shots:
+      - pre_qualify_corg_mode_left_target
+      - pre_qualify_corg_mode_middle_target
+      - pre_qualify_corg_mode_right_target
+      - pre_qualify_corg_mode_left_drop
+      - pre_qualify_corg_mode_middle_drop
+      - pre_qualify_corg_mode_right_drop
+    enable_events:
+      - enable_pre_qualify_corg_mode_drop_targets
+      - enable_invid_targets
+    disable_events:
+      - mode_skill_shot_started
+      - mode_pre_qualify_corg_mode_started
+      - mode_intro_rand_mode_started
+      - mode_intro_annie_mode_started
+      - mode_intro_rook_mode_started
+      - mode_lunk_mode_started
+    debug: true
+
+# show_player:
+#   pre_qualify_corg_mode_invid_target_group_hit_complete:
+#     invid_targets_complete:
+#       show_tokens:
+#         color: red
+
+shot_profiles:
+  pre_qualify_corg_mode_invid_profile:
+    show_when_disabled: false
+    states:
+      - name: flashing
+        show: flash_enforcer_show
+        speed: 5
+        sync_ms: 1500
+      - name: hit
+        show: color_red_on
+
+shots:
+  pre_qualify_corg_mode_left_target:
+    switch: s_left_target
+    profile: pre_qualify_corg_mode_invid_profile
+    show_tokens:
+      leds: l_t1
+    debug: true
+  pre_qualify_corg_mode_middle_target:
+    switch: s_middle_target
+    profile: pre_qualify_corg_mode_invid_profile
+    show_tokens:
+      leds: l_t2
+    debug: true
+  pre_qualify_corg_mode_right_target:
+    switch: s_right_target
+    profile: pre_qualify_corg_mode_invid_profile
+    show_tokens:
+      leds: l_t3
+    debug: true
+  pre_qualify_corg_mode_left_drop:
+    switch: s_left_drop_target
+    profile: pre_qualify_corg_mode_invid_profile
+    show_tokens:
+      leds: l_t4
+    debug: true
+  pre_qualify_corg_mode_middle_drop:
+    switch: s_middle_drop_target
+    profile: pre_qualify_corg_mode_invid_profile
+    show_tokens:
+      leds: l_t5
+    debug: True
+  pre_qualify_corg_mode_right_drop:
+    switch: s_right_drop_target
+    profile: pre_qualify_corg_mode_invid_profile
+    show_tokens:
+      leds: l_t6
+    debug: true
+
+variable_player:
+  pre_qualify_corg_mode_invid_target_group_flashing_hit:
+    score: 1000 * current_player.pf_multiplier|block
+
+# sound_player:
+#   invid_target_group_flashing_hit:
+#     spinner_sound4:
+#       action: play
