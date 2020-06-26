@@ -1,0 +1,16 @@
+#show_version=5
+
+- time: 0
+  lights:
+    tech_hotdog: red
+    robo_hotdog: red
+    l_sdf_bank_flasher: red
+    l_kickback_flasher: red
+    l_b20: red
+- time: +100ms
+  lights:
+    tech_hotdog: 000000
+    robo_hotdog: 000000
+    l_sdf_bank_flasher: 000000
+    l_kickback_flasher: 000000
+    l_b20: 000000

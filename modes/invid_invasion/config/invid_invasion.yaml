@@ -1,10 +1,12 @@
 #config_version=5
 
 mode:
-   start_events: start_invid_invasion
+   start_events:
+     - start_invid_invasion
    stop_events:
      - tilt
      - mode_end_invid_invasion_started
+     #- mode_end_invid_invasion_stopped
    priority: 900
 
 event_player:
@@ -16,11 +18,14 @@ event_player:
     - drop_reset_up|1s
   drop_target_right_drop_down:
     - drop_reset_up|1s
-  mode_invid_invasion_started:
+  mode_invid_invasion_started.1:
     - orbit_gate_enable
-    - ramp_up_active{device.switches.s_up_down_ramp_switch.state == 1}|1s
+  mode_invid_invasion_started.2{device.switches.s_up_down_ramp_switch.state == 1}:
+    - ramp_up_active
   mode_invid_invasion_stopping:
     - orbit_gate_disable
+  # mode_invid_invasion_stopping.2{device.switches.s_up_down_ramp_switch.state == 1}:
+  #   - ramp_up_active
   # ball_save_fake_invid_invasion_ball_save_saving_ball:
   #   - start_end_invid_invasion_mode
   timer_check_ramp_timer_complete{device.switches.s_up_down_ramp_switch.state == 0}:
@@ -34,6 +39,7 @@ event_player:
     - start_end_invid_invasion_mode
   timer_invid_invasion_complete:
     - start_end_invid_invasion_mode
+
 
 # slides:
 #   ball_added_slide:
@@ -202,9 +208,9 @@ timers:
       - action: add
         event: spinner_shot_hit
         value: current_player.spinner_time_value
-      # - action: add
-      #   event: add_5s
-      #   value: 5
+      - action: add
+        event: invid_invasion_add_ball
+        value: 10
       - action: add
         event: s_back_ramp_active
         value: 2
@@ -385,36 +391,78 @@ variable_player:
     invid_invasion_start_mode_score:
       int: current_player.score
       action: set
+    start_default_ball_save_flag:
+      int: 0
+      action: set
   invid_invasion_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: (current_player.invid_invasion_total * 1000) * current_player.ramp_shot_multiplier #(current_player.invid_invasion_total * 1000)  * game.balls_in_play
+      int: ((current_player.invid_invasion_total * 1000) * current_player.ramp_shot_multiplier) * current_player.pf_multiplier #(current_player.invid_invasion_total * 1000)  * game.balls_in_play
       action: set
-    score: (current_player.invid_invasion_total * 1000) * current_player.ramp_shot_multiplier  #(current_player.invid_invasion_total * 1000) * game.balls_in_play
+    score: ((current_player.invid_invasion_total * 1000) * current_player.ramp_shot_multiplier) * current_player.pf_multiplier  #(current_player.invid_invasion_total * 1000) * game.balls_in_play
+    start_default_ball_save_flag:
+      int: 1
+      action: set
   invid_invasion_double_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: ((current_player.invid_invasion_total * 1000) * 2) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 2
+      int: (((current_player.invid_invasion_total * 1000) * 2) * current_player.ramp_shot_multiplier) * current_player.pf_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 2
       action: set
-    score: ((current_player.invid_invasion_total * 1000) * 2) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 2
+    score: (((current_player.invid_invasion_total * 1000) * 2) * current_player.ramp_shot_multiplier) * current_player.pf_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 2
   invid_invasion_triple_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: ((current_player.invid_invasion_total * 1000) * 3) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 3
+      int: (((current_player.invid_invasion_total * 1000) * 3) * current_player.ramp_shot_multiplier) * current_player.pf_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 3
       action: set
-    score: ((current_player.invid_invasion_total * 1000) * 3) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 3
+    score: (((current_player.invid_invasion_total * 1000) * 3) * current_player.ramp_shot_multiplier) * current_player.pf_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 3
   invid_invasion_super_jackpot_shot_flashing_hit:
     jackpot_value:
-      int: ((current_player.invid_invasion_total * 1000) * 4) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 4
+      int: (((current_player.invid_invasion_total * 1000) * 4) * current_player.ramp_shot_multiplier) * current_player.pf_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 4
       action: set
-    score: ((current_player.invid_invasion_total * 1000) * 4) * current_player.ramp_shot_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 4
+    score: (((current_player.invid_invasion_total * 1000) * 4) * current_player.ramp_shot_multiplier) * current_player.pf_multiplier #((current_player.invid_invasion_total * 1000) * game.balls_in_play) * 4
     mode_end_action_flag:
       int: 2
       action: set
   sw_invid_active:
     invid_invasion_total: 1
-    score: 1000
+    score: 1000 * current_player.pf_multiplier
   timer_invid_invasion_complete:
     mode_end_action_flag:
       int: 1
       action: set
+
+show_player:
+  mode_invid_invasion_started:
+    flash_sdf_flasher_show:
+      key: start_invid_invasion_sdf_flasher_show
+      loops: 5
+      speed: 10
+  sw_invid_active:
+    hotdog_flash_red:
+      loops: 0
+      speed: 1
+  invid_invasion_jackpot_shot_flashing_hit:
+    mode_jackpot_show:
+      priority: 9996
+      loops: 0
+      speed: 15
+  invid_invasion_double_jackpot_shot_flashing_hit:
+    mode_double_jackpot_show:
+      priority: 9997
+      loops: 0
+      speed: 15
+  invid_invasion_triple_jackpot_shot_flashing_hit:
+    mode_triple_jackpot_show:
+      priority: 9998
+      loops: 0
+      speed: 15
+  invid_invasion_super_jackpot_shot_flashing_hit:
+    mode_super_jackpot_show:
+      priority: 9999
+      loops: 0
+      speed: 15
+  invid_invasion_add_ball:
+    invid_invastion_add_a_ball_show:
+      priority: 9999
+      loops: 0
+      speed: 15
 
 sound_player:
   invid_invasion_success:
@@ -436,17 +484,24 @@ sound_player:
       action: play
       priority: 1000
   invid_invasion_super_jackpot_shot_flashing_hit:
-    super_jackpot:
+    afm_super_jackpot:
       action: play
       priority: 1000
   invid_invasion_add_a_ball_group_hit: sdf_target_sound
 
-
 ball_saves:
   fake_invid_invasion_ball_save:
     enable_events:
-      - multiball_invid_invasion_quick_2_ball_ended
-    disable_events: invid_invasion_add_ball #added to test
+      #- mode_invid_invasion_will_stop
+      #- multiball_invid_invasion_quick_2_ball_shoot_again_ended
+      #- timer_invid_invasion_complete
+      #- start_end_invid_invasion_mode
+      #- start_end_invid_invasion_mode
+      - multiball_invid_invasion_quick_2_ball_ended # {not mode.ball_save_invid_invasion_add_a_ball.active}
+      #- ball_save_invid_invasion_add_a_ball_disabled
+      #- mode_multiball_invid_invasion_stopped
+    disable_events:
+      - invid_invasion_add_ball #multiball_invid_invasion_quick_2_ball_started #invid_invasion_add_ball #added to test
     auto_launch: no
     balls_to_save: 1
     debug: yes

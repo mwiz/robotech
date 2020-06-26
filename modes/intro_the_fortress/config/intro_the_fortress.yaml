@@ -2,62 +2,174 @@
 
 mode:
   start_events:
-   - start_intro_the_fortress
+    - start_intro_the_fortress
   stop_events:
-    - stop_intro_the_fortress_mode
+    - balldevice_bd_right_lock_ejecting_ball
+    #- mode_the_fortress_started
   restart_on_next_ball: false
   priority: 8250
 
-queue_event_player:
+event_player:
   mode_intro_the_fortress_started:
+    - drop_reset_up
+  flipper_cancel:
+    - start_the_fortress
+  timer_intro_the_fortress_timer_complete:
+    - start_the_fortress
+  timer_intro_the_fortress_timer_1_ball_complete{not mode.the_fortress.active}:
+    - start_the_fortress
+  timer_intro_the_fortress_timer_more_than_1_ball_complete{not mode.the_fortress.active}:
+    - start_genesis_pit
+  mode_the_fortress_started: eject_bd_right_locked_ball:1s
+
+queue_event_player:
+  mode_intro_the_fortress_started.1{game.balls_in_play == 1}:
     queue_event: my_queue_the_fortress
-    events_when_finished: stop_intro_the_fortress_mode
+    events_when_finished: start_the_fortress
+  mode_intro_the_fortress_started.2{game.balls_in_play > 1}:
+    queue_event: my_queue_the_fortress_more_than_1_ball
+    events_when_finished: start_the_fortress
 
 queue_relay_player:
   my_queue_the_fortress:
     post: start_the_fortress_intro
     wait_for: intro_the_fortress_show_ended
-  balldevice_bd_trough_ball_eject_attempt:
-    post: wait_for_instructions
+  my_queue_the_fortress_more_than_1_ball:
+    post: start_the_fortress_intro_more_than_1_ball
     wait_for: intro_the_fortress_show_ended
+  # balldevice_bd_trough_ball_eject_attempt:
+  #   post: wait_for_instructions
+  #   wait_for: intro_the_fortress_show_ended
   balldevice_bd_right_lock_ball_eject_attempt:
     post: wait_for_instructions
-    wait_for: intro_the_fortress_show_ended
+    wait_for: eject_bd_right_locked_ball # intro_the_fortress_show_ended
 
-shows:
-  the_fortress_intro:
-    - duration: 24
-      slides:
-        intro_the_fortress_slide:
-          widgets:
-            - type: text
-              text: THE FORTRESS !!!
-              color: white
-              font_size: 80
-              x: center
-              y: center+300
-            - type: text
-              text: Destroy The Fortress, lits Jackpot
-              color: white
-              x: center
-              y: center-300
-              font_size: 50
-            - type: video
-              video: intro_the_fortress_video
+timers:
+  intro_the_fortress_timer_1_ball:
+    debug: true
+    start_value: 24
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - action: start
+        event: start_the_fortress_intro
+  intro_the_fortress_timer_more_than_1_ball:
+    debug: true
+    start_value: 3
+    end_value: 0
+    direction: down
+    tick_interval: 1s
+    start_running: false
+    control_events:
+      - action: start
+        event: start_the_fortress_intro_more_than_1_ball
+
+widgets:
+  black_screen_rectangle_widget:
+    - type: rectangle
+      anchor_x: left
+      anchor_y: bottom
+      x: 0
+      y: 0
+      z: 109
+      width: 1280
+      height: 720
+      color: black
+  intro_the_fortress_text1_widget:
+    - type: text
+      text: THE FORTRESS !!!
+      color: white
+      font_size: 80
+      x: center
+      y: center+300
+      z: 110
+  intro_the_fortress_video_widget:
+    - type: video
+      video: intro_the_fortress_video
+      z: 110
+  intro_the_fortress_text2_widget:
+    - type: text
+      text: Destroy The Fortress, lits Jackpot
+      color: white
+      x: center
+      y: center-300
+      font_size: 50
+      z: 110
+  intro_the_fortress_more_than_1_ball_widget:
+    - type: image
+      image: three_invid
+      z: 110
+
+widget_player:
+  play_the_fortress_intro:
+    black_screen_rectangle_widget:
+      action: add
+    intro_the_fortress_text1_widget:
+      action: add
+    intro_the_fortress_video_widget:
+      action: add
+    intro_the_fortress_text2_widget:
+      action: add
+  play_the_fortress_intro_more_than_1_ball:
+    black_screen_rectangle_widget:
+      action: add
+    intro_the_fortress_text1_widget:
+      action: add
+    intro_the_fortress_more_than_1_ball_widget:
+      action: add
+    intro_the_fortress_text2_widget:
+      action: add
+  start_the_fortress.1{game.balls_in_play == 1}:
+    black_screen_rectangle_widget:
+      action: remove
+    intro_the_fortress_text1_widget:
+      action: remove
+    intro_the_fortress_video_widget:
+      action: remove
+    intro_the_fortress_text2_widget:
+      action: remove
+  start_the_fortress.2{game.balls_in_play == 2}:
+    black_screen_rectangle_widget:
+      action: remove
+    intro_the_fortress_text1_widget:
+      action: remove
+    intro_the_fortress_more_than_1_ball_widget:
+      action: remove
+    intro_the_fortress_text2_widget:
+      action: remove
 
 light_player:
   mode_intro_the_fortress_started{game.balls_in_play == 1}:
     gi_string:
       color: off
-    playfield:
-      color: off
-      priority: 9900
+  mode_the_fortress_started{game.balls_in_play == 1}:
+    gi_string:
+      color: on
+    # playfield:
+    #   color: off
+    #   priority: 9900
 
 show_player:
-  start_the_fortress_intro:
-    the_fortress_intro:
+  mode_intro_the_fortress_started.1{game.balls_in_play == 1}:
+    intro_mode_start_show:
       loops: 0
-      events_when_stopped: intro_the_fortress_show_ended
-  flipper_cancel:
-    the_fortress_intro:
+      speed: 30
+      priority: 9910
+      events_when_stopped:
+        - play_the_fortress_intro
+    turn_off_playfield_lights:
+      key: the_fortress_turn_off_playfield_lights
+      action: play
+      priority: 9900
+  mode_intro_the_fortress_started.2{game.balls_in_play > 1}:
+    intro_mode_start_show:
+      loops: 0
+      speed: 30
+      priority: 9910
+      events_when_stopped:
+        - play_the_fortress_intro_more_than_1_ball
+  mode_the_fortress_started:
+    the_fortress_turn_off_playfield_lights:
       action: stop
