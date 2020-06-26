@@ -14,10 +14,19 @@ event_player:
     - play_attract_slide_1
   mode_attract_started.2{machine.last_game_num_players==2}:
     - play_attract_slide_2
+    - display_player1_place_2_players
+    - display_player2_place_2_players
   mode_attract_started.3{machine.last_game_num_players==3}:
     - play_attract_slide_3
+    - display_player1_place_3_players
+    - display_player2_place_3_players
+    - display_player3_place_3_players
   mode_attract_started.4{machine.last_game_num_players==4}:
     - play_attract_slide_4
+    - display_player1_place_4_players
+    - display_player2_place_4_players
+    - display_player3_place_4_players
+    - display_player4_place_4_players
   timer_attract_slide_cycle_timer_complete:
     - play_next_attract_slide_right
   play_attract_slide_1:
@@ -96,15 +105,18 @@ event_player:
     - play_next_attract_slide_right
   s_left_flipper_active:
     - play_next_attract_slide_left
-  flipper_cancel.1{machine.last_game_num_players==1}:
-    - play_attract_slide_1
-  flipper_cancel.2{machine.last_game_num_players==2}:
-    - play_attract_slide_2
-  flipper_cancel.3{machine.last_game_num_players==3}:
-    - play_attract_slide_3
-  flipper_cancel.4{machine.last_game_num_players==4}:
-    - play_attract_slide_4
-
+  both_flippers_one.1{machine.last_game_num_players==1}: play_attract_slide_1
+  both_flippers_one.2{machine.last_game_num_players==2}: play_attract_slide_2
+  both_flippers_one.3{machine.last_game_num_players==3}: play_attract_slide_3
+  both_flippers_one.4{machine.last_game_num_players==4}: play_attract_slide_4
+  # flipper_cancel.1{machine.last_game_num_players==1}:
+  #   - play_attract_slide_1
+  # flipper_cancel.2{machine.last_game_num_players==2}:
+  #   - play_attract_slide_2
+  # flipper_cancel.2{machine.last_game_num_players==3}:
+  #   - play_attract_slide_3
+  # flipper_cancel.3{machine.last_game_num_players==4}:
+  #   - play_attract_slide_4
 
 timers:
   attract_slide_cycle_timer:
@@ -129,75 +141,293 @@ slides:
     widgets:
       - type: text
         text: Player 1
-        y: center + 140
-        font_size: 80
+        x: center
+        y: center + 180
+        font_size: 100
+        color: white
       - type: text
         text: (machine|player1_score)
         number_grouping: true
         #min_digits: 2
-        font_size: 80
-        y: center + 80
+        font_size: 100
+        x: center
+        y: center + 100
+        color: red
+      - type: text
+        text: "Skill Shots:"
+        x: center - 20
+        y: center
+        font_size: 50
+        color: blue
+      - type: text
+        text: (machine|last_game_player1_skill_shots_made)
+        number_grouping: true
+        font_size: 50
+        x: center + 140
+        y: center
+      - type: text
+        text: "Combos:"
+        x: center - 20
+        y: center - 50
+        font_size: 50
+        color: yellow
+      - type: text
+        text: (machine|last_game_player1_combos_made)
+        number_grouping: true
+        font_size: 50
+        x: center + 100
+        y: center - 50
+      - type: text
+        text: "Protoculture:"
+        x: center - 10
+        y: center - 100
+        font_size: 50
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player1_protoculture)
+        number_grouping: true
+        font_size: 50
+        x: center + 170
+        y: center - 100
+################################################################################
+################################################################################
   attract_slide_2_players:
     widgets:
+      # - type: image
+      #   image: 1st
+      #   x: center - 460
+      #   y: center + 230
       - type: text
         text: Player 1
         #y: center + 140
         x: center - 300
-        y: center + 140
-        font_size: 80
+        y: center + 180
+        font_size: 100
+        color: white
       - type: text
         text: (machine|player1_score)
         number_grouping: true
         #min_digits: 2
-        font_size: 80
+        font_size: 100
         #y: center + 80
         x: center - 300
-        y: center + 80
+        y: center + 100
+        color: red
+      - type: text
+        text: "Skill Shots:"
+        x: center - 320
+        y: center
+        font_size: 50
+        color: blue
+      - type: text
+        text: (machine|last_game_player1_skill_shots_made)
+        number_grouping: true
+        font_size: 50
+        x: center - 160
+        y: center
+      - type: text
+        text: "Combos:"
+        x: center - 320
+        y: center - 60
+        font_size: 50
+        color: yellow
+      - type: text
+        text: (machine|last_game_player1_combos_made)
+        number_grouping: true
+        font_size: 50
+        x: center - 200
+        y: center - 60
+      - type: text
+        text: "Protoculture:"
+        x: center - 310
+        y: center - 120
+        font_size: 50
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player1_protoculture)
+        number_grouping: true
+        font_size: 50
+        x: center - 130
+        y: center - 120
+################################################################################
       - type: text
         text: Player 2
         #y: center + 140 #center - 80
         x: center + 250
-        y: center + 140
-        font_size: 80
+        y: center + 180
+        color: white
+        font_size: 100
       - type: text
         text: (machine|player2_score)
         number_grouping: true
         #min_digits: 2
-        font_size: 80
+        font_size: 100
         #y: center - 140
         x: center + 250
-        y: center + 80
+        y: center + 100
+        color: red
+      - type: text
+        text: "Skill Shots:"
+        x: center + 230
+        y: center
+        font_size: 50
+        color: blue
+      - type: text
+        text: (machine|last_game_player2_skill_shots_made)
+        number_grouping: true
+        font_size: 50
+        x: center + 390
+        y: center
+      - type: text
+        text: "Combos:"
+        x: center + 230
+        y: center - 60
+        font_size: 50
+        color: yellow
+      - type: text
+        text: (machine|last_game_player2_combos_made)
+        number_grouping: true
+        font_size: 50
+        x: center + 350
+        y: center - 60
+      - type: text
+        text: "Protoculture:"
+        x: center + 240
+        y: center - 120
+        font_size: 50
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player2_protoculture)
+        number_grouping: true
+        font_size: 50
+        x: center + 420
+        y: center - 120
+###############################################################################
+###############################################################################
   attract_slide_3_players:
     widgets:
+      # - type: line
+      #   points: 0, 350, 1400, 350
+      #   thickness: 2
+      #   color: red
       - type: text
         text: Player 1
         x: center - 300
-        y: center + 140
+        #y: center + 140
+        y: center + 240 #190
         font_size: 80
+        color: red
       - type: text
         text: (machine|player1_score)
         number_grouping: true
         #min_digits: 2
         font_size: 80
         x: center - 300
-        y: center + 80
+        #y: center + 80
+        y: center + 180 #130
+      - type: text
+        text: "Skill Shots:"
+        x: center - 320
+      #  y: center
+        y: center + 120 #70
+        font_size: 40
+        color: blue
+      - type: text
+        text: (machine|last_game_player1_skill_shots_made)
+        number_grouping: true
+        font_size: 40
+        x: center - 190
+        y: center + 120 #70
+        #y: center
+      - type: text
+        text: "Combos:"
+        x: center - 320
+        #y: center - 60
+        y: center + 90 #40
+        font_size: 40
+        color: yellow
+      - type: text
+        text: (machine|last_game_player1_combos_made)
+        number_grouping: true
+        font_size: 40
+        x: center - 225
+        #y: center - 60
+        y: center + 90 #40
+      - type: text
+        text: "Protoculture:"
+        x: center - 310
+        y: center + 60
+        font_size: 40
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player1_protoculture)
+        number_grouping: true
+        font_size: 40
+        x: center - 170
+        y: center + 60
+#################################################################################
       - type: text
         text: Player 2
         x: center + 250
-        y: center + 140
+        #y: center + 140
+        y: center + 240 #190
         font_size: 80
+        color: red
       - type: text
         text: (machine|player2_score)
         number_grouping: true
         #min_digits: 2
         font_size: 80
         x: center + 250
-        y: center + 80
+        #y: center + 80
+        y: center + 180 #130
+      - type: text
+        text: "Skill Shots:"
+        x: center + 230
+      #  y: center
+        y: center + 120 #70
+        font_size: 40
+        color: blue
+      - type: text
+        text: (machine|last_game_player2_skill_shots_made)
+        number_grouping: true
+        font_size: 40
+        x: center + 360
+        y: center + 120 #70
+        #y: center
+      - type: text
+        text: "Combos:"
+        x: center + 230
+        #y: center - 60
+        y: center + 90 #40
+        font_size: 40
+        color: yellow
+      - type: text
+        text: (machine|last_game_player2_combos_made)
+        number_grouping: true
+        font_size: 40
+        x: center + 325
+        #y: center - 60
+        y: center + 90 #40
+      - type: text
+        text: "Protoculture:"
+        x: center + 235
+        y: center + 60
+        font_size: 40
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player2_protoculture)
+        number_grouping: true
+        font_size: 40
+        x: center + 375
+        y: center + 60
+##################################################################################
       - type: text
         text: Player 3
         x: center - 300
         y: center - 80
         font_size: 80
+        color: red
       - type: text
         text: (machine|player3_score)
         number_grouping: true
@@ -205,37 +435,168 @@ slides:
         font_size: 80
         x: center - 300
         y: center - 140
+      - type: text
+        text: "Skill Shots:"
+        x: center - 320
+      #  y: center
+        y: center - 200
+        font_size: 40
+        color: blue
+      - type: text
+        text: (machine|last_game_player3_skill_shots_made)
+        number_grouping: true
+        font_size: 40
+        x: center - 190
+        y: center - 200
+        #y: center
+      - type: text
+        text: "Combos:"
+        x: center - 320
+        #y: center - 60
+        y: center - 230
+        font_size: 40
+        color: yellow
+      - type: text
+        text: (machine|last_game_player3_combos_made)
+        number_grouping: true
+        font_size: 40
+        x: center - 225
+        #y: center - 60
+        y: center - 230
+      - type: text
+        text: "Protoculture:"
+        x: center - 310
+        y: center - 260
+        font_size: 40
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player3_protoculture)
+        number_grouping: true
+        font_size: 40
+        x: center - 170
+        y: center - 260
+################################################################################
+################################################################################
   attract_slide_4_players:
     widgets:
       - type: text
         text: Player 1
         x: center - 300
-        y: center + 140
+        #y: center + 140
+        y: center + 240 #190
         font_size: 80
+        color: red
       - type: text
         text: (machine|player1_score)
         number_grouping: true
         #min_digits: 2
         font_size: 80
         x: center - 300
-        y: center + 80
+        #y: center + 80
+        y: center + 180 #130
+      - type: text
+        text: "Skill Shots:"
+        x: center - 320
+      #  y: center
+        y: center + 120 #70
+        font_size: 40
+        color: blue
+      - type: text
+        text: (machine|last_game_player1_skill_shots_made)
+        number_grouping: true
+        font_size: 40
+        x: center - 190
+        y: center + 120 #70
+        #y: center
+      - type: text
+        text: "Combos:"
+        x: center - 320
+        #y: center - 60
+        y: center + 90 #40
+        font_size: 40
+        color: yellow
+      - type: text
+        text: (machine|last_game_player1_combos_made)
+        number_grouping: true
+        font_size: 40
+        x: center - 225
+        #y: center - 60
+        y: center + 90 #40
+      - type: text
+        text: "Protoculture:"
+        x: center - 310
+        y: center + 60
+        font_size: 40
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player1_protoculture)
+        number_grouping: true
+        font_size: 40
+        x: center - 170
+        y: center + 60
+#################################################################################
       - type: text
         text: Player 2
         x: center + 250
-        y: center + 140
+        #y: center + 140
+        y: center + 240 #190
         font_size: 80
+        color: red
       - type: text
         text: (machine|player2_score)
         number_grouping: true
         #min_digits: 2
         font_size: 80
         x: center + 250
-        y: center + 80
+        #y: center + 80
+        y: center + 180 #130
+      - type: text
+        text: "Skill Shots:"
+        x: center + 230
+      #  y: center
+        y: center + 120 #70
+        font_size: 40
+        color: blue
+      - type: text
+        text: (machine|last_game_player2_skill_shots_made)
+        number_grouping: true
+        font_size: 40
+        x: center + 360
+        y: center + 120 #70
+        #y: center
+      - type: text
+        text: "Combos:"
+        x: center + 230
+        #y: center - 60
+        y: center + 90 #40
+        font_size: 40
+        color: yellow
+      - type: text
+        text: (machine|last_game_player2_combos_made)
+        number_grouping: true
+        font_size: 40
+        x: center + 325
+        #y: center - 60
+        y: center + 90 #40
+      - type: text
+        text: "Protoculture:"
+        x: center + 235
+        y: center + 60
+        font_size: 40
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player2_protoculture)
+        number_grouping: true
+        font_size: 40
+        x: center + 375
+        y: center + 60
+##################################################################################
       - type: text
         text: Player 3
         x: center - 300
         y: center - 80
         font_size: 80
+        color: red
       - type: text
         text: (machine|player3_score)
         number_grouping: true
@@ -244,10 +605,52 @@ slides:
         x: center - 300
         y: center - 140
       - type: text
+        text: "Skill Shots:"
+        x: center - 320
+      #  y: center
+        y: center - 200
+        font_size: 40
+        color: blue
+      - type: text
+        text: (machine|last_game_player3_skill_shots_made)
+        number_grouping: true
+        font_size: 40
+        x: center - 190
+        y: center - 200
+        #y: center
+      - type: text
+        text: "Combos:"
+        x: center - 320
+        #y: center - 60
+        y: center - 230
+        font_size: 40
+        color: yellow
+      - type: text
+        text: (machine|last_game_player3_combos_made)
+        number_grouping: true
+        font_size: 40
+        x: center - 225
+        #y: center - 60
+        y: center - 230
+      - type: text
+        text: "Protoculture:"
+        x: center - 310
+        y: center - 260
+        font_size: 40
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player3_protoculture)
+        number_grouping: true
+        font_size: 40
+        x: center - 170
+        y: center - 260
+################################################################################
+      - type: text
         text: Player 4
         x: center + 250
         y: center - 80
         font_size: 80
+        color: red
       - type: text
         text: (machine|player4_score)
         number_grouping: true
@@ -255,6 +658,44 @@ slides:
         font_size: 80
         x: center + 250
         y: center - 140
+      - type: text
+        text: "Skill Shots:"
+        x: center + 230
+        y: center - 200
+        font_size: 40
+        color: blue
+      - type: text
+        text: (machine|last_game_player4_skill_shots_made)
+        number_grouping: true
+        font_size: 40
+        x: center + 360
+        y: center - 200
+      - type: text
+        text: "Combos:"
+        x: center + 230
+        y: center - 230
+        font_size: 40
+        color: yellow
+      - type: text
+        text: (machine|last_game_player4_combos_made)
+        number_grouping: true
+        font_size: 40
+        x: center + 325
+        y: center - 230
+      - type: text
+        text: "Protoculture:"
+        x: center + 235
+        y: center - 260
+        font_size: 40
+        color: 2F4F4F
+      - type: text
+        text: (machine|last_game_player4_protoculture)
+        number_grouping: true
+        font_size: 40
+        x: center + 375
+        y: center - 260
+################################################################################
+################################################################################
   attract_all_high_scores:
     widgets:
       - type: text
@@ -376,25 +817,37 @@ slides:
   attract_combo_skillshot_champ_scores:
     widgets:
       - type: text
-        text: (machine|combos_made1_label)
-        y: center + 170
-        font_size: 70
-        color: yellow
-      - type: text
-        text: (machine|combos_made1_name) - (machine|combos_made1_value)
-        number_grouping: true
-        y: center + 120
-        font_size: 70
-        color: red
-      - type: text
         text: (machine|skill_shots_made1_label)
-        y: center - 70
+        y: center + 250
         font_size: 70
         color: blue
       - type: text
         text: (machine|skill_shots_made1_name) - (machine|skill_shots_made1_value)
         number_grouping: true
-        y: center - 120
+        y: center + 200
+        font_size: 70
+        color: red
+      - type: text
+        text: (machine|combos_made1_label)
+        y: center + 50
+        font_size: 70
+        color: yellow
+      - type: text
+        text: (machine|combos_made1_name) - (machine|combos_made1_value)
+        number_grouping: true
+        y: center
+        font_size: 70
+        color: red
+      - type: text
+        text: (machine|protoculture_count1_label)
+        y: center - 150
+        font_size: 70
+        color: 2F4F4F
+      - type: text
+        text: (machine|protoculture_count1_name) - (machine|protoculture_count1_value)
+        number_grouping: true
+        x: center
+        y: center - 200
         font_size: 70
         color: red
   attract_main_modes_high_scores:
@@ -414,7 +867,7 @@ slides:
         number_grouping: true
         y: center + 150
         font_size: 60
-        color: white
+        color: red # white
       - type: text
         text: (machine|genesis_pit_mode_total_points1_label)
         y: center + 70
@@ -425,7 +878,7 @@ slides:
         number_grouping: true
         y: center + 30
         font_size: 60
-        color: white
+        color: red #white
       - type: text
         text: (machine|the_fortress_mode_total_points1_label)
         y: center - 50
@@ -436,7 +889,7 @@ slides:
         number_grouping: true
         y: center - 90
         font_size: 60
-        color: white
+        color: red #white
       - type: text
         text: (machine|big_apple_mode_total_points1_label)
         y: center - 170
@@ -447,7 +900,7 @@ slides:
         number_grouping: true
         y: center - 210
         font_size: 60
-        color: white
+        color: red #white
   attract_team_modes_high_scores:
     widgets:
       - type: text
@@ -508,6 +961,297 @@ slides:
       - type: image
         image: mpf-logo-full
 
+widgets:
+  player1_first_place_2_players_widget:
+    - type: image
+      image: 1st_pinball
+      x: center - 480
+      y: center + 220
+  player1_second_place_2_players_widget:
+    - type: image
+      image: 2nd_pinball
+      x: center - 480
+      y: center + 220
+################################################################################
+  player2_first_place_2_players_widget:
+    - type: image
+      image: 1st_pinball
+      x: center + 60
+      y: center + 220
+  player2_second_place_2_players_widget:
+    - type: image
+      image: 2nd_pinball
+      x: center + 60
+      y: center + 220
+################################################################################
+################################################################################
+  player1_first_place_3_players_widget:
+    - type: image
+      image: 1st_pinball
+      x: center - 460
+      y: center + 270
+  player1_second_place_3_players_widget:
+    - type: image
+      image: 2nd_pinball
+      x: center - 460
+      y: center + 270
+  player1_third_place_3_players_widget:
+    - type: image
+      image: 3rd_pinball
+      x: center - 460
+      y: center + 270
+################################################################################
+  player2_first_place_3_players_widget:
+    - type: image
+      image: 1st_pinball
+      x: center + 80
+      y: center + 270
+  player2_second_place_3_players_widget:
+    - type: image
+      image: 2nd_pinball
+      x: center + 80
+      y: center + 270
+  player2_third_place_3_players_widget:
+    - type: image
+      image: 3rd_pinball
+      x: center + 80
+      y: center + 270
+################################################################################
+  player3_first_place_3_players_widget:
+    - type: image
+      image: 1st_pinball
+      x: center - 460
+      y: center - 50
+  player3_second_place_3_players_widget:
+    - type: image
+      image: 2nd_pinball
+      x: center - 460
+      y: center - 50
+  player3_third_place_3_players_widget:
+    - type: image
+      image: 3rd_pinball
+      x: center - 460
+      y: center - 50
+################################################################################
+################################################################################
+  player1_first_place_4_players_widget:
+    - type: image
+      image: 1st_pinball
+      x: center - 460
+      y: center + 270
+  player1_second_place_4_players_widget:
+    - type: image
+      image: 2nd_pinball
+      x: center - 460
+      y: center + 270
+  player1_third_place_4_players_widget:
+    - type: image
+      image: 3rd_pinball
+      x: center - 460
+      y: center + 270
+  player1_forth_place_4_players_widget:
+    - type: image
+      image: 4th_pinball
+      x: center - 460
+      y: center + 270
+################################################################################
+  player2_first_place_4_players_widget:
+    - type: image
+      image: 1st_pinball
+      x: center + 80
+      y: center + 270
+  player2_second_place_4_players_widget:
+    - type: image
+      image: 2nd_pinball
+      x: center + 80
+      y: center + 270
+  player2_third_place_4_players_widget:
+    - type: image
+      image: 3rd_pinball
+      x: center + 80
+      y: center + 270
+  player2_forth_place_4_players_widget:
+    - type: image
+      image: 4th_pinball
+      x: center + 80
+      y: center + 270
+################################################################################
+  player3_first_place_4_players_widget:
+    - type: image
+      image: 1st_pinball
+      x: center - 460
+      y: center - 50
+  player3_second_place_4_players_widget:
+    - type: image
+      image: 2nd_pinball
+      x: center - 460
+      y: center - 50
+  player3_third_place_4_players_widget:
+    - type: image
+      image: 3rd_pinball
+      x: center - 460
+      y: center - 50
+  player3_forth_place_4_players_widget:
+    - type: image
+      image: 4th_pinball
+      x: center - 460
+      y: center - 50
+################################################################################
+  player4_first_place_4_players_widget:
+    - type: image
+      image: 1st_pinball
+      x: center + 80
+      y: center - 50
+  player4_second_place_4_players_widget:
+    - type: image
+      image: 2nd_pinball
+      x: center + 80
+      y: center - 50
+  player4_third_place_4_players_widget:
+    - type: image
+      image: 3rd_pinball
+      x: center + 80
+      y: center - 50
+  player4_forth_place_4_players_widget:
+    - type: image
+      image: 4th_pinball
+      x: center + 80
+      y: center - 50
+################################################################################
+################################################################################
+
+
+widget_player:
+  display_player1_place_2_players.1{machine.first_player_place == 1}:
+    player1_first_place_2_players_widget:
+      slide: attract_slide_2_players
+      priority: 9
+  display_player1_place_2_players.2{machine.first_player_place == 2}:
+    player1_second_place_2_players_widget:
+      slide: attract_slide_2_players
+      priority: 9
+  display_player2_place_2_players.1{machine.second_player_place == 1}:
+    player2_first_place_2_players_widget:
+      slide: attract_slide_2_players
+      priority: 9
+  display_player2_place_2_players.2{machine.second_player_place == 2}:
+    player2_second_place_2_players_widget:
+      slide: attract_slide_2_players
+      priority: 9
+################################################################################
+################################################################################
+  display_player1_place_3_players.1{machine.first_player_place == 1}:
+    player1_first_place_3_players_widget:
+      slide: attract_slide_3_players
+      priority: 9
+  display_player1_place_3_players.2{machine.first_player_place == 2}:
+    player1_second_place_3_players_widget:
+      slide: attract_slide_3_players
+      priority: 9
+  display_player1_place_3_players.3{machine.first_player_place == 3}:
+    player1_third_place_3_players_widget:
+      slide: attract_slide_3_players
+      priority: 9
+#######################################################
+  display_player2_place_3_players.1{machine.second_player_place == 1}:
+    player2_first_place_3_players_widget:
+      slide: attract_slide_3_players
+      priority: 9
+  display_player2_place_3_players.2{machine.second_player_place == 2}:
+    player2_second_place_3_players_widget:
+      slide: attract_slide_3_players
+      priority: 9
+  display_player2_place_3_players.3{machine.second_player_place == 3}:
+    player2_third_place_3_players_widget:
+      slide: attract_slide_3_players
+      priority: 9
+########################################################
+  display_player3_place_3_players.1{machine.third_player_place == 1}:
+    player3_first_place_3_players_widget:
+      slide: attract_slide_3_players
+      priority: 9
+  display_player3_place_3_players.2{machine.third_player_place == 2}:
+    player3_second_place_3_players_widget:
+      slide: attract_slide_3_players
+      priority: 9
+  display_player3_place_3_players.3{machine.third_player_place == 3}:
+    player3_third_place_3_players_widget:
+      slide: attract_slide_3_players
+      priority: 9
+################################################################################
+################################################################################
+  display_player1_place_4_players.1{machine.first_player_place == 1}:
+    player1_first_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player1_place_4_players.2{machine.first_player_place == 2}:
+    player1_second_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player1_place_4_players.3{machine.first_player_place == 3}:
+    player1_third_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player1_place_4_players.4{machine.first_player_place == 4}:
+    player1_forth_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+#######################################################
+  display_player2_place_4_players.1{machine.second_player_place == 1}:
+    player2_first_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player2_place_4_players.2{machine.second_player_place == 2}:
+    player2_second_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player2_place_4_players.3{machine.second_player_place == 3}:
+    player2_third_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player2_place_4_players.4{machine.second_player_place == 4}:
+    player2_forth_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+########################################################
+  display_player3_place_4_players.1{machine.third_player_place == 1}:
+    player3_first_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player3_place_4_players.2{machine.third_player_place == 2}:
+    player3_second_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player3_place_4_players.3{machine.third_player_place == 3}:
+    player3_third_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player3_place_4_players.4{machine.third_player_place == 4}:
+    player3_third_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+#########################################################
+  display_player4_place_4_players.1{machine.forth_player_place == 1}:
+    player4_first_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player4_place_4_players.2{machine.forth_player_place == 2}:
+    player4_second_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player4_place_4_players.3{machine.forth_player_place == 3}:
+    player4_third_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+  display_player4_place_4_players.4{machine.forth_player_place == 4}:
+    player4_third_place_4_players_widget:
+      slide: attract_slide_4_players
+      priority: 9
+################################################################################
+################################################################################
+
+
+
 slide_player:
   play_attract_slide_1: attract_slide_1_player
   play_attract_slide_2: attract_slide_2_players
@@ -523,6 +1267,207 @@ slide_player:
   play_attract_slide_12: mpf_logo
 
 variable_player:
+  mode_attract_started.1{machine.last_game_num_players==2 and (machine.player1_score > machine.player2_score)}:
+    first_player_place:
+      action: set_machine
+      int: 1
+    second_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.2{machine.last_game_num_players==2 and (machine.player1_score < machine.player2_score)}:
+    first_player_place:
+      action: set_machine
+      int: 2
+    second_player_place:
+      action: set_machine
+      int: 1
+###################################################################################################################
+###################################################################################################################
+  mode_attract_started.3{machine.last_game_num_players==3 and (machine.player1_score > machine.player2_score and machine.player1_score > machine.player3_score)}:
+    first_player_place:
+      action: set_machine
+      int: 1
+  mode_attract_started.4{machine.last_game_num_players==3 and (machine.player1_score < machine.player2_score and machine.player1_score > machine.player3_score)}:
+    first_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.5{machine.last_game_num_players==3 and (machine.player1_score < machine.player3_score and machine.player1_score > machine.player2_score)}:
+    first_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.6{machine.last_game_num_players==3 and (machine.player1_score < machine.player2_score and machine.player1_score < machine.player3_score)}:
+    first_player_place:
+      action: set_machine
+      int: 3
+############################
+  mode_attract_started.7{machine.last_game_num_players==3 and (machine.player2_score > machine.player1_score and machine.player2_score > machine.player3_score)}:
+    second_player_place:
+      action: set_machine
+      int: 1
+  mode_attract_started.8{machine.last_game_num_players==3 and (machine.player2_score < machine.player1_score and machine.player2_score > machine.player3_score)}:
+    second_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.9{machine.last_game_num_players==3 and (machine.player2_score < machine.player3_score and machine.player2_score > machine.player1_score)}:
+    second_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.10{machine.last_game_num_players==3 and (machine.player2_score < machine.player1_score and machine.player2_score < machine.player3_score)}:
+    second_player_place:
+      action: set_machine
+      int: 3
+############################
+  mode_attract_started.11{machine.last_game_num_players==3 and (machine.player3_score > machine.player1_score and machine.player3_score > machine.player2_score)}:
+    third_player_place:
+      action: set_machine
+      int: 1
+  mode_attract_started.12{machine.last_game_num_players==3 and (machine.player3_score < machine.player1_score and machine.player3_score > machine.player2_score)}:
+    third_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.13{machine.last_game_num_players==3 and (machine.player3_score < machine.player2_score and machine.player3_score > machine.player1_score)}:
+    third_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.14{machine.last_game_num_players==3 and (machine.player3_score < machine.player1_score and machine.player3_score < machine.player2_score)}:
+    third_player_place:
+      action: set_machine
+      int: 3
+################################################################################
+################################################################################
+  mode_attract_started.15{machine.last_game_num_players==4 and (machine.player1_score > machine.player2_score and machine.player1_score > machine.player3_score and machine.player1_score > machine.player4_score)}:
+    first_player_place:
+      action: set_machine
+      int: 1
+  mode_attract_started.16{machine.last_game_num_players==4 and (machine.player1_score < machine.player2_score and machine.player1_score > machine.player3_score and machine.player1_score > machine.player4_score)}:
+    first_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.17{machine.last_game_num_players==4 and (machine.player1_score < machine.player3_score and machine.player1_score > machine.player2_score and machine.player1_score > machine.player4_score)}:
+    first_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.18{machine.last_game_num_players==4 and (machine.player1_score < machine.player4_score and machine.player1_score > machine.player2_score and machine.player1_score > machine.player3_score)}:
+    first_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.19{machine.last_game_num_players==4 and (machine.player1_score < machine.player2_score and machine.player1_score < machine.player3_score and machine.player1_score > machine.player4_score)}:
+    first_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.20{machine.last_game_num_players==4 and (machine.player1_score < machine.player3_score and machine.player1_score < machine.player4_score and machine.player1_score > machine.player2_score)}:
+    first_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.21{machine.last_game_num_players==4 and (machine.player1_score < machine.player2_score and machine.player1_score < machine.player4_score and machine.player1_score > machine.player3_score)}:
+    first_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.22{machine.last_game_num_players==4 and (machine.player1_score < machine.player2_score and machine.player1_score < machine.player3_score and machine.player1_score < machine.player4_score)}:
+    first_player_place:
+      action: set_machine
+      int: 4
+################################################################################
+  mode_attract_started.23{machine.last_game_num_players==4 and (machine.player2_score > machine.player1_score and machine.player2_score > machine.player3_score and machine.player2_score > machine.player4_score)}:
+    second_player_place:
+      action: set_machine
+      int: 1
+  mode_attract_started.24{machine.last_game_num_players==4 and (machine.player2_score < machine.player1_score and machine.player2_score > machine.player3_score and machine.player2_score > machine.player4_score)}:
+    second_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.25{machine.last_game_num_players==4 and (machine.player2_score < machine.player3_score and machine.player2_score > machine.player1_score and machine.player2_score > machine.player4_score)}:
+    second_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.26{machine.last_game_num_players==4 and (machine.player2_score < machine.player4_score and machine.player2_score > machine.player1_score and machine.player2_score > machine.player3_score)}:
+    second_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.27{machine.last_game_num_players==4 and (machine.player2_score < machine.player1_score and machine.player2_score < machine.player3_score and machine.player2_score > machine.player4_score)}:
+    second_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.28{machine.last_game_num_players==4 and (machine.player2_score < machine.player3_score and machine.player2_score < machine.player4_score and machine.player2_score > machine.player1_score)}:
+    second_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.29{machine.last_game_num_players==4 and (machine.player2_score < machine.player1_score and machine.player2_score < machine.player4_score and machine.player2_score > machine.player3_score)}:
+    second_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.30{machine.last_game_num_players==4 and (machine.player2_score < machine.player1_score and machine.player2_score < machine.player3_score and machine.player2_score < machine.player4_score)}:
+    second_player_place:
+      action: set_machine
+      int: 4
+################################################################################
+  mode_attract_started.31{machine.last_game_num_players==4 and (machine.player3_score > machine.player1_score and machine.player3_score > machine.player2_score and machine.player3_score > machine.player4_score)}:
+    third_player_place:
+      action: set_machine
+      int: 1
+  mode_attract_started.32{machine.last_game_num_players==4 and (machine.player3_score < machine.player1_score and machine.player3_score > machine.player2_score and machine.player3_score > machine.player4_score)}:
+    third_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.33{machine.last_game_num_players==4 and (machine.player3_score < machine.player2_score and machine.player3_score > machine.player1_score and machine.player3_score > machine.player4_score)}:
+    third_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.34{machine.last_game_num_players==4 and (machine.player3_score < machine.player4_score and machine.player3_score > machine.player1_score and machine.player3_score > machine.player2_score)}:
+    third_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.35{machine.last_game_num_players==4 and (machine.player3_score < machine.player1_score and machine.player3_score < machine.player2_score and machine.player3_score > machine.player4_score)}:
+    third_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.36{machine.last_game_num_players==4 and (machine.player3_score < machine.player2_score and machine.player3_score < machine.player4_score and machine.player3_score > machine.player1_score)}:
+    third_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.37{machine.last_game_num_players==4 and (machine.player3_score < machine.player1_score and machine.player3_score < machine.player4_score and machine.player3_score > machine.player2_score)}:
+    third_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.38{machine.last_game_num_players==4 and (machine.player3_score < machine.player1_score and machine.player3_score < machine.player2_score and machine.player3_score < machine.player4_score)}:
+    third_player_place:
+      action: set_machine
+      int: 4
+################################################################################
+  mode_attract_started.39{machine.last_game_num_players==4 and (machine.player4_score > machine.player1_score and machine.player4_score > machine.player2_score and machine.player4_score > machine.player3_score)}:
+    forth_player_place:
+      action: set_machine
+      int: 1
+  mode_attract_started.40{machine.last_game_num_players==4 and (machine.player4_score < machine.player1_score and machine.player4_score > machine.player2_score and machine.player4_score > machine.player3_score)}:
+    forth_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.41{machine.last_game_num_players==4 and (machine.player4_score < machine.player2_score and machine.player4_score > machine.player1_score and machine.player4_score > machine.player3_score)}:
+    forth_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.42{machine.last_game_num_players==4 and (machine.player4_score < machine.player3_score and machine.player4_score > machine.player1_score and machine.player4_score > machine.player2_score)}:
+    forth_player_place:
+      action: set_machine
+      int: 2
+  mode_attract_started.43{machine.last_game_num_players==4 and (machine.player4_score < machine.player1_score and machine.player4_score < machine.player2_score and machine.player4_score > machine.player3_score)}:
+    forth_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.44{machine.last_game_num_players==4 and (machine.player4_score < machine.player2_score and machine.player4_score < machine.player3_score and machine.player4_score > machine.player1_score)}:
+    forth_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.45{machine.last_game_num_players==4 and (machine.player4_score < machine.player1_score and machine.player4_score < machine.player3_score and machine.player4_score > machine.player2_score)}:
+    forth_player_place:
+      action: set_machine
+      int: 3
+  mode_attract_started.46{machine.last_game_num_players==4 and (machine.player4_score < machine.player1_score and machine.player4_score < machine.player2_score and machine.player4_score < machine.player3_score)}:
+    forth_player_place:
+      action: set_machine
+      int: 4
+################################################################################
+################################################################################
   play_attract_slide_1:
     current_attract_slide:
       action: set_machine
