@@ -1,0 +1,18 @@
+RULES
+-----
+
+This is a timed mode (60 seconds) and 2 ball multiball with ball saver.
+
+Shoot flashing brown shots to complete mode.
+
+Spinner hits adds seconds to timer (determined by spinner level)
+
+
+SCORING
+--------
+
+Each shot is worth 20,000
+
+Total = 100,000 points
+
+Bonus = ((time left * 500) * balls_in_play) * playfield_multiplier

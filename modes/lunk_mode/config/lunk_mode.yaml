@@ -200,6 +200,31 @@ variable_player:
     lunk_mode_total_points:
       int: current_player.score - current_player.lunk_mode_start_score
       action: set
+  lunk_mode_rand_shot_flashing_hit:
+    lunk_mode_score_value:
+      int: (20000 *  current_player.rand_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.rand_shot_multiplier) * current_player.pf_multiplier
+  lunk_mode_annie_shot_flashing_hit:
+    lunk_mode_score_value:
+      int: (20000 *  current_player.annie_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.annie_shot_multiplier) * current_player.pf_multiplier
+  lunk_mode_rook_shot_flashing_hit:
+    lunk_mode_score_value:
+      int: (20000 *  current_player.rook_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.rook_shot_multiplier) * current_player.pf_multiplier
+  lunk_mode_lancer_shot_flashing_hit:
+    lunk_mode_score_value:
+      int: (20000 *  current_player.lancer_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.lancer_shot_multiplier) * current_player.pf_multiplier
+  lunk_mode_lunk_shot_flashing_hit:
+    lunk_mode_score_value:
+      int: (20000 *  current_player.lunk_shot_multiplier) * current_player.pf_multiplier
+      action: set
+    score: (20000 * current_player.lunk_shot_multiplier) * current_player.pf_multiplier
   lunk_mode_success:
     lunk_mode_bonus_time_score:
       int: (device.timers.lunk_mode_timer.ticks * 500  * game.balls_in_play) * current_player.pf_multiplier
