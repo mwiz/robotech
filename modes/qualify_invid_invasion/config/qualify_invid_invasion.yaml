@@ -29,10 +29,10 @@ event_player:
   #   - normal_flippers_enable
   diverter_ramp_activating{not mode.skill_shot.active}:
     - display_shoot_ramp_widget
-  mode_corg_mode_stopped.1{device.switches.s_up_down_ramp_switch.state == 0}:
-    - ramp_down_active
-  mode_corg_mode_stopped.2{device.switches.s_up_down_ramp_switch.state == 1}:
-    - display_shoot_ramp_widget
+  # mode_corg_mode_stopped.1{device.switches.s_up_down_ramp_switch.state == 0}:
+  #   - ramp_down_active
+  # mode_corg_mode_stopped.2{device.switches.s_up_down_ramp_switch.state == 1}:
+  #   - display_shoot_ramp_widget
 
 shots:
   mode_start_invid_invasion_shot:
@@ -43,23 +43,23 @@ shots:
     enable_events:
       #- mode_qualify_invid_invasion_started
       - diverter_ramp_activating
-      - mode_corg_mode_stopped
+      # - mode_corg_mode_stopped
     disable_events:
       #- mode_qualify_invid_invasion_stopped
       - diverter_ramp_deactivating
-      - mode_intro_corg_mode_starting
+      # - mode_intro_corg_mode_starting
   pity_invid_invasion_shot:
     switch: s_right_lock_kickout
     profile: mode_start
     enable_events:
       - mode_skill_shot_stopped{current_player.ball==3}
       - mode_qualify_invid_invasion_started{current_player.ball==3}
-      - mode_corg_mode_stopped{current_player.ball==3}
+      # - mode_corg_mode_stopped{current_player.ball==3}
     disable_events:
       - mode_skill_shot_started
       - mode_qualify_invid_invasion_started{current_player.ball < 3}
       - s_back_ramp_active
-      - mode_intro_corg_mode_starting
+      # - mode_intro_corg_mode_starting
     show_tokens:
       leds: l_rlock_arrow
 

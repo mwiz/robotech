@@ -7,10 +7,14 @@ mode:
   priority: 6700
 
 event_player:
-  logicblock_protoculture_hit_counter_hit.1{count==5}:
+  logicblock_protoculture_hit_counter_hit{count==10}:
     - protoculture_award_extra_ball
-  logicblock_protoculture_hit_counter_hit.2{count==10}:
-    - enable_corg_mode
+  # counter_protoculture_hit_counter_hit{count==10):
+  #   - enable_corg_mode
+# corg mini wizard mode qualified when 10 protoculture cells collected and Rand and Rook collected
+  # logicblock_protoculture_hit_counter_hit.2{count==10 and (device.achievements.rand_mode_collect.state == "completed" or device.achievements.rand_mode_collect.state == "stopped")}:
+  #   - enable_corg_mode
+  #protoculture_collected: enable_corg_mode
 
 timers:
   disable_protoculture_timer:
@@ -77,21 +81,22 @@ shots:
 counters:
   protoculture_hit_counter:
     count_events:
-      - top_target_protoculture_shot_flashing_hit
+      - top_target_protoculture_shot_flashing_hit.10
       - collect_rand_protoculture_big_apple
       - collect_annie_protoculture_big_apple
       - collect_rook_protoculture_big_apple
       - collect_lancer_protoculture_big_apple
       - collect_lunk_protoculture_big_apple
-      - top_target_skill_group_flashing_hit
-      - top_target_skill_group_hit
-      - logicblock_top_target_shot_made_hit
+      - top_target_skill_group_flashing_hit  # collect 3 protoculture hits with skill shot
+      - top_target_skill_group_hit            # collect 3 protoculture hits with skill shot
+      - logicblock_top_target_shot_made_hit   # collect 3 protoculture hits with skill shot
     starting_count: 0
     direction: up
     count_complete_value: 20
     reset_on_complete: false
     events_when_complete: protoculture_collected
     persist_state: true
+    disable_on_complete: false
     # control_events:
     #   - event: top_target_skill_group_flashing_hit
     #     action: add
@@ -175,6 +180,9 @@ variable_player:
       int: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.lunk_shot_multiplier) * current_player.pf_multiplier
       action: set
     score: ((1000 + ((device.counters.protoculture_hit_counter.value-1) * 250)) * current_player.lunk_shot_multiplier) * current_player.pf_multiplier
+  counter_protoculture_hit_counter_hit:
+    protoculture_count: 1
+
 
 show_player:
   top_target_protoculture_shot_flashing_hit:
@@ -297,7 +305,8 @@ show_player:
   mode_protoculture_started.16{device.counters.protoculture_hit_counter.value==16}: P_16_show_on
   mode_protoculture_started.17{device.counters.protoculture_hit_counter.value==17}: P_17_show_on
   mode_protoculture_started.18{device.counters.protoculture_hit_counter.value==18}: P_18_show_on
-  mode_protoculture_started.19{device.counters.protoculture_hit_counter.value==19}: P_19_show_on
+  mode_protoculture_started.19{device.counters.protoculture_hit_counter.value>=19}: P_19_show_on
+  #mode_protoculture_started.19{device.counters.protoculture_hit_counter.value>=20}: P_20_show_on
   logicblock_protoculture_hit_counter_hit.1{count==1}: P_1_show_on
   logicblock_protoculture_hit_counter_hit.2{count==2}: P_2_show_on
   logicblock_protoculture_hit_counter_hit.3{count==3}: P_3_show_on
@@ -583,5 +592,10 @@ shows:
         l_b7: 2F4F4F
         l_b8: 2F4F4F
         l_b9: 2F4F4F
-        #l_b10: 2F4F4F
+        l_b10: 2F4F4F
     - time: -1
+
+sound_player:
+  top_target_protoculture_shot_flashing_hit:
+    collect_protoculture:
+      action: play

@@ -13,25 +13,14 @@ event_player:
     - start_intro_corg_mode
     - stop_qualify_corg_mode
 
-show_player:
-  mode_qualify_corg_mode_started{mode.qualify_mystery.active}:
-    flash_corg_and_mystery_show:
-      loops: -1
-      speed: 5
-      priority: 9850
-  qualify_mystery:
-    flash_corg_and_mystery_show:
-      loops: -1
-      speed: 5
-      priority: 9850
-
 
 shot_profiles:
   start_corg_mode_shot_profile:
     show_when_disabled: false
     states:
       - name: flashing
-        show: flash_blue_show
+        show: flash_corg_blue_show
+        sync_ms: 1500
         loops: -1
         speed: 5
       - name: hit
@@ -42,27 +31,18 @@ shots:
     switch: s_top_lock_kickout
     profile: start_corg_mode_shot_profile
     show_tokens:
-      leds: l_left_orbit_arrow
+      leds: l_corg_arrow
     enable_events:
       - mode_skill_shot_stopped
       - mode_rand_mode_stopped
       - mode_annie_mode_stopped
       - mode_rook_mode_stopped
-      - mode_lunk_modee_stopped
+      - mode_lunk_mode_stopped
       - achievement_corg_state_enabled
     disable_events:
       - mode_skill_shot_started
       - mode_intro_rand_mode_started
       - mode_intro_annie_mode_started
       - mode_intro_rook_mode_started
-      - mode_intro_lunk_mode_started
-      - mode_intro_invid_invasion_started
-      - mode_intro_genesis_pit_started
-      - mode_intro_big_apple_started
-      - mode_genesis_pit_started
-      - mode_the_fortress_started
-    # enable_events:
-    #   - mode_qualify_mystery_started
-    #   - enable_mystery_shot
-    # reset_events: mode_qualify_mystery_started
+      - mode_lunk_mode_started
     debug: true

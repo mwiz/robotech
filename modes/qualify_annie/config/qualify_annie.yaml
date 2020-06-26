@@ -281,11 +281,15 @@ variable_player:
     team_members_collected: 1
 
 sound_player:
-  annie_shot_group_flashing_annie_hit{device.counters.annie_hit_counter.value > (current_player.annie_start_count + 1)}:
-    qualify_annie_sounds
+  #annie_shot_group_flashing_annie_hit{device.counters.annie_hit_counter.value > (current_player.annie_start_count + 1)}:
+  counter_annie_hit_counter_hit{count > (current_player.annie_start_count + 1)}:
+    qualify_annie_sounds:
+      action: play
+      priority: 9999
   play_my_name_is_annie_sound:
     hey_my_name_is_annie:
       action: play
+      priority: 9999
 
 sound_pools:
   qualify_annie_sounds:
