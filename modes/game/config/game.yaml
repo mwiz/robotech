@@ -564,3 +564,45 @@ widgets:
       # anchor_y: bottom
       color: red
       number_grouping: true
+
+variable_player:
+  game_will_end:
+    last_game_num_players:
+      action: set_machine
+      int: game.num_players
+    last_game_player1_combos_made:
+      action: set_machine
+      int: players[0].combos_made
+    last_game_player2_combos_made:
+      action: set_machine
+      int: players[1].combos_made
+    last_game_player3_combos_made:
+      action: set_machine
+      int: players[3].combos_made
+    last_game_player4_combos_made:
+      action: set_machine
+      int: players[3].combos_made
+    last_game_player1_skill_shots_made:
+      action: set_machine
+      int: players[0].skill_shots_made
+    last_game_player2_skill_shots_made:
+      action: set_machine
+      int: players[1].skill_shots_made
+    last_game_player3_skill_shots_made:
+      action: set_machine
+      int: players[2].skill_shots_made
+    last_game_player4_skill_shots_made:
+      action: set_machine
+      int: players[3].skill_shots_made
+    last_game_player1_protoculture:
+      action: set_machine
+      int: players[0].protoculture_count
+    last_game_player2_protoculture:
+      action: set_machine
+      int: players[1].protoculture_count
+    last_game_player3_protoculture:
+      action: set_machine
+      int: players[2].protoculture_count
+    last_game_player4_protoculture:
+      action: set_machine
+      int: players[3].protoculture_count

@@ -2,7 +2,8 @@
 
 mode:
   start_events:
-    - mode_intro_genesis_pit_started
+    - start_genesis_pit
+    #- mode_intro_genesis_pit_started
   stop_events:
     - mode_end_genesis_pit_started
     - tilt
@@ -24,7 +25,7 @@ event_player:
       count: 0
   mode_genesis_pit_started.5:
     - display_genesis_pit_mode_widgets
-    - advance_genesis_pit_croc_targets
+    - advance_genesis_pit_croc_targets|1s
     - drop_reset_up
     - ramp_up_active
     - start_check_genesis_pit_drop_targets_up_timer
@@ -65,7 +66,8 @@ multiballs:
     ball_count: 3
     ball_count_type: total
     start_or_add_a_ball_events:
-      - stop_intro_genesis_pit_mode
+      - mode_genesis_pit_started
+      #- stop_intro_genesis_pit_mode
     #ball_locks: bd_right_lock
     shoot_again: 0
     debug: true
@@ -101,7 +103,7 @@ timers:
         value: 5
   croc_target_rotator:
     start_running: false #true
-    tick_interval: 1s
+    tick_interval: 2s
     control_events:
       - action: start
         event: mode_intro_genesis_pit_stopped
@@ -109,7 +111,7 @@ timers:
         event: genesis_pit_croc_group_flashing_hit
   check_genesis_pit_drop_targets_up_timer:
     debug: True
-    start_value: 2
+    start_value: 1
     end_value: 0
     direction: down
     tick_interval: 1s
@@ -498,6 +500,7 @@ shot_groups:
     enable_events:
       - enable_genesis_pit_pterodactyl_targets
     disable_events:
+      - mode_genesis_pit_started
       - genesis_pit_pterodactyl_group_hit_complete
   left_invid_targets_genesis_pit:
     shots:
@@ -535,7 +538,7 @@ shots:
     profile: genesis_pit_croc
     show_tokens:
       leds: l_s_led
-    advance_events: advance_genesis_pit_croc_targets|1
+    advance_events: advance_genesis_pit_croc_targets
   genesis_pit_d_target_shot:
     switch: s_d_target
     profile: genesis_pit_croc
@@ -611,7 +614,7 @@ shots:
     profile: left_invid_targets_genesis_pit_mode
     show_tokens:
       leds: l_t3
-    advance_events: timer_left_invid_target_rotator_genesis_pit_started|1
+    advance_events: timer_left_invid_target_rotator_genesis_pit_started
     debug: true
   right_invid_left_drop_genesis_pit:
     switch: s_left_drop_target
@@ -628,7 +631,7 @@ shots:
     profile: right_invid_targets_genesis_pit_mode
     show_tokens:
       leds: l_t6
-    advance_events: timer_right_invid_drops_rotator_genesis_pit_started|1
+    advance_events: timer_right_invid_drops_rotator_genesis_pit_started
   genesis_pit_jackpot_shot:
     hit_events: ramp_wireform_sequence_hit
     profile: genesis_pit_jackpot
@@ -670,6 +673,9 @@ variable_player:
     genesis_pit_start_mode_score:
       int: current_player.score
       action: set
+    start_default_ball_save_flag:
+      int: 0
+      action: set
   genesis_pit_croc_group_flashing_hit:
     genesis_pit_score_value:
       int: 20000 * current_player.pf_multiplier
@@ -700,6 +706,9 @@ variable_player:
       int: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
       action: set
     score: (20000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
+    start_default_ball_save_flag:
+      int: 1
+      action: set
   genesis_pit_double_jackpot_shot_flashing_hit:
     jackpot_value:
       int: (40000 * current_player.ramp_shot_multiplier) * current_player.pf_multiplier
@@ -883,7 +892,99 @@ counters:
       - dinosaur_killed_success
     debug: true
 
+show_player:
+  mode_genesis_pit_started:
+    flash_sdf_flasher_show:
+      key: start_genesis_pit_sdf_flasher_show
+      loops: 5
+      speed: 10
+  genesis_pit_dinosaur_group_hit_complete:
+    team_combo_show:
+      priority: 9999
+      loops: 6
+      speed: 40
+      show_tokens:
+        color: red
+    gi_off_sec:
+      loops: 0
+  genesis_pit_croc_group_flashing_hit:
+    genesis_pit_croc_group_hit_show:
+      priority: 9999
+      loops: 0
+      speed: 15
+    gi_flicker:
+      loops: 0
+      events_when_stopped: turn_gi_on
+  left_invid_targets_genesis_pit_flashing_hit:
+    genesis_pit_invid_shot_group_hit_show:
+      key: left_invid_targets_genesis_pit_hit_show
+      priority: 9995
+      loops: 0
+      speed: 30
+    gi_flicker:
+      loops: 0
+      events_when_stopped: turn_gi_on
+  right_invid_drops_genesis_pit_flashing_hit:
+    genesis_pit_invid_shot_group_hit_show:
+      key: right_invid_drops_genesis_pit_hit_show
+      priority: 9995
+      loops: 0
+      speed: 30
+    gi_flicker:
+      loops: 0
+      events_when_stopped: turn_gi_on
+  genesis_pit_jackpot_shot_flashing_hit:
+    mode_jackpot_show:
+      priority: 9996
+      loops: 0
+      speed: 15
+  genesis_pit_double_jackpot_shot_flashing_hit:
+    mode_double_jackpot_show:
+      priority: 9997
+      loops: 0
+      speed: 15
+  genesis_pit_triple_jackpot_shot_flashing_hit:
+    mode_triple_jackpot_show:
+      priority: 9998
+      loops: 0
+      speed: 15
+  genesis_pit_super_jackpot_shot_flashing_hit:
+    mode_super_jackpot_show:
+      priority: 9999
+      loops: 0
+      speed: 15
+  genesis_pit_rand_shot_flashing_hit:
+    red_sweep_right_show:
+      key: genesis_pit_rand_shot_hit_show
+      priority: 9998
+      loops: 0
+      speed: 10
+  genesis_pit_annie_shot_flashing_hit:
+    red_swipe_down_show:
+      key: genesis_pit_annie_shot_hit_show
+      priority: 9998
+      loops: 0
+      speed: 10
+  genesis_pit_rook_shot_flashing_hit:
+    red_swipe_down_show:
+      key: genesis_pit_rook_shot_hit_show
+      priority: 9998
+      loops: 0
+      speed: 10
+  genesis_pit_lancer_shot_flashing_hit:
+    red_swipe_down_show:
+      key: genesis_pit_lancer_shot_hit_show
+      priority: 9998
+      loops: 0
+      speed: 10
+
 sound_player:
+  genesis_pit_dinosaur_group_flashing_hit:
+    dinosaur_roar:
+      action: play
+  genesis_pit_pterodactyl_group_flashing_hit:
+    pterodactyl_scream:
+      action: play
   genesis_pit_jackpot_shot_flashing_hit:
     jackpot:
       action: play

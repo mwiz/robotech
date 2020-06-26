@@ -18,6 +18,7 @@ event_player:
     - disable_sling
     - kickback_disable{mode.kickback.active}
     - ramp_diverter_disable
+    - drop_reset_up #|1
   end_the_fortress_player_continue_show_ended:
     - flipper_on
     - enable_Upper_Left_pop_bumper
@@ -28,6 +29,9 @@ event_player:
     - kickback_enable{mode.kickback.active}
     - start_skill_shot_mode
     - restart_main_title
+  mode_end_the_fortress_stopping{(device.achievements.genesis_pit.state != "completed" and device.achievements.genesis_pit.state != "stopped") or (device.achievements.big_apple.state != "completed" and device.achievements.big_apple.state != "stopped")}:
+    - start_pre_qualify_a_mode
+
 
 timers:
   eject_mystery_ball_end_the_fortress_timer:
@@ -197,6 +201,6 @@ variable_player:
       int: 0
       action: set
   mode_end_the_fortress_started:
-    genesis_pit_mode_total_points:
+    the_fortress_mode_total_points:
       int: current_player.score - current_player.the_fortress_start_mode_score
       action: set
